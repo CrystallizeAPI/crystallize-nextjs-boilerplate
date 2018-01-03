@@ -57,5 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
-# Next
+# Next build output
 .next
