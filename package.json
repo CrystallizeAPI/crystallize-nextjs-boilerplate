@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": ">=9"
+  },
   "name": "crystallize-frontend-template",
   "version": "0.0.0",
   "private": true,
