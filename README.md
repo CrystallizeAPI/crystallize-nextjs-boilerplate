@@ -2,6 +2,10 @@
 
 The bare minimum skeleton you need to get a frontend up and running on Crystallize. React SSR with Next.js
 
+[![React: latest](https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square)](https://github.com/facebook/react)
+
+[![Next: latest](https://img.shields.io/badge/next-latest-44cc11.svg?style=flat-square)](https://github.com/zeit/next.js)
+
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 # Develop locally
@@ -9,6 +13,18 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 * Run `yarn install`
 * Run `yarn run build`
 * Run `yarn run start`
+* The site should be ready at [http://localhost:3000](http://localhost:3000)
+* Develop and go wild!
+
+# App structure
+
+## ./pages
+
+Put all your entry pages here
+
+## ./components
+
+Put all your single components here. Most of your app will live here
 
 # Deploy
 
