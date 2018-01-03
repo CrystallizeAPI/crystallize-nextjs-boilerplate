@@ -1,6 +1,9 @@
 # Crystallize frontend template
 The bare minimum skeleton you need to get a frontend up and running on Crystallize. React SSR with Next.js
 
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
+
 # Develop locally
 * Run `yarn install`
 * Run `yarn run build`
