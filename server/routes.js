@@ -6,16 +6,18 @@
  * @returns {(string|boolean)} The component name or false if not found
  */
 function PageMatchForRequest({ pathname, query }) {
-  if (query && query.something) {
-    return '/';
-  } else if (pathname === '/profile') {
-    return '/user';
-  } else if (pathname === '/frontpage') {
-    return '/';
-  }
+  return new Promise(resolve => {
+    if (query && query.something) {
+      return resolve('/');
+    } else if (pathname === '/profile') {
+      return resolve('/user');
+    } else if (pathname === '/frontpage') {
+      return resolve('/');
+    }
 
-  // No matching page found for the the request
-  return false;
+    // No matching page found for the the request
+    return resolve(false);
+  });
 }
 
 module.exports = {

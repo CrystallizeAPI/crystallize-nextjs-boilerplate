@@ -10,9 +10,9 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  createServer((req, res) => {
+  createServer(async (req, res) => {
     const parsedUrl = parse(req.url, true);
-    const pageMatch = PageMatchForRequest(req);
+    const pageMatch = await PageMatchForRequest(req);
     if (pageMatch) {
       app.render(req, res, pageMatch, parsedUrl.query);
     } else {
