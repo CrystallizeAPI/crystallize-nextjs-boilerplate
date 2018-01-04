@@ -5,7 +5,7 @@ export default ({ shopName }) => (
     {shopName}
     <Nav>
       <a href="/">Home page</a>
-      <a href="/page2">Page 2</a>
+      <a href="/user">User profile</a>
     </Nav>
   </Outer>
 );

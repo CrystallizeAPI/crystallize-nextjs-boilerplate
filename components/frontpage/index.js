@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -25,19 +25,21 @@ export default class FrontPage extends React.PureComponent {
   render() {
     const { bannerImage, shopName } = this.props;
     return (
-      <main>
+      <Fragment>
         <Header shopName={shopName} />
-        <h1>Welcome to your Crystallize shop!</h1>
-        {bannerImage && (
-          <Figure>
-            <img
-              src={bannerImage.src}
-              alt={bannerImage.alt}
-              title={bannerImage.title}
-            />
-          </Figure>
-        )}
-      </main>
+        <main>
+          <h1>Welcome to your Crystallize shop!</h1>
+          {bannerImage && (
+            <Figure>
+              <img
+                src={bannerImage.src}
+                alt={bannerImage.alt}
+                title={bannerImage.title}
+              />
+            </Figure>
+          )}
+        </main>
+      </Fragment>
     );
   }
 }

@@ -8,8 +8,8 @@
 function PageMatchForRequest({ pathname, query }) {
   if (query && query.something) {
     return '/';
-  } else if (pathname === '/pagetwo') {
-    return '/page2';
+  } else if (pathname === '/profile') {
+    return '/user';
   } else if (pathname === '/frontpage') {
     return '/';
   }

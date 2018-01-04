@@ -1,36 +1,39 @@
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
+const root = 'https://jsonplaceholder.typicode.com';
+
 function getFrontpageData() {
   return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        shopName: 'My awesome shop',
-        bannerImage: {
-          src: '//lorempixel.com/1200/400',
-          title: 'Awesome image'
-        }
+    fetch(`${root}/photos/1`)
+      .then(response => response.json())
+      .then(photo => {
+        resolve({
+          shopName: 'My awesome shop',
+          bannerImage: {
+            src: photo.url,
+            title: photo.title,
+            alt: photo.title
+          }
+        });
       });
-    }, 10);
   });
 }
 
-function getPage2Data() {
+function getUserPageData() {
   return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        shopName: 'My awesome shop',
-        text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                 sed do eiusmod tempor incididunt ut labore et dolore magna
-                 aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                 ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                 aute irure dolor in reprehenderit in voluptate velit esse
-                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                 cupidatat non proident, sunt in culpa qui officia deserunt
-                 mollit anim id est laborum`
+    fetch(`${root}/users/1`)
+      .then(response => response.json())
+      .then(user => {
+        resolve({
+          shopName: 'My awesome shop',
+          user
+        });
       });
-    }, 2000);
   });
 }
 
 module.exports = {
   getFrontpageData,
-  getPage2Data
+  getUserPageData
 };
