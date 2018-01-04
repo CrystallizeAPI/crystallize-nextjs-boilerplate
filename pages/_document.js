@@ -3,7 +3,7 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import resetStyle from '../components/resetStyle';
+import resetStyle from '../components/reset-style';
 
 export default class MyDocument extends Document {
   render() {
