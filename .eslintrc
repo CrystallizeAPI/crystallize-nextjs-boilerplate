@@ -9,6 +9,7 @@
   },
   "rules": {
     "prettier/prettier": "error",
+    "jsx-a11y/anchor-is-valid": false,
     "react/jsx-filename-extension": false,
     "react/react-in-jsx-scope": false,
     "react/prop-types": "skipUndeclared",

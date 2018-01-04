@@ -12,7 +12,7 @@ async function getFrontpageData() {
       todos
     };
   } catch (error) {
-    console.error(error);
+    console.error(error); // eslint-disable-line
     return {};
   }
 }
@@ -26,7 +26,7 @@ async function getUserPageData() {
       user
     };
   } catch (error) {
-    console.error(error);
+    console.error(error); // eslint-disable-line
     return {};
   }
 }
