@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import Header from '../header';
 
-import { Figure } from './styles';
+export const Figure = styled.figure`
+  filter: grayscale(70%);
 
-export default class FrontPage extends React.Component {
+  img {
+    display: block;
+  }
+`;
+
+export default class FrontPage extends React.PureComponent {
   static propTypes = {
     shopName: PropTypes.string.isRequired,
     bannerImage: PropTypes.shape({
