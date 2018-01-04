@@ -10,19 +10,23 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettier": "prettier",
+    "prettier-watch": "onchange '**/*.{js,jsx}' -- prettier --write {{changed}}"
   },
   "dependencies": {
-    "eslint": "^4.14.0",
     "next": "^4.2.1",
-    "prettier": "^1.9.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
   "devDependencies": {
+    "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1"
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.5.1",
+    "prettier": "^1.9.2"
   }
 }

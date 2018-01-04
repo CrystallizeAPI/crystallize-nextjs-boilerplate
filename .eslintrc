@@ -1,3 +1,9 @@
 {
-  "extends": "airbnb"
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/jsx-filename-extension": false,
+    "react/react-in-jsx-scope": false
+  }
 }
