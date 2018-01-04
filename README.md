@@ -13,6 +13,7 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 * Run `yarn install`
 * Run `yarn run build`
 * Run `yarn run start`
+* (optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
 * The site should be ready at [http://localhost:3000](http://localhost:3000)
 * Develop and go wild!
 
