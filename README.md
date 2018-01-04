@@ -8,6 +8,8 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+[![code linter: Eslint](https://img.shields.io/badge/code_linter-eslint-463fd4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 # Develop locally
 
 * Run `yarn install`
