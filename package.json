@@ -16,10 +16,12 @@
     "prettier-watch": "onchange '**/*.{js,jsx}' -- prettier --write {{changed}}"
   },
   "dependencies": {
+    "babel-plugin-styled-components": "^1.4.0",
     "next": "^4.2.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "styled-components": "^2.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.1.2",
