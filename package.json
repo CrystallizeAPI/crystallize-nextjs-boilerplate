@@ -10,16 +10,10 @@
     "precommit": "yarn run lint",
     "dev": "node server/index.js",
     "build": "next build",
-    "build:production": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server/index.js",
-    "lint": "eslint .",
-    "prettier": "prettier",
-    "prettier-watch": "onchange '**/*.{js,jsx}' -- prettier --write {{changed}}"
+    "lint": "eslint ."
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ],
+  "browserslist": ["> 1%", "last 2 versions"],
   "dependencies": {
     "babel-plugin-styled-components": "^1.4.0",
     "es6-promise": "^4.2.2",
