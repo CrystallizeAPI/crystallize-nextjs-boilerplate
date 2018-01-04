@@ -1,9 +1,18 @@
 {
   "extends": ["airbnb", "prettier"],
   "plugins": ["prettier"],
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
   "rules": {
     "prettier/prettier": "error",
     "react/jsx-filename-extension": false,
-    "react/react-in-jsx-scope": false
+    "react/react-in-jsx-scope": false,
+    "react/prop-types": "skipUndeclared",
+    "react/require-default-props": false
   }
 }

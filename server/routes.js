@@ -6,7 +6,9 @@
  * @returns {(string|boolean)} The component name or false if not found
  */
 function PageMatchForRequest({ pathname, query }) {
-  if (pathname === '/pagetwo') {
+  if (query && query.something) {
+    return '/';
+  } else if (pathname === '/pagetwo') {
     return '/page2';
   } else if (pathname === '/frontpage') {
     return '/';

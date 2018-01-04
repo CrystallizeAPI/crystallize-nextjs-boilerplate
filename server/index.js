@@ -14,12 +14,12 @@ app.prepare().then(() => {
     const parsedUrl = parse(req.url, true);
     const pageMatch = PageMatchForRequest(req);
     if (pageMatch) {
-      app.render(req, res, pageMatch, query);
+      app.render(req, res, pageMatch, parsedUrl.query);
     } else {
       handle(req, res, parsedUrl);
     }
   }).listen(port, err => {
     if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
+    console.log(`> Ready on http://localhost:${port}`); // eslint-disable-line
   });
 });
