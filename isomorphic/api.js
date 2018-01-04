@@ -5,16 +5,12 @@ const root = 'https://jsonplaceholder.typicode.com';
 
 function getFrontpageData() {
   return new Promise(resolve => {
-    fetch(`${root}/photos/1`)
+    fetch(`${root}/todos`)
       .then(response => response.json())
-      .then(photo => {
+      .then(todos => {
         resolve({
           shopName: 'My awesome shop',
-          bannerImage: {
-            src: photo.url,
-            title: photo.title,
-            alt: photo.title
-          }
+          todos
         });
       });
   });
