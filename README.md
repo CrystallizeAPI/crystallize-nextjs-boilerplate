@@ -29,6 +29,14 @@ Put all your entry pages here
 
 Put all your single components here. Most of your app will live here
 
+## ./server
+
+This is where the ultra-light frontend server lives. Its only function is to render a React response to a request
+
+## ./isomorphic
+
+Code shared between the server and the client side code.
+
 # Deploy
 
 There are multiple alternatives for deployments, however for the easiest hosting of a Node application we recommend [Now](https://zeit.co/now).
