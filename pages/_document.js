@@ -1,5 +1,3 @@
-/* eslint react/no-danger: off */
-
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -21,11 +19,7 @@ export default class MyDocument extends Document {
           />
           <meta name="apple-mobile-web-app-capable" content="yes" />
 
-          <style
-            dangerouslySetInnerHTML={{
-              __html: resetStyle
-            }}
-          />
+          <style>{resetStyle}</style>
           {styleTags}
         </Head>
         <body>
