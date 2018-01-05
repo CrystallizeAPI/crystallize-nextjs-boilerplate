@@ -46,12 +46,17 @@
     }
   },
   "dependencies": {
+    "apollo-client-preset": "^1.0.5",
     "babel-plugin-styled-components": "^1.4.0",
     "es6-promise": "^4.2.2",
+    "graphql": "^0.12.3",
+    "graphql-anywhere": "^4.1.0",
+    "graphql-tag": "^2.6.1",
     "isomorphic-fetch": "^2.2.1",
     "next": "^4.2.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
+    "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
     "styled-components": "^2.4.0"
   },
