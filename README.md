@@ -12,11 +12,10 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 
 # Develop locally
 
-* Run `yarn install`
-* Run `yarn dev`
-* The site should be ready at [http://localhost:3000](http://localhost:3000)
-* Develop and go wild!
-* * (optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
+* Run `yarn` to install dependencies
+* Run `yarn dev` to start up
+* * The site should be ready at [http://localhost:3000](http://localhost:3000)
+* (Optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
 
 # App structure
 
@@ -30,11 +29,11 @@ Put all your single components here. Most of your app will live here
 
 ## ./server
 
-This is where the ultra-light frontend server lives. Its only function is to render a React response to a request
+This is where the ultra-light frontend server lives. Its only function is to render the React app in response to a request
 
-## ./isomorphic
+## ./lib
 
-Non React code shared between the server and the client side code.
+Library code to enable GraphQL and REST API communication
 
 # Deploy
 

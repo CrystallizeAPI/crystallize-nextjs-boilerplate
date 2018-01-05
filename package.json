@@ -41,6 +41,7 @@
     },
     "rules": {
       "prettier/prettier": "error",
+      "no-use-before-define": ["error", "nofunc"],
       "jsx-a11y/anchor-is-valid": false,
       "react/jsx-filename-extension": false,
       "react/react-in-jsx-scope": false,
