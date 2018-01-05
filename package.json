@@ -41,6 +41,7 @@
       "react/jsx-filename-extension": false,
       "react/react-in-jsx-scope": false,
       "react/prop-types": "skipUndeclared",
+      "react/forbid-prop-types": false,
       "react/require-default-props": false,
       "react/prefer-stateless-function": "ignorePureComponents"
     }
