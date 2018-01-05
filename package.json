@@ -14,6 +14,37 @@
     "lint": "eslint ."
   },
   "browserslist": ["> 1%", "last 2 versions"],
+  "babel": {
+    "presets": ["next/babel"],
+    "plugins": [
+      [
+        "styled-components",
+        { "ssr": true, "displayName": true, "preprocess": false }
+      ]
+    ]
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "extends": ["airbnb", "prettier"],
+    "plugins": ["prettier"],
+    "parser": "babel-eslint",
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": "error",
+      "jsx-a11y/anchor-is-valid": false,
+      "react/jsx-filename-extension": false,
+      "react/react-in-jsx-scope": false,
+      "react/prop-types": "skipUndeclared",
+      "react/require-default-props": false,
+      "react/prefer-stateless-function": "ignorePureComponents"
+    }
+  },
   "dependencies": {
     "babel-plugin-styled-components": "^1.4.0",
     "es6-promise": "^4.2.2",
