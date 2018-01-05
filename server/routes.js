@@ -8,19 +8,35 @@
  * @param {Object} url.query - The request query
  * @returns {(string|boolean)} The component name or false if not found
  */
-function PageMatchForRequest({ pathname, query }) {
-  return new Promise(resolve => {
-    if (query && query.something) {
-      return resolve('/');
-    } else if (pathname === '/profile') {
-      return resolve('/user');
-    } else if (pathname === '/frontpage') {
-      return resolve('/');
+async function PageMatchForRequest({ pathname, query }) {
+  if (pathname.match(/^\/_next\//)) {
+    return Promise.resolve(false);
+  }
+
+  if (query && query.testToForceFrontpage) {
+    return Promise.resolve('/');
+  } else if (pathname === '/profile') {
+    return Promise.resolve('/user');
+  } else if (pathname === '/frontpage') {
+    return Promise.resolve('/');
+  }
+
+  return new Promise(async resolve => {
+    const pagePath = await getPagePathFromRequest({ pathname, query });
+    if (pagePath) {
+      resolve(pagePath);
     }
 
     // No matching page found for the the request
     return resolve(false);
   });
+}
+
+function getPagePathFromRequest() {
+  // Todo: Insert dynamic URL lookup here
+  // return Promise.resolve('/');
+
+  return Promise.resolve(false);
 }
 
 module.exports = {

@@ -12,7 +12,7 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   createServer(async (req, res) => {
     const parsedUrl = parse(req.url, true);
-    const pageMatch = await PageMatchForRequest(req);
+    const pageMatch = await PageMatchForRequest(parsedUrl);
     if (pageMatch) {
       app.render(req, res, pageMatch, parsedUrl.query);
     } else {
