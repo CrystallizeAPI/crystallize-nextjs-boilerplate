@@ -34,7 +34,7 @@ This is where the ultra-light frontend server lives. Its only function is to ren
 
 ## ./isomorphic
 
-Code shared between the server and the client side code.
+Non React code shared between the server and the client side code.
 
 # Deploy
 
