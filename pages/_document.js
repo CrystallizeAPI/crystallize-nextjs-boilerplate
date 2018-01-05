@@ -4,11 +4,16 @@ import { ServerStyleSheet } from 'styled-components';
 import resetStyle from '../components/reset-style';
 
 export default class MyDocument extends Document {
-  render() {
+  static getInitialProps({ renderPage }) {
     const sheet = new ServerStyleSheet();
-    const main = sheet.collectStyles(<Main />);
+    const page = renderPage(App => props =>
+      sheet.collectStyles(<App {...props} />)
+    );
     const styleTags = sheet.getStyleElement();
+    return { ...page, styleTags };
+  }
 
+  render() {
     return (
       <html lang="no">
         <Head>
@@ -20,10 +25,10 @@ export default class MyDocument extends Document {
           <meta name="apple-mobile-web-app-capable" content="yes" />
 
           <style>{resetStyle}</style>
-          {styleTags}
+          {this.props.styleTags}
         </Head>
         <body>
-          {main}
+          <Main />
           <NextScript />
         </body>
       </html>
