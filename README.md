@@ -13,11 +13,10 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 # Develop locally
 
 * Run `yarn install`
-* Run `yarn run build`
-* Run `yarn run start`
-* (optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
+* Run `yarn dev`
 * The site should be ready at [http://localhost:3000](http://localhost:3000)
 * Develop and go wild!
+* * (optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
 
 # App structure
 
@@ -39,7 +38,7 @@ Code shared between the server and the client side code.
 
 # Deploy
 
-There are multiple alternatives for deployments, however for the easiest hosting of a Node application we recommend [Now](https://zeit.co/now).
+There are multiple alternatives for deployments, however for the easiest hosting of a Node application, one option is [Now](https://zeit.co/now).
 
 ## Deploying with Now
 
