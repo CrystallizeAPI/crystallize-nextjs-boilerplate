@@ -9,6 +9,7 @@
  * @returns {(string|boolean)} The component name or false if not found
  */
 async function PageMatchForRequest({ pathname, query }) {
+  // Skip checking for next build files
   if (pathname.match(/^\/_next\//)) {
     return Promise.resolve(false);
   }
@@ -22,13 +23,12 @@ async function PageMatchForRequest({ pathname, query }) {
   }
 
   return new Promise(async resolve => {
-    const pagePath = await getPagePathFromRequest({ pathname, query });
-    if (pagePath) {
-      resolve(pagePath);
+    try {
+      resolve(await getPagePathFromRequest({ pathname, query }));
+    } catch (e) {
+      console.error(e); // eslint-disable-line
+      resolve(false);
     }
-
-    // No matching page found for the the request
-    return resolve(false);
   });
 }
 
