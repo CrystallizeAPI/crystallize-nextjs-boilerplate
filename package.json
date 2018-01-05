@@ -19,7 +19,11 @@
     "plugins": [
       [
         "styled-components",
-        { "ssr": true, "displayName": true, "preprocess": false }
+        {
+          "ssr": true,
+          "displayName": true,
+          "preprocess": false
+        }
       ]
     ]
   },

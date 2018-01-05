@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Api from '../isomorphic/api';
+import Api from '../lib/rest-api';
 import UserPage from '../components/userpage';
 
 export default class Page extends React.Component {
