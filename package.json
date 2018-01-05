@@ -13,9 +13,14 @@
     "start": "NODE_ENV=production node server/index.js",
     "lint": "eslint ."
   },
-  "browserslist": ["> 1%", "last 2 versions"],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
   "babel": {
-    "presets": ["next/babel"],
+    "presets": [
+      "next/babel"
+    ],
     "plugins": [
       [
         "styled-components",
@@ -31,8 +36,13 @@
     "singleQuote": true
   },
   "eslintConfig": {
-    "extends": ["airbnb", "prettier"],
-    "plugins": ["prettier"],
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
     "parser": "babel-eslint",
     "env": {
       "es6": true,
@@ -41,7 +51,10 @@
     },
     "rules": {
       "prettier/prettier": "error",
-      "no-use-before-define": ["error", "nofunc"],
+      "no-use-before-define": [
+        "error",
+        "nofunc"
+      ],
       "jsx-a11y/anchor-is-valid": false,
       "react/jsx-filename-extension": false,
       "react/react-in-jsx-scope": false,
