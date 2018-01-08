@@ -4,7 +4,7 @@ import { Outer, Nav } from './styles';
 
 export default ({ shopName }) => (
   <Outer>
-    {shopName}
+    <span className="header__shop-name">{shopName}</span>
     <Nav>
       <Link href="/" prefetch>
         <a>Home page</a>

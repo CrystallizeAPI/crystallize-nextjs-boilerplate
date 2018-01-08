@@ -7,20 +7,43 @@
     "node": ">=9"
   },
   "scripts": {
-    "precommit": "yarn run lint",
+    "precommit": "yarn validate",
     "dev": "node server/index.js",
     "build": "next build",
     "start": "NODE_ENV=production node server/index.js",
-    "lint": "eslint ."
+    "test": "NODE_ENV=test jest",
+    "lint": "eslint .",
+    "validate": "npm-run-all test lint"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions"
   ],
   "babel": {
-    "presets": [
-      "next/babel"
-    ],
+    "env": {
+      "development": {
+        "presets": [
+          "next/babel"
+        ]
+      },
+      "production": {
+        "presets": [
+          "next/babel"
+        ]
+      },
+      "test": {
+        "presets": [
+          [
+            "next/babel",
+            {
+              "preset-env": {
+                "modules": "commonjs"
+              }
+            }
+          ]
+        ]
+      }
+    },
     "plugins": [
       [
         "module-resolver",
@@ -82,6 +105,7 @@
       "react/prefer-stateless-function": "ignorePureComponents"
     }
   },
+  "eslintIgnore": ["jest*.js", "__tests__/*.*"],
   "dependencies": {
     "apollo-client-preset": "^1.0.5",
     "babel-plugin-module-resolver": "^3.0.0",
@@ -100,6 +124,8 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.1.2",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
@@ -109,6 +135,10 @@
     "eslint-plugin-prettier": "^2.4.0",
     "eslint-plugin-react": "^7.5.1",
     "husky": "^0.14.3",
-    "prettier": "^1.9.2"
+    "jest": "^22.0.4",
+    "npm-run-all": "^4.1.2",
+    "prettier": "^1.9.2",
+    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "^16.2.0"
   }
 }
