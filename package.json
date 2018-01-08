@@ -88,13 +88,23 @@
     "env": {
       "es6": true,
       "browser": true,
-      "node": true
+      "node": true,
+      "jest": true
     },
     "rules": {
       "prettier/prettier": "error",
       "no-use-before-define": [
         "error",
         "nofunc"
+      ],
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": [
+            "jest*.js",
+            "__tests__/**/*.js"
+          ]
+        }
       ],
       "jsx-a11y/anchor-is-valid": false,
       "react/jsx-filename-extension": false,
@@ -105,7 +115,7 @@
       "react/prefer-stateless-function": "ignorePureComponents"
     }
   },
-  "eslintIgnore": ["jest*.js", "__tests__/*.*"],
+  "eslintIgnore": [],
   "dependencies": {
     "apollo-client-preset": "^1.0.5",
     "babel-plugin-module-resolver": "^3.0.0",
@@ -138,7 +148,6 @@
     "jest": "^22.0.4",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.9.2",
-    "react-addons-test-utils": "^15.6.2",
-    "react-test-renderer": "^16.2.0"
+    "react-addons-test-utils": "^15.6.2"
   }
 }
