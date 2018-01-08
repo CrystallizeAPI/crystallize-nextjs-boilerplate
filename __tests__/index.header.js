@@ -25,11 +25,3 @@ describe('With Enzyme', () => {
     ).toEqual('/');
   });
 });
-
-// describe('With Snapshot Testing', () => {
-//   it('App shows "Welcome to your Crystallize shop!"', () => {
-//     const component = renderer.create(<App />);
-//     const tree = component.toJSON();
-//     expect(tree).toMatchSnapshot();
-//   });
-// });
