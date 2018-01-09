@@ -5,7 +5,7 @@ html {
 }
 body {
   margin: 0;
-  font: 16px/1 sans-serif;
+  font: 16px/1 roboto, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }

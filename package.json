@@ -1,6 +1,6 @@
 {
   "name": "crystallize-frontend-template",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "license": "ISC",
   "engines": {
@@ -20,17 +20,10 @@
     "last 2 versions"
   ],
   "babel": {
+    "presets": [
+      "next/babel"
+    ],
     "env": {
-      "development": {
-        "presets": [
-          "next/babel"
-        ]
-      },
-      "production": {
-        "presets": [
-          "next/babel"
-        ]
-      },
       "test": {
         "presets": [
           [
@@ -58,14 +51,7 @@
           }
         }
       ],
-      [
-        "styled-components",
-        {
-          "ssr": true,
-          "displayName": true,
-          "preprocess": false
-        }
-      ]
+      ["styled-components", { "ssr": true, "displayName": true, "preprocess": false } ]
     ]
   },
   "prettier": {
@@ -106,6 +92,7 @@
           ]
         }
       ],
+      "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
       "jsx-a11y/anchor-is-valid": false,
       "react/jsx-filename-extension": false,
       "react/react-in-jsx-scope": false,

@@ -1,9 +1,10 @@
 import React from 'react';
 
+import withGraphData from 'lib/with-graph-data';
 import Api from 'lib/rest-api';
 import UserPage from 'components/userpage';
 
-export default class Page extends React.Component {
+class Page extends React.Component {
   static async getInitialProps({ req }) {
     const data = await Api.getUserPageData(req);
     return data;
@@ -13,3 +14,5 @@ export default class Page extends React.Component {
     return <UserPage {...this.props} />;
   }
 }
+
+export default withGraphData(Page);

@@ -2,7 +2,7 @@ const { createServer } = require('http');
 const next = require('next');
 const { parse } = require('url');
 
-const { PageMatchForRequest } = require('./routes');
+const { PageMatchForRequest } = require('../lib/routes');
 const config = require('../config');
 
 const port = parseInt(config.PORT, 10);

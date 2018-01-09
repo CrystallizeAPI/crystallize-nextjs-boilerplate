@@ -1,7 +1,7 @@
 const {
   NODE_ENV = 'development',
   PORT = 3000,
-  TENANT_ID = 'demo',
+  TENANT_ID = 'todo...',
   GTM_ID
 } = process.env;
 

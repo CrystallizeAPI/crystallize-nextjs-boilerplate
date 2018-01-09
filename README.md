@@ -33,7 +33,7 @@ This is where the ultra-light frontend server lives. Its only function is to ren
 
 ## ./lib
 
-Library code to enable GraphQL and REST API communication
+Library code to enable GraphQL and REST API communication, as well as prop type definitions
 
 # Deploy
 

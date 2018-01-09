@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Header from '../header';
+import Layout from '../layout';
 
 const H1 = styled.h1`
   text-align: center;
@@ -23,7 +23,6 @@ const UserProps = styled.ul`
 
 export default class FrontPage extends React.PureComponent {
   static propTypes = {
-    shopName: PropTypes.string.isRequired,
     user: PropTypes.shape({
       name: PropTypes.string,
       email: PropTypes.string,
@@ -33,29 +32,26 @@ export default class FrontPage extends React.PureComponent {
   };
 
   render() {
-    const { shopName, user } = this.props;
+    const { user } = this.props;
 
     return (
-      <Fragment>
-        <Header shopName={shopName} />
-        <main>
-          <H1>User page</H1>
-          <UserProps>
-            <li>
-              <span>Name:</span> <span>{user.name}</span>
-            </li>
-            <li>
-              <span>Phone:</span> <span>{user.phone}</span>
-            </li>
-            <li>
-              <span>Email:</span> <span>{user.email}</span>
-            </li>
-            <li>
-              <span>Username:</span> <span>{user.username}</span>
-            </li>
-          </UserProps>
-        </main>
-      </Fragment>
+      <Layout {...this.props}>
+        <H1>User page</H1>
+        <UserProps>
+          <li>
+            <span>Name:</span> <span>{user.name}</span>
+          </li>
+          <li>
+            <span>Phone:</span> <span>{user.phone}</span>
+          </li>
+          <li>
+            <span>Email:</span> <span>{user.email}</span>
+          </li>
+          <li>
+            <span>Username:</span> <span>{user.username}</span>
+          </li>
+        </UserProps>
+      </Layout>
     );
   }
 }
