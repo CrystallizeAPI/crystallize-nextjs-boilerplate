@@ -22,7 +22,7 @@ export default graphql(query, {
   options: () => ({
     variables: {
       url: '/',
-      id: 'demo'
+      id: __crystallizeConfig.TENANT_ID
     }
   }),
   props: ({ data }) => ({

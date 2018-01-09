@@ -77,6 +77,9 @@
       "node": true,
       "jest": true
     },
+    "globals": {
+      "__crystallizeConfig": true
+    },
     "rules": {
       "prettier/prettier": "error",
       "no-use-before-define": [
@@ -93,6 +96,7 @@
         }
       ],
       "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
+      "import/prefer-default-export": false,
       "jsx-a11y/anchor-is-valid": false,
       "react/jsx-filename-extension": false,
       "react/react-in-jsx-scope": false,

@@ -3,7 +3,7 @@ const next = require('next');
 const { parse } = require('url');
 
 const { PageMatchForRequest } = require('../lib/routes');
-const config = require('../config');
+const config = require('./config');
 
 const port = parseInt(config.PORT, 10);
 const dev = config.NODE_ENV !== 'production';

@@ -1,5 +1,6 @@
-import Layout from '../layout';
-import { H1, Outer } from './styles';
+import Layout from 'components/layout';
+import { H1 } from 'components/style';
+import { Outer } from './styles';
 
 export default ({ router }) => (
   <Layout router={router}>

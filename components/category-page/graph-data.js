@@ -29,7 +29,7 @@ export default graphql(query, {
   options: ({ router }) => ({
     variables: {
       url: router.asPath || router.pathname,
-      id: 'demo'
+      id: __crystallizeConfig.TENANT_ID
     }
   }),
   props: ({ data }) => ({
