@@ -5,7 +5,7 @@ import Layout from 'components/layout';
 import Product from 'components/product';
 import PropTypeProduct from 'lib/prop-types/product';
 import GraphData from './graph-data';
-import { H1, Outer, ProductList } from './styles';
+import { H1, Outer, Loader, ProductList } from './styles';
 
 class CategoryPage extends React.PureComponent {
   static propTypes = {
@@ -13,14 +13,18 @@ class CategoryPage extends React.PureComponent {
   };
 
   render() {
-    const { products } = this.props.data;
+    const { data } = this.props;
     return (
       <Layout {...this.props}>
         <Outer>
           <H1>Category page</H1>
-          <ProductList>
-            {products.map(p => <Product key={p.id} data={p} />)}
-          </ProductList>
+          {!data ? (
+            <Loader>Loading...</Loader>
+          ) : (
+            <ProductList>
+              {data.products.map(p => <Product key={p.id} data={p} />)}
+            </ProductList>
+          )}
         </Outer>
       </Layout>
     );

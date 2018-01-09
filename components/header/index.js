@@ -20,7 +20,12 @@ export default class Header extends React.PureComponent {
           </Link>
           {categories &&
             categories.map(category => (
-              <Link href="/category" as={category.link} key={category.link}>
+              <Link
+                href="/category"
+                as={category.link}
+                key={category.link}
+                prefetch
+              >
                 <a>{category.name}</a>
               </Link>
             ))}
