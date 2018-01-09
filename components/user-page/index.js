@@ -2,13 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Layout from '../layout';
+import Layout from 'components/layout';
 
-const H1 = styled.h1`
-  text-align: center;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-`;
+import { H1 } from 'components/style';
 
 const UserProps = styled.ul`
   display: block;

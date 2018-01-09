@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 
 export const Outer = styled.header`
-  margin-bottom: 10px;
   text-align: center;
-  padding: 10px 0;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Logo = styled.img`
+  height: 64px;
+  display: block;
 `;
 
 export const Nav = styled.nav`
@@ -12,13 +19,13 @@ export const Nav = styled.nav`
   margin-top: 10px;
 
   a {
+    display: inline-block;
     margin: 0 5px;
     padding: 5px 10px;
-    background-color: #fff;
     transition: all 100ms;
 
     &:hover {
-      background-color: #eee;
+      text-decoration: underline;
     }
   }
 `;

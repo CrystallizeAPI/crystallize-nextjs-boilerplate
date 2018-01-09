@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 
 import Layout from 'components/layout';
 import Product from 'components/product';
+import { H1 } from 'components/style';
 import PropTypeProduct from 'lib/prop-types/product';
 import GraphData from './graph-data';
-import { H1, Outer, Loader, ProductList } from './styles';
+
+import { Outer, Loader, ProductList } from './styles';
 
 class CategoryPage extends React.PureComponent {
   static propTypes = {

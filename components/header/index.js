@@ -3,21 +3,25 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 import PropTypeCategory from 'lib/prop-types/category';
-import { Outer, Nav } from './styles';
+import PropTypeTenant from 'lib/prop-types/tenant';
+import { Outer, Nav, Logo } from './styles';
 
 export default class Header extends React.PureComponent {
   static propTypes = {
+    tenant: PropTypeTenant,
     categories: PropTypes.arrayOf(PropTypeCategory)
   };
 
   render() {
-    const { categories } = this.props;
+    const { categories, tenant } = this.props;
     return (
       <Outer>
+        <Link href="/">
+          <a>
+            <Logo src={tenant.logo_url} alt={tenant.company_name} />
+          </a>
+        </Link>
         <Nav>
-          <Link href="/">
-            <a>Home</a>
-          </Link>
           {categories &&
             categories.map(category => (
               <Link

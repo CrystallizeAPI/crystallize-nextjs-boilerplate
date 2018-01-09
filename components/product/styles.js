@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colorPrice, mediaXs } from 'components/style-vars';
+import { colorPrice, mediaXs } from 'components/style/vars';
 
 export const Outer = styled.article`
   margin: 5px;

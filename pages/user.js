@@ -2,7 +2,7 @@ import React from 'react';
 
 import withGraphData from 'lib/with-graph-data';
 import Api from 'lib/rest-api';
-import UserPage from 'components/userpage';
+import UserPage from 'components/user-page';
 
 class Page extends React.Component {
   static async getInitialProps({ req }) {
