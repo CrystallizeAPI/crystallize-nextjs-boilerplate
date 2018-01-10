@@ -2,10 +2,10 @@ import Layout from 'components/layout';
 import { H1 } from 'components/style';
 import { Outer } from './styles';
 
-export default ({ router }) => (
+export default ({ router, frontpageHeading }) => (
   <Layout router={router}>
     <Outer>
-      <H1>Welcome to your Crystallize shop!</H1>
+      <H1>{frontpageHeading}</H1>
     </Outer>
   </Layout>
 );

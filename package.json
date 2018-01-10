@@ -51,7 +51,14 @@
           }
         }
       ],
-      ["styled-components", { "ssr": true, "displayName": true, "preprocess": false } ]
+      [
+        "styled-components",
+        {
+          "ssr": true,
+          "displayName": true,
+          "preprocess": false
+        }
+      ]
     ]
   },
   "prettier": {
@@ -95,7 +102,12 @@
           ]
         }
       ],
-      "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
+      "prefer-arrow-callback": [
+        "error",
+        {
+          "allowNamedFunctions": true
+        }
+      ],
       "import/prefer-default-export": false,
       "jsx-a11y/anchor-is-valid": false,
       "react/jsx-filename-extension": false,
@@ -121,6 +133,8 @@
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "styled-components": "^2.4.0"
   },
   "devDependencies": {

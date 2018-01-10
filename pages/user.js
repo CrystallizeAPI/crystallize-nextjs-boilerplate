@@ -1,6 +1,6 @@
 import React from 'react';
 
-import withGraphData from 'lib/with-graph-data';
+import withData from 'lib/with-data';
 import Api from 'lib/rest-api';
 import UserPage from 'components/user-page';
 
@@ -15,4 +15,4 @@ class Page extends React.Component {
   }
 }
 
-export default withGraphData(Page);
+export default withData(Page);

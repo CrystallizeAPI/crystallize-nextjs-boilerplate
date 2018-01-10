@@ -1,4 +1,4 @@
-import withGraphData from 'lib/with-graph-data';
+import withData from 'lib/with-data';
 import CategoryPage from 'components/category-page';
 
-export default withGraphData(CategoryPage);
+export default withData(CategoryPage);
