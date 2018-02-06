@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Layout from 'components/layout';
-
-import { H1 } from 'components/style';
+import Layout from 'fragments/layout';
+import { H1 } from 'fragments/style';
 
 const UserProps = styled.ul`
   display: block;

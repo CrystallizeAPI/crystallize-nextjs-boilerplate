@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { mediaSm, mediaMd, mediaLg } from 'components/style/vars';
+import { media } from 'fragments/style/vars';
 
 export const Outer = styled.div`
   margin-bottom: 30px;
@@ -16,15 +16,15 @@ export const ProductList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
-  ${mediaSm} {
+  ${media.sm} {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  ${mediaMd} {
+  ${media.md} {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  ${mediaLg} {
+  ${media.lg} {
     grid-template-columns: repeat(6, 1fr);
   }
 `;

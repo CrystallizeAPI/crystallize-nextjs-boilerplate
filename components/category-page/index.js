@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Layout from 'components/layout';
-import Product from 'components/product';
-import { H1 } from 'components/style';
+import Layout from 'fragments/layout';
+import { H1 } from 'fragments/style';
+import Product from 'fragments/product';
 import PropTypeProduct from 'lib/prop-types/product';
 import GraphData from './graph-data';
 

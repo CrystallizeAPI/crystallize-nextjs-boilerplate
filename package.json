@@ -47,7 +47,8 @@
           "alias": {
             "lib": "./lib",
             "pages": "./pages",
-            "components": "./components"
+            "components": "./components",
+            "fragments": "./fragments"
           }
         }
       ],
@@ -128,14 +129,14 @@
     "graphql-anywhere": "^4.1.0",
     "graphql-tag": "^2.6.1",
     "isomorphic-fetch": "^2.2.1",
-    "next": "^4.2.1",
+    "next": "^5.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "styled-components": "^2.4.0"
+    "styled-components": "^3.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.1.2",

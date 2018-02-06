@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colorPrice, mediaXs } from 'components/style/vars';
+import { colors, media } from 'fragments/style/vars';
 
 export const Outer = styled.article`
   margin: 10px;
@@ -24,7 +24,7 @@ export const Img = styled.img`
   object-fit: fill;
   margin: 0 auto;
 
-  ${mediaXs} {
+  ${media.xs} {
     height: 120px;
   }
 `;
@@ -38,12 +38,12 @@ export const Footer = styled.footer`
   justify-content: space-between;
   align-items: center;
 
-  ${mediaXs} {
+  ${media.xs} {
     margin: 0;
   }
 `;
 
 export const Price = styled.span`
-  color: ${colorPrice};
+  color: ${colors.price};
   margin-left: 10px;
 `;

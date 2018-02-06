@@ -2,7 +2,7 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import resetStyle from 'components/style/reset';
+import resetStyle from 'fragments/style/reset';
 import config from '../server/config';
 
 export default class MyDocument extends Document {

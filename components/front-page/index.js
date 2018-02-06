@@ -1,5 +1,5 @@
-import Layout from 'components/layout';
-import { H1 } from 'components/style';
+import Layout from 'fragments/layout';
+import { H1 } from 'fragments/style';
 import { Outer } from './styles';
 
 export default ({ router, frontpageHeading }) => (

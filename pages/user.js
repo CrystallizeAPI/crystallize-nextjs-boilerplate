@@ -1,12 +1,12 @@
 import React from 'react';
 
 import withData from 'lib/with-data';
-import Api from 'lib/rest-api';
+import { getUserPageData } from 'lib/rest-api';
 import UserPage from 'components/user-page';
 
 class Page extends React.Component {
   static async getInitialProps({ req }) {
-    const data = await Api.getUserPageData(req);
+    const data = await getUserPageData(req);
     return data;
   }
 
