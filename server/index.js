@@ -1,8 +1,9 @@
-const { createServer } = require('http');
+const express = require('express');
+const helmet = require('helmet');
 const next = require('next');
 const { parse } = require('url');
 
-const { PageMatchForRequest } = require('../lib/routes');
+const { PageMatchForRequest } = require('./routes');
 const config = require('./config');
 
 const port = parseInt(config.PORT, 10);
@@ -11,7 +12,11 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  createServer(async (req, res) => {
+  const server = express();
+
+  server.use(helmet());
+
+  server.get('*', async (req, res) => {
     const parsedUrl = parse(req.url, true);
     const pageMatch = await PageMatchForRequest(parsedUrl);
     if (pageMatch) {
@@ -19,7 +24,9 @@ app.prepare().then(() => {
     } else {
       handle(req, res, parsedUrl);
     }
-  }).listen(port, err => {
+  });
+
+  server.listen(port, err => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`); // eslint-disable-line
   });

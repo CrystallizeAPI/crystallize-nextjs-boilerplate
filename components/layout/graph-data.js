@@ -25,8 +25,13 @@ export default graphql(query, {
       id: __crystallizeConfig.TENANT_ID
     }
   }),
-  props: ({ data }) => ({
-    categories: data.category.subCategories,
-    tenant: data.tenant
-  })
+  props: ({ data }) => {
+    if (!data || data.loading) {
+      return data;
+    }
+    return {
+      categories: data.category.subCategories,
+      tenant: data.tenant
+    };
+  }
 });

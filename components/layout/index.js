@@ -16,11 +16,19 @@ class Layout extends React.PureComponent {
   };
 
   render() {
-    const { children, categories, tenant } = this.props;
+    const { children, categories, tenant, title, description } = this.props;
+    let displayTitle = tenant ? tenant.company_name : '';
+    if (title) {
+      displayTitle = `${title} - ${displayTitle}`;
+    }
+
     return (
       <Fragment>
         <Head>
-          <title>{tenant.company_name}</title>
+          <title key="title">{displayTitle}</title>
+          {description && (
+            <meta key="description" name="description" content={description} />
+          )}
         </Head>
         <Outer>
           <Header categories={categories} tenant={tenant} />

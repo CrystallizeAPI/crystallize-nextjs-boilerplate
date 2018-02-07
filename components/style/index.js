@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export * from './vars';
+
 export const H1 = styled.h1`
   text-align: center;
   padding: 5vh 20px;

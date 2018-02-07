@@ -2,7 +2,7 @@ import React from 'react';
 
 import withData from 'lib/with-data';
 import { getUserPageData } from 'lib/rest-api';
-import UserPage from 'components/user-page';
+import UserPage from 'page-components/user-page';
 
 class Page extends React.Component {
   static async getInitialProps({ req }) {

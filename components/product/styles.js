@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, media } from 'fragments/style/vars';
+import { colors, media } from 'components/style';
 
 export const Outer = styled.article`
   margin: 10px;

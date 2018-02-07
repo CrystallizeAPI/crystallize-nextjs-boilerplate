@@ -46,9 +46,9 @@
           ],
           "alias": {
             "lib": "./lib",
-            "pages": "./pages",
+            "page-components": "./page-components",
             "components": "./components",
-            "fragments": "./fragments"
+            "cmp": "./components"
           }
         }
       ],
@@ -125,9 +125,11 @@
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-styled-components": "^1.4.0",
     "es6-promise": "^4.2.2",
+    "express": "^4.16.2",
     "graphql": "^0.12.3",
     "graphql-anywhere": "^4.1.0",
     "graphql-tag": "^2.6.1",
+    "helmet": "^3.10.0",
     "isomorphic-fetch": "^2.2.1",
     "next": "^5.0.0",
     "prop-types": "^15.6.0",

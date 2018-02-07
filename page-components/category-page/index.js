@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Layout from 'fragments/layout';
-import { H1 } from 'fragments/style';
-import Product from 'fragments/product';
+import Layout from 'components/layout';
+import { H1 } from 'components/style';
+import Product from 'components/product';
 import PropTypeProduct from 'lib/prop-types/product';
 import GraphData from './graph-data';
 
@@ -15,9 +15,9 @@ class CategoryPage extends React.PureComponent {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, url } = this.props;
     return (
-      <Layout {...this.props}>
+      <Layout {...this.props} title={url.asPath.replace('/', '')}>
         <Outer>
           <H1>Category page</H1>
           {!data ? (

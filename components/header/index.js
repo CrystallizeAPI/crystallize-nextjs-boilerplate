@@ -18,7 +18,7 @@ export default class Header extends React.PureComponent {
       <Outer>
         <Link href="/">
           <a>
-            <Logo src={tenant.logo_url} alt={tenant.company_name} />
+            {tenant && <Logo src={tenant.logo_url} alt={tenant.company_name} />}
           </a>
         </Link>
         <Nav>

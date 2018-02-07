@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { media } from 'fragments/style/vars';
+import { media } from 'components/style';
 
 export const Outer = styled.header`
   text-align: center;

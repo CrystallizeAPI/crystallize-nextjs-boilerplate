@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { media } from 'fragments/style/vars';
+import { media } from 'components/style';
 
 export const Outer = styled.div`
   margin-bottom: 30px;
