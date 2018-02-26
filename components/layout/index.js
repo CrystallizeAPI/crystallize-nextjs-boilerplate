@@ -20,6 +20,10 @@ class Layout extends React.PureComponent {
     let displayTitle = tenant ? tenant.company_name : '';
     if (title) {
       displayTitle = `${title} - ${displayTitle}`;
+    } else {
+      console.warn(
+        `Layout is missing title attribute. Remember to provide one!`
+      );
     }
 
     return (
