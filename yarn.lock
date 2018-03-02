@@ -63,6 +63,10 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@crystallize/react-image@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-image/-/react-image-1.1.1.tgz#d247fd4668f38799e3c632ab6cae70ec4bd2f5d2"
+
 "@types/async@2.0.45":
   version "2.0.45"
   resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.45.tgz#0cfe971d7ed5542695740338e0455c91078a0e83"

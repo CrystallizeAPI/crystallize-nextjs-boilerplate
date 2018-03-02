@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import CrystallizeImage from '@crystallize/react-image';
 
-import { colors, media } from 'components/style';
+import { colors, responsive } from 'components/style';
 
 export const Outer = styled.article`
   margin: 10px;
@@ -18,13 +19,13 @@ export const Figure = styled.figure`
   margin-bottom: 10px;
 `;
 
-export const Img = styled.img`
+export const Img = styled(CrystallizeImage)`
   display: block;
   height: 215px;
   object-fit: fill;
   margin: 0 auto;
 
-  ${media.xs} {
+  ${responsive.xs} {
     height: 120px;
   }
 `;
@@ -38,7 +39,7 @@ export const Footer = styled.footer`
   justify-content: space-between;
   align-items: center;
 
-  ${media.xs} {
+  ${responsive.xs} {
     margin: 0;
   }
 `;

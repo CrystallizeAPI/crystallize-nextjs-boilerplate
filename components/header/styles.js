@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { media } from 'components/style';
+import { responsive } from 'components/style';
 
 export const Outer = styled.header`
   text-align: center;
@@ -9,7 +9,7 @@ export const Outer = styled.header`
   justify-content: space-between;
   align-items: center;
 
-  ${media.xs} {
+  ${responsive.xs} {
     flex-direction: column;
   }
 `;

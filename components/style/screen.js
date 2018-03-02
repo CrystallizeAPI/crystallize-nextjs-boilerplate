@@ -26,20 +26,3 @@ export const screen = {
     return this.lg;
   }
 };
-
-// Ready made media queries
-export const media = {
-  xs: `@media (max-width: ${screen.xsMax}px)`,
-  sm: `@media (min-width: ${screen.smMin}px) and (max-width: ${
-    screen.smMax
-  }px)`,
-  md: `@media (min-width: ${screen.mdMin}px) and (max-width: ${
-    screen.mdMax
-  }px)`,
-  lg: `@media (min-width: ${screen.lgMin}px)`
-};
-
-// Colors
-export const colors = {
-  price: '#f47f98'
-};

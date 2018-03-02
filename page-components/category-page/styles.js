@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { media } from 'components/style';
+import { responsive } from 'components/style';
 
 export const Outer = styled.div`
   margin-bottom: 30px;
@@ -16,15 +16,15 @@ export const ProductList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
-  ${media.sm} {
+  ${responsive.sm} {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  ${media.md} {
+  ${responsive.md} {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  ${media.lg} {
+  ${responsive.lg} {
     grid-template-columns: repeat(6, 1fr);
   }
 `;

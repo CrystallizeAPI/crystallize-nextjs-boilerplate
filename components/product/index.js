@@ -14,14 +14,19 @@ export default class Product extends React.PureComponent {
       name,
       // link,
       price,
-      // product_image,
+      product_image,
       product_image_resized
     } = this.props.data;
+
     return (
       <Outer>
         <Inner>
           <Figure>
-            <Img src={product_image_resized} />
+            <Img
+              product_image={product_image}
+              product_image_resized={product_image_resized}
+              alt={name}
+            />
           </Figure>
           <Footer>
             <span>{name}</span>

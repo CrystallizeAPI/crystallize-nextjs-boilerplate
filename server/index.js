@@ -6,9 +6,7 @@ const { parse } = require('url');
 const { PageMatchForRequest } = require('./routes');
 const config = require('./config');
 
-const port = parseInt(config.PORT, 10);
-const dev = config.NODE_ENV !== 'production';
-const app = next({ dev });
+const app = next({ dev: config.DEV });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
@@ -26,8 +24,8 @@ app.prepare().then(() => {
     }
   });
 
-  server.listen(port, err => {
+  server.listen(config.PORT, err => {
     if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`); // eslint-disable-line
+    console.log(`> Ready on http://localhost:${config.PORT}`); // eslint-disable-line
   });
 });

@@ -10,7 +10,7 @@ const tenant = {
 };
 
 describe('With Enzyme', () => {
-  it(`First header links to root`, () => {
+  it(`First header link links to root`, () => {
     const header = shallow(<Header tenant={tenant} />);
 
     expect(

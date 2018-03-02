@@ -21,9 +21,11 @@ class Layout extends React.PureComponent {
     if (title) {
       displayTitle = `${title} - ${displayTitle}`;
     } else {
+      /* eslint-disable */
       console.warn(
         `Layout is missing title attribute. Remember to provide one!`
       );
+      /* eslint-enable */
     }
 
     return (

@@ -6,11 +6,14 @@ const {
   GTM_ID
 } = process.env;
 
+const DEV = NODE_ENV !== 'production';
+
 global.__crystallizeConfig = {
   NODE_ENV,
-  PORT,
+  PORT: parseInt(PORT, 10),
   TENANT_ID,
-  GTM_ID
+  GTM_ID,
+  DEV
 };
 
 module.exports = global.__crystallizeConfig;
