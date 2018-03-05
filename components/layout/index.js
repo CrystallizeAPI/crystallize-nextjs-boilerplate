@@ -8,12 +8,41 @@ import Header from '../header';
 import GraphData from './graph-data';
 import { Outer, Main } from './styles';
 
+const registerServiceWorker = (() => {
+  let registered = false;
+
+  return () => {
+    if (!registered) {
+      /* eslint-disable */
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        registered = true;
+        navigator.serviceWorker
+          .register('/service-worker.js')
+          .then(registration => {
+            console.info(
+              'Service worker registration successful',
+              registration
+            );
+          })
+          .catch(err => {
+            console.warn('Service worker registration failed', err.message);
+          });
+      }
+      /* eslint-enable */
+    }
+  };
+})();
+
 class Layout extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node,
     tenant: PropTypeTenant,
     categories: PropTypes.arrayOf(PropTypeCategory)
   };
+
+  componentDidMount() {
+    registerServiceWorker();
+  }
 
   render() {
     const { children, categories, tenant, title, description } = this.props;

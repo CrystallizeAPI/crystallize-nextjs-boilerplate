@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const next = require('next');
 const { parse } = require('url');
+const { join } = require('path');
 
 const { PageMatchForRequest } = require('./routes');
 const config = require('./config');
@@ -19,6 +20,19 @@ app.prepare().then(() => {
     const pageMatch = await PageMatchForRequest(parsedUrl);
     if (pageMatch) {
       app.render(req, res, pageMatch, parsedUrl.query);
+    } else {
+      handle(req, res, parsedUrl);
+    }
+  });
+
+  server.get('*', async (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    const pageMatch = await PageMatchForRequest(parsedUrl);
+    if (pageMatch) {
+      app.render(req, res, pageMatch, parsedUrl.query);
+    } else if (parsedUrl.pathname === '/service-worker.js') {
+      const filePath = join(__dirname, '..', '.next', parsedUrl.pathname);
+      app.serveStatic(req, res, filePath);
     } else {
       handle(req, res, parsedUrl);
     }
