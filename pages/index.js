@@ -1,9 +1,9 @@
-import { connect } from 'react-redux';
+/**
+ * We have to keep a index.js file in here since
+ * Next does not map /index/index.js to root atm.
+ */
+
 import withData from 'lib/with-data';
-import FrontPage from 'page-components/front-page';
+import FrontPage from './front-page';
 
-const mapStateToProps = state => ({
-  frontpageHeading: state.app.frontpageHeading
-});
-
-export default withData(connect(mapStateToProps)(FrontPage));
+export default withData(FrontPage);

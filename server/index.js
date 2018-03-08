@@ -4,7 +4,7 @@ const next = require('next');
 const { parse } = require('url');
 const { join } = require('path');
 
-const { PageMatchForRequest } = require('./routes');
+const { PageMatchForRequest } = require('../lib/routes');
 const config = require('./config');
 
 const app = next({ dev: config.DEV });
@@ -14,16 +14,6 @@ app.prepare().then(() => {
   const server = express();
 
   server.use(helmet());
-
-  server.get('*', async (req, res) => {
-    const parsedUrl = parse(req.url, true);
-    const pageMatch = await PageMatchForRequest(parsedUrl);
-    if (pageMatch) {
-      app.render(req, res, pageMatch, parsedUrl.query);
-    } else {
-      handle(req, res, parsedUrl);
-    }
-  });
 
   server.get('*', async (req, res) => {
     const parsedUrl = parse(req.url, true);

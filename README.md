@@ -29,7 +29,7 @@ Put all your single components here. Most of your app will live here
 
 ## ./server
 
-This is where the ultra-light frontend server lives. Its only function is to render the React app in response to a request
+This is where the ultra-light frontend server lives. Its primary function is to render the React app in response to a request
 
 ## ./lib
 
