@@ -6,6 +6,10 @@
   "engines": {
     "node": ">=9"
   },
+  "repository": {
+    "url": "git@github.com:snowballdigital/crystallize-frontend-template.git",
+    "type": "git"
+  },
   "scripts": {
     "precommit": "npm run validate",
     "dev": "node server/index.js",
@@ -13,7 +17,8 @@
     "start": "NODE_ENV=production node server/index.js",
     "test": "NODE_ENV=test jest",
     "lint": "eslint .",
-    "validate": "npm-run-all test lint"
+    "validate": "npm-run-all test lint",
+    "release": "npm-github-release"
   },
   "browserslist": [
     "> 1%",
@@ -157,6 +162,7 @@
     "eslint-plugin-react": "^7.5.1",
     "husky": "^0.14.3",
     "jest": "^22.0.4",
+    "npm-github-release": "^0.9.0",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.9.2",
     "react-addons-test-utils": "^15.6.2"
