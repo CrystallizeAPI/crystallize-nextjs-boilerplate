@@ -89,6 +89,7 @@
       "__crystallizeConfig": true
     },
     "rules": {
+      "camelcase": 0,
       "prettier/prettier": "error",
       "no-use-before-define": [
         "error",

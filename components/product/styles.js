@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CrystallizeImage from '@crystallize/react-image';
+// import CrystallizeImage from '@crystallize/react-image';
 
 import { colors, responsive } from 'components/style';
 
@@ -19,7 +19,8 @@ export const Figure = styled.figure`
   margin-bottom: 10px;
 `;
 
-export const Img = styled(CrystallizeImage)`
+// export const Img = styled(CrystallizeImage)`
+export const Img = styled.img`
   display: block;
   height: 215px;
   object-fit: fill;
