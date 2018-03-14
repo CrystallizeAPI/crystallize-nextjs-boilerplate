@@ -7,7 +7,7 @@
     "node": ">=9"
   },
   "scripts": {
-    "precommit": "yarn validate",
+    "precommit": "npm run validate",
     "dev": "node server/index.js",
     "build": "next build",
     "start": "NODE_ENV=production node server/index.js",
