@@ -130,6 +130,7 @@
     "apollo-client-preset": "^1.0.5",
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-styled-components": "^1.4.0",
+    "dotenv": "^5.0.1",
     "es6-promise": "^4.2.2",
     "express": "^4.16.2",
     "graphql": "^0.12.3",
