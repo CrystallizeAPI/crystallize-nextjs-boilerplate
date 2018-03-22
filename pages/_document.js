@@ -40,7 +40,10 @@ export default class MyDocument extends Document {
           )}
           <script
             dangerouslySetInnerHTML={{
-              __html: `__crystallizeConfig={"TENANT_ID": "${config.TENANT_ID}"}`
+              __html: `__crystallizeConfig={
+                "TENANT_ID": "${config.TENANT_ID}",
+                "API_URL": "${config.API_URL}"
+              }`
             }}
           />
           <style>{resetStyle}</style>

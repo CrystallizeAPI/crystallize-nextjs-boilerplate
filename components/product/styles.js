@@ -37,8 +37,24 @@ export const Footer = styled.footer`
   margin: 0 50px;
   border-top: 1px solid rgba(222, 222, 222, 0.4);
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
+
+  > div {
+    flex: 1;
+
+    &:first-child {
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &:last-child {
+      text-align: center;
+    }
+  }
 
   ${responsive.xs} {
     margin: 0;

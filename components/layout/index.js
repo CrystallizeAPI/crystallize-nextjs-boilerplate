@@ -1,37 +1,16 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import CrystallizeLayout from '@crystallize/react-layout';
+import { BasketProvider, TinyBasket } from '@crystallize/react-basket';
 
 import PropTypeCategory from 'lib/prop-types/category';
 import PropTypeTenant from 'lib/prop-types/tenant';
+
 import Header from '../header';
 import GraphData from './graph-data';
-import { Outer, Main } from './styles';
-
-const registerServiceWorker = (() => {
-  let registered = false;
-
-  return () => {
-    if (!registered) {
-      /* eslint-disable */
-      if ('serviceWorker' in navigator && location.protocol === 'https:') {
-        registered = true;
-        navigator.serviceWorker
-          .register('/service-worker.js')
-          .then(registration => {
-            console.info(
-              'Service worker registration successful',
-              registration
-            );
-          })
-          .catch(err => {
-            console.warn('Service worker registration failed', err.message);
-          });
-      }
-      /* eslint-enable */
-    }
-  };
-})();
+import registerServiceWorker from './register-sw';
+import { Main } from './styles';
 
 class Layout extends React.PureComponent {
   static propTypes = {
@@ -65,10 +44,12 @@ class Layout extends React.PureComponent {
             <meta key="description" name="description" content={description} />
           )}
         </Head>
-        <Outer>
-          <Header categories={categories} tenant={tenant} />
-          <Main>{children}</Main>
-        </Outer>
+        <BasketProvider>
+          <CrystallizeLayout right={TinyBasket}>
+            <Header categories={categories} tenant={tenant} />
+            <Main>{children}</Main>
+          </CrystallizeLayout>
+        </BasketProvider>
       </Fragment>
     );
   }

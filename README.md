@@ -10,9 +10,11 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 
 [![code linter: Eslint](https://img.shields.io/badge/code_linter-eslint-463fd4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-# Develop locally
+# Getting started
 
+* Clone the repo or download from [https://github.com/snowballdigital/crystallize-frontend-template/releases](release page)
 * Run `yarn` to install dependencies
+* Create a .env file with the contents from .env.example
 * Run `yarn dev` to start up
 * * The site should be ready at [http://localhost:3000](http://localhost:3000)
 * (Optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor

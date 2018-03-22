@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import PropTypeCategory from 'lib/prop-types/category';
 import PropTypeTenant from 'lib/prop-types/tenant';
+
+import BasketButton from './basket-button';
 import { Outer, Nav, Logo } from './styles';
 
 export default class Header extends React.PureComponent {
@@ -37,6 +39,7 @@ export default class Header extends React.PureComponent {
             <a>User profile</a>
           </Link>
         </Nav>
+        <BasketButton />
       </Outer>
     );
   }
