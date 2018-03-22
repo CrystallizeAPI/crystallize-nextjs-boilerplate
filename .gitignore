@@ -62,3 +62,6 @@ typings/
 
 # OSX Finder folder settings
 .DS_STORE
+
+# Release-it settings
+.release-it.json

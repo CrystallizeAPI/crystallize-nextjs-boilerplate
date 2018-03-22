@@ -6,6 +6,7 @@ const next = require('next');
 const { parse } = require('url');
 const { join } = require('path');
 
+const api = require('./api');
 const { PageMatchForRequest } = require('../lib/routes');
 const config = require('./config');
 
@@ -16,6 +17,8 @@ app.prepare().then(() => {
   const server = express();
 
   server.use(helmet());
+
+  server.use('/api', api);
 
   server.get('*', async (req, res) => {
     const parsedUrl = parse(req.url, true);

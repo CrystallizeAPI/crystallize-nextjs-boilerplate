@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { BasketConsumer } from '@crystallize/react-basket';
 
 import Layout from 'components/layout';
 import { H1 } from 'components/style';
@@ -25,7 +26,17 @@ class CategoryPage extends React.PureComponent {
             <Loader>Loading...</Loader>
           ) : (
             <ProductList>
-              {data.products.map(p => <Product key={p.id} data={p} />)}
+              <BasketConsumer>
+                {({ actions }) =>
+                  data.products.map(p => (
+                    <Product
+                      key={p.id}
+                      data={p}
+                      addToBasket={actions.addItem}
+                    />
+                  ))
+                }
+              </BasketConsumer>
             </ProductList>
           )}
         </Outer>
