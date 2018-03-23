@@ -15,9 +15,11 @@
     "dev": "node server/index.js",
     "build": "next build",
     "start": "NODE_ENV=production node server/index.js",
+    "prod": "npm run build && npm run start",
     "test": "NODE_ENV=test jest",
     "lint": "eslint .",
-    "validate": "npm-run-all test lint"
+    "validate": "npm-run-all test lint",
+    "postinstall": "node postinstall"
   },
   "browserslist": [
     "> 1%",

@@ -65,3 +65,6 @@ typings/
 
 # Release-it settings
 .release-it.json
+
+# Crystallize npm install helper
+.crystallize-npm-init
