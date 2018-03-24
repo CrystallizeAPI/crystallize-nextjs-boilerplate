@@ -19,7 +19,7 @@
     "test": "NODE_ENV=test jest",
     "lint": "eslint .",
     "validate": "npm-run-all test lint",
-    "postinstall": "node postinstall"
+    "postinstall": "node .crystallize-greeting/"
   },
   "browserslist": [
     "> 1%",
@@ -126,7 +126,9 @@
       "react/prefer-stateless-function": "ignorePureComponents"
     }
   },
-  "eslintIgnore": ["postinstall"],
+  "eslintIgnore": [
+    ".crystallize-greeting"
+  ],
   "dependencies": {
     "@crystallize/express-basket": "^0.0.3",
     "@crystallize/react-basket": "^1.0.2",
@@ -157,6 +159,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.1.2",
+    "chalk": "^2.3.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.14.0",
@@ -173,6 +176,7 @@
     "node-emoji": "^1.8.1",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.9.2",
-    "react-addons-test-utils": "^15.6.2"
+    "react-addons-test-utils": "^15.6.2",
+    "supports-color": "^5.3.0"
   }
 }
