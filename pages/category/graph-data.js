@@ -11,6 +11,7 @@ export const query = gql`
       }
       products {
         id
+        sku
         name
         product_image
         product_image_resized

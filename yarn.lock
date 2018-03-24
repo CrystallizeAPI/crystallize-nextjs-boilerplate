@@ -70,9 +70,9 @@
     bounce "^1.2.0"
     express "^4.16.3"
 
-"@crystallize/react-basket@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@crystallize/react-basket/-/react-basket-1.0.2.tgz#69e7eab937c12cc2b08a2c95700a55fdea74c8cc"
+"@crystallize/react-basket@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-basket/-/react-basket-1.3.2.tgz#25b40757b9ed397db813c6f7f84fe4d744e6a6eb"
   dependencies:
     "@crystallize/react-image" "^1.2.2"
     localforage "^1.6.0"

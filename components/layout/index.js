@@ -44,7 +44,7 @@ class Layout extends React.PureComponent {
             <meta key="description" name="description" content={description} />
           )}
         </Head>
-        <BasketProvider>
+        <BasketProvider shippingCost="199">
           <CrystallizeLayout right={TinyBasket}>
             <Header categories={categories} tenant={tenant} />
             <Main>{children}</Main>
