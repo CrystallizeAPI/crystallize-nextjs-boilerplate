@@ -89,9 +89,9 @@
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@crystallize/react-image/-/react-image-1.2.2.tgz#de4ba80016bccb3ba260874bdd0624ed9bc24987"
 
-"@crystallize/react-layout@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@crystallize/react-layout/-/react-layout-1.3.1.tgz#22e3bc6b670318fa7cb956f6c8dc274601776abd"
+"@crystallize/react-layout@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-layout/-/react-layout-1.4.0.tgz#85922d55e71ad044d66b351b88c95acfdef3ea45"
   dependencies:
     styled-components "^3.2.3"
     tiny-emitter "^2.0.2"
