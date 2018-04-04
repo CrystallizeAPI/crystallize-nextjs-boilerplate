@@ -44,13 +44,13 @@ async function envFileExists() {
               value: 'demo',
               name: 'The demo shop - prefilled with lots of data'
             },
-            'My own tenant'
+            'My very own tenant please'
           ]
         }
       ]);
 
       const envFileVars = [
-        'CRYSTALLIZE_API_URL=http://api.crystallize.digital',
+        'CRYSTALLIZE_API_URL=https://api.crystallize.digital',
         'PORT=3000'
       ];
 

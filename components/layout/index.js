@@ -47,6 +47,7 @@ class Layout extends React.PureComponent {
         <BasketProvider
           shippingCost="199"
           freeShippingMinimumPurchaseAmount="800"
+          validateEndpoint="/api/basket/validate"
         >
           <CrystallizeLayout right={TinyBasket} blurContentOnShow>
             <Header categories={categories} tenant={tenant} />
