@@ -20,6 +20,10 @@ async function envFileExists() {
 
 (async function init() {
   try {
+    if (process.env.NODE_ENV === 'production') {
+      return;
+    }
+
     const exists = await envFileExists();
     if (!exists) {
       if (supportsColor.stdout) {
