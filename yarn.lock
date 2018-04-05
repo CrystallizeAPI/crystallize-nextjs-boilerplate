@@ -93,12 +93,12 @@
     express "^4.16.3"
     node-fetch "^2.1.2"
 
-"@crystallize/react-basket@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@crystallize/react-basket/-/react-basket-1.4.2.tgz#6ec737ed4db613ec980bff2ac9dfa8074a71994b"
+"@crystallize/react-basket@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-basket/-/react-basket-1.5.1.tgz#cfbb8555b0357f17dfe1df21a62b052a8f2d7f15"
   dependencies:
+    "@crystallize/express-basket" "^0.0.5"
     "@crystallize/react-image" "^1.2.2"
-    body-parser "^1.18.2"
     localforage "^1.6.0"
     prop-types "^15.6.0"
     react "^16.3.0"

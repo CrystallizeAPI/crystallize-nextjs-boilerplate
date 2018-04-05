@@ -48,7 +48,7 @@ class Layout extends React.PureComponent {
               'Yo! Put another {remainingUntilFreeShippingApplies},- and the shipping is free!'
           }}
         >
-          <CrystallizeLayout right={TinyBasket} blurContentOnShow>
+          <CrystallizeLayout right={TinyBasket}>
             <Header categories={categories} tenant={tenant} />
             <Main>{children}</Main>
           </CrystallizeLayout>

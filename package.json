@@ -130,8 +130,7 @@
     ".crystallize-greeting"
   ],
   "dependencies": {
-    "@crystallize/express-basket": "^0.0.5",
-    "@crystallize/react-basket": "^1.4.2",
+    "@crystallize/react-basket": "^1.5.1",
     "@crystallize/react-image": "^1.1.1",
     "@crystallize/react-layout": "^1.4.0",
     "apollo-client": "^2.2.8",

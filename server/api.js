@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const basketApi = require('@crystallize/express-basket');
+const basketApi = require('@crystallize/react-basket/server');
 
 const router = new Router();
 
