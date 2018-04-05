@@ -134,7 +134,9 @@
     "@crystallize/react-basket": "^1.4.2",
     "@crystallize/react-image": "^1.1.1",
     "@crystallize/react-layout": "^1.4.0",
+    "apollo-client": "^2.2.8",
     "apollo-client-preset": "^1.0.5",
+    "babel-core": "^6.26.0",
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-styled-components": "^1.4.0",
     "body-parser": "^1.18.2",
@@ -151,7 +153,7 @@
     "polished": "^1.9.2",
     "prop-types": "^15.6.0",
     "react": "^16.3.0",
-    "react-apollo": "^2.0.4",
+    "react-apollo": "^2.1.2",
     "react-dom": "^16.3.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
@@ -177,7 +179,6 @@
     "node-emoji": "^1.8.1",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.9.2",
-    "react-addons-test-utils": "^15.6.2",
     "supports-color": "^5.3.0"
   }
 }
