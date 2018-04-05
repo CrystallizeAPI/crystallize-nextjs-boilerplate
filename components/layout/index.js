@@ -9,7 +9,6 @@ import PropTypeTenant from 'lib/prop-types/tenant';
 
 import Header from '../header';
 import GraphData from './graph-data';
-import registerServiceWorker from './register-sw';
 import { Main } from './styles';
 
 class Layout extends React.PureComponent {
@@ -18,10 +17,6 @@ class Layout extends React.PureComponent {
     tenant: PropTypeTenant,
     categories: PropTypes.arrayOf(PropTypeCategory)
   };
-
-  componentDidMount() {
-    registerServiceWorker();
-  }
 
   render() {
     const { children, categories, tenant, title, description } = this.props;
@@ -48,6 +43,10 @@ class Layout extends React.PureComponent {
           shippingCost="199"
           freeShippingMinimumPurchaseAmount="800"
           validateEndpoint="/api/basket/validate"
+          translations={{
+            'basket.remainingUntilFreeShippingApplies':
+              'Yo! Put another {remainingUntilFreeShippingApplies},- and the shipping is free!'
+          }}
         >
           <CrystallizeLayout right={TinyBasket} blurContentOnShow>
             <Header categories={categories} tenant={tenant} />

@@ -16,6 +16,7 @@ export const query = gql`
         product_image
         product_image_resized
         price
+        price_from
         link
       }
       breadcrumbs {
@@ -33,7 +34,13 @@ export default graphql(query, {
       id: __crystallizeConfig.TENANT_ID
     }
   }),
-  props: ({ data }) => ({
-    data: data.category
-  })
+  props: ({ data }) => {
+    if (!data || data.loading) {
+      return data;
+    }
+
+    return {
+      data: data.category
+    };
+  }
 });

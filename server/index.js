@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const helmet = require('helmet');
+const bodyParser = require('body-parser');
 const next = require('next');
 const { parse } = require('url');
 const { join } = require('path');
@@ -18,7 +19,7 @@ app.prepare().then(() => {
 
   server.use(helmet());
 
-  server.use('/api', api);
+  server.use('/api', bodyParser.json(), api);
 
   server.get('*', async (req, res) => {
     const parsedUrl = parse(req.url, true);

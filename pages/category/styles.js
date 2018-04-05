@@ -12,7 +12,7 @@ export const Loader = styled.div`
   font-size: 2rem;
 `;
 
-export const ProductList = styled.div`
+export const List = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 

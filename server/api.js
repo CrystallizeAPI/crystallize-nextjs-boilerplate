@@ -1,8 +1,7 @@
 const { Router } = require('express');
+const basketApi = require('@crystallize/express-basket');
 
 const router = new Router();
-
-const basketApi = require('@crystallize/express-basket');
 
 router.use('/basket', basketApi);
 

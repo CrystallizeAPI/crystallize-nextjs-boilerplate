@@ -1,20 +1,15 @@
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const withOffline = require('next-offline');
 
-module.exports = {
-  webpack: config => {
-    config.plugins.push(
-      new SWPrecacheWebpackPlugin({
-        verbose: true,
-        staticFileGlobsIgnorePatterns: [/\.next\//],
-        runtimeCaching: [
-          {
-            handler: 'networkFirst',
-            urlPattern: /^https?.*/
-          }
-        ]
-      })
-    );
-
+module.exports = withOffline({
+  workboxOpts: {
+    runtimeCaching: [
+      {
+        urlPattern: /api/,
+        handler: 'networkFirst'
+      }
+    ]
+  },
+  webpack(config) {
     return config;
   }
-};
+});

@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 import { colors, responsive } from 'components/style';
 
-export const Outer = styled.article`
+export const Outer = styled.a`
   margin: 10px;
   display: flex;
   justify-content: center;
 `;
 
-export const Inner = styled.a`
+export const Inner = styled.span`
   text-decoration: none;
   display: flex;
   flex-direction: column;

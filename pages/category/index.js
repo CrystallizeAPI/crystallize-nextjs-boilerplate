@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BasketConsumer } from '@crystallize/react-basket';
 
 import Layout from 'components/layout';
 import { H1 } from 'components/style';
-import Product from 'components/product';
+import CategoryItem from 'components/category-item';
 import withData from 'lib/with-data';
 import PropTypeProduct from 'lib/prop-types/product';
 import GraphData from './graph-data';
 
-import { Outer, Loader, ProductList } from './styles';
+import { Outer, Loader, List } from './styles';
 
 class CategoryPage extends React.PureComponent {
   static propTypes = {
@@ -25,19 +24,9 @@ class CategoryPage extends React.PureComponent {
           {!data ? (
             <Loader>Loading...</Loader>
           ) : (
-            <ProductList>
-              <BasketConsumer>
-                {({ actions }) =>
-                  data.products.map(p => (
-                    <Product
-                      key={p.id}
-                      data={p}
-                      addToBasket={actions.addItem}
-                    />
-                  ))
-                }
-              </BasketConsumer>
-            </ProductList>
+            <List>
+              {data.products.map(p => <CategoryItem key={p.id} data={p} />)}
+            </List>
           )}
         </Outer>
       </Layout>
