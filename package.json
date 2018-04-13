@@ -131,7 +131,7 @@
   ],
   "dependencies": {
     "@crystallize/react-basket": "^1.10.1",
-    "@crystallize/react-checkout": "^0.0.4",
+    "@crystallize/react-checkout": "^0.1.0",
     "@crystallize/react-image": "^1.1.1",
     "@crystallize/react-layout": "^1.4.4",
     "apollo-client": "^2.2.8",
