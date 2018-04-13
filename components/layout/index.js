@@ -2,10 +2,11 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import CrystallizeLayout from '@crystallize/react-layout';
-import { BasketProvider, TinyBasket } from '@crystallize/react-basket';
+import { BasketProvider } from '@crystallize/react-basket';
 
 import PropTypeCategory from 'lib/prop-types/category';
 import PropTypeTenant from 'lib/prop-types/tenant';
+import Aside from 'cmp/aside';
 
 import Header from '../header';
 import GraphData from './graph-data';
@@ -19,7 +20,15 @@ class Layout extends React.PureComponent {
   };
 
   render() {
-    const { children, categories, tenant, title, description } = this.props;
+    const {
+      children,
+      categories,
+      tenant,
+      title,
+      description,
+      simpleHeader
+    } = this.props;
+
     let displayTitle = tenant ? tenant.company_name : '';
     if (title) {
       displayTitle = `${title} - ${displayTitle}`;
@@ -48,8 +57,12 @@ class Layout extends React.PureComponent {
               'Yo! Put another {remainingUntilFreeShippingApplies},- and the shipping is free!'
           }}
         >
-          <CrystallizeLayout right={TinyBasket}>
-            <Header categories={categories} tenant={tenant} />
+          <CrystallizeLayout right={Aside}>
+            <Header
+              categories={categories}
+              tenant={tenant}
+              simple={simpleHeader}
+            />
             <Main>{children}</Main>
           </CrystallizeLayout>
         </BasketProvider>

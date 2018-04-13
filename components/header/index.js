@@ -15,9 +15,18 @@ export default class Header extends React.PureComponent {
   };
 
   render() {
-    const { categories, tenant } = this.props;
+    const { categories, tenant, simple } = this.props;
+
+    if (simple) {
+      return (
+        <Outer simple={simple}>
+          {tenant && <Logo src={tenant.logo_url} alt={tenant.company_name} />}
+        </Outer>
+      );
+    }
+
     return (
-      <Outer>
+      <Outer simple={simple}>
         <Link href="/">
           <a>
             {tenant && <Logo src={tenant.logo_url} alt={tenant.company_name} />}

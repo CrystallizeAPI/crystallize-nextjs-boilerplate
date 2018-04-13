@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const next = require('next');
 const { parse } = require('url');
 const { join } = require('path');
+const checkout = require('@crystallize/react-checkout/server');
 
 const api = require('./api');
 const { PageMatchForRequest } = require('../lib/routes');
@@ -18,6 +19,15 @@ app.prepare().then(() => {
   const server = express();
 
   server.use(helmet());
+
+  server.use(
+    '/checkout',
+    checkout.klarnaController.createCheckoutRoutes({
+      checkoutHandle: (req, res) => {
+        app.render(req, res, '/checkout');
+      }
+    })
+  );
 
   server.use('/api', bodyParser.json(), api);
 
