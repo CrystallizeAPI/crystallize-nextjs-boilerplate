@@ -130,10 +130,10 @@
     ".crystallize-greeting"
   ],
   "dependencies": {
-    "@crystallize/react-basket": "^1.10.1",
-    "@crystallize/react-checkout": "^0.1.0",
+    "@crystallize/react-basket": "^1.11.0",
+    "@crystallize/react-checkout": "^1.0.0",
     "@crystallize/react-image": "^1.1.1",
-    "@crystallize/react-layout": "^1.4.4",
+    "@crystallize/react-layout": "^1.5.0",
     "apollo-client": "^2.2.8",
     "apollo-client-preset": "^1.0.5",
     "babel-core": "^6.26.0",

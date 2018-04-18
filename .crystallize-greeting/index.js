@@ -55,7 +55,8 @@ async function envFileExists() {
 
       const envFileVars = [
         'CRYSTALLIZE_API_URL=https://api.crystallize.digital',
-        'PORT=3000'
+        'PORT=3000',
+        'KLARNA_MODE=test'
       ];
 
       if (shopToUse !== 'demo') {

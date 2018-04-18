@@ -75,9 +75,14 @@ class ProductPage extends React.PureComponent {
                     {({ actions }) => (
                       <Button
                         type="button"
-                        onClick={() => {
+                        onClick={async () => {
                           actions.addItem(basketItemToAdd);
-                          showRight();
+                          try {
+                            await showRight();
+                            actions.animateItem(basketItemToAdd);
+                          } catch (error) {
+                            console.log(error); // eslint-disable-line
+                          }
                         }}
                       >
                         Add to basket
