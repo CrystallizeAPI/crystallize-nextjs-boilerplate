@@ -12,7 +12,7 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 
 # Getting started
 
-* Clone the repo or download from [https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases](release page)
+* Clone the repo or download from [the releases page](https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases)
 * Run `yarn` to install dependencies
 * Create a .env file with the contents from .env.example
 * Run `yarn dev` to start up
