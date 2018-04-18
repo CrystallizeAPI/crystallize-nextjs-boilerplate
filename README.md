@@ -1,4 +1,4 @@
-# Crystallize frontend template
+# Crystallize frontend boilerplate
 
 The bare minimum skeleton you need to get a frontend up and running on Crystallize. React SSR with Next.js
 
@@ -12,7 +12,7 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 
 # Getting started
 
-* Clone the repo or download from [https://github.com/snowballdigital/crystallize-frontend-template/releases](release page)
+* Clone the repo or download from [https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases](release page)
 * Run `yarn` to install dependencies
 * Create a .env file with the contents from .env.example
 * Run `yarn dev` to start up

@@ -1,5 +1,5 @@
 {
-  "name": "crystallize-frontend-template",
+  "name": "crystallize-frontend-boilerplate",
   "version": "1.4.0",
   "private": true,
   "license": "ISC",
@@ -7,7 +7,7 @@
     "node": ">=9"
   },
   "repository": {
-    "url": "git@github.com:snowballdigital/crystallize-frontend-template.git",
+    "url": "git@github.com:snowballdigital/crystallize-frontend-boilerplate.git",
     "type": "git"
   },
   "scripts": {
