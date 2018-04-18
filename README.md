@@ -14,7 +14,6 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 
 * Clone the repo or download from [the releases page](https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases)
 * Run `yarn` to install dependencies
-* Create a .env file with the contents from .env.example
 * Run `yarn dev` to start up
 * * The site should be ready at [http://localhost:3000](http://localhost:3000)
 * (Optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
