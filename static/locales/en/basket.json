@@ -8,8 +8,6 @@
   "registerCoupon": "Register coupon",
   "cancel": "Cancel",
   "thisCouponIsNotValid": "This coupon is not valid",
-  "anErrorOccurred": "An error occurred. Please try again.",
-  "basketIsEmpty": "You have no items in your basket",
   "totalPrice": "Total price",
   "discount": "Discount",
   "totalAfterDiscount": "Total after discount",
