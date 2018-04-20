@@ -37,7 +37,7 @@ class UserPage extends React.PureComponent {
     const { user } = this.props;
 
     return (
-      <Layout {...this.props}>
+      <Layout {...this.props} title="User page">
         <H1>User page</H1>
         <UserProps>
           <li>

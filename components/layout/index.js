@@ -14,7 +14,7 @@ import Header from '../header';
 import GraphData from './graph-data';
 import { Main } from './styles';
 
-class Layout extends React.PureComponent {
+class Layout extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     tenant: PropTypeTenant,

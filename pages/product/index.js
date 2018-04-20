@@ -32,8 +32,6 @@ class ProductPage extends React.PureComponent {
 
   state = {};
 
-  addToBasket = () => {};
-
   render() {
     const { data } = this.props;
     const { basketItemToAdd } = this.state;

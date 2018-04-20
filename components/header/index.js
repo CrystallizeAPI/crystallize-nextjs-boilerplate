@@ -8,7 +8,7 @@ import PropTypeTenant from 'lib/prop-types/tenant';
 import BasketButton from './basket-button';
 import { Outer, Nav, Logo } from './styles';
 
-export default class Header extends React.PureComponent {
+export default class Header extends React.Component {
   static propTypes = {
     tenant: PropTypeTenant,
     categories: PropTypes.arrayOf(PropTypeCategory)
@@ -32,6 +32,7 @@ export default class Header extends React.PureComponent {
             {tenant && <Logo src={tenant.logo_url} alt={tenant.company_name} />}
           </a>
         </Link>
+
         <Nav>
           {categories &&
             categories.map(category => (

@@ -1,4 +1,4 @@
-/* eslint react/no-multi-comp: 0 */
+/* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
 import { BasketConsumer } from '@crystallize/react-basket';
 
@@ -23,7 +23,7 @@ class Inner extends React.Component {
 
   render() {
     const { order } = this.props;
-    console.log(order);
+
     return (
       <div>
         <h1>Thank you for the purchase!</h1>

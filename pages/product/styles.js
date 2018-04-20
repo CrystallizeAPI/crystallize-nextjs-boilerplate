@@ -15,11 +15,15 @@ export const Loader = styled.div`
 
 export const Sections = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Media = styled.div`
   flex: 0 0 auto;
   width: 200px;
+  margin-bottom: 30px;
 
   ${responsive.md} {
     width: 400px;
@@ -32,4 +36,5 @@ export const Info = styled.div`
 
 export const Price = styled.div`
   margin-bottom: 15px;
+  text-align: center;
 `;

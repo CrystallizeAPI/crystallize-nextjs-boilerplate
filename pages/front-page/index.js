@@ -16,4 +16,7 @@ const mapStateToProps = state => ({
   frontpageHeading: state.app.frontpageHeading
 });
 
+// Declare the required localization namespaces
+FrontPage.l18namespaces = ['basket'];
+
 export default connect(mapStateToProps)(FrontPage);

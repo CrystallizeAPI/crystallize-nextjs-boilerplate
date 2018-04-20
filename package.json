@@ -130,8 +130,8 @@
     ".crystallize-greeting"
   ],
   "dependencies": {
-    "@crystallize/react-basket": "^1.11.0",
-    "@crystallize/react-checkout": "^1.0.0",
+    "@crystallize/react-basket": "^1.12.0",
+    "@crystallize/react-checkout": "^1.1.0",
     "@crystallize/react-image": "^1.1.1",
     "@crystallize/react-layout": "^1.5.0",
     "apollo-client": "^2.2.8",
@@ -148,17 +148,19 @@
     "graphql-anywhere": "^4.1.0",
     "graphql-tag": "^2.6.1",
     "helmet": "^3.10.0",
+    "i18next": "^11.2.3",
     "isomorphic-fetch": "^2.2.1",
-    "next": "^5.0.0",
+    "next": "^5.1.0",
     "next-offline": "^2.4.0",
     "polished": "^1.9.2",
     "prop-types": "^15.6.0",
     "react": "^16.3.0",
     "react-apollo": "^2.1.2",
     "react-dom": "^16.3.0",
+    "react-i18next": "^7.6.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "styled-components": "^3.2.1",
+    "styled-components": "^3.2.6",
     "styled-is": "^1.1.2"
   },
   "devDependencies": {

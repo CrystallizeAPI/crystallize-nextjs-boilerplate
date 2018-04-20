@@ -10,7 +10,7 @@ export default class CategoryItem extends React.Component {
   };
 
   render() {
-    const { name, link, price_from, product_image_resized } = this.props.data;
+    const { name, link, price, product_image_resized } = this.props.data;
 
     return (
       <Link as={link} href="/product" passHref>
@@ -22,7 +22,7 @@ export default class CategoryItem extends React.Component {
             <Footer>
               <div>
                 <span>{name}</span>
-                <Price>{price_from},-</Price>
+                <Price>{price},-</Price>
               </div>
             </Footer>
           </Inner>

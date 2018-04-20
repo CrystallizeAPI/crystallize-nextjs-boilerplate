@@ -1,0 +1,23 @@
+{
+  "basket": "Basket",
+  "empty": "Your basket is empty",
+  "shortStatus": "Your basket: {{totalQuantity}} items, {{totalPrice}},-",
+  "clickToAddCoupon": "Click here to add a coupon",
+  "inputCoupon": "Input coupon below",
+  "inputCouponPlaceholder": "my-awesome-code",
+  "registerCoupon": "Register coupon",
+  "cancel": "Cancel",
+  "thisCouponIsNotValid": "This coupon is not valid",
+  "anErrorOccurred": "An error occurred. Please try again.",
+  "basketIsEmpty": "You have no items in your basket",
+  "totalPrice": "Total price",
+  "discount": "Discount",
+  "totalAfterDiscount": "Total after discount",
+  "shipping": "Shipping",
+  "amountToPay": "To pay",
+  "remainingUntilFreeShippingApplies":
+    "Shop for {{remainingUntilFreeShippingApplies}},- more for free shipping",
+  "couldNotVerifyCoupon": "Could not find the coupon \"{{coupon}}\"",
+  "fillOutCoupon": "Please input a coupon",
+  "removeItemFromBasket": "Remove {{name}} from basket"
+}

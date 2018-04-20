@@ -1,4 +1,4 @@
-/* eslint react/no-multi-comp: 0 */
+/* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
 import { BasketConsumer } from '@crystallize/react-basket';
 

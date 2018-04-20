@@ -84,12 +84,11 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@crystallize/react-basket@^1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@crystallize/react-basket/-/react-basket-1.11.0.tgz#7cddd391605c932f2d16660fa84d6f1c99e2b3b8"
+"@crystallize/react-basket@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-basket/-/react-basket-1.12.0.tgz#f16ce0116c0ac35c02188f98bacba9943f38e336"
   dependencies:
     "@crystallize/react-image" "^1.2.2"
-    "@crystallize/translations" "^0.0.1"
     body-parser "^1.18.2"
     bounce "^1.2.0"
     cross-fetch "^2.1.0"
@@ -98,11 +97,10 @@
     react "^16.3.0"
     react-dom "^16.3.0"
 
-"@crystallize/react-checkout@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@crystallize/react-checkout/-/react-checkout-1.0.0.tgz#a2514a0bdde89618fc1e65e2cceae0ead13e914d"
+"@crystallize/react-checkout@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-checkout/-/react-checkout-1.1.0.tgz#cb3345c1ea07ff47de830427b78f16f3013aa8f4"
   dependencies:
-    "@crystallize/translations" "^0.0.1"
     body-parser "^1.18.2"
     bounce "^1.2.0"
     cross-fetch "^2.1.0"
@@ -121,10 +119,6 @@
   resolved "https://registry.yarnpkg.com/@crystallize/react-layout/-/react-layout-1.5.0.tgz#3441eb7942aebf3d74f3a97f38e448ee2102a69d"
   dependencies:
     tiny-emitter "^2.0.2"
-
-"@crystallize/translations@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@crystallize/translations/-/translations-0.0.1.tgz#051424f255313fc8e4e7bd9d31c6d8332b56e66c"
 
 "@types/async@2.0.47":
   version "2.0.47"
@@ -3424,6 +3418,12 @@ html-entities@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
 
+html-parse-stringify2@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/html-parse-stringify2/-/html-parse-stringify2-2.0.1.tgz#dc5670b7292ca158b7bc916c9a6735ac8872834a"
+  dependencies:
+    void-elements "^2.0.1"
+
 htmlescape@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/htmlescape/-/htmlescape-1.1.1.tgz#3a03edc2214bca3b66424a3e7959349509cb0351"
@@ -3488,6 +3488,10 @@ husky@^0.14.3:
     is-ci "^1.0.10"
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
+
+i18next@^11.2.3:
+  version "11.2.3"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-11.2.3.tgz#cc29400460ede53ecc0a3a399e3497e82a1d830e"
 
 iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@~0.4.13:
   version "0.4.19"
@@ -4850,7 +4854,7 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-next@^5.0.0:
+next@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/next/-/next-5.1.0.tgz#9f79f095b28e1be568ba6fc61ec807409ec77e0a"
   dependencies:
@@ -5695,6 +5699,14 @@ react-hot-loader@4.0.0:
     hoist-non-react-statics "^2.5.0"
     prop-types "^15.6.0"
     shallowequal "^1.0.2"
+
+react-i18next@^7.6.0:
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-7.6.0.tgz#abdb44b9dee5b43b4340590e25a6f7b04e2df6bc"
+  dependencies:
+    hoist-non-react-statics "^2.3.1"
+    html-parse-stringify2 "2.0.1"
+    prop-types "^15.6.0"
 
 react-is@^16.3.1:
   version "16.3.1"
@@ -6575,9 +6587,9 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-styled-components@^3.2.1:
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.2.5.tgz#b5d5d7d618ab240ff10602b5ca5886b8db3d0a0d"
+styled-components@^3.2.6:
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.2.6.tgz#99e6e75a746bdedd295a17e03dd1493055a1cc3b"
   dependencies:
     buffer "^5.0.3"
     css-to-react-native "^2.0.3"
@@ -6585,6 +6597,7 @@ styled-components@^3.2.1:
     hoist-non-react-statics "^2.5.0"
     is-plain-object "^2.0.1"
     prop-types "^15.5.4"
+    react-is "^16.3.1"
     stylis "^3.5.0"
     stylis-rule-sheet "^0.0.10"
     supports-color "^3.2.3"
@@ -7062,6 +7075,10 @@ vm-browserify@0.0.4:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
   dependencies:
     indexof "0.0.1"
+
+void-elements@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"
