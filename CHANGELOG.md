@@ -1,3 +1,13 @@
+<a name="1.6.0"></a>
+## 1.6.0 (2018-04-20)
+
+* Generate changelog for prev. releases ([0aa72ae](https://github.com/snowballdigital/crystallize-frontend-boilerplate/commit/0aa72ae))
+* Upd. readme ([b318006](https://github.com/snowballdigital/crystallize-frontend-boilerplate/commit/b318006))
+* Use react-i18next ([e13f436](https://github.com/snowballdigital/crystallize-frontend-boilerplate/commit/e13f436))
+* Use styled-components for global reset ([8035936](https://github.com/snowballdigital/crystallize-frontend-boilerplate/commit/8035936))
+
+
+
 <a name="1.5.0"></a>
 ## 1.5.0 (2018-04-18)
 
