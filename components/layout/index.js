@@ -4,6 +4,8 @@ import Head from 'next/head';
 import CrystallizeLayout from '@crystallize/react-layout';
 import { BasketProvider } from '@crystallize/react-basket';
 
+import 'components/style/reset';
+
 import PropTypeCategory from 'lib/prop-types/category';
 import PropTypeTenant from 'lib/prop-types/tenant';
 import Aside from 'cmp/aside';
