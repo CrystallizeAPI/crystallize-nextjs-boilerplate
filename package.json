@@ -136,7 +136,8 @@
     "@crystallize/react-layout": "^1.5.0",
     "apollo-client": "^2.2.8",
     "apollo-client-preset": "^1.0.5",
-    "babel-core": "^6.26.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "22.4.3",
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-styled-components": "^1.4.0",
     "body-parser": "^1.18.2",
@@ -150,7 +151,7 @@
     "helmet": "^3.10.0",
     "i18next": "^11.2.3",
     "isomorphic-fetch": "^2.2.1",
-    "next": "^5.1.0",
+    "next": "^6.0.0",
     "next-offline": "^2.6.0",
     "polished": "^1.9.2",
     "prop-types": "^15.6.0",
@@ -161,7 +162,8 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "styled-components": "^3.2.6",
-    "styled-is": "^1.1.2"
+    "styled-is": "^1.1.2",
+    "upper-case-first": "^1.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.1.2",
@@ -171,7 +173,7 @@
     "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-import-resolver-babel-module": "^4.0.0",
+    "eslint-import-resolver-babel-module": "^5.0.0-beta.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.4.0",

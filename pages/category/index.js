@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import upper from 'upper-case-first';
 
 import Layout from 'components/layout';
 import { H1 } from 'components/style';
@@ -16,9 +17,11 @@ class CategoryPage extends React.PureComponent {
   };
 
   render() {
-    const { data, url } = this.props;
+    const { data, router } = this.props;
+    const title = upper(router.asPath.replace('/', ''));
+
     return (
-      <Layout {...this.props} title={url.asPath.replace('/', '')}>
+      <Layout {...this.props} title={title}>
         <Outer>
           <H1>Category page</H1>
           {!data ? (

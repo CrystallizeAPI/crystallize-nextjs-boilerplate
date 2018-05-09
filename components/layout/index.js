@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import Router from 'next/router';
 import CrystallizeLayout from '@crystallize/react-layout';
 import { BasketProvider } from '@crystallize/react-basket';
 
-import 'components/style/reset';
+import 'cmp/style/reset';
 
 import PropTypeCategory from 'lib/prop-types/category';
 import PropTypeTenant from 'lib/prop-types/tenant';
@@ -13,6 +14,14 @@ import Aside from 'cmp/aside';
 import Header from '../header';
 import GraphData from './graph-data';
 import { Main } from './styles';
+
+Router.onRouteChangeComplete = () => {
+  if (window.dataLayer) {
+    window.dataLayer.push({
+      event: 'pageview'
+    });
+  }
+};
 
 class Layout extends React.Component {
   static propTypes = {
