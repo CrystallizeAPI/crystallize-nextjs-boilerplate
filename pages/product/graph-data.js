@@ -4,37 +4,41 @@ import gql from 'graphql-tag';
 // Get sub categories, products and breadcrumbs for the category
 export const query = gql`
   query PRODUCT_QUERY($url: String!, $id: String!) {
-    product(url: $url, tenantID: $id) {
-      id
-      name
-      vat
-      product_image
-      product_image_resized
-      sku
-      link
-      price
-      price_from
-      fields
-
-      variations {
-        variation_sku
-        price_ex_vat
-        stock_count
-        attributes {
-          attribute_key
-          attribute_value
-        }
-        variation_plans {
+    catalogue(url: $url, tenantID: $id) {
+      product {
+        id
+        name
+        vat {
+          id
+          percentage
           name
-          initial_price
-          renewal_price
-          initial_period_unit
-          initial_period
-          duration
-          duration_unit
-          renewal_term
-          cancellation_term
-          variationplan_id
+        }
+        product_image
+        product_image_resized
+        sku
+        price
+        price_from
+        fields
+        variations {
+          variation_sku
+          price_ex_vat
+          stock_count
+          attributes {
+            attribute_key
+            attribute_value
+          }
+          variation_plans {
+            name
+            initial_price
+            renewal_price
+            initial_period_unit
+            initial_period
+            duration
+            duration_unit
+            renewal_term
+            cancellation_term
+            variationplan_id
+          }
         }
       }
     }
@@ -54,7 +58,7 @@ export default graphql(query, {
     }
 
     return {
-      data: data.product
+      data: data.catalogue.product
     };
   }
 });

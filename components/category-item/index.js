@@ -10,14 +10,20 @@ export default class CategoryItem extends React.Component {
   };
 
   render() {
-    const { name, link, price, product_image_resized } = this.props.data;
+    const { name, link, product } = this.props.data;
+
+    if (!product) {
+      return null;
+    }
+
+    const { price, product_image } = product;
 
     return (
       <Link as={link} href="/product" passHref>
         <Outer>
           <Inner>
             <Figure>
-              <Img src={product_image_resized} alt={name} />
+              <Img src={product_image} alt={name} />
             </Figure>
             <Footer>
               <div>

@@ -4,21 +4,24 @@ import gql from 'graphql-tag';
 // Get sub categories, products and breadcrumbs for the category
 export const query = gql`
   query CATEGORY_QUERY($url: String!, $id: String!) {
-    category(url: $url, tenantID: $id) {
-      subCategories {
-        name
-        link
-      }
-      products {
+    catalogue(url: $url, tenantID: $id) {
+      children {
         id
-        sku
         name
-        product_image
-        product_image_resized
-        price
-        price_from
         link
+
+        product {
+          id
+          sku
+          name
+          product_image
+          product_image_resized
+          price
+          price_from
+          link
+        }
       }
+
       breadcrumbs {
         name
         breadcrumb
@@ -40,7 +43,7 @@ export default graphql(query, {
     }
 
     return {
-      data: data.category
+      data: data.catalogue
     };
   }
 });

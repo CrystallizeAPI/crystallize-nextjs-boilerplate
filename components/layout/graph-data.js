@@ -9,8 +9,8 @@ export const query = gql`
       logo_url
     }
 
-    category(url: $url, tenantID: $id) {
-      subCategories {
+    catalogue(url: $url, tenantID: $id) {
+      children {
         name
         link
       }
@@ -30,7 +30,7 @@ export default graphql(query, {
       return data;
     }
     return {
-      categories: data.category.subCategories,
+      categories: data.catalogue.children,
       tenant: data.tenant
     };
   }
