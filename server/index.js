@@ -37,8 +37,12 @@ app.prepare().then(() => {
     if (pageMatch) {
       app.render(req, res, pageMatch, parsedUrl.query);
     } else if (parsedUrl.pathname === '/service-worker.js') {
-      const filePath = join(__dirname, '..', '.next', parsedUrl.pathname);
-      app.serveStatic(req, res, filePath);
+      if (config.DEV) {
+        res.status(404);
+      } else {
+        const filePath = join(__dirname, '..', '.next', parsedUrl.pathname);
+        app.serveStatic(req, res, filePath);
+      }
     } else {
       handle(req, res, parsedUrl);
     }
