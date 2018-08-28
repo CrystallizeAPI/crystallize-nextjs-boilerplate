@@ -28,7 +28,10 @@ export default class CategoryItem extends React.Component {
             <Footer>
               <div>
                 <span>{name}</span>
-                <Price>{price},-</Price>
+                <Price>
+                  {price}
+                  ,-
+                </Price>
               </div>
             </Footer>
           </Inner>

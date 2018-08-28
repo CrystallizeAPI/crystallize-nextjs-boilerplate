@@ -48,6 +48,19 @@ export default class MyDocument extends Document {
           {this.props.styleTags}
         </Head>
         <body>
+          {config.GTM_ID && (
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${
+                  config.GTM_ID
+                }`}
+                height="0"
+                width="0"
+                style={{ display: 'none', visibility: 'hidden' }}
+                title="Google Tagmanager noscript tracking"
+              />
+            </noscript>
+          )}
           <Main />
           <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch" />
           <NextScript />

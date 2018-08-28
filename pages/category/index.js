@@ -22,7 +22,9 @@ class CategoryPage extends React.PureComponent {
             <Loader>Loading...</Loader>
           ) : (
             <List>
-              {data.children.map(p => <CategoryItem key={p.id} data={p} />)}
+              {data.children.map(p => (
+                <CategoryItem key={p.id} data={p} />
+              ))}
             </List>
           )}
         </Outer>

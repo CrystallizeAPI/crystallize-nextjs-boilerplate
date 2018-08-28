@@ -68,7 +68,10 @@ class ProductPage extends React.PureComponent {
                   />
                 </Media>
                 <Info>
-                  <Price>Price: {basketItemToAdd.unit_price},-</Price>
+                  <Price>
+                    Price: {basketItemToAdd.unit_price}
+                    ,-
+                  </Price>
                   <BasketConsumer>
                     {({ actions }) => (
                       <Button

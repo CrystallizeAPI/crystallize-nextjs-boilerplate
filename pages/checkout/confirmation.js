@@ -30,7 +30,8 @@ class Inner extends React.Component {
         <br />
         <div>Order id {order.id}</div>
         <div>
-          Total price incl. tax: {order.cart.total_price_including_tax / 100},-
+          Total price incl. tax: {order.cart.total_price_including_tax / 100}
+          ,-
         </div>
         <div>Metadata {order.merchant_order_data.comment}</div>
         <div dangerouslySetInnerHTML={{ __html: order.gui.snippet }} />
