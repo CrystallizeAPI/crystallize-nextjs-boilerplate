@@ -24,10 +24,11 @@ class CheckoutConfirmation extends React.Component {
   }
 
   render() {
+    const { order } = this.props;
     return (
       <Layout title="Checkout">
         <BasketConsumer>
-          {props => <Inner {...props} order={this.props.order} />}
+          {props => <Inner {...props} order={order} />}
         </BasketConsumer>
       </Layout>
     );

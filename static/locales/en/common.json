@@ -1,4 +1,11 @@
 {
   "ok": "OK",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "day": "day",
+  "day_plural": "days",
+  "week": "week",
+  "week_plural": "weeks",
+  "month": "month",
+  "month_plural": "months",
+  "currency": "{{amount}},-"
 }

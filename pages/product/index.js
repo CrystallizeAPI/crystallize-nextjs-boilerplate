@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { BasketConsumer, createBasketItem } from '@crystallize/react-basket';
 import { showRight } from '@crystallize/react-layout';
+import Img from '@crystallize/react-image';
+import { translate } from 'react-i18next';
 
 import Layout from 'components/layout';
 import { H1, Button, screen } from 'components/style';
@@ -33,7 +35,7 @@ class ProductPage extends React.PureComponent {
   state = {};
 
   render() {
-    const { data } = this.props;
+    const { data, t } = this.props;
     const { basketItemToAdd } = this.state;
 
     if (!data || data.loading) {
@@ -54,13 +56,9 @@ class ProductPage extends React.PureComponent {
               <H1>{data.name}</H1>
               <Sections>
                 <Media>
-                  <img
-                    src={data.product_image_resized}
+                  <Img
+                    src={data.product_image}
                     alt={data.name}
-                    srcSet={`
-                      ${data.product_image} 750w,
-                      ${data.product_image_resized} 500w
-                    `}
                     sizes={`
                       (max-width: ${screen.sm}px) 200px,
                       400px
@@ -69,8 +67,8 @@ class ProductPage extends React.PureComponent {
                 </Media>
                 <Info>
                   <Price>
-                    Price: {basketItemToAdd.unit_price}
-                    ,-
+                    Price:
+                    {t('currency', { amount: basketItemToAdd.unit_price })}
                   </Price>
                   <BasketConsumer>
                     {({ actions }) => (
@@ -96,4 +94,4 @@ class ProductPage extends React.PureComponent {
   }
 }
 
-export default withData(GraphData(ProductPage));
+export default withData(GraphData(translate()(ProductPage)));

@@ -6,7 +6,7 @@ import { showRight } from '@crystallize/react-layout';
 const Button = ({ t }) => (
   <BasketConsumer>
     {({ state }) => (
-      <button onClick={showRight}>
+      <button onClick={showRight} type="button">
         {state.totalQuantity
           ? t('basket:shortStatus', state)
           : t('basket:empty')}

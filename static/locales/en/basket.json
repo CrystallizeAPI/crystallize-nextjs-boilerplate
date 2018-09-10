@@ -13,9 +13,13 @@
   "totalAfterDiscount": "Total after discount",
   "shipping": "Shipping",
   "amountToPay": "To pay",
-  "remainingUntilFreeShippingApplies":
-    "Shop for {{remainingUntilFreeShippingApplies}},- more for free shipping",
+  "remainingUntilFreeShippingApplies": "Shop for {{remainingUntilFreeShippingApplies}},- more for free shipping",
   "couldNotVerifyCoupon": "Could not find the coupon \"{{coupon}}\"",
   "fillOutCoupon": "Please input a coupon",
-  "removeItemFromBasket": "Remove {{name}} from basket"
+  "removeItemFromBasket": "Remove {{name}} from basket",
+  "subscriptionItemName": "Subscription for {{name}} ({{subscription.name, lowercase}})",
+  "subscriptionItemDuration": "{{count}} {{unit}}",
+  "subscriptionItemDuration_plural": "{{count}} {{unit}}",
+  "subscriptionInitialPrice": "Initial price: {{price}},-",
+  "subscriptionRenewalPrice": "Renewal price: {{price}},-"
 }

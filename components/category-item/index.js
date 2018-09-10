@@ -1,16 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
+import { translate } from 'react-i18next';
 
 import ProductPropType from 'lib/prop-types/product';
 import { Outer, Inner, Figure, Img, Footer, Price } from './styles';
 
-export default class CategoryItem extends React.Component {
+class CategoryItem extends React.Component {
   static propTypes = {
     data: ProductPropType
   };
 
   render() {
-    const { name, link, product } = this.props.data;
+    const { data, t } = this.props;
+    const { name, link, product } = data;
 
     if (!product) {
       return null;
@@ -28,10 +30,7 @@ export default class CategoryItem extends React.Component {
             <Footer>
               <div>
                 <span>{name}</span>
-                <Price>
-                  {price}
-                  ,-
-                </Price>
+                <Price>{t('currency', { amount: price })}</Price>
               </div>
             </Footer>
           </Inner>
@@ -40,3 +39,5 @@ export default class CategoryItem extends React.Component {
     );
   }
 }
+
+export default translate()(CategoryItem);
