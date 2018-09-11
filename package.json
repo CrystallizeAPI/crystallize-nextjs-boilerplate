@@ -1,6 +1,6 @@
 {
   "name": "crystallize-frontend-boilerplate",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "private": true,
   "license": "MIT",
   "engines": {
@@ -22,7 +22,11 @@
     "postinstall": "node .crystallize-greeting/"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "eslint --fix", "git add"]
+    "*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
   },
   "browserslist": [
     "> 1%",
