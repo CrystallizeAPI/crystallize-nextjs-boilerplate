@@ -2,7 +2,7 @@
   "name": "crystallize-frontend-boilerplate",
   "version": "1.8.0",
   "private": true,
-  "license": "MIT",
+  "license": "ISC",
   "engines": {
     "node": ">=8.10"
   },
