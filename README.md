@@ -26,7 +26,11 @@ Put all your entry pages here
 
 ## ./components
 
-Put all your single components here. Most of your app will live here
+All your shared components
+
+## ,/ui
+
+UI related components live her. Color variables and simple shared components
 
 ## ./server
 
@@ -35,6 +39,10 @@ This is where the ultra-light frontend server lives. Its primary function is to 
 ## ./lib
 
 Library code to enable GraphQL and REST API communication and more
+
+## ./static
+
+Resources server statically by the web server. Including translation files
 
 # Deploy
 
