@@ -104,6 +104,7 @@
     "rules": {
       "camelcase": 0,
       "prettier/prettier": "error",
+      "no-plusplus": 0,
       "no-use-before-define": [
         "error",
         "nofunc"

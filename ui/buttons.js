@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import is, { isNot } from 'styled-is';
-import { lighten, darken, desaturate } from 'polished';
+import { lighten, darken } from 'polished';
 import Link from 'next/link';
 
 import { colors } from './colors';
@@ -9,44 +9,71 @@ import { Spinner } from './spinner';
 
 const themes = {
   primary: {
-    background: colors.glacier,
-    backgroundHover: darken(0.1, colors.glacier),
-    color: '#fff',
-    textDecoration: 'none',
-    textAlign: 'center'
+    default: `
+      background: ${colors.glacier};
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+    `,
+    hover: `
+      background: ${darken(0.1, colors.glacier)};
+    `,
+    disabled: `
+      background: #aaa;
+      color: #333;
+    `
   },
   secondary: {
-    background: colors.frost,
-    backgroundHover: darken(0.05, colors.frost),
-    color: colors.frostbite,
-    textDecoration: 'none',
-    textAlign: 'center'
+    default: `
+      background: ${colors.frost};
+      color: ${colors.frostbite};
+      text-decoration: none;
+      text-align: center;
+    `,
+    hover: `
+      background: ${darken(0.5, colors.frost)};
+    `,
+    disabled: `
+      background: #aaa;
+      color: #333;
+    `
   },
   danger: {
-    background: lighten(0.1, colors.error),
-    backgroundHover: lighten(0.05, colors.error),
-    color: '#fff',
-    textDecoration: 'none',
-    textAlign: 'center'
+    default: `
+      background: ${lighten(0.1, colors.error)};
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+    `,
+    hover: `
+      background: ${lighten(0.05, colors.error)};
+    `,
+    disabled: `
+      background: #aaa;
+      color: #333;
+    `
   }
 };
 
 const linkThemes = {
   primary: {
-    background: 'transparent',
-    borderBottom: '2px solid #f47f98',
-    textDecoration: 'none',
-    textAlign: 'left'
+    default: `
+      background: transparent;
+      border-bottom: 2px solid #f47f98;
+      text-decoration: none;
+      text-align: left;
+    `
   }
 };
 
-function getTheme({ themesToSelectFrom, secondary, danger } = {}) {
-  if (secondary) {
-    return themesToSelectFrom.secondary;
+function getTheme({ themesToSelectFrom, ...rest } = {}) {
+  const themeNames = Object.keys(themes);
+  for (let i = 0; i < themeNames.length; i++) {
+    if (themeNames[i] in rest) {
+      return themesToSelectFrom[themeNames[i]];
+    }
   }
-  if (danger) {
-    return themesToSelectFrom.danger;
-  }
+
   return themesToSelectFrom.primary;
 }
 
@@ -94,18 +121,13 @@ const ButtonInner = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({ theme }) =>
-    theme.borderBottom && `border-bottom: ${theme.borderBottom}`};
   min-width: ${p => p.size.minWidth};
-  background: ${p => p.theme.background};
-  color: ${p => p.theme.color};
   padding: ${p => p.size.padding};
-  text-align: ${p => p.theme.textAlign};
-  text-decoration: ${p => p.theme.textDecoration};
   padding: ${p => p.size.padding};
   font-size: ${p => p.size.fontSize || 'inherit'};
   transition: background-color 100ms;
   position: relative;
+  ${p => (p.theme ? p.theme.default : '')};
 `;
 
 const ButtonOuter = styled.button`
@@ -118,15 +140,14 @@ const ButtonOuter = styled.button`
   text-decoration: none;
 
   &:hover ${ButtonInner} {
-    ${({ theme }) =>
-      theme.backgroundHover && `background-color: ${theme.backgroundHover}`};
+    ${({ theme }) => (theme ? theme.hover : ``)};
   }
 
   &[disabled] {
     cursor: default;
 
     ${ButtonInner} {
-      background: ${p => desaturate(0.5, p.theme.background)};
+      ${({ theme }) => (theme ? theme.disabled : ``)};
     }
   }
 `;
@@ -181,6 +202,7 @@ function buttonCreator({ buttonThemes, asLink }) {
       themesToSelectFrom: buttonThemes,
       ...rest
     });
+
     const size = getSize({ tiny, small, large, xlarge });
     const as = asLink ? Link : 'button';
 
