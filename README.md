@@ -12,11 +12,11 @@ The bare minimum skeleton you need to get a frontend up and running on Crystalli
 
 # Getting started
 
-* Clone the repo or download from [the releases page](https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases)
-* Run `yarn` to install dependencies
-* Run `yarn dev` to start up
-* * The site should be ready at [http://localhost:3000](http://localhost:3000)
-* (Optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
+- Clone the repo or download from [the releases page](https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases)
+- Run `yarn` to install dependencies
+- Run `yarn dev` to start up
+- - The site should be ready at [http://localhost:3000](http://localhost:3000)
+- (Optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
 
 # App structure
 
@@ -34,7 +34,7 @@ This is where the ultra-light frontend server lives. Its primary function is to 
 
 ## ./lib
 
-Library code to enable GraphQL and REST API communication, as well as prop type definitions
+Library code to enable GraphQL and REST API communication and more
 
 # Deploy
 
@@ -42,7 +42,7 @@ There are multiple alternatives for deployments, however for the easiest hosting
 
 ## Deploying with Now
 
-* Register a Now account
-* Run `yarn global add now`
-* Navigate to your project folder
-* Run `now`
+- Register a Now account
+- Run `yarn global add now`
+- Navigate to your project folder
+- Run `now`

@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import CrystallizeImage from '@crystallize/react-image';
 
-import { colors, responsive } from 'components/style';
+import { colors, responsive } from 'ui';
+
+export const imageWidth = {
+  lg: '300px',
+  xs: '150px'
+};
 
 export const Outer = styled.a`
   margin: 10px;
@@ -21,12 +26,12 @@ export const Figure = styled.figure`
 
 export const Img = styled(CrystallizeImage)`
   display: block;
-  height: 215px;
-  object-fit: fill;
+  width: ${imageWidth.lg};
+  object-fit: contain;
   margin: 0 auto;
 
   ${responsive.xs} {
-    height: 120px;
+    height: ${imageWidth.xs};
   }
 `;
 

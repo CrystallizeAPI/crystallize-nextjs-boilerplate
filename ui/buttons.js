@@ -5,7 +5,7 @@ import { lighten, darken, desaturate } from 'polished';
 import Link from 'next/link';
 
 import { colors } from './colors';
-import LoadingSpinner from '../spinner';
+import { Spinner } from './spinner';
 
 const themes = {
   primary: {
@@ -131,8 +131,6 @@ const ButtonOuter = styled.button`
   }
 `;
 
-const ButtonOuterAsLink = ButtonOuter.withComponent(Link);
-
 const ButtonText = styled.span`
   position: relative;
   z-index: 2;
@@ -184,18 +182,17 @@ function buttonCreator({ buttonThemes, asLink }) {
       ...rest
     });
     const size = getSize({ tiny, small, large, xlarge });
-
-    const Outer = asLink ? ButtonOuterAsLink : ButtonOuter;
+    const as = asLink ? Link : 'button';
 
     return (
-      <Outer {...rest} theme={theme} block={block}>
+      <ButtonOuter as={as} {...rest} theme={theme} block={block}>
         <ButtonInner theme={theme} size={size}>
           <ButtonText shown={!loading}>{children}</ButtonText>
           <ButtonLoading shown={loading}>
-            <LoadingSpinner />
+            <Spinner />
           </ButtonLoading>
         </ButtonInner>
-      </Outer>
+      </ButtonOuter>
     );
   };
 }

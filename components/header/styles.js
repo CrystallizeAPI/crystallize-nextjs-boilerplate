@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { responsive } from 'components/style';
+import { responsive } from 'ui';
 
 export const Outer = styled.header`
   text-align: center;

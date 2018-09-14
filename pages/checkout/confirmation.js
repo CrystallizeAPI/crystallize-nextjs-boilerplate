@@ -3,8 +3,7 @@ import React from 'react';
 import { BasketConsumer } from '@crystallize/react-basket';
 import { translate } from 'react-i18next';
 
-import withData from 'lib/with-data';
-import Layout from 'cmp/layout';
+import Layout from 'components/layout';
 
 class Inner extends React.Component {
   state = {
@@ -26,6 +25,9 @@ class Inner extends React.Component {
 
   render() {
     const { order, t } = this.props;
+    if (!order) {
+      return null;
+    }
 
     return (
       <div>
@@ -45,7 +47,6 @@ class Inner extends React.Component {
           Metadata
           {order.merchant_order_data.comment}
         </div>
-        <div dangerouslySetInnerHTML={{ __html: order.gui.snippet }} />
       </div>
     );
   }
@@ -57,15 +58,14 @@ class CheckoutConfirmation extends React.Component {
   }
 
   render() {
-    const { order } = this.props;
     return (
       <Layout title="confirmation">
         <BasketConsumer>
-          {props => <Inner {...props} order={order} />}
+          {props => <Inner {...props} {...this.props} />}
         </BasketConsumer>
       </Layout>
     );
   }
 }
 
-export default withData(translate()(CheckoutConfirmation));
+export default translate()(CheckoutConfirmation);

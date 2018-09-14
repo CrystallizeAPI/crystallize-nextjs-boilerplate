@@ -1,8 +1,8 @@
 /* eslint no-unused-expressions: 0 */
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 // Global styles
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -66,3 +66,5 @@ injectGlobal`
     border: 0;
   }
 `;
+
+export default GlobalStyle;

@@ -54,7 +54,7 @@ async function envFileExists() {
       ]);
 
       const envFileVars = [
-        'CRYSTALLIZE_API_URL=https://api.crystallize.digital',
+        'CRYSTALLIZE_API_URL=https://api.crystallize.com',
         'PORT=3000',
         'KLARNA_MODE=test',
         'GTM_ID='

@@ -13,9 +13,10 @@
   "scripts": {
     "precommit": "yarn validate",
     "dev": "node server/index.js",
+    "dev:inspect": "node --inspect-brk server/index.js",
     "build": "next build",
     "start": "NODE_ENV=production node server/index.js",
-    "prod": "yarn run build && yarn run start",
+    "prod": "yarn build && yarn start",
     "test": "NODE_ENV=test jest",
     "lint": "eslint .",
     "validate": "yarn test && yarn lint-staged",
@@ -61,14 +62,13 @@
             "lib": "./lib",
             "page-components": "./page-components",
             "components": "./components",
-            "cmp": "./components"
+            "ui": "./ui"
           }
         }
       ],
       [
         "styled-components",
         {
-          "ssr": true,
           "displayName": true,
           "preprocess": false
         }
@@ -137,34 +137,33 @@
     ".crystallize-greeting"
   ],
   "dependencies": {
-    "@crystallize/react-basket": "^2.4.3",
+    "@crystallize/react-basket": "^3.1.1",
     "@crystallize/react-checkout": "^1.5.0",
-    "@crystallize/react-image": "^1.4.4",
+    "@crystallize/react-image": "^2.0.0",
     "@crystallize/react-layout": "^1.7.1",
-    "apollo-boost": "^0.1.15",
-    "apollo-client": "^2.4.1",
+    "apollo-boost": "^0.1.16",
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-styled-components": "^1.6.4",
     "body-parser": "^1.18.3",
+    "camelcase": "^5.0.0",
     "cross-fetch": "^2.2.1",
+    "deep-assign": "^2.0.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
     "helmet": "^3.13.0",
+    "humps": "^2.0.1",
     "i18next": "^11.7.0",
+    "isarray": "^2.0.4",
     "next": "^6.1.2",
-    "next-offline": "^2.12.0",
     "polished": "^2.0.3",
-    "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-apollo": "^2.1.11",
     "react-dom": "^16.5.0",
     "react-i18next": "^7.11.1",
-    "react-redux": "^5.0.7",
-    "redux": "^3.7.2",
-    "styled-components": "^3.4.5",
+    "styled-components": "^4.0.0-beta.4",
     "styled-is": "^1.1.5",
     "upper-case-first": "^1.1.2"
   },

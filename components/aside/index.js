@@ -1,7 +1,7 @@
 import { TinyBasket } from '@crystallize/react-basket';
 import { KlarnaGoToCheckout } from '@crystallize/react-checkout';
 
-import { Button } from 'components/style';
+import { Button } from 'ui';
 
 export default () => (
   <div>

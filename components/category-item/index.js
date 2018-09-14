@@ -2,14 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { translate } from 'react-i18next';
 
-import ProductPropType from 'lib/prop-types/product';
-import { Outer, Inner, Figure, Img, Footer, Price } from './styles';
+import { screen } from 'ui';
+import { Outer, Inner, Figure, Img, Footer, Price, imageWidth } from './styles';
 
 class CategoryItem extends React.Component {
-  static propTypes = {
-    data: ProductPropType
-  };
-
   render() {
     const { data, t } = this.props;
     const { name, link, product } = data;
@@ -25,7 +21,13 @@ class CategoryItem extends React.Component {
         <Outer>
           <Inner>
             <Figure>
-              <Img src={product_image} alt={name} />
+              <Img
+                src={product_image}
+                alt={name}
+                sizes={`(min-width ${screen.md}px) ${imageWidth.lg}, ${
+                  imageWidth.xs
+                }`}
+              />
             </Figure>
             <Footer>
               <div>

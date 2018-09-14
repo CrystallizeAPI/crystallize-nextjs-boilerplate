@@ -1,5 +1,6 @@
 export * from './screen';
 export * from './colors';
 export * from './responsive';
-export * from './components';
+export * from './headings';
 export * from './buttons';
+export * from './spinner';

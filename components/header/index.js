@@ -1,19 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
-
-import PropTypeCategory from 'lib/prop-types/category';
-import PropTypeTenant from 'lib/prop-types/tenant';
 
 import BasketButton from './basket-button';
 import { Outer, Nav, Logo } from './styles';
 
 export default class Header extends React.Component {
-  static propTypes = {
-    tenant: PropTypeTenant,
-    categories: PropTypes.arrayOf(PropTypeCategory)
-  };
-
   render() {
     const { categories, tenant, simple } = this.props;
 

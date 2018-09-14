@@ -1,10 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Layout from 'components/layout';
-import { H1 } from 'components/style';
-import withData from 'lib/with-data';
+import { H1 } from 'ui';
 import { getUserPageData } from 'lib/rest-api';
 
 const UserProps = styled.ul`
@@ -18,23 +16,18 @@ const UserProps = styled.ul`
   }
 `;
 
-class UserPage extends React.PureComponent {
-  static propTypes = {
-    user: PropTypes.shape({
-      name: PropTypes.string,
-      email: PropTypes.string,
-      phone: PropTypes.string,
-      username: PropTypes.string
-    })
-  };
-
-  static async getInitialProps({ req }) {
-    const data = await getUserPageData(req);
+export default class UserPage extends React.PureComponent {
+  static async getInitialProps() {
+    const data = await getUserPageData();
     return data;
   }
 
   render() {
     const { user } = this.props;
+
+    if (!user) {
+      return null;
+    }
 
     return (
       <Layout {...this.props} title="User page">
@@ -61,5 +54,3 @@ class UserPage extends React.PureComponent {
     );
   }
 }
-
-export default withData(UserPage);

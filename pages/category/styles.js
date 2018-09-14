@@ -1,15 +1,9 @@
 import styled from 'styled-components';
 
-import { responsive } from 'components/style';
+import { responsive } from 'ui';
 
 export const Outer = styled.div`
   margin-bottom: 30px;
-`;
-
-export const Loader = styled.div`
-  text-align: center;
-  margin: 50px;
-  font-size: 2rem;
 `;
 
 export const List = styled.div`

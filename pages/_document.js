@@ -2,7 +2,15 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import config from '../server/config';
+import GlobalStyle from 'ui/global';
+
+import { NODE_ENV, GTM_ID, TENANT_ID, API_URL } from '../server/config';
+
+// These settings will be exposed to the world
+const clientConfig = {
+  TENANT_ID,
+  API_URL
+};
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
@@ -25,35 +33,32 @@ export default class MyDocument extends Document {
           />
           <meta name="apple-mobile-web-app-capable" content="yes" />
 
-          {config.GTM_ID && (
+          {GTM_ID && (
             <script
               dangerouslySetInnerHTML={{
                 __html: `
-                  window.dataLayer = [{ environment: '${config.NODE_ENV}' }];
-                  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${
-                    config.GTM_ID
-                  }');
+                  window.dataLayer = [{ environment: '${NODE_ENV}' }];
+                  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');
                 `
               }}
             />
           )}
           <script
             dangerouslySetInnerHTML={{
-              __html: `__crystallizeConfig={
-                "TENANT_ID": "${config.TENANT_ID}",
-                "API_URL": "${config.API_URL}"
-              }`
+              __html: `
+              __crystallizeConfig=${JSON.stringify(clientConfig)};
+              __crystallizeConfig.HOST_NAME = location.origin;
+              `
             }}
           />
+          <GlobalStyle />
           {this.props.styleTags}
         </Head>
         <body>
-          {config.GTM_ID && (
+          {GTM_ID && (
             <noscript>
               <iframe
-                src={`https://www.googletagmanager.com/ns.html?id=${
-                  config.GTM_ID
-                }`}
+                src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
                 height="0"
                 width="0"
                 style={{ display: 'none', visibility: 'hidden' }}

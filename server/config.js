@@ -12,6 +12,7 @@ const DEV = NODE_ENV !== 'production';
 global.__crystallizeConfig = {
   NODE_ENV,
   PORT: parseInt(PORT, 10),
+  HOST_NAME: `http://localhost:${PORT}`,
   TENANT_ID: CRYSTALLIZE_TENANT_ID,
   API_URL: CRYSTALLIZE_API_URL,
   GTM_ID,

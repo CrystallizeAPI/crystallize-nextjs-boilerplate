@@ -1,22 +1,19 @@
-import { connect } from 'react-redux';
+import React from 'react';
 
 import Layout from 'components/layout';
-import { H1 } from 'components/style';
+import { H1 } from 'ui';
 import { Outer } from './styles';
 
-const FrontPage = ({ router, frontpageHeading }) => (
-  <Layout router={router} title="Front page">
-    <Outer>
-      <H1>{frontpageHeading}</H1>
-    </Outer>
-  </Layout>
-);
+export default class FrontPage extends React.Component {
+  render() {
+    const { router } = this.props;
 
-const mapStateToProps = state => ({
-  frontpageHeading: state.app.frontpageHeading
-});
-
-// Declare the required localization namespaces
-FrontPage.l18namespaces = ['basket'];
-
-export default connect(mapStateToProps)(FrontPage);
+    return (
+      <Layout router={router} title="Front page">
+        <Outer>
+          <H1>Hello and welcome</H1>
+        </Outer>
+      </Layout>
+    );
+  }
+}

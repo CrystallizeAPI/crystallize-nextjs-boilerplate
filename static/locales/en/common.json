@@ -1,11 +1,18 @@
 {
   "ok": "OK",
   "cancel": "Cancel",
+  "loading": "Loading",
   "day": "day",
   "day_plural": "days",
+  "days": "day",
+  "days_plural": "days",
   "week": "week",
   "week_plural": "weeks",
+  "weeks": "week",
+  "weeks_plural": "weeks",
   "month": "month",
   "month_plural": "months",
+  "months": "month",
+  "months_plural": "months",
   "currency": "{{amount}},-"
 }

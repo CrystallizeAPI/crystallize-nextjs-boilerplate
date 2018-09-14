@@ -1,15 +1,10 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
 import CrystallizeLayout from '@crystallize/react-layout';
 import { BasketProvider } from '@crystallize/react-basket';
 
-import 'cmp/style/reset';
-
-import PropTypeCategory from 'lib/prop-types/category';
-import PropTypeTenant from 'lib/prop-types/tenant';
-import Aside from 'cmp/aside';
+import Aside from 'components/aside';
 
 import Header from '../header';
 import GraphData from './graph-data';
@@ -24,12 +19,6 @@ Router.onRouteChangeComplete = () => {
 };
 
 class Layout extends React.Component {
-  static propTypes = {
-    children: PropTypes.node,
-    tenant: PropTypeTenant,
-    categories: PropTypes.arrayOf(PropTypeCategory)
-  };
-
   render() {
     const {
       children,
@@ -37,12 +26,18 @@ class Layout extends React.Component {
       tenant,
       title,
       description,
-      simpleHeader
+      simpleHeader,
+      loading,
+      error
     } = this.props;
 
     let displayTitle = tenant ? tenant.company_name : '';
     if (title) {
       displayTitle = `${title} - ${displayTitle}`;
+    } else if (loading) {
+      displayTitle = 'Loading';
+    } else if (error) {
+      displayTitle = 'Error';
     } else {
       /* eslint-disable */
       console.warn(

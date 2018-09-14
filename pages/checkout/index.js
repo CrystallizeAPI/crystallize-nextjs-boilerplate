@@ -2,8 +2,7 @@
 import React from 'react';
 import { BasketConsumer } from '@crystallize/react-basket';
 
-import withData from 'lib/with-data';
-import Layout from 'cmp/layout';
+import Layout from 'components/layout';
 
 class Inner extends React.Component {
   render() {
@@ -18,7 +17,7 @@ class Inner extends React.Component {
   }
 }
 
-class CheckoutConfirmation extends React.Component {
+export default class CheckoutConfirmation extends React.Component {
   static async getInitialProps(ctx) {
     return { order: ctx.req.crystallizeKlarnaOrder };
   }
@@ -34,5 +33,3 @@ class CheckoutConfirmation extends React.Component {
     );
   }
 }
-
-export default withData(CheckoutConfirmation);
