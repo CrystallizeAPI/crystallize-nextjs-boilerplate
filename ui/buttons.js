@@ -55,65 +55,46 @@ const themes = {
   }
 };
 
-const linkThemes = {
-  primary: {
-    default: `
-      background: transparent;
-      border-bottom: 2px solid #f47f98;
-      text-decoration: none;
-      text-align: left;
-    `
-  }
+const sizes = {
+  tiny: `
+    padding: 0px 1px;
+  `,
+  small: `
+    padding: 5px 10px;
+  `,
+  medium: `
+    padding: 10px 15px;
+    font-size: 16px;
+  `,
+  large: `
+    padding: 30px;
+    font-size: 25px;
+  `,
+  xlarge: `
+    padding: 50px;
+    font-size: 50px;
+  `
 };
 
-function getTheme({ themesToSelectFrom, ...rest } = {}) {
+function getTheme(rest) {
   const themeNames = Object.keys(themes);
   for (let i = 0; i < themeNames.length; i++) {
     if (themeNames[i] in rest) {
-      return themesToSelectFrom[themeNames[i]];
+      return themes[themeNames[i]];
     }
   }
 
-  return themesToSelectFrom.primary;
+  return themes.primary;
 }
 
-const sizes = {
-  tiny: {
-    padding: '0px 1px',
-    minWidth: '0'
-  },
-  small: {
-    padding: '5px 10px',
-    minWidth: '0'
-  },
-  medium: {
-    padding: '10px 15px',
-    minWidth: '150px',
-    fontSize: '16px'
-  },
-  large: {
-    padding: '0px 1px',
-    minWidth: '0'
-  },
-  xlarge: {
-    padding: '0px 1px',
-    minWidth: '0'
+function getSize(rest) {
+  const sizeNames = Object.keys(sizes);
+  for (let i = 0; i < sizeNames.length; i++) {
+    if (sizeNames[i] in rest) {
+      return sizes[sizeNames[i]];
+    }
   }
-};
 
-function getSize({ tiny, small, large, xlarge }) {
-  if (tiny) {
-    return sizes.tiny;
-  }
-  if (small) {
-    return sizes.small;
-  }
-  if (large) {
-    return sizes.large;
-  }
-  if (xlarge) {
-    return sizes.xlarge;
-  }
   return sizes.medium;
 }
 
@@ -121,12 +102,11 @@ const ButtonInner = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: ${p => p.size.minWidth};
-  padding: ${p => p.size.padding};
-  padding: ${p => p.size.padding};
-  font-size: ${p => p.size.fontSize || 'inherit'};
+  padding: 0;
+  font-size: inherit;
   transition: background-color 100ms;
   position: relative;
+  ${p => p.size || ''};
   ${p => (p.theme ? p.theme.default : '')};
 `;
 
@@ -187,45 +167,19 @@ const ButtonLoading = styled.span`
   }
 `;
 
-function buttonCreator({ buttonThemes, asLink }) {
-  return ({
-    children,
-    tiny,
-    small,
-    large,
-    xlarge,
-    loading,
-    block,
-    ...rest
-  }) => {
-    const theme = getTheme({
-      themesToSelectFrom: buttonThemes,
-      ...rest
-    });
+export function Button({ children, loading, block, asLink, ...rest }) {
+  const theme = getTheme(rest);
+  const size = getSize(rest);
+  const as = asLink ? Link : 'button';
 
-    const size = getSize({ tiny, small, large, xlarge });
-    const as = asLink ? Link : 'button';
-
-    return (
-      <ButtonOuter as={as} {...rest} theme={theme} block={block}>
-        <ButtonInner theme={theme} size={size}>
-          <ButtonText shown={!loading}>{children}</ButtonText>
-          <ButtonLoading shown={loading}>
-            <Spinner />
-          </ButtonLoading>
-        </ButtonInner>
-      </ButtonOuter>
-    );
-  };
+  return (
+    <ButtonOuter as={as} {...rest} theme={theme} block={block}>
+      <ButtonInner theme={theme} size={size}>
+        <ButtonText shown={!loading}>{children}</ButtonText>
+        <ButtonLoading shown={loading}>
+          <Spinner />
+        </ButtonLoading>
+      </ButtonInner>
+    </ButtonOuter>
+  );
 }
-
-export const Button = buttonCreator({ buttonThemes: themes });
-export const ButtonAsLink = buttonCreator({
-  buttonThemes: themes,
-  asLink: true
-});
-export const LinkButton = buttonCreator({ buttonThemes: linkThemes });
-export const LinkButtonAsLink = buttonCreator({
-  buttonThemes: linkThemes,
-  asLink: true
-});
