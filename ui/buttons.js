@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import is, { isNot } from 'styled-is';
 import { lighten, darken } from 'polished';
 import Link from 'next/link';
+import { Spinner } from './spinner';
 
 import { colors } from './colors';
-import { Spinner } from './spinner';
 
 const themes = {
   primary: {

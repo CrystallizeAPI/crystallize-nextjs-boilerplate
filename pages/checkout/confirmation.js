@@ -43,10 +43,6 @@ class Inner extends React.Component {
             amount: order.cart.total_price_including_tax / 100
           })}
         </div>
-        <div>
-          Metadata
-          {order.merchant_order_data.comment}
-        </div>
       </div>
     );
   }
@@ -54,7 +50,7 @@ class Inner extends React.Component {
 
 class CheckoutConfirmation extends React.Component {
   static async getInitialProps(ctx) {
-    return { order: ctx.req.crystallizeKlarnaOrder };
+    return { order: ctx.req.klarnaOrder };
   }
 
   render() {

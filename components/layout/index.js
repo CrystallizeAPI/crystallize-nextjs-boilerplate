@@ -57,11 +57,7 @@ class Layout extends React.Component {
         <BasketProvider
           shippingCost="199"
           freeShippingMinimumPurchaseAmount="800"
-          validateEndpoint="/api/basket/validate"
-          translations={{
-            'basket.remainingUntilFreeShippingApplies':
-              'Yo! Put another {remainingUntilFreeShippingApplies},- and the shipping is free!'
-          }}
+          validateEndpoint="/checkout/validate-basket"
         >
           <CrystallizeLayout right={Aside}>
             <Header
