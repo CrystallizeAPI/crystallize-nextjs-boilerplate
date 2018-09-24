@@ -88,7 +88,6 @@ class ProductPage extends React.Component {
     const { selectedVariant } = this.state;
     const { data, crystallizeBasket } = this.props;
     const { actions } = crystallizeBasket;
-    console.log(selectedVariant);
 
     const basketItemToAdd = createBasketItem({
       masterProduct: data.catalogue.product,
