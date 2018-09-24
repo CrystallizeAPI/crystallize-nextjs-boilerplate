@@ -25,93 +25,106 @@ async function envFileExists() {
     }
 
     const exists = await envFileExists();
-    if (!exists) {
-      if (supportsColor.stdout) {
-        console.log(await readFile(join(__dirname, './logo.txt'), 'utf8'));
+    if (exists) {
+      return;
+    }
+
+    if (supportsColor.stdout) {
+      console.log(await readFile(join(__dirname, './logo.txt'), 'utf8'));
+    }
+
+    const themeColor = chalk.rgb(244, 127, 152);
+
+    console.log(
+      themeColor.bold(
+        emoji.emojify(':sparkles:  Welcome awesome developer! :sparkles:\n')
+      )
+    );
+
+    const { shopToUse } = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'shopToUse',
+        message: 'Which shop do you want to use?',
+        choices: [
+          {
+            value: 'demo',
+            name: 'The demo shop - prefilled with lots of data'
+          },
+          'My very own tenant please'
+        ]
       }
+    ]);
 
-      const themeColor = chalk.rgb(244, 127, 152);
+    const envFileVars = [
+      'CRYSTALLIZE_API_URL=https://api.crystallize.com',
+      'PORT=3000',
+      'GTM_ID=',
+      'KLARNA_MODE=test',
+      'KLARNA_MERCHANT_ID=1',
+      'KLARNA_STORE_NAME=test',
+      'KLARNA_SHARED_SECRET=test',
+      'KLARNA_TERMS_URI=https://example.com',
+      'KLARNA_RECURRING_TOKEN='
+    ];
 
-      console.log(
-        themeColor.bold(
-          emoji.emojify(':sparkles:  Welcome awesome developer! :sparkles:\n')
-        )
-      );
-
-      const { shopToUse } = await inquirer.prompt([
+    if (shopToUse !== 'demo') {
+      const { tenantId, tenantToken } = await inquirer.prompt([
         {
-          type: 'list',
-          name: 'shopToUse',
-          message: 'Which shop do you want to use?',
-          choices: [
-            {
-              value: 'demo',
-              name: 'The demo shop - prefilled with lots of data'
-            },
-            'My very own tenant please'
-          ]
+          type: 'input',
+          name: 'tenantId',
+          message: 'Your tenant ID',
+          default: 'demo'
+        },
+        {
+          type: 'input',
+          name: 'tenantToken',
+          message: 'Your super secret tenant token',
+          default: '1234'
         }
       ]);
-
-      const envFileVars = [
-        'CRYSTALLIZE_API_URL=https://api.crystallize.com',
-        'PORT=3000',
-        'GTM_ID=',
-        'KLARNA_MODE=test',
-        'KLARNA_MERCHANT_ID=1',
-        'KLARNA_STORE_NAME=test',
-        'KLARNA_SHARED_SECRET=test',
-        'KLARNA_TERMS_URI=https://example.com',
-        'KLARNA_RECURRING_TOKEN='
-      ];
-
-      if (shopToUse !== 'demo') {
-        const { tenantId, tenantToken } = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'tenantId',
-            message: 'Your tenant ID',
-            default: 'demo'
-          },
-          {
-            type: 'input',
-            name: 'tenantToken',
-            message: 'Your super secret tenant token',
-            default: '1234'
-          }
-        ]);
-        envFileVars.push(
-          `CRYSTALLIZE_TENANT_ID=${tenantId}`,
-          `CRYSTALLIZE_API_TOKEN=${tenantToken}`
-        );
-      } else {
-        envFileVars.push(
-          'CRYSTALLIZE_TENANT_ID=demo',
-          'CRYSTALLIZE_API_TOKEN='
-        );
-      }
-
-      await writeFile(join(__dirname, '..', './.env'), envFileVars.join('\n'));
-
-      console.log(
-        emoji.emojify('\n\nWell done! :muscle:  Your shop is set to go! :star:')
+      envFileVars.push(
+        `CRYSTALLIZE_TENANT_ID=${tenantId}`,
+        `CRYSTALLIZE_API_TOKEN=${tenantToken}`
       );
+    } else {
+      envFileVars.push('CRYSTALLIZE_TENANT_ID=demo', 'CRYSTALLIZE_API_TOKEN=');
+    }
 
-      console.log(`
+    // Set the env file
+    await writeFile(join(__dirname, '..', './.env'), envFileVars.join('\n'));
+
+    // Remove greeting from package.json
+    const packageJson = await readFile(
+      join(__dirname, '../', './package.json'),
+      'utf8'
+    );
+    const packageJsonObj = JSON.parse(packageJson);
+    delete packageJsonObj.scripts.postinstall;
+    await writeFile(
+      join(__dirname, '../', './package.json'),
+      JSON.stringify(packageJsonObj, null, 3),
+      'utf-8'
+    );
+
+    console.log(
+      emoji.emojify('\n\nWell done! :muscle:  Your shop is set to go! :star:')
+    );
+
+    console.log(`
 To start in development mode: ${themeColor('npm run dev')} or ${themeColor(
-        'yarn dev'
-      )}
+      'yarn dev'
+    )}
 To start in ${chalk.italic('super fast')} production mode: ${themeColor(
-        'npm run prod'
-      )} or ${themeColor('yarn prod')}
+      'npm run prod'
+    )} or ${themeColor('yarn prod')}
       `);
 
-      console.log(
-        chalk.hex('#dadada')(
-          `\nYour settings are saved in the root .env file\n\n`
-        )
-      );
-    }
+    console.log(
+      chalk.hex('#dadada')(
+        `\nYour settings are saved in the root .env file\n\n`
+      )
+    );
   } catch (error) {
     console.log('Oh no. An error occured in the Crystallize greeting script.');
     console.log(error);

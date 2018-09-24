@@ -605,7 +605,7 @@
     core-js "^2.5.7"
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@7.0.0":
+"@babel/runtime@7.0.0", "@babel/runtime@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0.tgz#adeb78fedfc855aa05bc041640f3f6f98e85424c"
   dependencies:
@@ -718,8 +718,8 @@
   resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.29.tgz#aa845204cd0a289f65d47e0de63a6a815e30cc66"
 
 "@types/node@*", "@types/node@^10.0.5":
-  version "10.10.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.10.1.tgz#d5c96ca246a418404914d180b7fdd625ad18eca6"
+  version "10.10.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.10.3.tgz#09c75a4ad84d6a3d286790bdd9489a4f8ee9906c"
 
 "@types/zen-observable@^0.8.0":
   version "0.8.0"
@@ -930,8 +930,8 @@ ajv@^5.3.0:
     json-schema-traverse "^0.3.0"
 
 ajv@^6.0.1, ajv@^6.1.0, ajv@^6.5.3:
-  version "6.5.3"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.5.3.tgz#71a569d189ecf4f4f321224fecb166f071dd90f9"
+  version "6.5.4"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.5.4.tgz#247d5274110db653706b550fcc2b797ca28cfc59"
   dependencies:
     fast-deep-equal "^2.0.1"
     fast-json-stable-stringify "^2.0.0"
@@ -1604,8 +1604,8 @@ brorand@^1.0.1:
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
 
 browser-process-hrtime@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-0.1.2.tgz#425d68a58d3447f02a04aa894187fce8af8b7b8e"
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-0.1.3.tgz#616f00faef1df7ec1b5bf9cfe2bdc3170f26c7b4"
 
 browser-resolve@^1.11.3:
   version "1.11.3"
@@ -1786,8 +1786,8 @@ camelize@1.0.0:
   resolved "https://registry.yarnpkg.com/camelize/-/camelize-1.0.0.tgz#164a5483e630fa4321e5af07020e531831b2609b"
 
 caniuse-lite@^1.0.30000884:
-  version "1.0.30000886"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000886.tgz#2127186c4f57da10d3ba26fc3e87dce4a5ddd3ae"
+  version "1.0.30000887"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000887.tgz#1769458c27bbdcf61b0cb6b5072bb6cd11fd9c23"
 
 capture-exit@^1.2.0:
   version "1.2.0"
@@ -2657,8 +2657,8 @@ eslint-config-airbnb@^17.1.0:
     object.entries "^1.0.4"
 
 eslint-config-prettier@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.0.1.tgz#479214f64c1a4b344040924bfb97543db334b7b1"
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.1.0.tgz#2c26d2cdcfa3a05f0642cd7e6e4ef3316cdabfa2"
   dependencies:
     get-stdin "^6.0.0"
 
@@ -3225,9 +3225,11 @@ frameguard@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/frameguard/-/frameguard-3.0.0.tgz#7bcad469ee7b96e91d12ceb3959c78235a9272e9"
 
-framesync@^3.1.8, framesync@^3.1.9:
-  version "3.1.9"
-  resolved "https://registry.yarnpkg.com/framesync/-/framesync-3.1.9.tgz#f65f815c711cf876f343b1f63da6e18b1384172f"
+framesync@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/framesync/-/framesync-4.0.0.tgz#4f7d89d9b4960fece330a0d811c84b1602aace03"
+  dependencies:
+    hey-listen "^1.0.5"
 
 fresh@0.5.2:
   version "0.5.2"
@@ -5139,8 +5141,8 @@ nearley@^2.7.10:
     semver "^5.4.1"
 
 needle@^2.2.1:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/needle/-/needle-2.2.3.tgz#c1b04da378cd634d8befe2de965dc2cfb0fd65ca"
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/needle/-/needle-2.2.4.tgz#51931bff82533b1928b7d1d69e01f1b00ffd2a4e"
   dependencies:
     debug "^2.1.2"
     iconv-lite "^0.4.4"
@@ -5783,26 +5785,28 @@ pn@^1.1.0:
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
 
 polished@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/polished/-/polished-2.0.3.tgz#54bb5f474bebe149e760d4015ed04207817fd38e"
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/polished/-/polished-2.1.1.tgz#767bd417b9df3fa317bc0f3935d1d6b4cb182235"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
 
 popmotion-pose@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/popmotion-pose/-/popmotion-pose-3.3.0.tgz#6df7843cbb5fee81f8d8977b0233b051247c2f4d"
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/popmotion-pose/-/popmotion-pose-3.3.1.tgz#31bab99d8407917dd2055fc374cd95632646be2e"
   dependencies:
     "@popmotion/easing" "^1.0.1"
     hey-listen "^1.0.5"
-    popmotion "^8.3.7"
+    popmotion "^8.4.0"
     pose-core "^2.0.0"
     style-value-types "^3.0.6"
     tslib "^1.9.1"
 
-popmotion@^8.3.7:
-  version "8.3.8"
-  resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-8.3.8.tgz#af2b9ba00d4be089461043b60ea82c1709352a27"
+popmotion@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-8.4.0.tgz#1152245663ab7a8f154ec83c9e8aefc73bd35db4"
   dependencies:
     "@popmotion/easing" "^1.0.1"
-    framesync "^3.1.9"
+    framesync "^4.0.0"
     hey-listen "^1.0.5"
     style-value-types "^3.0.6"
     stylefire "^2.0.7"
@@ -6080,8 +6084,8 @@ react-is@^16.3.1, react-is@^16.4.2, react-is@^16.5.1, react-is@^16.5.2:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.2.tgz#e2a7b7c3f5d48062eb769fcb123505eb928722e3"
 
 react-pose@^3.2.1:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/react-pose/-/react-pose-3.3.3.tgz#9702414a139430db40ea1925f45f9eefc630652e"
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/react-pose/-/react-pose-3.3.4.tgz#7aac93ba09163ed018f1e538d0075c3a2ac65479"
   dependencies:
     "@emotion/is-prop-valid" "^0.6.5"
     hey-listen "^1.0.5"
@@ -6947,10 +6951,10 @@ styled-jsx@3.0.3-canary.0:
     stylis-rule-sheet "0.0.10"
 
 stylefire@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/stylefire/-/stylefire-2.0.7.tgz#ccb121dbd7e96fb92c311413639830cc2d4c7eab"
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/stylefire/-/stylefire-2.1.0.tgz#356dc7951da17f4f55f5f5e6473f2327c17e7077"
   dependencies:
-    framesync "^3.1.8"
+    framesync "^4.0.0"
     hey-listen "^1.0.4"
     style-value-types "^3.0.6"
     tslib "^1.9.1"
