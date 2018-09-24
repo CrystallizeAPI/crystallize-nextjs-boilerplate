@@ -14,6 +14,14 @@ export default {
             percentage
             name
           }
+          dimensions {
+            id
+            name
+            values {
+              id
+              name
+            }
+          }
           product_image
           product_image_resized
           sku
@@ -21,6 +29,7 @@ export default {
           price_from
           fields
           default_variation_id
+
           variations {
             variation_sku
             price_ex_vat
@@ -59,6 +68,7 @@ export default {
 
   props: props => {
     const { data } = props;
+
     return {
       data: {
         ...data,

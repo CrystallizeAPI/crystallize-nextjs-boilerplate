@@ -20,6 +20,16 @@ app.prepare().then(() => {
 
   server.use(checkout(app));
 
+  // Helper function for throwing 404's from Next pages
+  server.get('*', async (req, res, doNext) => {
+    req.throw404 = function throw404() {
+      const err = new Error();
+      err.code = 'ENOENT';
+      throw err;
+    };
+    doNext();
+  });
+
   server.get('*', async (req, res) => {
     const parsedUrl = parse(req.url, true);
     const pageMatch = await PageMatchForRequest(parsedUrl);

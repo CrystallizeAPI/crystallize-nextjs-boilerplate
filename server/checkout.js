@@ -28,7 +28,8 @@ module.exports = app => {
     }),
 
     async (req, res) => {
-      function sendError() {
+      function sendError(error) {
+        console.log(error);
         return res.redirect('/');
       }
 

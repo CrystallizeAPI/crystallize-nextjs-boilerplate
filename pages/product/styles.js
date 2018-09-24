@@ -37,4 +37,9 @@ export const Info = styled.div`
 export const Price = styled.div`
   margin-bottom: 15px;
   text-align: center;
+
+  strong {
+    display: inline-block;
+    margin-left: 5px;
+  }
 `;
