@@ -10,14 +10,29 @@ const checkoutRouter = express.Router();
 
 module.exports = app => {
   // Endpoint used for basket validation for react-basket
-  checkoutRouter.post('/checkout/validate-basket', async (req, res) => {
-    const validation = await Crystallize.callApi('/v2/products/validate', {
-      method: 'post',
-      body: req.body
-    });
+  checkoutRouter.post(
+    '/checkout/validate-basket',
+    bodyParser.json(),
+    bodyParser.urlencoded({
+      extended: true
+    }),
+    async (req, res) => {
+      const { items, ...rest } = req.body;
 
-    return res.json(validation);
-  });
+      const validation = await Crystallize.callApi('/v2/products/validate', {
+        method: 'post',
+        body: {
+          ...rest,
+          items: items.filter(
+            item =>
+              !['discount', 'shipping', 'shipping_fee'].includes(item.type)
+          )
+        }
+      });
+
+      return res.json(validation);
+    }
+  );
 
   // Go to checkout
   checkoutRouter.post(
