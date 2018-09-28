@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CrystallizeImage from '@crystallize/react-image';
+import Image from '@crystallize/react-image';
 
 import { colors, responsive } from 'ui';
 
@@ -12,21 +12,42 @@ export const Outer = styled.a`
   margin: 10px;
   display: flex;
   justify-content: center;
+  position: relative;
+  &:before {
+    content: '';
+    width: 80%;
+    height: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 export const Inner = styled.span`
   text-decoration: none;
   display: flex;
+  background: #fff;
   flex-direction: column;
+  width: 100%;
+  position: relative;
+  z-index: 10;
 `;
 
 export const Figure = styled.figure`
   margin-bottom: 10px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 `;
 
-export const Img = styled(CrystallizeImage)`
+export const Img = styled(Image)`
   display: block;
   width: ${imageWidth.lg};
+  width: 100%;
   object-fit: contain;
   margin: 0 auto;
 
@@ -37,14 +58,12 @@ export const Img = styled(CrystallizeImage)`
 
 export const Footer = styled.footer`
   flex: 1 1 auto;
-  padding: 10px 0;
-  margin: 0 50px;
-  border-top: 1px solid rgba(222, 222, 222, 0.4);
+  padding: 15px 0;
+  margin: 0 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
-
   > div {
     flex: 1;
 
@@ -53,6 +72,8 @@ export const Footer = styled.footer`
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-weight: 600;
+      color: ${colors.darktext};
     }
 
     &:last-child {

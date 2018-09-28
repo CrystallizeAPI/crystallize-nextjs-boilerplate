@@ -1,19 +1,41 @@
 import React from 'react';
+import { graphql } from 'react-apollo';
 
 import Layout from 'components/layout';
-import { H1 } from 'ui';
-import { Outer } from './styles';
+import ProductGrid from 'components/product-grid';
+import { H1, Outer, Header } from 'ui';
+import graphSettings from './graph-settings';
 
-export default class FrontPage extends React.Component {
+class FrontPage extends React.Component {
+  static getInitialProps({ req, graphData }) {
+    if (req) {
+      // No category found. Show 404
+      if (!graphData.catalogue) {
+        const err = new Error();
+        err.code = 'ENOENT';
+        throw err;
+      }
+    }
+    return {};
+  }
+
+  // Attach the graph settings to the class
+  static graph = graphSettings;
+
   render() {
-    const { router } = this.props;
-
+    const { router, data } = this.props;
+    console.log(data);
     return (
       <Layout router={router} title="Front page">
         <Outer>
-          <H1>Hello and welcome</H1>
+          <Header>
+            <H1>Oh hi there!</H1>
+            <p>Cool of you to join us.</p>
+          </Header>
+          <ProductGrid />
         </Outer>
       </Layout>
     );
   }
 }
+export default graphql(FrontPage.graph.query, FrontPage.graph)(FrontPage);

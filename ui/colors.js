@@ -12,5 +12,9 @@ export const colors = {
   error: '#EF4836',
   light: '#dfdfdf',
   roboto: "'Roboto', sans-serif",
-  varela: "'Varela', sans-serif"
+  varela: "'Varela', sans-serif",
+
+  darkText: '#4c505b',
+  lightText: '#fff',
+  price: '#8fdecb'
 };

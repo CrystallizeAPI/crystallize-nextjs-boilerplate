@@ -1,15 +1,13 @@
 import styled from 'styled-components';
+import { colors } from './colors';
 
 export const H1 = styled.h1`
-  text-align: center;
-  padding: 5vh 20px;
-  font-size: 2rem;
-  margin-bottom: 20px;
+  padding: 0 0 15px;
+  font-size: 4rem;
+  color: ${colors.frostbite};
 `;
 
 export const H2 = styled.h2`
-  text-align: center;
   padding: 5vh 20px;
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-size: 2rem;
 `;

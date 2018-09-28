@@ -1,13 +1,13 @@
 import React from 'react';
 import upper from 'upper-case-first';
 import { graphql } from 'react-apollo';
-
+import Collection from 'components/collection';
+import { Outer, Header } from 'ui';
 import Layout from 'components/layout';
-import { H1 } from 'ui';
 import CategoryItem from 'components/category-item';
 
 import graphSettings from './graph-settings';
-import { Outer, List } from './styles';
+import { List } from './styles';
 
 class CategoryPage extends React.PureComponent {
   static getInitialProps({ req, graphData }) {
@@ -27,9 +27,8 @@ class CategoryPage extends React.PureComponent {
 
   render() {
     const { data, router } = this.props;
-    const { loading, error, catalogue } = data;
+    const { loading, error, catalogue, folder } = data;
     const title = upper(router.asPath.replace('/', ''));
-
     if (!catalogue || error) {
       return (
         <Layout {...this.props} title={title}>
@@ -50,11 +49,17 @@ class CategoryPage extends React.PureComponent {
     }
 
     const { children } = catalogue;
-
+    const folderData = folder.content_fields['standard category'];
+    console.log(folderData);
     return (
       <Layout {...this.props} title={title}>
         <Outer>
-          <H1>{title}</H1>
+          <Header>
+            {!!folderData &&
+              folderData.data.map(collection => (
+                <Collection {...collection} key={collection.id} h1 />
+              ))}
+          </Header>
           <List>
             {children.map(p => (
               <CategoryItem key={p.id} data={p} />

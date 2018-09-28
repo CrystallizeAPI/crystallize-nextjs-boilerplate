@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
-
+import { IconUser, IconLogo } from 'ui';
 import BasketButton from './basket-button';
+
 import { Outer, Nav, Logo } from './styles';
 
 export default class Header extends React.Component {
   render() {
-    const { categories, tenant, simple } = this.props;
+    const { categories, simple } = this.props;
 
     if (simple) {
       return (
         <Outer simple={simple}>
-          {tenant && <Logo src={tenant.logo_url} alt={tenant.company_name} />}
+          <Logo>
+            <IconLogo />
+          </Logo>
         </Outer>
       );
     }
@@ -20,10 +23,11 @@ export default class Header extends React.Component {
       <Outer simple={simple}>
         <Link href="/">
           <a>
-            {tenant && <Logo src={tenant.logo_url} alt={tenant.company_name} />}
+            <Logo>
+              <IconLogo />
+            </Logo>
           </a>
         </Link>
-
         <Nav>
           {categories &&
             categories.map(category => (
@@ -37,7 +41,9 @@ export default class Header extends React.Component {
               </Link>
             ))}
           <Link href="/user" prefetch>
-            <a>User profile</a>
+            <a>
+              <IconUser />
+            </a>
           </Link>
         </Nav>
         <BasketButton />

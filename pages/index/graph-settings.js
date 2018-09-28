@@ -1,32 +1,29 @@
 import gql from 'graphql-tag';
 
-import { normalizeContentFields } from 'lib/normalizers';
+// import { normalizeContentFields } from 'lib/normalizers';
 
 export default {
   query: gql`
     query CATEGORY_QUERY($url: String!, $id: String!) {
       catalogue(url: $url, tenantID: $id) {
+        ...stuff
+      }
+    }
+    fragment stuff on Catalogue {
+      id
+      children {
         id
-        content_fields
-        children {
+        name
+        link
+        product {
           id
+          sku
           name
+          product_image
+          product_image_resized
+          price
+          price_from
           link
-          product {
-            id
-            sku
-            name
-            product_image
-            product_image_resized
-            price
-            price_from
-            link
-          }
-        }
-
-        breadcrumbs {
-          name
-          breadcrumb
         }
       }
     }
@@ -46,9 +43,7 @@ export default {
     const { data } = props;
     return {
       data: {
-        ...data,
-        catalogue: normalizeContentFields(data.catalogue),
-        folder: normalizeContentFields(data.catalogue)
+        ...data
       }
     };
   }

@@ -3,15 +3,23 @@ import React from 'react';
 import { BasketConsumer, createBasketItem } from '@crystallize/react-basket';
 import { showRight } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
+import Chunk from '@crystallize/content-chunk/reactChunk';
 import { translate } from 'react-i18next';
 import { graphql } from 'react-apollo';
-
-import { H1, Button, screen } from 'ui';
+import { H1, Button, screen, Outer } from 'ui';
 import Layout from 'components/layout';
 import VariantSelector from 'components/variant-selector';
 
 import graphSettings from './graph-settings';
-import { Outer, Sections, Media, Info, Price } from './styles';
+import {
+  Sections,
+  Media,
+  MediaInner,
+  Info,
+  Price,
+  Description,
+  ProductFooter
+} from './styles';
 
 class ProductPage extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -103,7 +111,6 @@ class ProductPage extends React.Component {
     const { data, t } = this.props;
     const { loading, error, catalogue } = data;
     const { selectedVariant } = this.state;
-
     if (loading) {
       return <Layout loading>Loading...</Layout>;
     }
@@ -113,33 +120,49 @@ class ProductPage extends React.Component {
     }
 
     const { product } = catalogue;
+    const shortDescription = (
+      catalogue.content_fields['short description'] || {}
+    ).data;
 
     return (
       <Outer>
-        <H1>{product.name}</H1>
         <Sections>
           <Media>
-            <Img
-              src={product.product_image}
-              alt={product.name}
-              sizes={`(max-width: ${screen.sm}px) 200px, 400px`}
-            />
+            <MediaInner>
+              <Img
+                src={
+                  selectedVariant.image.length
+                    ? selectedVariant.image[0]
+                    : product.product_image
+                }
+                alt={product.name}
+                sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
+              />
+            </MediaInner>
           </Media>
           <Info>
-            <Price>
-              Price:
-              <strong>
-                {t('currency', { amount: selectedVariant.price_ex_vat })}
-              </strong>
-            </Price>
+            <H1>{product.name}</H1>
+            {!!shortDescription && (
+              <Description>
+                <Chunk {...shortDescription} />
+              </Description>
+            )}
+
             <VariantSelector
               {...product}
               selectedVariant={selectedVariant}
               onDimensionValueChange={this.onDimensionValueChange}
             />
-            <Button type="button" onClick={this.buy}>
-              Add to basket
-            </Button>
+            <ProductFooter>
+              <Price>
+                <strong>
+                  {t('currency', { amount: selectedVariant.price_ex_vat })}
+                </strong>
+              </Price>
+              <Button type="button" onClick={this.buy}>
+                Add to basket
+              </Button>
+            </ProductFooter>
           </Info>
         </Sections>
       </Outer>

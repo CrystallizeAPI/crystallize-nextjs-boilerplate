@@ -6,9 +6,18 @@ export default {
   query: gql`
     query PRODUCT_QUERY($url: String!, $id: String!) {
       catalogue(url: $url, tenantID: $id) {
+        id
+        content_fields
         product {
           id
           name
+          product_image
+          product_image_resized
+          sku
+          price
+          price_from
+          fields
+          default_variation_id
           vat {
             id
             percentage
@@ -22,17 +31,11 @@ export default {
               name
             }
           }
-          product_image
-          product_image_resized
-          sku
-          price
-          price_from
-          fields
-          default_variation_id
 
           variations {
             variation_sku
             price_ex_vat
+            image
             stock_count
             attributes {
               attribute_key

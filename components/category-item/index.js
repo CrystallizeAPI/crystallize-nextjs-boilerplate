@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+
 import { translate } from 'react-i18next';
 
 import { screen } from 'ui';
@@ -14,7 +15,7 @@ class CategoryItem extends React.Component {
       return null;
     }
 
-    const { price, product_image } = product;
+    const { price, product_image, price_from } = product;
 
     return (
       <Link as={link} href="/product" passHref>
@@ -32,7 +33,11 @@ class CategoryItem extends React.Component {
             <Footer>
               <div>
                 <span>{name}</span>
-                <Price>{t('currency', { amount: price })}</Price>
+                <Price>
+                  {price
+                    ? t('currency', { amount: price })
+                    : t('currency', { amount: price_from })}
+                </Price>
               </div>
             </Footer>
           </Inner>
