@@ -10,7 +10,9 @@ export const query = gql`
     }
 
     catalogue(url: $url, tenantID: $id) {
+      id
       children {
+        id
         name
         link
       }

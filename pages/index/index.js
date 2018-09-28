@@ -10,7 +10,7 @@ class FrontPage extends React.Component {
   static getInitialProps({ req, graphData }) {
     if (req) {
       // No category found. Show 404
-      if (!graphData.catalogue) {
+      if (!graphData || !graphData.catalogue) {
         const err = new Error();
         err.code = 'ENOENT';
         throw err;
@@ -23,8 +23,8 @@ class FrontPage extends React.Component {
   static graph = graphSettings;
 
   render() {
-    const { router, data } = this.props;
-    console.log(data);
+    const { router } = this.props;
+
     return (
       <Layout router={router} title="Front page">
         <Outer>
