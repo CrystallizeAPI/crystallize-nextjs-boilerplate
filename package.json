@@ -20,7 +20,8 @@
       "test": "NODE_ENV=test jest",
       "lint": "eslint .",
       "validate": "yarn test && yarn lint-staged",
-      "greet": "node .crystallize-greeting/"
+      "greet": "node .crystallize-greeting/",
+      "postinstall": "yarn greet"
    },
    "lint-staged": {
       "*.js": [
