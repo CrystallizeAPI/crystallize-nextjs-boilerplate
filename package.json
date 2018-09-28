@@ -2,7 +2,7 @@
    "name": "crystallize-frontend-boilerplate",
    "version": "2.3.1",
    "private": true,
-   "license": "ISC",
+   "license": "MIT",
    "engines": {
       "node": ">=8.10"
    },
@@ -29,115 +29,6 @@
          "git add"
       ]
    },
-   "browserslist": [
-      "> 1%",
-      "last 2 versions"
-   ],
-   "babel": {
-      "presets": [
-         "next/babel"
-      ],
-      "env": {
-         "test": {
-            "presets": [
-               [
-                  "next/babel",
-                  {
-                     "preset-env": {
-                        "modules": "commonjs"
-                     }
-                  }
-               ]
-            ]
-         }
-      },
-      "plugins": [
-         "@babel/plugin-transform-runtime",
-         [
-            "module-resolver",
-            {
-               "root": [
-                  "./"
-               ],
-               "alias": {
-                  "lib": "./lib",
-                  "page-components": "./page-components",
-                  "components": "./components",
-                  "ui": "./ui"
-               }
-            }
-         ],
-         [
-            "styled-components",
-            {
-               "displayName": true,
-               "preprocess": false
-            }
-         ]
-      ]
-   },
-   "prettier": {
-      "singleQuote": true
-   },
-   "eslintConfig": {
-      "extends": [
-         "airbnb",
-         "prettier"
-      ],
-      "plugins": [
-         "prettier"
-      ],
-      "parser": "babel-eslint",
-      "settings": {
-         "import/resolver": {
-            "babel-module": {}
-         }
-      },
-      "env": {
-         "es6": true,
-         "browser": true,
-         "node": true,
-         "jest": true
-      },
-      "globals": {
-         "__crystallizeConfig": true
-      },
-      "rules": {
-         "camelcase": 0,
-         "prettier/prettier": "error",
-         "no-plusplus": 0,
-         "no-use-before-define": [
-            "error",
-            "nofunc"
-         ],
-         "import/no-extraneous-dependencies": [
-            "error",
-            {
-               "devDependencies": [
-                  "jest*.js",
-                  "__tests__/**/*.js"
-               ]
-            }
-         ],
-         "prefer-arrow-callback": [
-            "error",
-            {
-               "allowNamedFunctions": true
-            }
-         ],
-         "import/prefer-default-export": false,
-         "jsx-a11y/anchor-is-valid": false,
-         "react/jsx-filename-extension": false,
-         "react/react-in-jsx-scope": false,
-         "react/prop-types": "skipUndeclared",
-         "react/forbid-prop-types": false,
-         "react/require-default-props": false,
-         "react/prefer-stateless-function": "ignorePureComponents"
-      }
-   },
-   "eslintIgnore": [
-      ".crystallize-greeting"
-   ],
    "dependencies": {
       "@babel/core": "^7.1.0",
       "@babel/plugin-transform-runtime": "^7.1.0",
