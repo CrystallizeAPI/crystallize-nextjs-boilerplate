@@ -120,9 +120,8 @@ class ProductPage extends React.Component {
     }
 
     const { product } = catalogue;
-    const shortDescription = (
-      catalogue.content_fields['short description'] || {}
-    ).data;
+    const shortDescription = (catalogue.content_fields.shortDescription || {})
+      .data;
 
     return (
       <Outer>

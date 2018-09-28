@@ -49,8 +49,8 @@ class CategoryPage extends React.PureComponent {
     }
 
     const { children } = catalogue;
-    const folderData = folder.content_fields['standard category'];
-    console.log(folderData);
+    const folderData = folder.content_fields.standardCategory;
+
     return (
       <Layout {...this.props} title={title}>
         <Outer>

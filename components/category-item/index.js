@@ -18,7 +18,7 @@ class CategoryItem extends React.Component {
     const { price, product_image, price_from } = product;
 
     return (
-      <Link as={link} href="/product" passHref>
+      <Link as={link} href="/product" passHref prefetch>
         <Outer>
           <Inner>
             <Figure>
