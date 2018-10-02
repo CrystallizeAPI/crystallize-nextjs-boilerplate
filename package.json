@@ -22,8 +22,10 @@
       "greet": "node .crystallize-greeting/",
       "postinstall": "yarn greet"
    },
-   "husky.hooks": {
-     "precommit": "yarn validate"
+   "husky": {
+     "hooks": {
+       "pre-commit": "yarn validate"
+     }
    },
    "lint-staged": {
       "*.js": [
