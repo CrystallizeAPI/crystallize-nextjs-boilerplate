@@ -20,6 +20,7 @@ export const Grid = styled.div`
 class ProductGrid extends React.Component {
   render() {
     const { products } = this.props;
+
     return (
       <Grid>
         {products.map(item => (
