@@ -65,7 +65,9 @@ class Layout extends React.Component {
               tenant={tenant}
               simple={simpleHeader}
             />
-            <Main>{children}</Main>
+            <Main loading={loading}>
+              {loading ? <div>{children || 'Loading...'}</div> : children}
+            </Main>
           </CrystallizeLayout>
         </BasketProvider>
       </Fragment>

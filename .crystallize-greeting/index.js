@@ -20,7 +20,7 @@ async function envFileExists() {
 
 (async function init() {
   try {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.CRYSTALLIZE_TENANT_ID) {
       return;
     }
 

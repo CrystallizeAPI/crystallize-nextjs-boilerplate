@@ -1,3 +1,4 @@
 {
-  "dotenv": true
+  "dotenv": true,
+  "alias": "weknowinternet.work"
 }

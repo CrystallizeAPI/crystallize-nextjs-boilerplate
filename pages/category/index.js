@@ -39,13 +39,7 @@ class CategoryPage extends React.PureComponent {
     }
 
     if (loading) {
-      return (
-        <Layout {...this.props} title={title} loading>
-          Loading
-          {title}
-          ...
-        </Layout>
-      );
+      return <Layout {...this.props} title={title} loading />;
     }
 
     const { children } = catalogue;

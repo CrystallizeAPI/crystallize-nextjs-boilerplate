@@ -96,12 +96,19 @@ class ProductPage extends React.Component {
     const { selectedVariant } = this.state;
     const { data, crystallizeBasket } = this.props;
     const { actions } = crystallizeBasket;
+    // @Todo cleaner solution
+    const image =
+      selectedVariant.image[0] === 'undefined'
+        ? [data.catalogue.product.product_image]
+        : selectedVariant.image;
 
     const basketItemToAdd = createBasketItem({
       masterProduct: data.catalogue.product,
-      variant: selectedVariant
+      variant: {
+        ...selectedVariant,
+        image
+      }
     });
-
     actions.addItem(basketItemToAdd);
     await showRight();
     actions.animateItem(basketItemToAdd);
@@ -112,7 +119,7 @@ class ProductPage extends React.Component {
     const { loading, error, catalogue } = data;
     const { selectedVariant } = this.state;
     if (loading) {
-      return <Layout loading>Loading...</Layout>;
+      return <Layout loading />;
     }
 
     if (error || !catalogue) {
@@ -122,7 +129,6 @@ class ProductPage extends React.Component {
     const { product } = catalogue;
     const shortDescription = (catalogue.content_fields.shortDescription || {})
       .data;
-
     return (
       <Outer>
         <Sections>
@@ -130,12 +136,12 @@ class ProductPage extends React.Component {
             <MediaInner>
               <Img
                 src={
-                  selectedVariant.image.length
-                    ? selectedVariant.image[0]
-                    : product.product_image
+                  selectedVariant.image[0] === 'undefined'
+                    ? product.product_image
+                    : selectedVariant.image[0]
                 }
-                alt={product.name}
                 sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
+                alt={product.name}
               />
             </MediaInner>
           </Media>
@@ -158,7 +164,7 @@ class ProductPage extends React.Component {
                   {t('currency', { amount: selectedVariant.price_ex_vat })}
                 </strong>
               </Price>
-              <Button type="button" onClick={this.buy}>
+              <Button buy fullWidth type="button" onClick={this.buy}>
                 Add to basket
               </Button>
             </ProductFooter>

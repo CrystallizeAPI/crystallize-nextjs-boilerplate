@@ -61,7 +61,6 @@ export const Info = styled.div`
 `;
 
 export const Price = styled.div`
-  margin-bottom: 15px;
   text-align: center;
   color: ${colors.darkText};
   font-size: 50px;

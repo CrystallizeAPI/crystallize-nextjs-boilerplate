@@ -23,8 +23,8 @@ class FrontPage extends React.Component {
   static graph = graphSettings;
 
   render() {
-    const { router } = this.props;
-
+    const { router, data } = this.props;
+    if (!data || data.loading) return <div>Loading ...</div>;
     return (
       <Layout router={router} title="Front page">
         <Outer>
@@ -32,7 +32,7 @@ class FrontPage extends React.Component {
             <H1>Oh hi there!</H1>
             <p>Cool of you to join us.</p>
           </Header>
-          <ProductGrid />
+          <ProductGrid {...data} />
         </Outer>
       </Layout>
     );

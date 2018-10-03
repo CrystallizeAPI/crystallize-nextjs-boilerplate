@@ -30,16 +30,19 @@ export default class Header extends React.Component {
         </Link>
         <Nav>
           {categories &&
-            categories.map(category => (
-              <Link
-                href="/category"
-                as={category.link}
-                key={category.link}
-                prefetch
-              >
-                <a>{category.name}</a>
-              </Link>
-            ))}
+            categories.map(
+              category =>
+                category.link !== '/shipping' && (
+                  <Link
+                    href="/category"
+                    as={category.link}
+                    key={category.link}
+                    prefetch
+                  >
+                    <a>{category.name}</a>
+                  </Link>
+                )
+            )}
           <Link href="/user" prefetch>
             <a>
               <IconUser />

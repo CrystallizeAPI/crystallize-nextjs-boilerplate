@@ -3,7 +3,7 @@ export const colors = {
   iceberg: '#B7E2E4',
   frost: '#f3f4f6',
   frostbite: '#4c505b',
-  glacier: '#8fdecb',
+  glacier: '#8FDDCA',
   new: '#F79F79',
   handled: '#3496A0',
   dispatched: '#69A2B0',

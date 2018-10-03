@@ -38,6 +38,24 @@ const themes = {
       color: #333;
     `
   },
+  buy: {
+    default: `
+      background: ${darken(0.1, colors.glacier)};
+      color: #fff;
+      font-weight:600;
+      text-decoration: none;
+      text-align: center;
+      border-radius:25px;
+      width:100%;
+    `,
+    hover: `
+      background: ${lighten(0.05, colors.glacier)};
+    `,
+    disabled: `
+      background: #aaa;
+      color: #333;
+    `
+  },
   danger: {
     default: `
       background: ${lighten(0.1, colors.error)};
@@ -73,7 +91,12 @@ const sizes = {
   xlarge: `
     padding: 50px;
     font-size: 50px;
-  `
+  `,
+  fullWidth: `
+    padding: 15px 35px;
+    font-size: 16px;
+    width:100%;
+    `
 };
 
 function getTheme(rest) {
@@ -112,6 +135,7 @@ const ButtonInner = styled.span`
 
 const ButtonOuter = styled.button`
   display: ${p => (p.block ? 'block' : 'inline-block')};
+  width: ${p => (p.block ? '100%' : 'auto')};
   border-radius: 0;
   border: none;
   padding: 0;

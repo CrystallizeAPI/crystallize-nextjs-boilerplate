@@ -37,8 +37,9 @@ export const Inner = styled.span`
 
 export const Figure = styled.figure`
   margin-bottom: 10px;
-  height: 400px;
   display: flex;
+  min-height: 400px;
+  height: 100%;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -46,7 +47,6 @@ export const Figure = styled.figure`
 
 export const Img = styled(Image)`
   display: block;
-  width: ${imageWidth.lg};
   width: 100%;
   object-fit: contain;
   margin: 0 auto;
@@ -61,6 +61,7 @@ export const Footer = styled.footer`
   padding: 15px 0;
   margin: 0 20px;
   display: flex;
+  height: 50px;
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;

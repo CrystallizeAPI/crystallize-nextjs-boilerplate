@@ -8,6 +8,15 @@ export default {
       catalogue(url: $url, tenantID: $id) {
         ...stuff
       }
+      bikes: catalogue(url: "/bikes", tenantID: $id) {
+        ...stuff
+      }
+      illustrations: catalogue(url: "/illustrations", tenantID: $id) {
+        ...stuff
+      }
+      furniture: catalogue(url: "/furniture", tenantID: $id) {
+        ...stuff
+      }
     }
     fragment stuff on Catalogue {
       id
@@ -41,9 +50,17 @@ export default {
 
   props: props => {
     const { data } = props;
+    const { bikes, furniture, illustrations } = data;
     return {
       data: {
-        ...data
+        ...data,
+        products: !bikes
+          ? []
+          : [
+              ...bikes.children,
+              ...furniture.children,
+              ...illustrations.children
+            ]
       }
     };
   }
