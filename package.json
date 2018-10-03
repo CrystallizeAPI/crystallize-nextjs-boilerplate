@@ -11,7 +11,6 @@
       "type": "git"
    },
    "scripts": {
-      "precommit": "yarn validate",
       "dev": "node server/index.js",
       "dev:inspect": "node --inspect-brk server/index.js",
       "build": "next build",
@@ -22,6 +21,11 @@
       "validate": "yarn test && yarn lint-staged",
       "greet": "node .crystallize-greeting/",
       "postinstall": "yarn greet"
+   },
+   "husky": {
+     "hooks": {
+       "pre-commit": "yarn validate"
+     }
    },
    "lint-staged": {
       "*.js": [
@@ -61,7 +65,6 @@
       "react-i18next": "^7.11.1",
       "styled-components": "^4.0.0-beta.9",
       "styled-is": "^1.1.5",
-      "to-camel-case": "^1.0.0",
       "upper-case-first": "^1.1.2"
    },
    "devDependencies": {
