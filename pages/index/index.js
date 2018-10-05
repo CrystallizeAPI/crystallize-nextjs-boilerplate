@@ -11,9 +11,7 @@ class FrontPage extends React.Component {
     if (req) {
       // No category found. Show 404
       if (!graphData || !graphData.catalogue) {
-        const err = new Error();
-        err.code = 'ENOENT';
-        throw err;
+        req.throw404();
       }
     }
     return {};
