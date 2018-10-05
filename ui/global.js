@@ -1,8 +1,5 @@
-/* eslint no-unused-expressions: 0 */
-import { createGlobalStyle } from 'styled-components';
-
 // Global styles
-const GlobalStyle = createGlobalStyle`
+export default `
   html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -67,5 +64,3 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
   }
 `;
-
-export default GlobalStyle;

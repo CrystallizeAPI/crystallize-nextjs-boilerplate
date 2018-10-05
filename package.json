@@ -23,9 +23,9 @@
       "postinstall": "yarn greet"
    },
    "husky": {
-     "hooks": {
-       "pre-commit": "yarn validate"
-     }
+      "hooks": {
+         "pre-commit": "yarn validate"
+      }
    },
    "lint-staged": {
       "*.js": [
@@ -63,7 +63,7 @@
       "react-apollo": "^2.1.11",
       "react-dom": "^16.5.2",
       "react-i18next": "^7.11.1",
-      "styled-components": "^4.0.0-beta.9",
+      "styled-components": "^4.0.0-beta.10",
       "styled-is": "^1.1.5",
       "upper-case-first": "^1.1.2"
    },

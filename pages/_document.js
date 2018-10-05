@@ -2,7 +2,7 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import GlobalStyle from 'ui/global';
+import globalStyle from 'ui/global';
 
 import { NODE_ENV, GTM_ID, TENANT_ID, API_URL } from '../server/config';
 
@@ -51,7 +51,7 @@ export default class MyDocument extends Document {
               `
             }}
           />
-          <GlobalStyle />
+          <style dangerouslySetInnerHTML={{ __html: globalStyle }} />
           {this.props.styleTags}
         </Head>
         <body>
