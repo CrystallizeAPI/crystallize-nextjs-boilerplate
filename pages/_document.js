@@ -26,12 +26,42 @@ export default class MyDocument extends Document {
     return (
       <html lang="no">
         <Head>
-          <title>Crystallize</title>
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1, minimal-ui"
           />
           <meta name="apple-mobile-web-app-capable" content="yes" />
+
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/static/favicons/apple-touch-icon.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/static/favicons/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/static/favicons/favicon-16x16.png"
+          />
+          <link rel="manifest" href="/static/favicons/site.webmanifest" />
+          <link
+            rel="mask-icon"
+            href="/static/favicons/safari-pinned-tab.svg"
+            color="#8fdecb"
+          />
+          <link rel="shortcut icon" href="/static/favicons/favicon.ico" />
+          <meta name="msapplication-TileColor" content="#00aba9" />
+          <meta
+            name="msapplication-config"
+            content="/static/favicons/browserconfig.xml"
+          />
+          <meta name="theme-color" content="#ffffff" />
 
           {GTM_ID && (
             <script

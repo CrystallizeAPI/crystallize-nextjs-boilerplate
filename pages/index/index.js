@@ -7,16 +7,6 @@ import { H1, Outer, Header } from 'ui';
 import graphSettings from './graph-settings';
 
 class FrontPage extends React.Component {
-  static getInitialProps({ req, graphData }) {
-    if (req) {
-      // No category found. Show 404
-      if (!graphData || !graphData.catalogue) {
-        req.throw404();
-      }
-    }
-    return {};
-  }
-
   // Attach the graph settings to the class
   static graph = graphSettings;
 

@@ -13,10 +13,8 @@ class CategoryPage extends React.PureComponent {
   static getInitialProps({ req, graphData }) {
     if (req) {
       // No category found. Show 404
-      if (!graphData.catalogue) {
-        const err = new Error();
-        err.code = 'ENOENT';
-        throw err;
+      if (!graphData || !graphData.catalogue) {
+        req.throw404();
       }
     }
     return {};
@@ -29,7 +27,8 @@ class CategoryPage extends React.PureComponent {
     const { data, router } = this.props;
     const { loading, error, catalogue, folder } = data;
     const title = upper(router.asPath.replace('/', ''));
-    if (!catalogue || error) {
+
+    if (error) {
       return (
         <Layout {...this.props} title={title}>
           Could not load

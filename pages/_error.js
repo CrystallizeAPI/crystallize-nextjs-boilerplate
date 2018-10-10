@@ -1,4 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
+
+export const Outer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default class Error extends React.Component {
   static getInitialProps({ res, err }) {
@@ -14,11 +23,11 @@ export default class Error extends React.Component {
   render() {
     const { statusCode } = this.props;
     return (
-      <p>
+      <Outer>
         {statusCode
           ? `Oh dear. An error (${statusCode}) occurred on server`
           : 'Huh? An error occurred on client'}
-      </p>
+      </Outer>
     );
   }
 }
