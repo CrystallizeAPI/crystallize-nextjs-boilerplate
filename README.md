@@ -1,6 +1,6 @@
 # Crystallize frontend boilerplate
 
-The bare minimum skeleton you need to get a frontend up and running on Crystallize. React SSR with Next.js
+The bare minimum skeleton you need to get a frontend up and running on [Crystallize](https://crystallize.com). React SSR with Next.js
 
 [![React: latest](https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square)](https://github.com/facebook/react)
 
@@ -28,7 +28,7 @@ Put all your entry pages here
 
 All your shared components
 
-## ,/ui
+## ./ui
 
 UI related components live her. Color variables and simple shared components
 
