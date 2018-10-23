@@ -21,7 +21,6 @@
         "root": ["./"],
         "alias": {
           "lib": "./lib",
-          "page-components": "./page-components",
           "components": "./components",
           "ui": "./ui"
         }

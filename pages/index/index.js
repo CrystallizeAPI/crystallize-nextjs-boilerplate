@@ -26,4 +26,5 @@ class FrontPage extends React.Component {
     );
   }
 }
+
 export default graphql(FrontPage.graph.query, FrontPage.graph)(FrontPage);
