@@ -9,10 +9,11 @@ export const imageWidth = {
 };
 
 export const Outer = styled.a`
-  margin: 10px;
+  flex: 1 1 auto;
   display: flex;
   justify-content: center;
   position: relative;
+
   &:before {
     content: '';
     width: 80%;
