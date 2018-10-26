@@ -10,6 +10,11 @@ export default class Checkout extends React.Component {
 
   render() {
     const { order } = this.props;
+
+    if (!order) {
+      return null;
+    }
+
     return (
       <Layout title="Checkout">
         <div dangerouslySetInnerHTML={{ __html: order.gui.snippet }} />

@@ -1,6 +1,6 @@
 /* eslint react/no-multi-comp: 0 */
 import React from 'react';
-import { BasketConsumer, createBasketItem } from '@crystallize/react-basket';
+import { BasketContext, createBasketItem } from '@crystallize/react-basket';
 import { showRight } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import Chunk from '@crystallize/content-chunk/reactChunk';
@@ -22,6 +22,8 @@ import {
 } from './styles';
 
 class ProductPage extends React.Component {
+  static contextType = BasketContext;
+
   static getDerivedStateFromProps(nextProps, prevState) {
     // Determine the selected variant
     if (prevState && !prevState.selectedVariant) {
@@ -94,8 +96,9 @@ class ProductPage extends React.Component {
 
   buy = async () => {
     const { selectedVariant } = this.state;
-    const { data, crystallizeBasket } = this.props;
-    const { actions } = crystallizeBasket;
+    const { data } = this.props;
+    const { actions } = this.context;
+
     // @Todo cleaner solution
     const image =
       selectedVariant.image[0] === 'undefined'
@@ -116,15 +119,8 @@ class ProductPage extends React.Component {
 
   render() {
     const { data, t } = this.props;
-    const { loading, error, catalogue } = data;
+    const { catalogue } = data;
     const { selectedVariant } = this.state;
-    if (loading) {
-      return <Layout loading />;
-    }
-
-    if (error || !catalogue) {
-      return <Layout error>Error getting product</Layout>;
-    }
 
     const { product } = catalogue;
     const shortDescription = (catalogue.content_fields.shortDescription || {})
@@ -189,6 +185,19 @@ class ProductPageDataLoader extends React.Component {
 
   render() {
     const { data, t } = this.props;
+    const { loading, error } = data;
+
+    if (loading) {
+      return <Layout {...this.props} loading />;
+    }
+
+    if (error) {
+      return (
+        <Layout {...this.props} error>
+          Error getting product
+        </Layout>
+      );
+    }
 
     let title = t('Loading');
     if (data.catalogue) {
@@ -197,11 +206,7 @@ class ProductPageDataLoader extends React.Component {
 
     return (
       <Layout {...this.props} title={title}>
-        <BasketConsumer>
-          {basketProps => (
-            <ProductPage crystallizeBasket={basketProps} {...this.props} />
-          )}
-        </BasketConsumer>
+        <ProductPage {...this.props} />
       </Layout>
     );
   }

@@ -1,11 +1,13 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
-import { BasketConsumer } from '@crystallize/react-basket';
+import { BasketContext } from '@crystallize/react-basket';
 import { translate } from 'react-i18next';
 
 import Layout from 'components/layout';
 
 class Inner extends React.Component {
+  static contextType = BasketContext;
+
   state = {
     emptied: false
   };
@@ -16,7 +18,7 @@ class Inner extends React.Component {
 
   empty() {
     const { emptied } = this.state;
-    const { actions } = this.props;
+    const { actions } = this.context;
     if (!emptied) {
       actions.empty();
       this.setState({ emptied: true });
@@ -56,9 +58,7 @@ class CheckoutConfirmation extends React.Component {
   render() {
     return (
       <Layout title="confirmation">
-        <BasketConsumer>
-          {props => <Inner {...props} {...this.props} />}
-        </BasketConsumer>
+        <Inner {...this.props} />
       </Layout>
     );
   }
