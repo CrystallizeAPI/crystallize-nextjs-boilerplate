@@ -6,6 +6,7 @@
   "inputCoupon": "Input coupon below",
   "inputCouponPlaceholder": "my-awesome-code",
   "registerCoupon": "Register coupon",
+  "unregisterCoupon": "Remove coupon",
   "cancel": "Cancel",
   "thisCouponIsNotValid": "This coupon is not valid",
   "totalPrice": "Total price",

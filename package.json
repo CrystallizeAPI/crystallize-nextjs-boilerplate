@@ -1,13 +1,12 @@
 {
    "name": "crystallize-frontend-boilerplate",
    "version": "2.6.1",
-   "private": true,
    "license": "MIT",
    "engines": {
       "node": ">=8.12"
    },
    "repository": {
-      "url": "git@github.com:snowballdigital/crystallize-frontend-boilerplate.git",
+      "url": "git@github.com:CrystallizeAPI/crystallize-frontend-boilerplate.git",
       "type": "git"
    },
    "scripts": {
@@ -36,11 +35,11 @@
    },
    "dependencies": {
       "@babel/core": "^7.1.2",
-      "@crystallize/content-chunk": "^3.2.0",
-      "@crystallize/node-klarna": "^1.4.0",
-      "@crystallize/react-basket": "^4.0.1",
-      "@crystallize/react-image": "^2.1.0",
-      "@crystallize/react-layout": "^1.8.0",
+      "@crystallize/content-chunk": "^3.3.0",
+      "@crystallize/node-klarna": "^1.5.0",
+      "@crystallize/react-basket": "^5.1.2",
+      "@crystallize/react-image": "^2.2.0",
+      "@crystallize/react-layout": "^1.9.0",
       "apollo-boost": "^0.1.19",
       "apollo-client": "^2.4.5",
       "babel-plugin-module-resolver": "^3.1.1",
