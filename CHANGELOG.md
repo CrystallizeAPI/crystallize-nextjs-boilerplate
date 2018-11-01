@@ -1,3 +1,12 @@
+## 2.7.0 (2018-11-01)
+
+* Fix for getInitialProps ([7b59b36](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/7b59b36))
+* Updated changelog ([5ded0bb](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/5ded0bb))
+* Updated package versions ([43bedca](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/43bedca))
+* Updated react basket ([1317c11](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/1317c11))
+
+
+
 ## <small>2.6.1 (2018-10-26)</small>
 
 * Added Crystallize api token to default setup values ([4fac8ba](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/4fac8ba))
