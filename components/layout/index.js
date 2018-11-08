@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import CrystallizeLayout from '@crystallize/react-layout';
-import { BasketProvider } from '@crystallize/react-basket';
 
 import Aside from 'components/aside';
 
@@ -47,30 +46,25 @@ class Layout extends React.Component {
     }
 
     return (
-      <Fragment>
+      <>
         <Head>
           <title key="title">{displayTitle}</title>
           {description && (
             <meta key="description" name="description" content={description} />
           )}
         </Head>
-        <BasketProvider
-          shippingCost="199"
-          freeShippingMinimumPurchaseAmount="800"
-          validateEndpoint="/checkout/validate-basket"
-        >
-          <CrystallizeLayout right={Aside}>
-            <Header
-              categories={categories}
-              tenant={tenant}
-              simple={simpleHeader}
-            />
-            <Main loading={loading}>
-              {loading ? <div>{children || 'Loading...'}</div> : children}
-            </Main>
-          </CrystallizeLayout>
-        </BasketProvider>
-      </Fragment>
+
+        <CrystallizeLayout right={Aside}>
+          <Header
+            categories={categories}
+            tenant={tenant}
+            simple={simpleHeader}
+          />
+          <Main loading={loading}>
+            {loading ? <div>{children || 'Loading...'}</div> : children}
+          </Main>
+        </CrystallizeLayout>
+      </>
     );
   }
 }
