@@ -1,4 +1,4 @@
-# Crystallize frontend boilerplate
+# Crystallize React ecommerce frontend boilerplate
 
 The bare minimum skeleton you need to get a frontend up and running on the [headless commerce & GraphQL based PIM service Crystallize](https://crystallize.com). React SSR with Next.js
 
