@@ -1,3 +1,14 @@
+## <small>2.7.1 (2019-02-15)</small>
+
+* Moved BasketProvider to _app ([c3bec35](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/c3bec35))
+* Update deps. ([96abaae](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/96abaae))
+* Update README.md ([4a9d9a2](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/4a9d9a2))
+* Update README.md ([aab3a0b](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/aab3a0b))
+* Update README.md ([82d3d84](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/82d3d84))
+* Update README.md ([60a4a4e](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/60a4a4e))
+
+
+
 ## 2.7.0 (2018-11-01)
 
 * Fix for getInitialProps ([7b59b36](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/7b59b36))
