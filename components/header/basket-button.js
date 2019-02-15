@@ -1,8 +1,10 @@
 import React from 'react';
-import { IconBasket } from 'ui';
 import { translate } from 'react-i18next';
+
 import { BasketConsumer } from '@crystallize/react-basket';
-import { showRight } from '@crystallize/react-layout';
+import { LayoutContext } from '@crystallize/react-layout';
+
+import { IconBasket } from 'ui';
 
 import { Basket, BasketQuantity } from './styles';
 
@@ -11,10 +13,14 @@ const Button = () => (
     {({ state }) => {
       if (state.ready) {
         return (
-          <Basket onClick={showRight} type="button">
-            <IconBasket />
-            <BasketQuantity>{state.totalQuantity}</BasketQuantity>
-          </Basket>
+          <LayoutContext.Consumer>
+            {({ actions }) => (
+              <Basket onClick={actions.showRight} type="button">
+                <IconBasket />
+                <BasketQuantity>{state.totalQuantity}</BasketQuantity>
+              </Basket>
+            )}
+          </LayoutContext.Consumer>
         );
       }
       return '...';

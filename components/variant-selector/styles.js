@@ -21,9 +21,9 @@ export const Values = styled.div`
   margin-left: -20px;
 `;
 
-export const Button = styled.button.attrs({
+export const Button = styled.button.attrs(() => ({
   type: 'button'
-})`
+}))`
   appearance: none;
   background: transparent;
   border: none;

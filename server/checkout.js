@@ -2,8 +2,8 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const klarna = require('@crystallize/node-klarna/v2');
 
+const klarna = require('./lib/klarna');
 const Crystallize = require('./lib/crystallize');
 const config = require('./config');
 

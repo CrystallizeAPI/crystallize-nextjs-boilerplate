@@ -31,7 +31,7 @@ export const Basket = styled.div`
     }
     &__items {
       flex: 1 1 auto;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
     &__item {
       padding: 2px 0;

@@ -29,8 +29,7 @@
     [
       "styled-components",
       {
-        "displayName": true,
-        "preprocess": false
+        "ssr": true
       }
     ]
   ]

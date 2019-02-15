@@ -60,13 +60,7 @@ async function envFileExists() {
       'CRYSTALLIZE_API_URL=https://api.crystallize.com',
       'CRYSTALLIZE_API_TOKEN=4a9154575f38ad98f2bb227a9fb4a77f',
       'PORT=3000',
-      'GTM_ID=',
-      'KLARNA_MODE=test',
-      'KLARNA_MERCHANT_ID=1',
-      'KLARNA_STORE_NAME=test',
-      'KLARNA_SHARED_SECRET=test',
-      'KLARNA_TERMS_URI=https://example.com',
-      'KLARNA_RECURRING_TOKEN='
+      'GTM_ID='
     ];
 
     if (shopToUse !== 'demo') {

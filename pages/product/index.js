@@ -1,14 +1,14 @@
 /* eslint react/no-multi-comp: 0 */
 import React from 'react';
 import { BasketContext, createBasketItem } from '@crystallize/react-basket';
-import { showRight } from '@crystallize/react-layout';
+import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import Chunk from '@crystallize/content-chunk/reactChunk';
-import { translate } from 'react-i18next';
 import { graphql } from 'react-apollo';
 import { H1, Button, screen, Outer } from 'ui';
 import Layout from 'components/layout';
 import VariantSelector from 'components/variant-selector';
+import { translate } from 'react-i18next';
 
 import graphSettings from './graph-settings';
 import {
@@ -22,8 +22,6 @@ import {
 } from './styles';
 
 class ProductPage extends React.Component {
-  static contextType = BasketContext;
-
   static getDerivedStateFromProps(nextProps, prevState) {
     // Determine the selected variant
     if (prevState && !prevState.selectedVariant) {
@@ -96,8 +94,7 @@ class ProductPage extends React.Component {
 
   buy = async () => {
     const { selectedVariant } = this.state;
-    const { data } = this.props;
-    const { actions } = this.context;
+    const { data, layoutContext, basketContext } = this.props;
 
     // @Todo cleaner solution
     const image =
@@ -112,9 +109,10 @@ class ProductPage extends React.Component {
         image
       }
     });
-    actions.addItem(basketItemToAdd);
-    await showRight();
-    actions.animateItem(basketItemToAdd);
+
+    basketContext.actions.addItem(basketItemToAdd);
+    await layoutContext.actions.showRight();
+    basketContext.actions.animateItem(basketItemToAdd);
   };
 
   render() {
@@ -206,7 +204,19 @@ class ProductPageDataLoader extends React.Component {
 
     return (
       <Layout {...this.props} title={title}>
-        <ProductPage {...this.props} />
+        <LayoutContext.Consumer>
+          {layoutContext => (
+            <BasketContext.Consumer>
+              {basketContext => (
+                <ProductPage
+                  layoutContext={layoutContext}
+                  basketContext={basketContext}
+                  {...this.props}
+                />
+              )}
+            </BasketContext.Consumer>
+          )}
+        </LayoutContext.Consumer>
       </Layout>
     );
   }
