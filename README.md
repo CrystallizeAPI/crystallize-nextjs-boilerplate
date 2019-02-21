@@ -1,6 +1,6 @@
 # Crystallize React ecommerce frontend boilerplate
 
-The bare minimum skeleton you need to get a frontend up and running on the [headless commerce & GraphQL based PIM service Crystallize](https://crystallize.com). [React commerce with SSR with Next.js](https://crystallize.com/developers).
+The bare minimum skeleton you need to get a frontend up and running on the [headless commerce](https://crystallize.com/product) & [GraphQL based Product Information Management service Crystallize](https://crystallize.com/product/product-information-management). [React commerce with SSR with Next.js](https://crystallize.com/developers).
 
 [![React: latest](https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square)](https://github.com/facebook/react)
 
