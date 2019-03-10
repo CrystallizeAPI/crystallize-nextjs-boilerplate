@@ -1,6 +1,12 @@
 # Crystallize React ecommerce frontend boilerplate
 
-The bare minimum skeleton you need to get a frontend up and running on the [headless ecommerce](https://crystallize.com/product) & [GraphQL based Product Information Management service Crystallize](https://crystallize.com/product/product-information-management). [React commerce with SSR with Next.js](https://crystallize.com/developers).
+The bare minimum skeleton you need to get a frontend up and running on the [headless ecommerce](https://crystallize.com/product) & GraphQL based [product Information Management](https://crystallize.com/product/product-information-management) service [Crystallize](https://crystallize.com). [React commerce with Next.js SSR](https://crystallize.com/developers).
+
+This frontend boilerplate is a great startingpoing when building [React ecommerce](https://crystallize.com/developers) experiences with [frontend performance](https://crystallize.com/blog/frontend-performance-measuring-kpis) in focus. You can have rich ecommerce content with the super structured [PIM](https://crystallize.com/product/product-information-management) engine in Crystallize powering your product catalogue.
+
+Fast frontend performance delivers a better ecommerce experience and is a key ingredient in the [ecommerce SEO checklist](https://crystallize.com/blog/ecommerce-seo-checklist). [Rich content driven ecommerce experiences](https://crystallize.com/blog/content-rich-storytelling-makes-juicy-ecommerce) builds the foundation for a  [content strategy for exponential growth marketing](https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing). 
+
+Check it out, the boilerplate is Open Source and MIT licensed.
 
 [![React: latest](https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square)](https://github.com/facebook/react)
 
