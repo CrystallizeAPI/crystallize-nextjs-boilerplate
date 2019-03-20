@@ -107,13 +107,11 @@ async function envFileExists() {
     );
 
     console.log(`
-To start in development mode: ${themeColor('npm run dev')} or ${themeColor(
-      'yarn dev'
-    )}
-To start in ${chalk.italic('super fast')} production mode: ${themeColor(
+      To start in development mode: ${themeColor('npm run dev')} 
+      To start in ${chalk.italic('super fast')} production mode: ${themeColor(
       'npm run prod'
-    )} or ${themeColor('yarn prod')}
-      `);
+    )}
+    `);
 
     console.log(
       chalk.hex('#dadada')(
