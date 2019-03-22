@@ -9,4 +9,5 @@ export const Main = styled.main`
     justify-content:center;
     min-height:400px;
   `};
+  padding-bottom: 200px;
 `;
