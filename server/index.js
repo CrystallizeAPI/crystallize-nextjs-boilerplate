@@ -13,12 +13,16 @@ const checkout = require('./checkout');
 const app = next({ dev: config.DEV });
 const handle = app.getRequestHandler();
 
+const api = require('./api');
+
 app.prepare().then(() => {
   const server = express();
 
   server.use(helmet());
 
   server.use(checkout(app));
+
+  server.use('/api', api);
 
   // Helper function for throwing 404's from Next pages
   server.get('*', async (req, res, doNext) => {

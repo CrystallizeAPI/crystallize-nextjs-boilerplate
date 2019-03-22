@@ -38,6 +38,7 @@
       "@crystallize/content-chunk": "^3.3.0",
       "@crystallize/node-klarna": "^2.1.1",
       "@crystallize/react-basket": "^5.1.2",
+      "@crystallize/react-dialog": "^4.2.1",
       "@crystallize/react-image": "^2.2.0",
       "@crystallize/react-layout": "^3.0.0",
       "apollo-boost": "^0.1.28",
@@ -55,6 +56,7 @@
       "i18next": "^11.7.0",
       "isarray": "^2.0.4",
       "lodash.merge": "^4.6.1",
+      "mjml": "^4.4.0-beta.1",
       "next": "^7.0.3",
       "ow": "^0.8.0",
       "polished": "^2.3.0",
@@ -65,7 +67,8 @@
       "react-i18next": "^7.11.1",
       "styled-components": "^4.1.3",
       "styled-is": "^1.1.5",
-      "upper-case-first": "^1.1.2"
+      "upper-case-first": "^1.1.2",
+      "uuid": "^3.3.2"
    },
    "devDependencies": {
       "babel-core": "7.0.0-bridge.0",

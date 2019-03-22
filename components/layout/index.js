@@ -5,6 +5,7 @@ import CrystallizeLayout from '@crystallize/react-layout';
 
 import Aside from 'components/aside';
 
+import { Wrapper } from '@crystallize/react-dialog';
 import Header from '../header';
 import GraphData from './graph-data';
 import { Main } from './styles';
@@ -53,7 +54,6 @@ class Layout extends React.Component {
             <meta key="description" name="description" content={description} />
           )}
         </Head>
-
         <CrystallizeLayout right={Aside}>
           <Header
             categories={categories}
@@ -64,6 +64,7 @@ class Layout extends React.Component {
             {loading ? <div>{children || 'Loading...'}</div> : children}
           </Main>
         </CrystallizeLayout>
+        <Wrapper />
       </>
     );
   }
