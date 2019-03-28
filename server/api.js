@@ -1,10 +1,10 @@
 const routes = require('express').Router();
 const crypto = require('crypto');
-const fs = require('fs');
-const users = require('./data/users.json');
 const emailFormatter = require('./lib/email-formatter');
 
-const secret = 'somesecretscanneverberevealed';
+const users = [];
+
+const secret = process.env.SECRET;
 
 routes.post('/login-user/:email', async (req, res) => {
   const { email } = req.params;
@@ -23,17 +23,7 @@ routes.post('/login-user/:email', async (req, res) => {
   // Ready to send email
   console.log(formattedEmail);
 
-  fs.writeFile(
-    './server/data/users.json',
-    JSON.stringify(users),
-    'utf8',
-    err => {
-      if (err) {
-        return console.error(err);
-      }
-      return {};
-    }
-  );
+  console.log(users);
 
   if (email) {
     console.log(magicLink);
