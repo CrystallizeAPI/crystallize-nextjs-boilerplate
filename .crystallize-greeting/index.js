@@ -57,7 +57,7 @@ async function envFileExists() {
     ]);
 
     const envFileVars = [
-      'CRYSTALLIZE_API_URL=https://api.crystallize.com',
+      'CRYSTALLIZE_API_URL=https://graph-dev.crystallize.digital/t/demo',
       'CRYSTALLIZE_API_TOKEN=4a9154575f38ad98f2bb227a9fb4a77f',
       'PORT=3000',
       'GTM_ID='
