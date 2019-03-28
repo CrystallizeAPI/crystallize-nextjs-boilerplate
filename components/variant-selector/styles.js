@@ -10,13 +10,6 @@ export const Dimension = styled.div`
   margin-bottom: 15px;
 `;
 
-export const Label = styled.div`
-  color: #000;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  padding-bottom: 5px;
-`;
-
 export const Values = styled.div`
   margin-left: -20px;
 `;
