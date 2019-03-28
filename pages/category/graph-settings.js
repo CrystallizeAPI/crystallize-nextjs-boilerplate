@@ -4,29 +4,93 @@ import { normalizeContentFields } from 'lib/normalizers';
 
 export default {
   query: gql`
-    query CATEGORY_QUERY($url: String!, $id: String!) {
-      catalogue(url: $url, tenantID: $id) {
-        id
-        content_fields
-        children {
-          id
-          name
-          link
-          product {
-            id
-            sku
-            name
-            product_image
-            product_image_resized
-            price
-            price_from
-            link
+    query CATEGORY_QUERY($url: String) {
+      tree(language: "en", path: $url) {
+        ...item
+        ...product
+        ... on Item {
+          children {
+            ...item
+            ...product
+            ... on Item {
+              children {
+                ...item
+                ...product
+              }
+            }
           }
         }
+      }
+    }
 
-        breadcrumbs {
+    fragment item on Item {
+      id
+      name
+      type
+      path
+      components {
+        name
+        type
+        meta {
+          key
+          value
+        }
+        content {
+          ...singleLine
+          ...richText
+          ...paragraphCollection
+        }
+      }
+    }
+
+    fragment product on Product {
+      vatType {
+        name
+        percent
+      }
+      isVirtual
+      isSubscriptionOnly
+      variants {
+        id
+        name
+        sku
+        price
+        stock
+        isDefault
+        image {
+          url
+          altText
+          variants {
+            key
+            width
+          }
+        }
+        subscriptionPlans {
+          id
           name
-          breadcrumb
+          initialPeriod
+          initialPrice
+          recurringPeriod
+          recurringPrice
+        }
+      }
+    }
+
+    fragment singleLine on SingleLineContent {
+      text
+    }
+
+    fragment richText on RichTextContent {
+      json
+    }
+
+    fragment paragraphCollection on ParagraphCollectionContent {
+      paragraphs {
+        title {
+          ...singleLine
+        }
+        body {
+          ...richText
         }
       }
     }
@@ -47,8 +111,8 @@ export default {
     return {
       data: {
         ...data,
-        catalogue: normalizeContentFields(data.catalogue),
-        folder: normalizeContentFields(data.catalogue)
+        catalogue: normalizeContentFields(data),
+        folder: normalizeContentFields(data)
       }
     };
   }
