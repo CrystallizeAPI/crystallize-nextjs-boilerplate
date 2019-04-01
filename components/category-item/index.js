@@ -10,7 +10,7 @@ const placeHolderImg = '/static/placeholder.png';
 
 class CategoryItem extends React.Component {
   render() {
-    const { data, t } = this.props;
+    const { data, t, key } = this.props;
     const { name, path, variants } = data;
 
     if (!data) {
@@ -20,7 +20,7 @@ class CategoryItem extends React.Component {
     const { price, image } = variants[0];
 
     return (
-      <Link as={path} href="/product" passHref prefetch>
+      <Link as={path} key={key} href="/product" passHref prefetch>
         <Outer>
           <Inner>
             <Figure>

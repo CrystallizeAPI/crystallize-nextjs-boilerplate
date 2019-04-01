@@ -42,7 +42,11 @@ class CategoryPage extends React.PureComponent {
       return <Layout {...this.props} title={title} loading />;
     }
 
-    const { children } = data.tree[0];
+    const {
+      tree: {
+        0: { children }
+      }
+    } = data;
     if (folder) {
       const { standardCategory, standardProduct } = folder;
       if (!standardCategory && !standardProduct) folderData = false;
@@ -56,7 +60,7 @@ class CategoryPage extends React.PureComponent {
           <Header>
             {!!folderData &&
               folderData.paragraphs.map(collection => (
-                <Collection {...collection} key={collection.id} h1 />
+                <Collection {...collection} key={collection.title} h1 />
               ))}
           </Header>
           <List>
