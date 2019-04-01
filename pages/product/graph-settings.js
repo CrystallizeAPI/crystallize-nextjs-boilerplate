@@ -1,7 +1,5 @@
 import gql from 'graphql-tag';
 
-import { normalizeContentFields } from 'lib/normalizers';
-
 export default {
   query: gql`
     query PRODUCT_QUERY($url: String) {
@@ -110,8 +108,7 @@ export default {
     const { data } = props;
     return {
       data: {
-        ...data,
-        catalogue: normalizeContentFields(data.tree)
+        ...data
       }
     };
   }

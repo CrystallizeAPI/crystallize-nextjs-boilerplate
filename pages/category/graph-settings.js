@@ -108,11 +108,14 @@ export default {
 
   props: props => {
     const { data } = props;
+    const { tree } = data;
     return {
       data: {
         ...data,
-        catalogue: normalizeContentFields(data),
-        folder: normalizeContentFields(data)
+        folder:
+          tree && tree[0] && tree[0].components
+            ? normalizeContentFields(tree[0].components)
+            : undefined
       }
     };
   }

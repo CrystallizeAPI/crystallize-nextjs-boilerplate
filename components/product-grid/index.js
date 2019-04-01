@@ -38,11 +38,12 @@ class ProductGrid extends React.Component {
 
     return (
       <Grid>
-        {products.map(item => (
-          <li key={item.id}>
-            <Product data={item} />
-          </li>
-        ))}
+        {products &&
+          products.map(item => (
+            <li key={item.id}>
+              <Product data={item} />
+            </li>
+          ))}
       </Grid>
     );
   }
