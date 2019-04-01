@@ -14,6 +14,8 @@
   "totalAfterDiscount": "Total after discount",
   "shipping": "Shipping",
   "amountToPay": "To pay",
+  "totalVatAmount": "Incl. VAT",
+  "itemVat": "VAT $t(currency, { 'amount': {{amount}} })",
   "remainingUntilFreeShippingApplies": "Shop for {{remainingUntilFreeShippingApplies}},- more for free shipping",
   "couldNotVerifyCoupon": "Could not find the coupon \"{{coupon}}\"",
   "fillOutCoupon": "Please input a coupon",

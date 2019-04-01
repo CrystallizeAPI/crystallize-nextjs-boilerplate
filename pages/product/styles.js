@@ -74,6 +74,7 @@ export const Description = styled.div`
   max-width: 400px;
   color: ${colors.darkText};
   line-height: 1.3em;
+  margin-bottom: 15px;
 `;
 export const ProductFooter = styled.div`
   display: flex;

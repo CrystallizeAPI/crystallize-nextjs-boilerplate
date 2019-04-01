@@ -63,6 +63,11 @@ export const Basket = styled.div`
         font-weight: 700;
         padding-top: 5px;
       }
+      &-vat {
+        font-weight: 300;
+        font-size: 12px;
+        margin-top: 5px;
+      }
     }
     &__totals {
       padding: 10px 0;
