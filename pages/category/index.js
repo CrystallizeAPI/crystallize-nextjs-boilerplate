@@ -48,7 +48,6 @@ class CategoryPage extends React.PureComponent {
       if (!standardCategory && !standardProduct) folderData = false;
       if (standardCategory) folderData = standardCategory.content;
       if (standardProduct) folderData = standardProduct.content;
-      folderData = false;
     }
 
     return (
