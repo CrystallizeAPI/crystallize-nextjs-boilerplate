@@ -12,7 +12,7 @@ exports.getHtml = loginLink =>
           <mj-text>
             Welcome to ${tenantName}
             <mj-button href="${loginLink}" align="center">
-              Click here to log in
+              Click here to login
             </mj-button>
           </mj-text>
         </mj-column>

@@ -1,33 +1,32 @@
 const routes = require('express').Router();
-const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const emailFormatter = require('./lib/email-formatter');
 
 const users = [];
 
 const secret = process.env.SECRET;
 
-routes.post('/login-user/:email', async (req, res) => {
+routes.post('/magic-link/:email', async (req, res) => {
   const { email } = req.params;
 
-  const hash = crypto
-    .createHmac('sha1', secret)
-    .update(email)
-    .digest('hex');
+  const token = jwt.sign({ email }, secret, { expiresIn: '36000s' });
   const hostUrl = `${req.protocol}://${req.get('host')}`;
-  const magicLink = `${hostUrl}/api/verify/${hash}`;
+  const magicLink = `${hostUrl}/api/verify/${token}`;
 
-  const exists = users.some(u => u.hash === hash);
-  if (exists === false) users.push({ email, hash });
+  const exists = users.some(u => u.token === token);
+  if (exists === false) users.push({ email, token });
 
   const formattedEmail = emailFormatter.getHtml(magicLink);
   // Ready to send email
-  console.log(formattedEmail);
 
-  console.log(users);
+  /* eslint-disable */
+  console.log(formattedEmail);
+  /* eslint-enable */
 
   if (email) {
-    console.log(magicLink);
-    res.status(200).send({ message: 'Email sent!' });
+    res.status(200).send({
+      message: 'Email sent! The verification link is only valid for 1 hour'
+    });
   } else {
     res.status(400).send({ message: 'No email provided' });
   }
@@ -35,12 +34,43 @@ routes.post('/login-user/:email', async (req, res) => {
 
 routes.get('/verify/:token', (req, res) => {
   const { token } = req.params;
-  const exists = users.some(u => u.hash === token);
-  if (exists) {
-    res.status(200).send({ token });
+  const exists = users.find(u => u.token === token);
+  if (exists && exists.token) {
+    jwt.verify(exists.token, secret, (err, decoded) => {
+      if (err) {
+        res.status(400).send({ message: 'User cannot be verified' });
+      } else {
+        const { email } = decoded;
+        const signedLoginToken = jwt.sign({ email }, secret, {
+          expiresIn: '3600s'
+        });
+        res.cookie('token', signedLoginToken, { path: '/' }).writeHead(301, {
+          Location: `${req.protocol}://${req.get('host')}/login`
+        });
+        res.end();
+      }
+    });
   } else {
     res.status(400).send({ message: 'User cannot be verified' });
   }
+});
+
+routes.post('/user/logout', (req, res) => {
+  res
+    .clearCookie('token')
+    .status(200)
+    .send({ message: 'OK' });
+});
+
+routes.post('/validate-login/:token', (req, res) => {
+  const { token } = req.params;
+  jwt.verify(token, secret, (err, decoded) => {
+    if (err) {
+      res.status(400).send({ message: 'Not logged in' });
+    } else {
+      res.status(200).send({ message: 'OK', decoded });
+    }
+  });
 });
 
 module.exports = routes;

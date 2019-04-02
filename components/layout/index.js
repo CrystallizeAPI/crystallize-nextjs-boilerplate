@@ -4,8 +4,9 @@ import Router from 'next/router';
 import CrystallizeLayout from '@crystallize/react-layout';
 
 import Aside from 'components/aside';
-
 import { Wrapper } from '@crystallize/react-dialog';
+import AuthGate from './auth-context';
+
 import Header from '../header';
 import GraphData from './graph-data';
 import { Main } from './styles';
@@ -47,7 +48,7 @@ class Layout extends React.Component {
     }
 
     return (
-      <>
+      <AuthGate>
         <Head>
           <title key="title">{displayTitle}</title>
           {description && (
@@ -65,7 +66,7 @@ class Layout extends React.Component {
           </Main>
         </CrystallizeLayout>
         <Wrapper />
-      </>
+      </AuthGate>
     );
   }
 }
