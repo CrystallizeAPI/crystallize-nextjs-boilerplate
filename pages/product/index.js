@@ -86,6 +86,8 @@ class ProductPage extends React.Component {
     const { t, masterProduct } = this.props;
     const { selectedVariant, dimensions, folder } = this.state;
 
+    const selectedVariantImg =
+      ((selectedVariant || {}).image || {}).url || placeHolderImg;
     const shortDescription =
       (((folder || {}).shortDescription || {}).content || {}).json || undefined;
 
@@ -95,13 +97,7 @@ class ProductPage extends React.Component {
           <Media>
             <MediaInner>
               <Img
-                src={
-                  selectedVariant &&
-                  selectedVariant.image &&
-                  selectedVariant.image.url
-                    ? selectedVariant.image.url
-                    : placeHolderImg
-                }
+                src={selectedVariantImg}
                 onError={e => {
                   e.target.onerror = null;
                   e.target.src = placeHolderImg;

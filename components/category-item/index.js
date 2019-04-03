@@ -17,7 +17,7 @@ class CategoryItem extends React.Component {
       return null;
     }
 
-    const { price, image } = variants[0];
+    const [{ price, image }] = variants;
 
     return (
       <Link as={path} key={key} href="/product" passHref prefetch>
