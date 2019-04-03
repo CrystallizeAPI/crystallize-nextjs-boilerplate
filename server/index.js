@@ -6,6 +6,7 @@ const next = require('next');
 const { parse } = require('url');
 const { join } = require('path');
 
+const jwt = require('jsonwebtoken');
 const { PageMatchForRequest } = require('../lib/routes');
 const config = require('./config');
 const checkout = require('./checkout');
@@ -14,6 +15,24 @@ const app = next({ dev: config.DEV });
 const handle = app.getRequestHandler();
 
 const api = require('./api');
+
+const authMiddleware = headers => {
+  /* eslint-disable */
+  const token =
+    (headers.cookie.match('(^|;) *' + 'token' + '=([^;]*)') || '')[2] || false;
+  if (!token) {
+    return false;
+  }
+  return jwt.verify(token, process.env.SECRET, (err, decoded) => {
+    if (err) {
+      return false;
+    }
+    if (decoded) {
+      return true;
+    }
+  });
+  /* eslint-enable */
+};
 
 app.prepare().then(() => {
   const server = express();
@@ -38,6 +57,10 @@ app.prepare().then(() => {
     const parsedUrl = parse(req.url, true);
     const pageMatch = await PageMatchForRequest(parsedUrl);
     if (pageMatch) {
+      const response = authMiddleware(req.headers);
+      if (response === true) {
+        req.headers.isLoggedIn = true;
+      }
       app.render(req, res, pageMatch, parsedUrl.query);
     } else if (parsedUrl.pathname === '/service-worker.js') {
       if (config.DEV) {

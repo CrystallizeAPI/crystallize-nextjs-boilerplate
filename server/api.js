@@ -44,9 +44,11 @@ routes.get('/verify/:token', (req, res) => {
         const signedLoginToken = jwt.sign({ email }, secret, {
           expiresIn: '3600s'
         });
-        res.cookie('token', signedLoginToken, { path: '/' }).writeHead(301, {
-          Location: `${req.protocol}://${req.get('host')}/login`
-        });
+        res
+          .cookie('token', signedLoginToken, { path: '/', httpOnly: true })
+          .writeHead(301, {
+            Location: `${req.protocol}://${req.get('host')}/login`
+          });
         res.end();
       }
     });
@@ -60,17 +62,6 @@ routes.post('/user/logout', (req, res) => {
     .clearCookie('token')
     .status(200)
     .send({ message: 'OK' });
-});
-
-routes.post('/validate-login/:token', (req, res) => {
-  const { token } = req.params;
-  jwt.verify(token, secret, (err, decoded) => {
-    if (err) {
-      res.status(400).send({ message: 'Not logged in' });
-    } else {
-      res.status(200).send({ message: 'OK', decoded });
-    }
-  });
 });
 
 module.exports = routes;
