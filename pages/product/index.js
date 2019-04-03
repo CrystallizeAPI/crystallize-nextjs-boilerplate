@@ -3,7 +3,7 @@ import React from 'react';
 import { BasketContext, createBasketItem } from '@crystallize/react-basket';
 import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
-// import Chunk from '@crystallize/content-chunk/reactChunk';
+import Chunk from '@crystallize/content-chunk/reactChunk';
 import { graphql } from 'react-apollo';
 import { H1, Button, screen, Outer } from 'ui';
 import Layout from 'components/layout';
@@ -19,8 +19,8 @@ import {
   MediaInner,
   Info,
   Price,
-  ProductFooter
-  // Description,
+  ProductFooter,
+  Description
 } from './styles';
 
 const placeHolderImg = '/static/placeholder.png';
@@ -84,7 +84,10 @@ class ProductPage extends React.Component {
 
   render() {
     const { t, masterProduct } = this.props;
-    const { selectedVariant, dimensions } = this.state;
+    const { selectedVariant, dimensions, folder } = this.state;
+
+    const shortDescription =
+      (((folder || {}).shortDescription || {}).content || {}).json || undefined;
 
     return (
       <Outer>
@@ -110,11 +113,11 @@ class ProductPage extends React.Component {
           </Media>
           <Info>
             <H1>{masterProduct.name}</H1>
-            {/* {!!shortDescription && (
+            {!!shortDescription && (
               <Description>
                 <Chunk {...shortDescription} />
               </Description>
-            )} */}
+            )}
 
             <VariantSelector
               dimensions={dimensions}
