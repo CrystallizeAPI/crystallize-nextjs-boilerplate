@@ -25,15 +25,16 @@ const authMiddleware = headers => {
     false;
   if (!token) {
     return false;
+  } else {
+    return jwt.verify(token, process.env.SECRET, (err, decoded) => {
+      if (err) {
+        return false;
+      }
+      if (decoded) {
+        return true;
+      }
+    });
   }
-  return jwt.verify(token, process.env.SECRET, (err, decoded) => {
-    if (err) {
-      return false;
-    }
-    if (decoded) {
-      return true;
-    }
-  });
   /* eslint-enable */
 };
 
