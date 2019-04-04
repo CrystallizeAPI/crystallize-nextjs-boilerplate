@@ -19,7 +19,10 @@ const api = require('./api');
 const authMiddleware = headers => {
   /* eslint-disable */
   const token =
-    (headers.cookie.match('(^|;) *' + 'token' + '=([^;]*)') || '')[2] || false;
+    (headers &&
+      headers.cookie &&
+      (headers.cookie.match('(^|;) *' + 'token' + '=([^;]*)') || '')[2]) ||
+    false;
   if (!token) {
     return false;
   }
