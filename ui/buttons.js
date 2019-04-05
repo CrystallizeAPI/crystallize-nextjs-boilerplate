@@ -99,7 +99,7 @@ const sizes = {
     `
 };
 
-function getTheme(rest) {
+const getTheme = rest => {
   const themeNames = Object.keys(themes);
   for (let i = 0; i < themeNames.length; i++) {
     if (themeNames[i] in rest) {
@@ -108,9 +108,9 @@ function getTheme(rest) {
   }
 
   return themes.primary;
-}
+};
 
-function getSize(rest) {
+const getSize = rest => {
   const sizeNames = Object.keys(sizes);
   for (let i = 0; i < sizeNames.length; i++) {
     if (sizeNames[i] in rest) {
@@ -119,7 +119,7 @@ function getSize(rest) {
   }
 
   return sizes.medium;
-}
+};
 
 const ButtonInner = styled.span`
   display: flex;
@@ -191,7 +191,7 @@ const ButtonLoading = styled.span`
   }
 `;
 
-export function Button({ children, loading, block, asLink, ...rest }) {
+export const Button = ({ children, loading, block, asLink, ...rest }) => {
   const theme = getTheme(rest);
   const size = getSize(rest);
   const as = asLink ? Link : 'button';
@@ -206,4 +206,4 @@ export function Button({ children, loading, block, asLink, ...rest }) {
       </ButtonInner>
     </ButtonOuter>
   );
-}
+};

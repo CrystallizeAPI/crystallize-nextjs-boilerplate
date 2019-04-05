@@ -3,19 +3,11 @@ import { logoutUser } from 'lib/rest-api';
 
 export const AuthContext = React.createContext();
 
-const authState = {};
-export function getAuthState() {
-  return authState;
-}
-
 export default class AuthGate extends React.PureComponent {
   componentDidMount() {
     const { isLoggedIn } = this.props;
-    if (isLoggedIn === true) {
-      window.isLoggedIn = true;
-    } else {
-      window.isLoggedIn = false;
-    }
+    window.isLoggedIn = false;
+    if (isLoggedIn === true) window.isLoggedIn = true;
   }
 
   logout = async () => {

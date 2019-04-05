@@ -25,7 +25,7 @@ class CategoryItem extends React.Component {
           <Inner>
             <Figure>
               <Img
-                src={image && image.url ? image.url : placeHolderImg}
+                src={image && image.urls ? image.url : placeHolderImg}
                 onError={e => {
                   e.target.onerror = null;
                   e.target.src = placeHolderImg;

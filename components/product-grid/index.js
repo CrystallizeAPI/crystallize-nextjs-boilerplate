@@ -32,21 +32,15 @@ export const Grid = styled.ul`
   }
 `;
 
-class ProductGrid extends React.Component {
-  render() {
-    const { products } = this.props;
-
-    return (
-      <Grid>
-        {products &&
-          products.map(item => (
-            <li key={item.id}>
-              <Product data={item} />
-            </li>
-          ))}
-      </Grid>
-    );
-  }
-}
+const ProductGrid = ({ products }) => (
+  <Grid>
+    {!!products &&
+      products.map(item => (
+        <li key={item.id}>
+          <Product data={item} />
+        </li>
+      ))}
+  </Grid>
+);
 
 export default translate()(ProductGrid);

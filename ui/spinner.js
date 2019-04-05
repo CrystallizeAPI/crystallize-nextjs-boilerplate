@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-function speedSwitch(speed) {
+const speedSwitch = speed => {
   if (speed === 'fast') return 600;
   if (speed === 'slow') return 900;
   return 750;
-}
+};
 
 const animation = keyframes`
   from {transform: rotate(0deg)}
