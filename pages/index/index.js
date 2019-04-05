@@ -12,6 +12,15 @@ class FrontPage extends React.Component {
 
   render() {
     const { router, data } = this.props;
+    let productsArray = [];
+
+    if (data && data.length > 0) {
+      data.forEach(p => {
+        const { children } = p;
+        productsArray = productsArray.concat(children);
+      });
+    }
+
     if (!data || data.loading) return <Layout loading />;
     return (
       <Layout router={router} title="Front page">
@@ -20,7 +29,7 @@ class FrontPage extends React.Component {
             <H1>Oh hi there!</H1>
             <p>Cool of you to join us.</p>
           </Header>
-          {!!data.products && <ProductGrid {...data} />}
+          {productsArray && <ProductGrid products={productsArray} />}
         </Outer>
       </Layout>
     );

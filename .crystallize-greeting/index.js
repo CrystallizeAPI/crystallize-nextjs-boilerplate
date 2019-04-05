@@ -57,7 +57,7 @@ async function envFileExists() {
     ]);
 
     const envFileVars = [
-      'CRYSTALLIZE_API_URL=https://api.crystallize.com',
+      'CRYSTALLIZE_API_URL=https://graph-dev.crystallize.digital/tenant/demo',
       'CRYSTALLIZE_API_TOKEN=4a9154575f38ad98f2bb227a9fb4a77f',
       'PORT=3000',
       'GTM_ID='
@@ -107,13 +107,11 @@ async function envFileExists() {
     );
 
     console.log(`
-To start in development mode: ${themeColor('npm run dev')} or ${themeColor(
-      'yarn dev'
-    )}
-To start in ${chalk.italic('super fast')} production mode: ${themeColor(
+      To start in development mode: ${themeColor('npm run dev')} 
+      To start in ${chalk.italic('super fast')} production mode: ${themeColor(
       'npm run prod'
-    )} or ${themeColor('yarn prod')}
-      `);
+    )}
+    `);
 
     console.log(
       chalk.hex('#dadada')(

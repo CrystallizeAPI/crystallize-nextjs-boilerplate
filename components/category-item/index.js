@@ -6,24 +6,30 @@ import { translate } from 'react-i18next';
 import { screen } from 'ui';
 import { Outer, Inner, Figure, Img, Footer, Price, imageWidth } from './styles';
 
+const placeHolderImg = '/static/placeholder.png';
+
 class CategoryItem extends React.Component {
   render() {
-    const { data, t } = this.props;
-    const { name, link, product } = data;
+    const { data, t, key } = this.props;
+    const { name, path, variants } = data;
 
-    if (!product) {
+    if (!data) {
       return null;
     }
 
-    const { price, product_image, price_from } = product;
+    const [{ price, image }] = variants;
 
     return (
-      <Link as={link} href="/product" passHref prefetch>
+      <Link as={path} key={key} href="/product" passHref prefetch>
         <Outer>
           <Inner>
             <Figure>
               <Img
-                src={product_image}
+                src={image && image.urls ? image.url : placeHolderImg}
+                onError={e => {
+                  e.target.onerror = null;
+                  e.target.src = placeHolderImg;
+                }}
                 alt={name}
                 sizes={`(min-width ${screen.md}px) ${imageWidth.lg}, ${
                   imageWidth.xs
@@ -36,7 +42,7 @@ class CategoryItem extends React.Component {
                 <Price>
                   {price
                     ? t('currency', { amount: price })
-                    : t('currency', { amount: price_from })}
+                    : t('currency', { amount: price })}
                 </Price>
               </div>
             </Footer>

@@ -9,6 +9,8 @@ import { H1, Button, screen, Outer } from 'ui';
 import Layout from 'components/layout';
 import VariantSelector from 'components/variant-selector';
 import { translate } from 'react-i18next';
+import { withRouter } from 'next/router';
+import { normalizeContentFields } from 'lib/normalizers';
 
 import graphSettings from './graph-settings';
 import {
@@ -17,33 +19,34 @@ import {
   MediaInner,
   Info,
   Price,
-  Description,
-  ProductFooter
+  ProductFooter,
+  Description
 } from './styles';
+
+const placeHolderImg = '/static/placeholder.png';
 
 class ProductPage extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     // Determine the selected variant
     if (prevState && !prevState.selectedVariant) {
-      const { catalogue } = nextProps.data;
-      if (catalogue) {
-        const { product } = catalogue;
+      const { masterProduct } = nextProps;
+      if (masterProduct) {
+        const product = masterProduct;
 
         let selectedVariant;
-        if (product.variations) {
-          if (product.default_variation_id) {
-            selectedVariant = product.variations.find(
-              v => v.id === product.default_variation_id
-            );
-          }
-
-          if (!selectedVariant) {
-            [selectedVariant] = product.variations;
-          }
+        if (product.variants && product.variants.length > 0) {
+          selectedVariant = product.variants.find(p => p.isDefault === true);
+          if (!selectedVariant) [selectedVariant] = product.variants;
         }
 
+        const folder = masterProduct.components
+          ? normalizeContentFields(masterProduct.components)
+          : undefined;
+
         return {
-          selectedVariant
+          dimensions: product.variants,
+          selectedVariant,
+          folder
         };
       }
     }
@@ -51,62 +54,26 @@ class ProductPage extends React.Component {
   }
 
   state = {
-    selectedVariant: null
+    selectedVariant: null,
+    dimensions: null
   };
 
-  onDimensionValueChange = ({ dimension, value }) => {
-    const { selectedVariant } = this.state;
-    const newAttributes = selectedVariant.attributes.map(attr => {
-      if (attr.attribute_key === dimension.name) {
-        return {
-          ...attr,
-          attribute_value: value.name
-        };
-      }
-      return attr;
-    });
-
-    // Find the variant that matches this new attribute set
-    const { data } = this.props;
-    const { product } = data.catalogue;
-    const matchedVariant = product.variations.find(v => {
-      let match = true;
-      newAttributes.forEach(attr => {
-        if (
-          !v.attributes.find(
-            a =>
-              a.attribute_key === attr.attribute_key &&
-              a.attribute_value === attr.attribute_value
-          )
-        ) {
-          match = false;
-        }
-      });
-      return match;
-    });
-
-    if (matchedVariant) {
-      this.setState({
-        selectedVariant: matchedVariant
-      });
-    }
+  onVariantValueChange = ({ dimensionId }) => {
+    const { dimensions } = this.state;
+    const selectedVariant = dimensions.find(p => p.id === dimensionId);
+    if (selectedVariant) this.setState({ selectedVariant });
   };
 
   buy = async () => {
     const { selectedVariant } = this.state;
-    const { data, layoutContext, basketContext } = this.props;
-
-    // @Todo cleaner solution
-    const image =
-      selectedVariant.image[0] === 'undefined'
-        ? [data.catalogue.product.product_image]
-        : selectedVariant.image;
+    const { layoutContext, basketContext, masterProduct } = this.props;
 
     const basketItemToAdd = createBasketItem({
-      masterProduct: data.catalogue.product,
+      masterProduct,
       variant: {
         ...selectedVariant,
-        image
+        image: ((selectedVariant || {}).image || {}).url || placeHolderImg,
+        placeholder_image: placeHolderImg
       }
     });
 
@@ -116,31 +83,32 @@ class ProductPage extends React.Component {
   };
 
   render() {
-    const { data, t } = this.props;
-    const { catalogue } = data;
-    const { selectedVariant } = this.state;
+    const { t, masterProduct } = this.props;
+    const { selectedVariant, dimensions, folder } = this.state;
 
-    const { product } = catalogue;
-    const shortDescription = (catalogue.content_fields.shortDescription || {})
-      .data;
+    const selectedVariantImg =
+      ((selectedVariant || {}).image || {}).url || placeHolderImg;
+    const shortDescription =
+      (((folder || {}).shortDescription || {}).content || {}).json || undefined;
+
     return (
       <Outer>
         <Sections>
           <Media>
             <MediaInner>
               <Img
-                src={
-                  selectedVariant.image[0] === 'undefined'
-                    ? product.product_image
-                    : selectedVariant.image[0]
-                }
+                src={selectedVariantImg}
+                onError={e => {
+                  e.target.onerror = null;
+                  e.target.src = placeHolderImg;
+                }}
                 sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
-                alt={product.name}
+                alt={masterProduct.name}
               />
             </MediaInner>
           </Media>
           <Info>
-            <H1>{product.name}</H1>
+            <H1>{masterProduct.name}</H1>
             {!!shortDescription && (
               <Description>
                 <Chunk {...shortDescription} />
@@ -148,14 +116,14 @@ class ProductPage extends React.Component {
             )}
 
             <VariantSelector
-              {...product}
+              dimensions={dimensions}
               selectedVariant={selectedVariant}
-              onDimensionValueChange={this.onDimensionValueChange}
+              onVariantValueChange={this.onVariantValueChange}
             />
             <ProductFooter>
               <Price>
                 <strong>
-                  {t('currency', { amount: selectedVariant.price_ex_vat })}
+                  {t('currency', { amount: selectedVariant.price })}
                 </strong>
               </Price>
               <Button buy fullWidth type="button" onClick={this.buy}>
@@ -171,11 +139,12 @@ class ProductPage extends React.Component {
 
 class ProductPageDataLoader extends React.Component {
   static getInitialProps({ req, graphData }) {
-    // No product found on server. Show 404
-    if (req && !graphData.catalogue) {
-      req.throw404();
+    if (req) {
+      // No category found. Show 404
+      if (!graphData || !graphData.tree) {
+        req.throw404();
+      }
     }
-
     return {};
   }
 
@@ -198,31 +167,48 @@ class ProductPageDataLoader extends React.Component {
     }
 
     let title = t('Loading');
-    if (data.catalogue) {
-      title = data.catalogue.product.name;
-    }
+
+    const {
+      tree: {
+        0: { children }
+      }
+    } = data;
+    const {
+      router: { asPath }
+    } = this.props;
+    const [masterProduct] = children.filter(p => p.path === asPath);
+
+    if (masterProduct) title = masterProduct.name;
 
     return (
-      <Layout {...this.props} title={title}>
-        <LayoutContext.Consumer>
-          {layoutContext => (
-            <BasketContext.Consumer>
-              {basketContext => (
-                <ProductPage
-                  layoutContext={layoutContext}
-                  basketContext={basketContext}
-                  {...this.props}
-                />
+      <div>
+        {!masterProduct ? (
+          <div>Error, Product not found</div>
+        ) : (
+          <Layout {...this.props} title={title}>
+            <LayoutContext.Consumer>
+              {layoutContext => (
+                <BasketContext.Consumer>
+                  {basketContext => (
+                    <ProductPage
+                      layoutContext={layoutContext}
+                      basketContext={basketContext}
+                      masterProduct={masterProduct}
+                      {...this.props}
+                    />
+                  )}
+                </BasketContext.Consumer>
               )}
-            </BasketContext.Consumer>
-          )}
-        </LayoutContext.Consumer>
-      </Layout>
+            </LayoutContext.Consumer>
+          </Layout>
+        )}
+      </div>
     );
   }
 }
 
-export default graphql(
-  ProductPageDataLoader.graph.query,
-  ProductPageDataLoader.graph
-)(translate()(ProductPageDataLoader));
+export default withRouter(
+  graphql(ProductPageDataLoader.graph.query, ProductPageDataLoader.graph)(
+    translate()(ProductPageDataLoader)
+  )
+);

@@ -13,7 +13,7 @@ class CategoryPage extends React.PureComponent {
   static getInitialProps({ req, graphData }) {
     if (req) {
       // No category found. Show 404
-      if (!graphData || !graphData.catalogue) {
+      if (!graphData || !graphData.tree) {
         req.throw404();
       }
     }
@@ -25,8 +25,9 @@ class CategoryPage extends React.PureComponent {
 
   render() {
     const { data, router } = this.props;
-    const { loading, error, catalogue, folder } = data;
+    const { loading, error, folder } = data;
     const title = upper(router.asPath.replace('/', ''));
+    let folderData = false;
 
     if (error) {
       return (
@@ -41,16 +42,25 @@ class CategoryPage extends React.PureComponent {
       return <Layout {...this.props} title={title} loading />;
     }
 
-    const { children } = catalogue;
-    const folderData = folder.content_fields.standardCategory;
+    const {
+      tree: {
+        0: { children }
+      }
+    } = data;
+    if (folder) {
+      const { standardCategory, standardProduct } = folder;
+      if (!standardCategory && !standardProduct) folderData = false;
+      if (standardCategory) folderData = standardCategory.content;
+      if (standardProduct) folderData = standardProduct.content;
+    }
 
     return (
       <Layout {...this.props} title={title}>
         <Outer>
           <Header>
             {!!folderData &&
-              folderData.data.map(collection => (
-                <Collection {...collection} key={collection.id} h1 />
+              folderData.paragraphs.map(collection => (
+                <Collection {...collection} key={collection.title} h1 />
               ))}
           </Header>
           <List>

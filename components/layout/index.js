@@ -30,7 +30,7 @@ class Layout extends React.Component {
       error
     } = this.props;
 
-    let displayTitle = tenant ? tenant.company_name : '';
+    let displayTitle = tenant ? tenant.company_name : 'Frontend Boilerplate';
     if (title) {
       displayTitle = `${title} - ${displayTitle}`;
     } else if (loading) {
@@ -53,7 +53,6 @@ class Layout extends React.Component {
             <meta key="description" name="description" content={description} />
           )}
         </Head>
-
         <CrystallizeLayout right={Aside}>
           <Header
             categories={categories}

@@ -1,67 +1,101 @@
 import gql from 'graphql-tag';
 
-// import { normalizeContentFields } from 'lib/normalizers';
-
 export default {
   query: gql`
-    query CATEGORY_QUERY($url: String!, $id: String!) {
-      catalogue(url: $url, tenantID: $id) {
-        ...stuff
-      }
-      bikes: catalogue(url: "/bikes", tenantID: $id) {
-        ...stuff
-      }
-      illustrations: catalogue(url: "/illustrations", tenantID: $id) {
-        ...stuff
-      }
-      furniture: catalogue(url: "/furniture", tenantID: $id) {
-        ...stuff
+    query {
+      tree(language: "en") {
+        ... on Item {
+          children {
+            ...item
+            ...product
+            ... on Item {
+              children {
+                ...item
+                ...product
+              }
+            }
+          }
+        }
       }
     }
-    fragment stuff on Catalogue {
+
+    fragment item on Item {
       id
-      children {
+      name
+      type
+      path
+      components {
+        name
+        type
+        meta {
+          key
+          value
+        }
+        content {
+          ...singleLine
+          ...richText
+          ...paragraphCollection
+        }
+      }
+    }
+
+    fragment product on Product {
+      vatType {
+        name
+        percent
+      }
+      isVirtual
+      isSubscriptionOnly
+      variants {
         id
         name
-        link
-        product {
+        sku
+        price
+        stock
+        isDefault
+        image {
+          url
+          altText
+          variants {
+            key
+            width
+          }
+        }
+        subscriptionPlans {
           id
-          sku
           name
-          product_image
-          product_image_resized
-          price
-          price_from
-          link
+          initialPeriod
+          initialPrice
+          recurringPeriod
+          recurringPrice
+        }
+      }
+    }
+
+    fragment singleLine on SingleLineContent {
+      text
+    }
+
+    fragment richText on RichTextContent {
+      json
+    }
+
+    fragment paragraphCollection on ParagraphCollectionContent {
+      paragraphs {
+        title {
+          ...singleLine
+        }
+        body {
+          ...richText
         }
       }
     }
   `,
 
-  options: ctx => {
-    const { router } = ctx;
-    return {
-      variables: {
-        url: router.asPath || router.pathname,
-        id: __crystallizeConfig.TENANT_ID
-      }
-    };
-  },
-
   props: props => {
     const { data } = props;
-    const { bikes, furniture, illustrations } = data;
     return {
-      data: {
-        ...data,
-        products: !bikes
-          ? []
-          : [
-              ...bikes.children,
-              ...furniture.children,
-              ...illustrations.children
-            ]
-      }
+      data: data.tree
     };
   }
 };

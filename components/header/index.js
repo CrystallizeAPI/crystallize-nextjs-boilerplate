@@ -1,9 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { IconUser, IconLogo } from 'ui';
+import { IconLogo } from 'ui';
+import { AuthContext } from 'components/layout/auth-context';
 import BasketButton from './basket-button';
 
-import { Outer, Nav, Logo } from './styles';
+import { Outer, Nav, Logo, NavActions } from './styles';
 
 export default class Header extends React.Component {
   render() {
@@ -32,23 +33,40 @@ export default class Header extends React.Component {
           {categories &&
             categories.map(
               category =>
-                category.link !== '/shipping' && (
+                category.path !== '/shipping' && (
                   <Link
                     href="/category"
-                    as={category.link}
-                    key={category.link}
+                    as={category.path}
+                    key={category.path}
                     prefetch
                   >
                     <a>{category.name}</a>
                   </Link>
                 )
             )}
-          <Link href="/user" prefetch>
-            <a>
-              <IconUser />
-            </a>
-          </Link>
         </Nav>
+        <NavActions>
+          <AuthContext.Consumer>
+            {state =>
+              state && state.isLoggedIn === true ? (
+                <a
+                  onClick={() => state.actions.logout()}
+                  role="button"
+                  tabIndex="0"
+                  onKeyPress={this.handleKeyPress}
+                >
+                  Logout
+                </a>
+              ) : (
+                <Link href="/login" prefetch>
+                  <a role="button" tabIndex="0">
+                    Login
+                  </a>
+                </Link>
+              )
+            }
+          </AuthContext.Consumer>
+        </NavActions>
         <BasketButton />
       </Outer>
     );

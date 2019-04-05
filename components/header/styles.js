@@ -70,3 +70,12 @@ export const BasketQuantity = styled.div`
   left: 50%;
   transform: translate(-50%, -25%);
 `;
+
+export const NavActions = styled.div`
+  cursor: pointer;
+  margin: 0px 10px;
+
+  a:hover {
+    text-decoration: underline;
+  }
+`;

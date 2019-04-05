@@ -1,0 +1,36 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "INTERFACE",
+        "name": "Item",
+        "possibleTypes": [
+          {
+            "name": "Document"
+          },
+          {
+            "name": "Folder"
+          },
+          {
+            "name": "Product"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "CrystallizeItem",
+        "possibleTypes": [
+          {
+            "name": "Document"
+          },
+          {
+            "name": "Folder"
+          },
+          {
+            "name": "Product"
+          }
+        ]
+      }
+    ]
+  }
+}

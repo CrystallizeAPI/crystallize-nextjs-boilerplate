@@ -3,36 +3,26 @@ import gql from 'graphql-tag';
 
 // Getting the top level categories
 export const query = gql`
-  query LAYOUT_QUERY($url: String!, $id: String!) {
-    tenant(tenantID: $id) {
-      company_name
-      logo_url
+  query {
+    tree(language: "en", path: "/") {
+      ...itemProp
     }
-
-    catalogue(url: $url, tenantID: $id) {
-      id
-      children {
-        id
-        name
-        link
-      }
-    }
+  }
+  fragment itemProp on Item {
+    id
+    name
+    type
+    path
   }
 `;
 
 export default graphql(query, {
-  options: () => ({
-    variables: {
-      url: '/',
-      id: __crystallizeConfig.TENANT_ID
-    }
-  }),
   props: ({ data }) => {
     if (!data || data.loading) {
       return data;
     }
     return {
-      categories: data.catalogue.children,
+      categories: data.tree,
       tenant: data.tenant
     };
   }
