@@ -21,6 +21,9 @@ routes.post('/magic-link/:email', async (req, res) => {
 
   /* eslint-disable */
   console.log(formattedEmail);
+  console.log('----');
+  console.log('Login Link: ' + magicLink);
+  console.log('----');
   /* eslint-enable */
 
   if (email) {
