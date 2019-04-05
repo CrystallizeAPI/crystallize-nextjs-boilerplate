@@ -37,7 +37,7 @@
       "@babel/core": "^7.1.2",
       "@crystallize/content-chunk": "^3.3.0",
       "@crystallize/node-klarna": "^2.1.1",
-      "@crystallize/react-basket": "^6.0.0-beta.2",
+      "@crystallize/react-basket": "^6.0.0-beta.3",
       "@crystallize/react-dialog": "^4.2.1",
       "@crystallize/react-image": "^2.2.0",
       "@crystallize/react-layout": "^3.0.0",

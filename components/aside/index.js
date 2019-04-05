@@ -1,19 +1,19 @@
 import React from 'react';
 import { BasketContext, TinyBasket } from '@crystallize/react-basket';
 
-import { Button } from 'ui';
+// import { Button } from 'ui';
 import { Basket, Header, Footer } from './styles';
 
 export default class Aside extends React.Component {
   static contextType = BasketContext;
 
-  state = { going: false };
+  // state = { going: false };
 
-  go = () => this.setState({ going: true });
+  // go = () => this.setState({ going: true });
 
   render() {
     const { state } = this.context;
-    const { going } = this.state;
+    // const { going } = this.state;
 
     if (!state) {
       return null;
@@ -24,7 +24,7 @@ export default class Aside extends React.Component {
         <Header>Basket</Header>
         <TinyBasket />
         <Footer>
-          <form method="post" action="/checkout">
+          {/* <form method="post" action="/checkout">
             <input type="hidden" name="basket" value={JSON.stringify(state)} />
             {state.items.length > 0 && (
               <Button
@@ -38,7 +38,7 @@ export default class Aside extends React.Component {
                 Go to checkout
               </Button>
             )}
-          </form>
+          </form> */}
         </Footer>
       </Basket>
     );
