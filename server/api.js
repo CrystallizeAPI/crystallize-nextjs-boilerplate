@@ -42,13 +42,13 @@ routes.get('/verify/:token', (req, res) => {
       } else {
         const { email } = decoded;
         const signedLoginToken = jwt.sign({ email }, secret, {
-          expiresIn: '43200'
+          expiresIn: '12h'
         });
         res
           .cookie('token', signedLoginToken, {
             path: '/',
-            maxAge: '43200',
-            httpOnly: true
+            httpOnly: true,
+            maxAge: 36000000
           })
           .writeHead(301, {
             Location: `${req.protocol}://${req.get('host')}/login`
