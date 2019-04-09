@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import CrystallizeLayout from '@crystallize/react-layout';
 
-// import Aside from 'components/aside';
+import Aside from 'components/aside';
 
 import Header from '../header';
 import GraphData from './graph-data';
@@ -53,7 +53,7 @@ class Layout extends React.Component {
             <meta key="description" name="description" content={description} />
           )}
         </Head>
-        <CrystallizeLayout>
+        <CrystallizeLayout right={Aside}>
           <Header
             categories={categories}
             tenant={tenant}
