@@ -4,12 +4,12 @@ import { ServerStyleSheet } from 'styled-components';
 
 import globalStyle from 'ui/global';
 
-import { NODE_ENV, GTM_ID, TENANT_ID, API_URL } from '../server/config';
+import { NODE_ENV, GTM_ID, TENANT_ID, GRAPH_URL } from '../server/config';
 
 // These settings will be exposed to the world
 const clientConfig = {
   TENANT_ID,
-  API_URL
+  GRAPH_URL
 };
 
 export default class MyDocument extends Document {

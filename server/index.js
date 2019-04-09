@@ -9,7 +9,7 @@ const { join } = require('path');
 const jwt = require('jsonwebtoken');
 const { PageMatchForRequest } = require('../lib/routes');
 const config = require('./config');
-const checkout = require('./checkout');
+// const checkout = require('./checkout');
 
 const app = next({ dev: config.DEV });
 const handle = app.getRequestHandler();
@@ -43,7 +43,7 @@ app.prepare().then(() => {
 
   server.use(helmet());
 
-  server.use(checkout(app));
+  // server.use(checkout(app));
 
   server.use('/api', api);
 

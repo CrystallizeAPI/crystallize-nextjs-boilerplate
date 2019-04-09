@@ -57,10 +57,9 @@ async function envFileExists() {
     ]);
 
     const envFileVars = [
-      'CRYSTALLIZE_API_URL=https://graph-dev.crystallize.digital/tenant/demo',
-      'CRYSTALLIZE_API_TOKEN=4a9154575f38ad98f2bb227a9fb4a77f',
       'PORT=3000',
-      'GTM_ID='
+      'GTM_ID=',
+      'CRYSTALLIZE_GRAPH_URL_BASE=https://graph.crystallize.com'
     ];
 
     if (shopToUse !== 'demo') {
@@ -70,20 +69,11 @@ async function envFileExists() {
           name: 'tenantId',
           message: 'Your tenant ID',
           default: 'demo'
-        },
-        {
-          type: 'input',
-          name: 'tenantToken',
-          message: 'Your super secret tenant token',
-          default: '1234'
         }
       ]);
-      envFileVars.push(
-        `CRYSTALLIZE_TENANT_ID=${tenantId}`,
-        `CRYSTALLIZE_API_TOKEN=${tenantToken}`
-      );
+      envFileVars.push(`CRYSTALLIZE_TENANT_ID=${tenantId}`);
     } else {
-      envFileVars.push('CRYSTALLIZE_TENANT_ID=demo', 'CRYSTALLIZE_API_TOKEN=');
+      envFileVars.push('CRYSTALLIZE_TENANT_ID=demo');
     }
 
     // Set the env file

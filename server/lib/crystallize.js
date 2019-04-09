@@ -1,6 +1,6 @@
 const ow = require('ow');
 
-const { API_URL, API_TOKEN, TENANT_ID } = require('../config');
+const { GRAPH_URL, API_TOKEN, TENANT_ID } = require('../config');
 const { doFetch } = require('../helpers');
 
 function callApi(path, options) {
@@ -11,7 +11,7 @@ function callApi(path, options) {
   }
 
   return doFetch(
-    `${API_URL}${path}`,
+    `${GRAPH_URL}${path}`,
     Object.assign(
       {
         headers: {

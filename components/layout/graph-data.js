@@ -22,7 +22,7 @@ export default graphql(query, {
       return data;
     }
     return {
-      categories: data.tree,
+      categories: (data.tree || []).filter(i => i.type === 'folder'),
       tenant: data.tenant
     };
   }
