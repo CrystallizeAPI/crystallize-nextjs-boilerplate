@@ -12,16 +12,21 @@ class FrontPage extends React.Component {
 
   render() {
     const { router, data } = this.props;
-    let productsArray = [];
+    let childrenArray = [];
 
     if (data && data.length > 0) {
       data.forEach(p => {
         const { children } = p;
-        productsArray = productsArray.concat(children);
+        childrenArray = childrenArray.concat(children);
       });
     }
 
-    if (!data || data.loading) return <Layout loading />;
+    const productsArray = childrenArray.filter(p => p.type === 'product');
+
+    if (!data) return <Layout loading />;
+
+    if (data.loading) return <Layout loading />;
+
     return (
       <Layout router={router} title="Front page">
         <Outer>
