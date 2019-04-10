@@ -8,7 +8,7 @@ import { Outer, Nav, Logo, NavActions } from './styles';
 
 export default class Header extends React.Component {
   render() {
-    const { categories, simple } = this.props;
+    const { topLevelFolders, simple } = this.props;
 
     if (simple) {
       return (
@@ -30,20 +30,17 @@ export default class Header extends React.Component {
           </a>
         </Link>
         <Nav>
-          {categories &&
-            categories.map(
-              category =>
-                category.path !== '/shipping' && (
-                  <Link
-                    href="/category"
-                    as={category.path}
-                    key={category.path}
-                    prefetch
-                  >
-                    <a>{category.name}</a>
-                  </Link>
-                )
-            )}
+          {topLevelFolders &&
+            topLevelFolders.map(category => (
+              <Link
+                href="/category"
+                as={category.path}
+                key={category.path}
+                prefetch
+              >
+                <a>{category.name}</a>
+              </Link>
+            ))}
         </Nav>
         <NavActions>
           <AuthContext.Consumer>

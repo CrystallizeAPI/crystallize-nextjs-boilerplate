@@ -1,7 +1,7 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-// Getting the top level categories
+// Getting the top level nodes
 export const query = gql`
   query {
     tree(language: "en", path: "/") {
@@ -22,7 +22,7 @@ export default graphql(query, {
       return data;
     }
     return {
-      categories: (data.tree || []).filter(i => i.type === 'folder'),
+      topLevelFolders: (data.tree || []).filter(i => i.type === 'folder'),
       tenant: data.tenant
     };
   }

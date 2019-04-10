@@ -21,7 +21,7 @@ class Layout extends React.Component {
   render() {
     const {
       children,
-      categories,
+      topLevelFolders,
       tenant,
       title,
       description,
@@ -55,7 +55,7 @@ class Layout extends React.Component {
         </Head>
         <CrystallizeLayout right={Aside}>
           <Header
-            categories={categories}
+            topLevelFolders={topLevelFolders}
             tenant={tenant}
             simple={simpleHeader}
           />
