@@ -11,7 +11,6 @@
    },
    "scripts": {
       "dev": "node server/index.js",
-      "dev:inspect": "node --inspect-brk server/index.js",
       "build": "next build",
       "start": "NODE_ENV=production node server/index.js",
       "prod": "npm run build && npm run start",
