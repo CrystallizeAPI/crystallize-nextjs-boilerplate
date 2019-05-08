@@ -1,46 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { BasketContext, TinyBasket } from '@crystallize/react-basket';
 
-// import { Button } from 'ui';
+import { Button } from 'ui';
 import { Basket, Header, Footer } from './styles';
 
-export default class Aside extends React.Component {
-  static contextType = BasketContext;
+const Aside = () => {
+  const [going, setGoing] = useState(false);
 
-  // state = { going: false };
+  return (
+    <BasketContext.Consumer>
+      {({ state }) => {
+        if (!state || !state.ready) {
+          return '...';
+        }
 
-  // go = () => this.setState({ going: true });
+        return (
+          <Basket>
+            <Header>Basket</Header>
+            <TinyBasket />
+            <Footer>
+              <Link href="/checkout">
+                <Button
+                  as="a"
+                  buy
+                  block
+                  fullWidth
+                  loading={going}
+                  disabled={!state.items.length}
+                  onClick={() => setGoing(true)}
+                >
+                  Go to checkout
+                </Button>
+              </Link>
+            </Footer>
+          </Basket>
+        );
+      }}
+    </BasketContext.Consumer>
+  );
+};
 
-  render() {
-    const { state } = this.context || {};
-    // const { going } = this.state;
-
-    if (!state) {
-      return null;
-    }
-
-    return (
-      <Basket>
-        <Header>Basket</Header>
-        <TinyBasket />
-        <Footer>
-          {/* <form method="post" action="/checkout">
-            <input type="hidden" name="basket" value={JSON.stringify(state)} />
-            {state.items.length > 0 && (
-              <Button
-                buy
-                block
-                fullWidth
-                type="submit"
-                loading={going}
-                onClick={this.go}
-              >
-                Go to checkout
-              </Button>
-            )}
-          </form> */}
-        </Footer>
-      </Basket>
-    );
-  }
-}
+export default Aside;

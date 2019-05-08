@@ -11,7 +11,6 @@ const jwt = require('jsonwebtoken');
 const nextI18next = require('../lib/i18n');
 const getComponentAndDataForPath = require('../lib/get-component-and-data-for-path');
 const config = require('./config');
-// const checkout = require('./checkout');
 
 const app = next({ dev: config.DEV });
 const handle = app.getRequestHandler();
@@ -46,8 +45,6 @@ app.prepare().then(() => {
   server.use(helmet());
 
   server.use(nextI18NextMiddleware(nextI18next));
-
-  // server.use(checkout(app));
 
   server.use('/api', api);
 

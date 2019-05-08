@@ -7,14 +7,7 @@ import Aside from 'components/aside';
 import Header from '../header';
 import { Main } from './styles';
 
-const Layout = ({
-  children,
-  title,
-  description,
-  simpleHeader,
-  loading,
-  error
-}) => {
+const Layout = ({ children, title, description, simple, loading, error }) => {
   let displayTitle = 'Crystallize';
   if (title) {
     displayTitle = `${title} - ${displayTitle}`;
@@ -36,8 +29,8 @@ const Layout = ({
           <meta key="description" name="description" content={description} />
         )}
       </Head>
-      <CrystallizeLayout right={Aside}>
-        <Header simple={simpleHeader} />
+      <CrystallizeLayout right={simple ? null : Aside}>
+        <Header simple={simple} />
         <Main loading={loading}>
           {loading ? <div>{children || 'Loading...'}</div> : children}
         </Main>

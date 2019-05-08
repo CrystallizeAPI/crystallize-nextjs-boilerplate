@@ -1,24 +1,65 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
+import { BasketContext } from '@crystallize/react-basket';
 
 import Layout from 'components/layout';
 
-export default class Checkout extends React.Component {
-  static async getInitialProps(ctx) {
-    return { order: ctx.req.klarnaOrder };
-  }
+import PaymentGateway from './payment-gateway';
+import {
+  Outer,
+  Inner,
+  Item,
+  ItemImage,
+  ItemName,
+  Items,
+  ItemQuantity,
+  ItemPrice
+} from './styles';
 
-  render() {
-    const { order } = this.props;
+const Checkout = () => (
+  <Layout title="Checkout" simple>
+    <BasketContext.Consumer>
+      {({ state }) => {
+        if (!state.ready) {
+          return 'Getting basket...';
+        }
 
-    if (!order) {
-      return null;
-    }
+        const { items } = state;
 
-    return (
-      <Layout title="Checkout">
-        <div dangerouslySetInnerHTML={{ __html: order.gui.snippet }} />
-      </Layout>
-    );
-  }
-}
+        if (!items.length) {
+          return <Outer>Basket is empty</Outer>;
+        }
+
+        return (
+          <Outer>
+            <Inner>
+              <Items>
+                {state.items.map(item => (
+                  <Item key={item.masterId}>
+                    <ItemImage src={item.placeholder_image} alt={item.name} />
+                    <ItemName>{item.name}</ItemName>
+                    <ItemQuantity>
+                      {item.quantity}
+                      pcs
+                    </ItemQuantity>
+                    <ItemPrice>{item.unit_price}</ItemPrice>
+                  </Item>
+                ))}
+              </Items>
+            </Inner>
+            <PaymentGateway />
+          </Outer>
+        );
+      }}
+    </BasketContext.Consumer>
+  </Layout>
+);
+
+Checkout.getInitialProps = ({ asPath }) => {
+  return {
+    namespacesRequired: ['common', 'basket', 'product'],
+    asPath
+  };
+};
+
+export default Checkout;

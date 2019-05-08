@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import is, { isNot } from 'styled-is';
 import { lighten, darken } from 'polished';
-import Link from 'next/link';
-import { Spinner } from './spinner';
 
+import { Spinner } from './spinner';
 import { colors } from './colors';
 
 const themes = {
@@ -42,11 +41,11 @@ const themes = {
     default: `
       background: ${darken(0.1, colors.glacier)};
       color: #fff;
-      font-weight:600;
+      font-weight: 600;
       text-decoration: none;
       text-align: center;
-      border-radius:25px;
-      width:100%;
+      border-radius: 25px;
+      width: 100%;
     `,
     hover: `
       background: ${lighten(0.05, colors.glacier)};
@@ -191,13 +190,12 @@ const ButtonLoading = styled.span`
   }
 `;
 
-export const Button = ({ children, loading, block, asLink, ...rest }) => {
+export const Button = ({ children, loading, block, ...rest }) => {
   const theme = getTheme(rest);
   const size = getSize(rest);
-  const as = asLink ? Link : 'button';
 
   return (
-    <ButtonOuter as={as} {...rest} theme={theme} block={block}>
+    <ButtonOuter {...rest} theme={theme} block={block}>
       <ButtonInner theme={theme} size={size}>
         <ButtonText shown={!loading}>{children}</ButtonText>
         <ButtonLoading shown={loading}>

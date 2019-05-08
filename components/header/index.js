@@ -13,9 +13,13 @@ const Header = ({ simple }) => {
   if (simple) {
     return (
       <Outer simple={simple}>
-        <Logo>
-          <IconLogo />
-        </Logo>
+        <Link href="/">
+          <a>
+            <Logo>
+              <IconLogo />
+            </Logo>
+          </a>
+        </Link>
       </Outer>
     );
   }
