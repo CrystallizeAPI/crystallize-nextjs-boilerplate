@@ -1,6 +1,6 @@
 {
    "name": "crystallize-frontend-boilerplate",
-   "version": "2.7.1",
+   "version": "3.0.0",
    "license": "MIT",
    "engines": {
       "node": ">=8.10"
