@@ -31,9 +31,23 @@ export const Nav = styled.nav`
   width: 100%;
   border-left: 1px solid #dfdfdf;
   padding-left: 15px;
-  a {
+`;
+
+export const NavList = styled.ul`
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+export const NavListItem = styled.li`
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  margin: 0 5px;
+
+  > a {
     display: inline-block;
-    margin: 0 5px;
     padding: 10px 10px;
     transition: all 100ms;
 

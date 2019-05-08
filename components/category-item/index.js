@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { translate } from 'react-i18next';
-
+import { withNamespaces } from 'lib/i18n';
 import { screen } from 'ui';
 import { Outer, Inner, Figure, Img, Footer, Price, imageWidth } from './styles';
 
@@ -17,10 +16,22 @@ class CategoryItem extends React.Component {
       return null;
     }
 
-    const [{ price, image }] = variants;
+    const { type } = data;
+
+    if (type === 'folder' || type === 'document') {
+      return (
+        <Link as={path} key={key} href={`/${type}`} passHref>
+          <Outer>
+            <Inner onlytext>{name}</Inner>
+          </Outer>
+        </Link>
+      );
+    }
+
+    const [{ price, image }] = variants || [];
 
     return (
-      <Link as={path} key={key} href="/product" passHref prefetch>
+      <Link as={path} key={key} href={`/${type}`} passHref>
         <Outer>
           <Inner>
             <Figure>
@@ -53,4 +64,4 @@ class CategoryItem extends React.Component {
   }
 }
 
-export default translate()(CategoryItem);
+export default withNamespaces()(CategoryItem);

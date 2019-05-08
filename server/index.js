@@ -3,11 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const next = require('next');
+const nextI18NextMiddleware = require('next-i18next/middleware');
 const { parse } = require('url');
 const { join } = require('path');
-
 const jwt = require('jsonwebtoken');
-const { PageMatchForRequest } = require('../lib/routes');
+
+const nextI18next = require('../lib/i18n');
+const getComponentForPath = require('../lib/get-component-for-path');
 const config = require('./config');
 // const checkout = require('./checkout');
 
@@ -16,7 +18,7 @@ const handle = app.getRequestHandler();
 
 const api = require('./api');
 
-const authMiddleware = headers => {
+const checkLoginState = headers => {
   /* eslint-disable */
   const token =
     (headers &&
@@ -43,6 +45,8 @@ app.prepare().then(() => {
 
   server.use(helmet());
 
+  server.use(nextI18NextMiddleware(nextI18next));
+
   // server.use(checkout(app));
 
   server.use('/api', api);
@@ -59,14 +63,8 @@ app.prepare().then(() => {
 
   server.get('*', async (req, res) => {
     const parsedUrl = parse(req.url, true);
-    const pageMatch = await PageMatchForRequest(parsedUrl);
-    if (pageMatch) {
-      const response = authMiddleware(req.headers);
-      if (response === true) {
-        req.headers.isLoggedIn = true;
-      }
-      app.render(req, res, pageMatch, parsedUrl.query);
-    } else if (parsedUrl.pathname === '/service-worker.js') {
+
+    if (parsedUrl.pathname === '/service-worker.js') {
       if (config.DEV) {
         res.status(404);
       } else {
@@ -74,7 +72,15 @@ app.prepare().then(() => {
         app.serveStatic(req, res, filePath);
       }
     } else {
-      handle(req, res, parsedUrl);
+      const { component } = await getComponentForPath(parsedUrl);
+      if (component) {
+        req.headers.isLoggedIn = checkLoginState(req.headers);
+
+        app.render(req, res, component, parsedUrl.query);
+      } else {
+        // Let Next.js handle the path
+        handle(req, res);
+      }
     }
   });
 

@@ -6,8 +6,8 @@ export const AuthContext = React.createContext();
 export default class AuthGate extends React.PureComponent {
   componentDidMount() {
     const { isLoggedIn } = this.props;
-    window.isLoggedIn = false;
-    if (isLoggedIn === true) window.isLoggedIn = true;
+
+    window.isLoggedIn = isLoggedIn;
   }
 
   logout = async () => {

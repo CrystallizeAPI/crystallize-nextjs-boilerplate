@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import is from 'styled-is';
 import Image from '@crystallize/react-image';
 
 import { colors, responsive } from 'ui';
@@ -34,6 +35,13 @@ export const Inner = styled.span`
   width: 100%;
   position: relative;
   z-index: 10;
+
+  ${is('onlytext')`
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  `};
 `;
 
 export const Figure = styled.figure`
