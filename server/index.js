@@ -9,7 +9,7 @@ const { join } = require('path');
 const jwt = require('jsonwebtoken');
 
 const nextI18next = require('../lib/i18n');
-const getComponentForPath = require('../lib/get-component-for-path');
+const getComponentAndDataForPath = require('../lib/get-component-and-data-for-path');
 const config = require('./config');
 // const checkout = require('./checkout');
 
@@ -72,8 +72,13 @@ app.prepare().then(() => {
         app.serveStatic(req, res, filePath);
       }
     } else {
-      const { component } = await getComponentForPath(parsedUrl);
+      const { component, apolloState } = await getComponentAndDataForPath(
+        parsedUrl
+      );
       if (component) {
+        // Attach the apollo state to be used in lib/with-data
+        req.initialApolloState = apolloState;
+
         req.headers.isLoggedIn = checkLoginState(req.headers);
 
         app.render(req, res, component, parsedUrl.query);
