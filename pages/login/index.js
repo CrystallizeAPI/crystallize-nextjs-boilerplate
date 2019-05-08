@@ -1,8 +1,10 @@
 import React from 'react';
+
 import Layout from 'components/layout';
 import { Button } from 'ui';
 import { sendMagicLink } from 'lib/rest-api';
-import { AuthContext } from 'components/layout/auth-context';
+import { AuthContext } from 'components/auth-context';
+
 import { LoginStyle, Outer } from './styles';
 
 class LoginPage extends React.Component {

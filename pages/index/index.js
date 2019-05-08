@@ -1,44 +1,59 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import { Query } from 'react-apollo';
 
 import Layout from 'components/layout';
 import ProductGrid from 'components/product-grid';
 import { H1, Outer, Header } from 'ui';
-import graphSettings from './graph-settings';
 
-class FrontPage extends React.Component {
-  // Attach the graph settings to the class
-  static graph = graphSettings;
+import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
+
+export default class FrontPage extends React.Component {
+  static async getInitialProps() {
+    return {
+      namespacesRequired: ['common', 'basket']
+    };
+  }
 
   render() {
-    const { router, data } = this.props;
-    let childrenArray = [];
-
-    if (data && data.length > 0) {
-      data.forEach(p => {
-        const { children } = p;
-        childrenArray = childrenArray.concat(children);
-      });
-    }
-
-    const productsArray = childrenArray.filter(p => p.type === 'product');
-
-    if (!data) return <Layout loading />;
-
-    if (data.loading) return <Layout loading />;
-
     return (
-      <Layout router={router} title="Front page">
-        <Outer>
-          <Header>
-            <H1>Oh hi there!</H1>
-            <p>Cool of you to join us.</p>
-          </Header>
-          {productsArray && <ProductGrid products={productsArray} />}
-        </Outer>
-      </Layout>
+      <Query
+        query={FETCH_TREE_NODE_AND_MENU}
+        variables={{ path: '/', language: 'en' }}
+      >
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <Layout loading />;
+          }
+
+          if (error) {
+            return <Layout error />;
+          }
+
+          const { tree } = data;
+
+          let productsArray = [];
+          if (tree && tree.length > 0) {
+            tree.forEach(p => {
+              const { children } = p;
+              productsArray = productsArray.concat(
+                children.filter(c => c.type === 'product')
+              );
+            });
+          }
+
+          return (
+            <Layout title="Home">
+              <Outer>
+                <Header>
+                  <H1>Oh hi there!</H1>
+                  <p>Cool of you to join us.</p>
+                </Header>
+                {productsArray && <ProductGrid products={productsArray} />}
+              </Outer>
+            </Layout>
+          );
+        }}
+      </Query>
     );
   }
 }
-
-export default graphql(FrontPage.graph.query, FrontPage.graph)(FrontPage);

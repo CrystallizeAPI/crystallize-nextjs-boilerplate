@@ -1,9 +1,8 @@
 import React from 'react';
-import { translate } from 'react-i18next';
-
 import { BasketConsumer } from '@crystallize/react-basket';
 import { LayoutContext } from '@crystallize/react-layout';
 
+import { withNamespaces } from 'lib/i18n';
 import { IconBasket } from 'ui';
 
 import { Basket, BasketQuantity } from './styles';
@@ -28,4 +27,4 @@ const Button = () => (
   </BasketConsumer>
 );
 
-export default translate()(Button);
+export default withNamespaces(['common', 'basket'])(Button);

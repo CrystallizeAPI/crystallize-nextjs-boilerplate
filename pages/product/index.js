@@ -1,18 +1,19 @@
 /* eslint react/no-multi-comp: 0 */
 import React from 'react';
+import { Query } from 'react-apollo';
 import { BasketContext, createBasketItem } from '@crystallize/react-basket';
 import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import Chunk from '@crystallize/content-chunk/reactChunk';
-import { graphql } from 'react-apollo';
+import { withRouter } from 'next/router';
+
 import { H1, Button, screen, Outer } from 'ui';
 import Layout from 'components/layout';
 import VariantSelector from 'components/variant-selector';
-import { translate } from 'react-i18next';
-import { withRouter } from 'next/router';
+import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
+import { withNamespaces } from 'lib/i18n';
 import { normalizeContentFields } from 'lib/normalizers';
 
-import graphSettings from './graph-settings';
 import {
   Sections,
   Media,
@@ -138,77 +139,56 @@ class ProductPage extends React.Component {
 }
 
 class ProductPageDataLoader extends React.Component {
-  static getInitialProps({ req, graphData }) {
-    if (req) {
-      // No category found. Show 404
-      if (!graphData || !graphData.tree) {
-        req.throw404();
-      }
-    }
-    return {};
+  static async getInitialProps({ asPath }) {
+    return {
+      namespacesRequired: ['common', 'basket', 'product'],
+      asPath
+    };
   }
 
-  static graph = graphSettings;
-
   render() {
-    const { data, t } = this.props;
-    const { loading, error } = data;
-
-    if (loading) {
-      return <Layout {...this.props} loading />;
-    }
-
-    if (error) {
-      return (
-        <Layout {...this.props} error>
-          Error getting product
-        </Layout>
-      );
-    }
-
-    let title = t('Loading');
-
-    const {
-      tree: {
-        0: { children }
-      }
-    } = data;
-    const {
-      router: { asPath }
-    } = this.props;
-    const [masterProduct] = children.filter(p => p.path === asPath);
-
-    if (masterProduct) title = masterProduct.name;
+    const { asPath: path, t } = this.props;
 
     return (
-      <div>
-        {!masterProduct ? (
-          <div>Error, Product not found</div>
-        ) : (
-          <Layout {...this.props} title={title}>
-            <LayoutContext.Consumer>
-              {layoutContext => (
-                <BasketContext.Consumer>
-                  {basketContext => (
-                    <ProductPage
-                      layoutContext={layoutContext}
-                      basketContext={basketContext}
-                      masterProduct={masterProduct}
-                      {...this.props}
-                    />
-                  )}
-                </BasketContext.Consumer>
-              )}
-            </LayoutContext.Consumer>
-          </Layout>
-        )}
-      </div>
+      <Query
+        variables={{ path, language: 'en' }}
+        query={FETCH_TREE_NODE_AND_MENU}
+      >
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <Layout loading title={t('Loading')} />;
+          }
+
+          if (error) {
+            return <Layout error />;
+          }
+
+          const [masterProduct] = data.tree;
+
+          return (
+            <Layout title={masterProduct.name}>
+              <LayoutContext.Consumer>
+                {layoutContext => (
+                  <BasketContext.Consumer>
+                    {basketContext => (
+                      <ProductPage
+                        layoutContext={layoutContext}
+                        basketContext={basketContext}
+                        masterProduct={masterProduct}
+                        {...this.props}
+                      />
+                    )}
+                  </BasketContext.Consumer>
+                )}
+              </LayoutContext.Consumer>
+            </Layout>
+          );
+        }}
+      </Query>
     );
   }
 }
 
 export default withRouter(
-  graphql(ProductPageDataLoader.graph.query, ProductPageDataLoader.graph)(
-    translate()(ProductPageDataLoader)
-  )
+  withNamespaces(['common', 'basket', 'product'])(ProductPageDataLoader)
 );

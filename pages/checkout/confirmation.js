@@ -1,8 +1,8 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
 import { BasketContext } from '@crystallize/react-basket';
-import { translate } from 'react-i18next';
 
+import { withNamespaces } from 'lib/i18n';
 import Layout from 'components/layout';
 
 class Inner extends React.Component {
@@ -64,4 +64,4 @@ class CheckoutConfirmation extends React.Component {
   }
 }
 
-export default translate()(CheckoutConfirmation);
+export default withNamespaces(['common', 'checkout'])(CheckoutConfirmation);

@@ -12,7 +12,7 @@ export default class Aside extends React.Component {
   // go = () => this.setState({ going: true });
 
   render() {
-    const { state } = this.context;
+    const { state } = this.context || {};
     // const { going } = this.state;
 
     if (!state) {
