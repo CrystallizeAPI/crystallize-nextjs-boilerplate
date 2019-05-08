@@ -1,3 +1,9 @@
+## 3.1.0 (2019-05-08)
+
+* Server does data fetching on component resolvement ([4b75f17](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/4b75f17))
+
+
+
 ## 3.0.0 (2019-05-08)
 
 * Adapt to new schema changes ([8997e95](https://github.com/CrystallizeAPI/crystallize-frontend-boilerplate/commit/8997e95))
