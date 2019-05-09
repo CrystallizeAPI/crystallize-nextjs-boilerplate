@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors } from 'ui';
+import { colors, responsive } from 'ui';
 
 export const Outer = styled.div`
   max-width: 1200px;
@@ -17,12 +17,17 @@ export const Sections = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${responsive.smAndLess} {
+    display: block;
+  }
 `;
 
 export const Media = styled.div`
   flex: 0 0 60%;
   position: relative;
   padding-top: 60%;
+
   &:before {
     content: '';
     width: 80%;
@@ -58,6 +63,11 @@ export const MediaInner = styled.div`
 export const Info = styled.div`
   flex: 1 1 auto;
   margin-left: 100px;
+
+  ${responsive.smAndLess} {
+    margin-left: 0;
+    margin-top: 50px;
+  }
 `;
 
 export const Price = styled.div`
