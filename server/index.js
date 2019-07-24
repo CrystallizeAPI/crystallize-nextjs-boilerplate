@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const next = require('next');
-const nextI18NextMiddleware = require('next-i18next/middleware');
+const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const { parse } = require('url');
 const { join } = require('path');
 const jwt = require('jsonwebtoken');

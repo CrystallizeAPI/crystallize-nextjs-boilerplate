@@ -40,6 +40,7 @@
     "react/prop-types": "skipUndeclared",
     "react/forbid-prop-types": false,
     "react/require-default-props": false,
-    "react/prefer-stateless-function": "ignorePureComponents"
+    "react/prefer-stateless-function": "ignorePureComponents",
+    "react/jsx-one-expression-per-line": false
   }
 }

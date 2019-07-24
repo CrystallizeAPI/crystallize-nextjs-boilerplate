@@ -36,7 +36,7 @@ export default class FrontPage extends React.Component {
             tree.forEach(p => {
               const { children } = p;
               productsArray = productsArray.concat(
-                children.filter(c => c.type === 'product')
+                (children || []).filter(c => c.type === 'product')
               );
             });
           }

@@ -10,31 +10,6 @@ const config = require('./config');
 const checkoutRouter = express.Router();
 
 module.exports = app => {
-  // Endpoint used for basket validation for react-basket
-  checkoutRouter.post(
-    '/checkout/validate-basket',
-    bodyParser.json(),
-    bodyParser.urlencoded({
-      extended: true
-    }),
-    async (req, res) => {
-      const { items, ...rest } = req.body;
-
-      const validation = await Crystallize.callApi('/v2/products/validate', {
-        method: 'post',
-        body: {
-          ...rest,
-          items: items.filter(
-            item =>
-              !['discount', 'shipping', 'shipping_fee'].includes(item.type)
-          )
-        }
-      });
-
-      return res.json(validation);
-    }
-  );
-
   // Go to checkout
   checkoutRouter.post(
     '/checkout',
@@ -49,15 +24,17 @@ module.exports = app => {
         return res.redirect('/');
       }
 
+      return res.json({ todo: true });
+
+      // eslint-disable-next-line no-unreachable
       try {
         const basket = JSON.parse(req.body.basket);
 
         // Validate the basket to ensure it is not tampered with
-        const {
-          success,
-          error,
-          validatedBasket
-        } = await Crystallize.validateBasket(basket);
+        // eslint-disable-next-line no-undef
+        const { success, error, validatedBasket } = await validateBasket(
+          basket
+        );
 
         if (!success) {
           return sendError(error);
@@ -104,9 +81,7 @@ module.exports = app => {
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${
-              config.GTM_ID
-            }');</script>
+            })(window,document,'script','dataLayer','${config.GTM_ID}');</script>
             <!-- End Google Tag Manager -->
           </head>
           <style>
@@ -126,9 +101,7 @@ module.exports = app => {
           </style>
           <body>
             <!-- Google Tag Manager (noscript) -->
-            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${
-              config.GTM_ID
-            }"
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${config.GTM_ID}"
             height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- End Google Tag Manager (noscript) -->
 

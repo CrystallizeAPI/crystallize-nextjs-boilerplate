@@ -1,30 +1,24 @@
 import React from 'react';
-import { BasketConsumer } from '@crystallize/react-basket';
 import { LayoutContext } from '@crystallize/react-layout';
 
-import { withNamespaces } from 'lib/i18n';
+import { useBasket } from 'components/basket';
 import { IconBasket } from 'ui';
 
 import { Basket, BasketQuantity } from './styles';
 
-const Button = () => (
-  <BasketConsumer>
-    {({ state }) => {
-      if (state.ready) {
-        return (
-          <LayoutContext.Consumer>
-            {({ actions }) => (
-              <Basket onClick={actions.showRight} type="button">
-                <IconBasket />
-                <BasketQuantity>{state.totalQuantity}</BasketQuantity>
-              </Basket>
-            )}
-          </LayoutContext.Consumer>
-        );
-      }
-      return '...';
-    }}
-  </BasketConsumer>
-);
+const BasketButton = () => {
+  const { state } = useBasket();
+  const layout = React.useContext(LayoutContext);
 
-export default withNamespaces(['common', 'basket'])(Button);
+  if (state.ready) {
+    return (
+      <Basket onClick={layout.actions.showRight} type="button">
+        <IconBasket />
+        <BasketQuantity>{state.totalQuantity || 0}</BasketQuantity>
+      </Basket>
+    );
+  }
+  return '...';
+};
+
+export default BasketButton;

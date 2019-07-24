@@ -1,7 +1,7 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
-import { BasketContext } from '@crystallize/react-basket';
 
+import { BasketContext } from 'components/basket';
 import Layout from 'components/layout';
 
 import PaymentGateway from './payment-gateway';
