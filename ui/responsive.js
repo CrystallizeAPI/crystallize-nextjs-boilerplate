@@ -4,11 +4,7 @@ import { screen } from './screen';
 export const responsive = {
   xs: `@media (max-width: ${screen.xsMax}px)`,
   smAndLess: `@media (max-width: ${screen.smMax}px)`,
-  sm: `@media (min-width: ${screen.smMin}px) and (max-width: ${
-    screen.smMax
-  }px)`,
-  md: `@media (min-width: ${screen.mdMin}px) and (max-width: ${
-    screen.mdMax
-  }px)`,
+  sm: `@media (min-width: ${screen.smMin}px) and (max-width: ${screen.smMax}px)`,
+  md: `@media (min-width: ${screen.mdMin}px) and (max-width: ${screen.mdMax}px)`,
   lg: `@media (min-width: ${screen.lgMin}px)`
 };

@@ -1,17 +1,17 @@
 /* eslint react/no-multi-comp: 0 */
 import React from 'react';
 import { Query } from 'react-apollo';
-import { BasketContext, createBasketItem } from '@crystallize/react-basket';
 import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import Chunk from '@crystallize/content-chunk/reactChunk';
 import { withRouter } from 'next/router';
 
 import { H1, Button, screen, Outer } from 'ui';
+import { BasketContext } from 'components/basket';
 import Layout from 'components/layout';
 import VariantSelector from 'components/variant-selector';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
-import { withNamespaces } from 'lib/i18n';
+import { withTranslation } from 'lib/i18n';
 import { normalizeContentFields } from 'lib/normalizers';
 
 import {
@@ -69,18 +69,14 @@ class ProductPage extends React.Component {
     const { selectedVariant } = this.state;
     const { layoutContext, basketContext, masterProduct } = this.props;
 
-    const basketItemToAdd = createBasketItem({
-      masterProduct,
-      variant: {
-        ...selectedVariant,
-        image: ((selectedVariant || {}).image || {}).url || placeHolderImg,
-        placeholder_image: placeHolderImg
-      }
-    });
+    const basketItemToAdd = {
+      name: masterProduct.name,
+      ...selectedVariant
+    };
 
-    basketContext.actions.addItem(basketItemToAdd);
+    basketContext.actions.addItem(selectedVariant);
     await layoutContext.actions.showRight();
-    basketContext.actions.animateItem(basketItemToAdd);
+    basketContext.actions.pulsateItemInBasket(basketItemToAdd);
   };
 
   render() {
@@ -159,7 +155,7 @@ class ProductPageDataLoader extends React.Component {
             return <Layout loading title={t('Loading')} />;
           }
 
-          if (error) {
+          if (error || !data.tree) {
             return <Layout error />;
           }
 
@@ -190,5 +186,5 @@ class ProductPageDataLoader extends React.Component {
 }
 
 export default withRouter(
-  withNamespaces(['common', 'basket', 'product'])(ProductPageDataLoader)
+  withTranslation(['common', 'basket', 'product'])(ProductPageDataLoader)
 );

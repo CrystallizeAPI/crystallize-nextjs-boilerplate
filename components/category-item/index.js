@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { withNamespaces } from 'lib/i18n';
+import { withTranslation } from 'lib/i18n';
 import { screen } from 'ui';
 import { Outer, Inner, Figure, Img, Footer, Price, imageWidth } from './styles';
 
@@ -42,9 +42,7 @@ class CategoryItem extends React.Component {
                   e.target.src = placeHolderImg;
                 }}
                 alt={name}
-                sizes={`(min-width ${screen.md}px) ${imageWidth.lg}, ${
-                  imageWidth.xs
-                }`}
+                sizes={`(min-width ${screen.md}px) ${imageWidth.lg}, ${imageWidth.xs}`}
               />
             </Figure>
             <Footer>
@@ -64,4 +62,4 @@ class CategoryItem extends React.Component {
   }
 }
 
-export default withNamespaces()(CategoryItem);
+export default withTranslation('product')(CategoryItem);

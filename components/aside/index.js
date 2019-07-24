@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { BasketContext, TinyBasket } from '@crystallize/react-basket';
+
+import { BasketContext, TinyBasket } from 'components/basket';
 
 import { Button } from 'ui';
 import { Basket, Header, Footer } from './styles';
