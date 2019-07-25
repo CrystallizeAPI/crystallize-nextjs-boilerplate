@@ -21,7 +21,7 @@ import {
 } from './styles';
 
 const TinyBasketItem = ({ actions, item }) => {
-  const { t } = useTranslation(['basket']);
+  const { t } = useTranslation(['common', 'basket']);
 
   const increment = () => {
     actions.incrementQuantityItem(item);
@@ -72,13 +72,12 @@ const TinyBasketItem = ({ actions, item }) => {
               <Price>{t('currency', { amount: item.price })}</Price>
             </PriceWrap>
           )}
-          {item.vat && (
-            <PriceVat>
-              <span>
-                {t('basket:itemVat', { amount: item.vat.toFixed(2) })}
-              </span>
-            </PriceVat>
-          )}
+
+          <PriceVat>
+            <span>
+              {t('basket:itemVat', { amount: item.vatAmount.toFixed(2) })}
+            </span>
+          </PriceVat>
         </ItemInfoText>
       </ItemInfo>
       <ItemQuantityChanger>

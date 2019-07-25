@@ -1,4 +1,4 @@
-const localCacheKey = 'crystallize-basket';
+const localCacheKey = 'crystallize-bskt';
 
 export async function retrieveBasketFromCache({ parseBasketItem }) {
   try {

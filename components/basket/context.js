@@ -5,18 +5,14 @@ import * as helpers from './helpers';
 import * as cache from './cache';
 
 export const {
-  createBasketItem,
   calculateTotals,
-  getSupportedOptionsFromProps
+  getSupportedOptionsFromProps,
+  getVariantVATprops
 } = helpers;
 
 export const BasketContext = createContext();
 
-export const useBasket = () => {
-  const basket = React.useContext(BasketContext);
-
-  return basket;
-};
+export const useBasket = () => React.useContext(BasketContext);
 
 function createId() {
   return `${Date.now()}-${uuid()}`;
@@ -74,19 +70,6 @@ export class BasketProvider extends React.Component {
   };
 
   parseBasketItem = ({ basketId, ...item }) => {
-    function ensureProperties(names) {
-      names.forEach(name => {
-        if (!(name in item)) {
-          throw new Error(
-            `Basket item validation error: missing property "${name}" for`,
-            item
-          );
-        }
-      });
-    }
-
-    ensureProperties(['sku']);
-
     let newBasketId = item.sku;
     if (this.subscription) {
       newBasketId = `${item.sku}-subscr-${this.subscription.variationplan_id}`;

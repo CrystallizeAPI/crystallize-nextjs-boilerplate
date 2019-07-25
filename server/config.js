@@ -1,9 +1,9 @@
 /* eslint no-underscore-dangle: "off" */
 const {
   NODE_ENV = 'development',
-  PORT,
-  CRYSTALLIZE_TENANT_ID,
-  CRYSTALLIZE_GRAPH_URL_BASE,
+  PORT = 3000,
+  CRYSTALLIZE_TENANT_ID = 'demo',
+  CRYSTALLIZE_GRAPH_URL_BASE = 'https://graph.crystallize.com',
   GTM_ID
 } = process.env;
 

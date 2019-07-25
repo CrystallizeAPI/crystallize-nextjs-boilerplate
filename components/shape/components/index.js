@@ -4,37 +4,45 @@ import Chunk from '@crystallize/content-chunk/reactChunk';
 
 import ParagraphCollection from './paragraph-collection';
 
-const CrystallizeComponents = ({ components }) => (
-  <div>
-    {components.map((component, index) => {
-      if (component.type === 'paragraphCollection') {
+const ShapeComponents = ({ components }) => {
+  if (!components) {
+    return null;
+  }
+
+  return (
+    <div>
+      {components.map((component, index) => {
+        if (component.type === 'paragraphCollection') {
+          return (
+            <ParagraphCollection
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              paragraphs={component.content.paragraphs}
+            />
+          );
+        }
+
+        if (component.type === 'richText') {
+          return (
+            <Chunk
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              {...component.content.json[0]}
+            />
+          );
+        }
+
         return (
-          <ParagraphCollection
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-            paragraphs={component.content.paragraphs}
-          />
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={index}>Render for {component.type} not implemented</div>
         );
-      }
+      })}
+    </div>
+  );
+};
 
-      if (component.type === 'richText') {
-        return (
-          <Chunk
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-            {...component.content.json[0]}
-          />
-        );
-      }
-
-      // eslint-disable-next-line react/no-array-index-key
-      return <div key={index}>n/a</div>;
-    })}
-  </div>
-);
-
-CrystallizeComponents.propTypes = {
+ShapeComponents.propTypes = {
   components: PropTypes.array.isRequired
 };
 
-export default CrystallizeComponents;
+export default ShapeComponents;

@@ -76,78 +76,14 @@ export function calculateTotals({ items, discount, options, shipping }) {
   };
 }
 
-export function createBasketItem({
-  masterProduct,
-  variant,
-  metadata,
-  subscription
-}) {
-  if (!masterProduct) {
-    /* eslint-disable */
-    throw new Error(
-      'Could not the create basket item without a master product!'
-    );
-    /* eslint-enable */
-  } else if (!variant) {
-    /* eslint-disable */
-    throw new Error(
-      'Product variant must be provided while creating a basket item'
-    );
-    /* eslint-enable */
-  }
+export function getVariantVATprops({ product, variant }) {
+  const { vatType = {} } = product;
+  const vatPercent =
+    vatType.percent && vatType.percent === 0 ? 0 : vatType.percent;
+  const priceWithoutVat = variant.price / (1 + vatPercent / 100);
 
-  function getPriceWithVAT(priceWithVat) {
-    const { vatType = {} } = masterProduct;
-    const vatPercent =
-      vatType.percent && vatType.percent === 0 ? 0 : vatType.percent;
-    return {
-      priceWithoutVat: priceWithVat / (1 + vatPercent / 100),
-      /* eslint-disable */
-      vatAmount: priceWithVat - priceWithVat / (1 + vatPercent / 100)
-      /* eslint-enable */
-    };
-  }
-
-  /* eslint-disable */
-  let vat = 0;
-  /* eslint-enable */
-  let vatType;
-  if (masterProduct && masterProduct.vatType) {
-    ({ vatType = {} } = masterProduct);
-
-    if (Number.isNaN(vatType.percent) && vatType && vatType.percent) {
-      vat = vatType.percent;
-    }
-
-    if (Number.isNaN(vatType.percent) || vatType.percent === 0) {
-      vat = 0;
-    }
-  }
-
-  const basketItem = {
-    masterId: masterProduct.id,
-    name: masterProduct.name,
-    sku: `${variant.sku}-standard`,
-    product_image:
-      variant.image && variant.image.url ? variant.image.url : undefined,
-    price: variant.price,
-    price_without_vat: getPriceWithVAT(variant.price).priceWithoutVat,
-    attributes: [],
-    vat: getPriceWithVAT(variant.price).vatAmount,
-    metadata,
-    subscription,
-    placeholder_image: variant.placeholder_image
-      ? variant.placeholder_image
-      : undefined
+  return {
+    priceWithoutVat,
+    vatAmount: variant.price - priceWithoutVat
   };
-
-  basketItem.reference = basketItem.sku;
-
-  if (basketItem.subscription) {
-    if (!basketItem.variationplan_id) {
-      basketItem.variationplan_id = basketItem.subscription.variationplan_id;
-    }
-  }
-
-  return basketItem;
 }

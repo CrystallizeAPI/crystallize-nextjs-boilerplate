@@ -55,12 +55,11 @@ export const Totals = () => {
             </span>
           )}
         </Row>
-        {totalVatAmount && (
-          <Row modifier="total-vat">
-            <span>{t('basket:totalVatAmount', state)}:</span>
-            <span>{t('currency', { amount: totalVatAmount.toFixed(2) })}</span>
-          </Row>
-        )}
+
+        <Row modifier="total-vat">
+          <span>{t('basket:totalVatAmount', state)}:</span>
+          <span>{t('currency', { amount: totalVatAmount.toFixed(2) })}</span>
+        </Row>
         <Row modifier="to-pay">
           <span>{t('basket:amountToPay', state)}:</span>
           <span>{t('currency', { amount: totalToPay })}</span>

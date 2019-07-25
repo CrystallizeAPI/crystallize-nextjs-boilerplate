@@ -42,9 +42,7 @@ export default class FolderPage extends React.PureComponent {
             <Layout title={folder.name}>
               <Outer>
                 <Header>
-                  {folder.components && (
-                    <ShapeComponents components={folder.components} />
-                  )}
+                  <ShapeComponents components={folder.components} />
                 </Header>
                 <List>
                   {children.map(p => (

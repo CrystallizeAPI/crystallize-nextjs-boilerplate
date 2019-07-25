@@ -1,7 +1,7 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
 
-import { BasketContext } from 'components/basket';
+import { useBasket } from 'components/basket';
 import Layout from 'components/layout';
 
 import PaymentGateway from './payment-gateway';
@@ -16,49 +16,54 @@ import {
   ItemPrice
 } from './styles';
 
-const Checkout = () => (
-  <Layout title="Checkout" simple>
-    <BasketContext.Consumer>
-      {({ state }) => {
-        if (!state.ready) {
-          return 'Getting basket...';
-        }
+const Checkout = () => {
+  const basket = useBasket();
 
-        const { items } = state;
+  if (!basket.state.ready) {
+    return (
+      <Layout title="Checkout" simple loading>
+        Getting basket...
+      </Layout>
+    );
+  }
 
-        if (!items.length) {
-          return <Outer>Basket is empty</Outer>;
-        }
+  const { items } = basket.state;
 
-        return (
-          <Outer>
-            <Inner>
-              <Items>
-                {state.items.map(item => (
-                  <Item key={item.masterId}>
-                    <ItemImage src={item.placeholder_image} alt={item.name} />
-                    <ItemName>{item.name}</ItemName>
-                    <ItemQuantity>
-                      {item.quantity}
-                      pcs
-                    </ItemQuantity>
-                    <ItemPrice>{item.unit_price}</ItemPrice>
-                  </Item>
-                ))}
-              </Items>
-            </Inner>
-            <PaymentGateway />
-          </Outer>
-        );
-      }}
-    </BasketContext.Consumer>
-  </Layout>
-);
+  if (!items.length) {
+    return (
+      <Layout title="Checkout" simple>
+        <Outer>Basket is empty</Outer>
+      </Layout>
+    );
+  }
 
-Checkout.getInitialProps = ({ asPath }) => {
+  return (
+    <Layout title="Checkout" simple>
+      <Outer>
+        <Inner>
+          <Items>
+            {items.map(item => (
+              <Item key={item.id}>
+                <ItemImage {...item.image} alt={item.name} />
+                <ItemName>{item.name}</ItemName>
+                <ItemQuantity>
+                  {item.quantity}
+                  pcs
+                </ItemQuantity>
+                <ItemPrice>{item.unit_price}</ItemPrice>
+              </Item>
+            ))}
+          </Items>
+        </Inner>
+        <PaymentGateway />
+      </Outer>
+    </Layout>
+  );
+};
+
+Checkout.getInitialProps = () => {
   return {
-    namespacesRequired: ['common', 'basket', 'product'],
-    asPath
+    namespacesRequired: ['common', 'basket', 'product']
   };
 };
 

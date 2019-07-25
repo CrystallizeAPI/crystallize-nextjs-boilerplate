@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Image from '@crystallize/react-image';
 
 export const Outer = styled.div`
   max-width: 1000px;
@@ -23,7 +24,9 @@ export const Item = styled.div`
   align-items: center;
 `;
 
-export const ItemImage = styled.img`
+export const ItemImage = styled(Image).attrs(() => ({
+  sizes: '100px'
+}))`
   display: block;
   flex: 0 0 auto;
   width: 100px;

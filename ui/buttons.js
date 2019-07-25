@@ -1,140 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import is, { isNot } from 'styled-is';
-import { lighten, darken } from 'polished';
+import { darken } from 'polished';
 
 import { Spinner } from './spinner';
 import { colors } from './colors';
 
-const themes = {
-  primary: {
-    default: `
-      background: ${colors.glacier};
-      color: #fff;
-      text-decoration: none;
-      text-align: center;
-    `,
-    hover: `
-      background: ${darken(0.1, colors.glacier)};
-    `,
-    disabled: `
-      background: #aaa;
-      color: #333;
-    `
-  },
-  secondary: {
-    default: `
-      background: ${colors.frost};
-      color: ${colors.frostbite};
-      text-decoration: none;
-      text-align: center;
-    `,
-    hover: `
-      background: ${darken(0.5, colors.frost)};
-    `,
-    disabled: `
-      background: #aaa;
-      color: #333;
-    `
-  },
-  buy: {
-    default: `
-      background: ${darken(0.1, colors.glacier)};
-      color: #fff;
-      font-weight: 600;
-      text-decoration: none;
-      text-align: center;
-      border-radius: 25px;
-      width: 100%;
-    `,
-    hover: `
-      background: ${lighten(0.05, colors.glacier)};
-    `,
-    disabled: `
-      background: #aaa;
-      color: #333;
-    `
-  },
-  danger: {
-    default: `
-      background: ${lighten(0.1, colors.error)};
-      color: #fff;
-      text-decoration: none;
-      text-align: center;
-    `,
-    hover: `
-      background: ${lighten(0.05, colors.error)};
-    `,
-    disabled: `
-      background: #aaa;
-      color: #333;
-    `
-  }
-};
-
-const sizes = {
-  tiny: `
-    padding: 0px 1px;
-  `,
-  small: `
-    padding: 5px 10px;
-  `,
-  medium: `
-    padding: 10px 15px;
-    font-size: 16px;
-  `,
-  large: `
-    padding: 30px;
-    font-size: 25px;
-  `,
-  xlarge: `
-    padding: 50px;
-    font-size: 50px;
-  `,
-  fullWidth: `
-    padding: 15px 35px;
-    font-size: 16px;
-    width:100%;
-    `
-};
-
-const getTheme = rest => {
-  const themeNames = Object.keys(themes);
-  for (let i = 0; i < themeNames.length; i++) {
-    if (themeNames[i] in rest) {
-      return themes[themeNames[i]];
-    }
-  }
-
-  return themes.primary;
-};
-
-const getSize = rest => {
-  const sizeNames = Object.keys(sizes);
-  for (let i = 0; i < sizeNames.length; i++) {
-    if (sizeNames[i] in rest) {
-      return sizes[sizeNames[i]];
-    }
-  }
-
-  return sizes.medium;
-};
-
-const ButtonInner = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  font-size: inherit;
-  transition: background-color 100ms;
-  position: relative;
-  ${p => p.size || ''};
-  ${p => (p.theme ? p.theme.default : '')};
+const Inner = styled.span`
+  flex: 1 1 auto;
+  background: ${darken(0.1, colors.glacier)};
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 25px;
+  padding: 16px 25px;
 `;
 
-const ButtonOuter = styled.button`
-  display: ${p => (p.block ? 'block' : 'inline-block')};
-  width: ${p => (p.block ? '100%' : 'auto')};
+const Outer = styled.button.attrs(() => ({
+  type: 'button'
+}))`
+  display: inline-flex;
   border-radius: 0;
   border: none;
   padding: 0;
@@ -142,20 +28,25 @@ const ButtonOuter = styled.button`
   cursor: pointer;
   text-decoration: none;
 
-  &:hover ${ButtonInner} {
-    ${({ theme }) => (theme ? theme.hover : ``)};
+  ${is('fullWidth')`
+    width: 100%;
+  `};
+
+  &:hover ${Inner} {
+    background: ${darken(0.1, colors.glacier)};
   }
 
   &[disabled] {
     cursor: default;
 
-    ${ButtonInner} {
-      ${({ theme }) => (theme ? theme.disabled : ``)};
+    ${Inner} {
+      background: #aaa;
+      color: #333;
     }
   }
 `;
 
-const ButtonText = styled.span`
+const Text = styled.span`
   position: relative;
   z-index: 2;
   transition: opacity 100ms, transform 100ms;
@@ -166,7 +57,7 @@ const ButtonText = styled.span`
   `};
 `;
 
-const ButtonLoading = styled.span`
+const Loading = styled.span`
   position: absolute;
   top: 0;
   left: 0;
@@ -190,18 +81,17 @@ const ButtonLoading = styled.span`
   }
 `;
 
-export const Button = ({ children, loading, block, ...rest }) => {
-  const theme = getTheme(rest);
-  const size = getSize(rest);
-
+export const Button = ({ children, loading, ...rest }) => {
   return (
-    <ButtonOuter {...rest} theme={theme} block={block}>
-      <ButtonInner theme={theme} size={size}>
-        <ButtonText shown={!loading}>{children}</ButtonText>
-        <ButtonLoading shown={loading}>
-          <Spinner />
-        </ButtonLoading>
-      </ButtonInner>
-    </ButtonOuter>
+    <Outer {...rest}>
+      <Inner>
+        <Text shown={!loading}>{children}</Text>
+        {loading && (
+          <Loading>
+            <Spinner />
+          </Loading>
+        )}
+      </Inner>
+    </Outer>
   );
 };

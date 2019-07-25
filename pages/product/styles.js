@@ -28,6 +28,10 @@ export const Media = styled.div`
   position: relative;
   padding-top: 60%;
 
+  ${responsive.mdAndLess} {
+    flex-basis: 40%;
+  }
+
   &:before {
     content: '';
     width: 80%;
@@ -39,6 +43,7 @@ export const Media = styled.div`
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
 `;
+
 export const MediaInner = styled.div`
   width: 100%;
   height: 100%;
@@ -50,6 +55,7 @@ export const MediaInner = styled.div`
   top: 0;
   left: 0;
   background: #fff;
+
   img {
     position: relative;
     object-fit: contain;
@@ -70,26 +76,29 @@ export const Info = styled.div`
   }
 `;
 
-export const Price = styled.div`
-  text-align: center;
-  color: ${colors.darkText};
-  font-size: 50px;
-  strong {
-    display: inline-block;
-    margin-left: 5px;
-  }
-`;
-
 export const Description = styled.div`
   max-width: 400px;
   color: ${colors.darkText};
   line-height: 1.3em;
   margin-bottom: 15px;
 `;
+
 export const ProductFooter = styled.div`
   display: flex;
   border-top: 1px solid #dfdfdf;
   padding: 15px 0;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const Price = styled.div`
+  text-align: center;
+  color: ${colors.darkText};
+  font-size: 50px;
+  margin-right: 20px;
+
+  strong {
+    display: inline-block;
+    margin-left: 5px;
+  }
 `;

@@ -6,7 +6,7 @@ export const Outer = styled.div`
   margin: 30px 0;
 `;
 
-export const Dimension = styled.div`
+export const Variant = styled.div`
   margin-bottom: 15px;
 `;
 

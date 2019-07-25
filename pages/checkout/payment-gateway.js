@@ -28,7 +28,7 @@ const PaymentGateway = () => {
           <Spinner />
         </>
       ) : (
-        <Button buy large onClick={() => setPaying(true)}>
+        <Button large onClick={() => setPaying(true)}>
           Pay now
         </Button>
       )}

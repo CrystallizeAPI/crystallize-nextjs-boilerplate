@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useTranslation } from 'lib/i18n';
 
-import { BasketContext } from '../context';
+import { useBasket } from '../context';
 import { Totals } from '../totals';
 
 import TinyBasketItem from './item';
@@ -20,10 +20,10 @@ export const TinyBasket = ({
   hideRemainingUntilFreeShipping = false,
   itemImageSizes
 }) => {
-  const { state, actions } = React.useContext(BasketContext);
+  const { state, actions } = useBasket();
   const { t } = useTranslation(['basket']);
 
-  if (!state) {
+  if (!state || !state.ready) {
     return null;
   }
 

@@ -1,44 +1,45 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-import { BasketContext, TinyBasket } from 'components/basket';
-
+import { useBasket, TinyBasket } from 'components/basket';
 import { Button } from 'ui';
+
 import { Basket, Header, Footer } from './styles';
 
 const Aside = () => {
+  const basket = useBasket();
   const [going, setGoing] = useState(false);
 
-  return (
-    <BasketContext.Consumer>
-      {({ state }) => {
-        if (!state || !state.ready) {
-          return '...';
-        }
+  const onCheckoutClick = evt => {
+    if (!basket.state.items.length) {
+      evt.preventDefault();
+      return;
+    }
+    setGoing(true);
+  };
 
-        return (
-          <Basket>
-            <Header>Basket</Header>
-            <TinyBasket />
-            <Footer>
-              <Link href="/checkout">
-                <Button
-                  as="a"
-                  buy
-                  block
-                  fullWidth
-                  loading={going}
-                  disabled={!state.items.length}
-                  onClick={() => setGoing(true)}
-                >
-                  Go to checkout
-                </Button>
-              </Link>
-            </Footer>
-          </Basket>
-        );
-      }}
-    </BasketContext.Consumer>
+  if (!basket.state || !basket.state.ready) {
+    return '...';
+  }
+
+  return (
+    <Basket>
+      <Header>Basket</Header>
+      <TinyBasket />
+      <Footer>
+        <Link href="/checkout" passHref>
+          <Button
+            as="a"
+            fullWidth
+            loading={going}
+            disabled={!basket.state.items.length}
+            onClick={onCheckoutClick}
+          >
+            Go to checkout
+          </Button>
+        </Link>
+      </Footer>
+    </Basket>
   );
 };
 

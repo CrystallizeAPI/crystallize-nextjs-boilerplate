@@ -1,23 +1,19 @@
-import { Outer, Values, Button, Dimension } from './styles';
+import { Outer, Values, Button, Variant } from './styles';
 
-export default ({ dimensions, selectedVariant, onVariantValueChange }) => (
+export default ({ variants, selectedVariant, onChange }) => (
   <Outer>
-    {dimensions.map(d => (
-      <Dimension key={d.id}>
+    {variants.map(variant => (
+      <Variant key={variant.id}>
         <Values>
           <Button
-            key={d.id}
-            selected={d.id === selectedVariant.id}
-            onClick={() =>
-              onVariantValueChange({
-                dimensionId: d.id
-              })
-            }
+            key={variant.id}
+            selected={variant.id === selectedVariant.id}
+            onClick={() => onChange(variant)}
           >
-            {d.name}
+            {variant.name}
           </Button>
         </Values>
-      </Dimension>
+      </Variant>
     ))}
   </Outer>
 );
