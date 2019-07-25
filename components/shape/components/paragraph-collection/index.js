@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 
-import { Outer } from './styles';
+import { Paragraphs } from './styles';
 import Paragraph from './paragraph';
 
 const ParagraphCollection = ({ paragraphs }) => (
-  <Outer>
+  <Paragraphs>
     {paragraphs.map((paragraph, index) => (
       // eslint-disable-next-line react/no-array-index-key
       <Paragraph key={index} {...paragraph} />
     ))}
-  </Outer>
+  </Paragraphs>
 );
 
 ParagraphCollection.propTypes = {
