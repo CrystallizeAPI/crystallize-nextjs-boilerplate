@@ -9,36 +9,31 @@ const ShapeComponents = ({ components }) => {
     return null;
   }
 
-  return (
-    <div>
-      {components.map((component, index) => {
-        if (component.type === 'paragraphCollection') {
-          return (
-            <ParagraphCollection
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              paragraphs={component.content.paragraphs}
-            />
-          );
-        }
+  return components.map(({ type, ...component }, index) => {
+    const key = index;
 
-        if (component.type === 'richText') {
-          return (
-            <Chunk
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              {...component.content.json[0]}
-            />
-          );
-        }
+    if (type === 'paragraphCollection') {
+      return (
+        <ParagraphCollection
+          key={key}
+          paragraphs={component.content.paragraphs}
+        />
+      );
+    }
 
-        return (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={index}>Render for {component.type} not implemented</div>
-        );
-      })}
-    </div>
-  );
+    if (type === 'richText') {
+      return <Chunk key={key} {...component.content.json[0]} />;
+    }
+
+    if (type === 'singleLine') {
+      return <span key={key}>{component.content.text}</span>;
+    }
+
+    // eslint-disable-next-line no-console
+    console.log(`Render for ${type} not implemented`);
+
+    return <span key={key} />;
+  });
 };
 
 ShapeComponents.propTypes = {

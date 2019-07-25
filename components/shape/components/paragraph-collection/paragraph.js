@@ -5,14 +5,19 @@ import { H1 } from 'ui';
 const Paragraph = ({
   body,
   title,
-  media,
+  images,
   headingComponent: HeadingComponent = H1
-}) => (
-  <>
-    {!!title && <HeadingComponent>{title.text}</HeadingComponent>}
-    {!!body && body.json && body.json.length > 0 && <Chunk {...body.json} />}
-    {!!media && !!media.length && <Image src={media[0].url} />}
-  </>
-);
+}) => {
+  return (
+    <>
+      {!!title && <HeadingComponent>{title.text}</HeadingComponent>}
+      {!!body && body.json && body.json.length > 0 && <Chunk {...body.json} />}
+      {!!images &&
+        images.length > 0 &&
+        // eslint-disable-next-line react/no-array-index-key
+        images.map((image, index) => <Image key={index} {...image} />)}
+    </>
+  );
+};
 
 export default Paragraph;
