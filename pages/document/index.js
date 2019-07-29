@@ -27,11 +27,11 @@ export default class DocumentPage extends React.PureComponent {
             return <Layout loading />;
           }
 
-          const [document] = data.tree;
-
-          if (error || !document) {
+          if (error || !data.tree) {
             return <Layout error />;
           }
+
+          const [document] = data.tree;
 
           return (
             <Layout title={document.name}>

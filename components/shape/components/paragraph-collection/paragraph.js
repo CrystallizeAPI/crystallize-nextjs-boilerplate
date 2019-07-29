@@ -10,7 +10,6 @@ const Paragraph = ({
   images,
   headingComponent: HeadingComponent = H1
 }) => {
-  console.log('22', body);
   return (
     <P>
       {!!title && (

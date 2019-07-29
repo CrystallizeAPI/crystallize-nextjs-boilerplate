@@ -30,11 +30,11 @@ export default class FolderPage extends React.PureComponent {
             return <Layout loading />;
           }
 
-          const [folder] = data.tree;
-
-          if (error || !folder) {
+          if (error || !data.tree) {
             return <Layout error />;
           }
+
+          const [folder] = data.tree;
 
           const { children } = folder;
 
