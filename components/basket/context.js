@@ -273,7 +273,7 @@ export class BasketProvider extends React.Component {
 
   setShipping = shipping =>
     this.ss({
-      shipping: BasketProvider.createShippingBasketItem(shipping)
+      shipping
     });
 
   render() {
