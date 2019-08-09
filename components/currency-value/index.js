@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import { FormattedNumber } from 'react-intl';
 import { FETCH_TENANT } from 'lib/graph';
 
-export const CurrencyValue = ({ value }) => (
+export const CurrencyValue = ({ value, minimumFractionDigits }) => (
   <Query query={FETCH_TENANT}>
     {({ loading, error, data }) => {
       if (loading) return null;
@@ -13,6 +13,7 @@ export const CurrencyValue = ({ value }) => (
           style="currency"
           currency={data.tenant.defaults.currency}
           value={value}
+          minimumFractionDigits={minimumFractionDigits || 0}
         />
       );
     }}

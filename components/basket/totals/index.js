@@ -66,7 +66,7 @@ export const Totals = () => {
         <Row modifier="total-vat">
           <span>{t('basket:totalVatAmount', state)}:</span>
           <span>
-            <CurrencyValue value={totalVatAmount} />
+            <CurrencyValue value={totalVatAmount} minimumFractionDigits={2} />
           </span>
         </Row>
         <Row modifier="to-pay">
