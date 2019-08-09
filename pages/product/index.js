@@ -119,6 +119,7 @@ const ProductPageDataLoader = props => {
         return (
           <Layout title={product.name}>
             <ProductPage
+              key={product.id}
               product={product}
               defaultVariant={defaultVariant}
               {...props}
