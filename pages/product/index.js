@@ -5,6 +5,7 @@ import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import { withRouter } from 'next/router';
 
+import { CurrencyValue } from 'components/currency-value';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 import { withTranslation } from 'lib/i18n';
 import { H1, Button, screen, Outer } from 'ui';
@@ -25,7 +26,7 @@ import {
 
 const placeHolderImg = '/static/placeholder.png';
 
-const ProductPage = ({ t, product, defaultVariant }) => {
+const ProductPage = ({ product, defaultVariant }) => {
   const layout = useContext(LayoutContext);
   const basket = useBasket();
 
@@ -78,7 +79,7 @@ const ProductPage = ({ t, product, defaultVariant }) => {
           <ProductFooter>
             <Price>
               <strong>
-                {t('currency', { amount: selectedVariant.price })}
+                <CurrencyValue value={selectedVariant.price} />
               </strong>
             </Price>
             <Button onClick={buy}>Add to basket</Button>

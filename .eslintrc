@@ -41,6 +41,7 @@
     "react/forbid-prop-types": false,
     "react/require-default-props": false,
     "react/prefer-stateless-function": "ignorePureComponents",
-    "react/jsx-one-expression-per-line": false
+    "react/jsx-one-expression-per-line": false,
+    "react/style-prop-object": false
   }
 }

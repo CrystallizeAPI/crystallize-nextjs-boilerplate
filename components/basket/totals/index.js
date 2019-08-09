@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 
+import { CurrencyValue } from 'components/currency-value';
 import { useTranslation } from 'lib/i18n';
 import { useBasket } from '../context';
 
@@ -24,17 +25,23 @@ export const Totals = () => {
       <Rows>
         <Row modifier="total-price">
           <span>{t('basket:totalPrice', state)}:</span>
-          <span>{t('currency', { amount: totalPrice })}</span>
+          <span>
+            <CurrencyValue value={totalPrice} />
+          </span>
         </Row>
         {discount && (
           <Fragment>
             <Row modifier="discount">
               <span>{t('basket:discount', state)}:</span>
-              <span>{t('currency', { amount: discount })}</span>
+              <span>
+                <CurrencyValue value={discount} />
+              </span>
             </Row>
             <Row modifier="total-after-discount">
               <span>{t('basket:totalAfterDiscount', state)}:</span>
-              <span>{t('currency', { amount: totalPriceMinusDiscount })}</span>
+              <span>
+                <CurrencyValue value={totalPriceMinusDiscount} />
+              </span>
             </Row>
           </Fragment>
         )}
@@ -44,25 +51,29 @@ export const Totals = () => {
             <span>
               {shipping && shipping.unit_price > 0 && (
                 <StrikeThrough>
-                  {t('currency', { amount: shipping.unit_price })}
+                  <CurrencyValue value={shipping.unit_price} />
                 </StrikeThrough>
               )}{' '}
-              {t('currency', { amount: 0 })}
+              <CurrencyValue value="0" />
             </span>
           ) : (
             <span>
-              {t('currency', { amount: shipping ? shipping.unit_price : 0 })}
+              <CurrencyValue value={shipping ? shipping.unit_price : 0} />
             </span>
           )}
         </Row>
 
         <Row modifier="total-vat">
           <span>{t('basket:totalVatAmount', state)}:</span>
-          <span>{t('currency', { amount: totalVatAmount.toFixed(2) })}</span>
+          <span>
+            <CurrencyValue value={totalVatAmount} />
+          </span>
         </Row>
         <Row modifier="to-pay">
           <span>{t('basket:amountToPay', state)}:</span>
-          <span>{t('currency', { amount: totalToPay })}</span>
+          <span>
+            <CurrencyValue value={totalToPay} />
+          </span>
         </Row>
       </Rows>
     </Outer>

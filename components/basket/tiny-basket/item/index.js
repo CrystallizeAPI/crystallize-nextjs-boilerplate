@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { CurrencyValue } from 'components/currency-value';
 import { useTranslation } from 'lib/i18n';
 
 import {
@@ -69,13 +70,15 @@ const TinyBasketItem = ({ actions, item }) => {
             </SubInfoOuter>
           ) : (
             <PriceWrap>
-              <Price>{t('currency', { amount: item.price })}</Price>
+              <Price>
+                <CurrencyValue value={item.price} />
+              </Price>
             </PriceWrap>
           )}
 
           <PriceVat>
             <span>
-              {t('basket:itemVat', { amount: item.vatAmount.toFixed(2) })}
+              <CurrencyValue value={item.vatAmount} />
             </span>
           </PriceVat>
         </ItemInfoText>
