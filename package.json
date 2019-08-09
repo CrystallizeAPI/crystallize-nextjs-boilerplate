@@ -37,7 +37,7 @@
     "@crystallize/node-klarna": "^2.1.1",
     "@crystallize/react-image": "^3.0.0-beta.7",
     "@crystallize/react-layout": "^3.0.0",
-    "apollo-boost": "^0.3.1",
+    "apollo-boost": "^0.4.3",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "babel-plugin-module-resolver": "^3.2.0",
