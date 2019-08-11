@@ -88,7 +88,7 @@ async function envFileExists() {
     delete packageJsonObj.scripts.postinstall;
     await writeFile(
       join(__dirname, '../', './package.json'),
-      JSON.stringify(packageJsonObj, null, 3),
+      JSON.stringify(packageJsonObj, null, 2),
       'utf-8'
     );
 
@@ -97,7 +97,7 @@ async function envFileExists() {
     );
 
     console.log(`
-      To start in development mode: ${themeColor('npm run dev')} 
+      To start in development mode: ${themeColor('npm run dev')}
       To start in ${chalk.italic('super fast')} production mode: ${themeColor(
       'npm run prod'
     )}
