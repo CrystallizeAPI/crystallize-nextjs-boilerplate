@@ -44,11 +44,15 @@ export default class FolderPage extends React.PureComponent {
                 <Header>
                   <ShapeComponents components={folder.components} />
                 </Header>
-                <List>
-                  {children.map(p => (
-                    <CategoryItem key={p.id} data={p} />
-                  ))}
-                </List>
+                {children ? (
+                  <List>
+                    {children.map(p => (
+                      <CategoryItem key={p.id} data={p} />
+                    ))}
+                  </List>
+                ) : (
+                  'This folder is empty'
+                )}
               </Outer>
             </Layout>
           );

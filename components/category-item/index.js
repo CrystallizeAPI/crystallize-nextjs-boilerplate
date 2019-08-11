@@ -29,7 +29,9 @@ class CategoryItem extends React.Component {
       );
     }
 
-    const [{ price, image }] = variants || [];
+    const { price, image } = variants
+      ? variants.find(variant => variant.isDefault)
+      : {};
 
     return (
       <Link as={path} key={key} href={`/${type}`} passHref>
