@@ -1,10 +1,13 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import { FormattedNumber } from 'react-intl';
-import { FETCH_TENANT } from 'lib/graph';
+import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 
 export const CurrencyValue = ({ value, minimumFractionDigits }) => (
-  <Query query={FETCH_TENANT}>
+  <Query
+    variables={{ path: '/', language: 'en' }}
+    query={FETCH_TREE_NODE_AND_MENU}
+  >
     {({ loading, error, data }) => {
       if (loading) return null;
       if (error) return null;
