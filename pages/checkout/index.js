@@ -1,3 +1,3 @@
-import CheckoutPage from 'page-components/checkout';
+import Checkout from 'page-components/checkout';
 
-export default CheckoutPage;
+export default Checkout;

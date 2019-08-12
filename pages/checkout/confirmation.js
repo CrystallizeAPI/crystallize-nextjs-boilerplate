@@ -1,3 +1,3 @@
-import ConfirmationPage from 'page-components/checkout/confirmation';
+import CheckoutConfirmation from 'page-components/checkout/confirmation';
 
-export default ConfirmationPage;
+export default CheckoutConfirmation;
