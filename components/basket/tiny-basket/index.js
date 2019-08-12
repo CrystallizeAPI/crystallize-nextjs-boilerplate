@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { useTranslation } from 'lib/i18n';
-
+import { CurrencyValue } from 'components/currency-value';
 import { useBasket } from '../context';
 import { Totals } from '../totals';
 
@@ -21,7 +20,6 @@ export const TinyBasket = ({
   itemImageSizes
 }) => {
   const { state, actions } = useBasket();
-  const { t } = useTranslation(['basket']);
 
   if (!state || !state.ready) {
     return null;
@@ -32,7 +30,7 @@ export const TinyBasket = ({
   if (!items.length) {
     return (
       <Outer>
-        <BasketIsEmpty>{t('basket:empty', state)}</BasketIsEmpty>
+        <BasketIsEmpty>Your basket is empty.</BasketIsEmpty>
       </Outer>
     );
   }
@@ -45,7 +43,6 @@ export const TinyBasket = ({
             <TinyBasketItem
               actions={actions}
               item={item}
-              t={t}
               itemImageSizes={itemImageSizes}
             />
           </ItemOuter>
@@ -58,7 +55,9 @@ export const TinyBasket = ({
         !freeShipping &&
         remainingUntilFreeShippingApplies > 0 && (
           <RemainingUntilFreeShipping>
-            {t('basket:remainingUntilFreeShippingApplies', state)}
+            Add another{' '}
+            <CurrencyValue value={remainingUntilFreeShippingApplies} /> to your
+            order for free shipping.
           </RemainingUntilFreeShipping>
         )}
     </Outer>

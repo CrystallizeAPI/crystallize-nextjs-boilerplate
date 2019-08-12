@@ -4,7 +4,6 @@ import { ApolloProvider, Query } from 'react-apollo';
 import { IntlProvider } from 'react-intl';
 
 import withData from 'lib/with-data';
-import { appWithTranslation } from 'lib/i18n';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 import AuthGate from 'components/auth-context';
 import BasketProvider from 'components/basket-provider';
@@ -40,4 +39,4 @@ class MyApp extends App {
   }
 }
 
-export default withData(appWithTranslation(MyApp));
+export default withData(MyApp);

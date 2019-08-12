@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 
 import { CurrencyValue } from 'components/currency-value';
-import { withTranslation } from 'lib/i18n';
 import { screen } from 'ui';
 import { Outer, Inner, Figure, Img, Footer, Price, imageWidth } from './styles';
 
@@ -63,4 +62,4 @@ class CategoryItem extends React.Component {
   }
 }
 
-export default withTranslation('product')(CategoryItem);
+export default CategoryItem;

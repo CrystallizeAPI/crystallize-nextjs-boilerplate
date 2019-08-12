@@ -7,7 +7,6 @@ import { withRouter } from 'next/router';
 
 import { CurrencyValue } from 'components/currency-value';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
-import { withTranslation } from 'lib/i18n';
 import { H1, Button, screen, Outer } from 'ui';
 import { useBasket, getVariantVATprops } from 'components/basket';
 import Layout from 'components/layout';
@@ -91,7 +90,7 @@ const ProductPage = ({ product, defaultVariant }) => {
 };
 
 const ProductPageDataLoader = props => {
-  const { asPath: path, t } = props;
+  const { asPath: path } = props;
 
   return (
     <Query
@@ -100,7 +99,7 @@ const ProductPageDataLoader = props => {
     >
       {({ loading, error, data }) => {
         if (loading) {
-          return <Layout loading title={t('Loading')} />;
+          return <Layout loading title="Loading" />;
         }
 
         if (error || !data.tree) {
@@ -137,6 +136,4 @@ ProductPageDataLoader.getInitialProps = ({ asPath }) => ({
   asPath
 });
 
-export default withRouter(
-  withTranslation(['common', 'basket', 'product'])(ProductPageDataLoader)
-);
+export default withRouter(ProductPageDataLoader);

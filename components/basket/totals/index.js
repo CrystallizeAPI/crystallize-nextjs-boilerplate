@@ -1,13 +1,11 @@
 import React, { Fragment } from 'react';
 
 import { CurrencyValue } from 'components/currency-value';
-import { useTranslation } from 'lib/i18n';
 import { useBasket } from '../context';
 
 import { Outer, Row, StrikeThrough, Rows } from './styles';
 
 export const Totals = () => {
-  const { t } = useTranslation(['common', 'basket']);
   const { state } = useBasket();
 
   const {
@@ -24,7 +22,7 @@ export const Totals = () => {
     <Outer>
       <Rows>
         <Row modifier="total-price">
-          <span>{t('basket:totalPrice', state)}:</span>
+          <span>Total price:</span>
           <span>
             <CurrencyValue value={totalPrice} />
           </span>
@@ -32,13 +30,13 @@ export const Totals = () => {
         {discount && (
           <Fragment>
             <Row modifier="discount">
-              <span>{t('basket:discount', state)}:</span>
+              <span>Discount:</span>
               <span>
                 <CurrencyValue value={discount} />
               </span>
             </Row>
             <Row modifier="total-after-discount">
-              <span>{t('basket:totalAfterDiscount', state)}:</span>
+              <span>Total after discount:</span>
               <span>
                 <CurrencyValue value={totalPriceMinusDiscount} />
               </span>
@@ -46,7 +44,7 @@ export const Totals = () => {
           </Fragment>
         )}
         <Row modifier="shipping">
-          <span>{t('basket:shipping', state)}:</span>
+          <span>Shipping:</span>
           {freeShipping ? (
             <span>
               {shipping && shipping.unit_price > 0 && (
@@ -64,13 +62,13 @@ export const Totals = () => {
         </Row>
 
         <Row modifier="total-vat">
-          <span>{t('basket:totalVatAmount', state)}:</span>
+          <span>VAT amount:</span>
           <span>
             <CurrencyValue value={totalVatAmount} minimumFractionDigits={2} />
           </span>
         </Row>
         <Row modifier="to-pay">
-          <span>{t('basket:amountToPay', state)}:</span>
+          <span>To pay:</span>
           <span>
             <CurrencyValue value={totalToPay} />
           </span>

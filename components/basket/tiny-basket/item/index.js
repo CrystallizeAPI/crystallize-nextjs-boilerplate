@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { CurrencyValue } from 'components/currency-value';
-import { useTranslation } from 'lib/i18n';
 
 import {
   Item,
@@ -22,8 +21,6 @@ import {
 } from './styles';
 
 const TinyBasketItem = ({ actions, item }) => {
-  const { t } = useTranslation(['common', 'basket']);
-
   const increment = () => {
     actions.incrementQuantityItem(item);
   };
@@ -96,9 +93,7 @@ const TinyBasketItem = ({ actions, item }) => {
           +
         </button>
       </ItemQuantityChanger>
-      <ItemDelete onClick={remove}>
-        {t('basket:removeItemFromBasket', item)}
-      </ItemDelete>
+      <ItemDelete onClick={remove}>Remove {item.name} from basket</ItemDelete>
     </Item>
   );
 };
