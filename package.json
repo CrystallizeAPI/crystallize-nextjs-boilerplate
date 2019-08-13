@@ -11,6 +11,7 @@
   },
   "scripts": {
     "dev": "next",
+    "now-dev": "now dev",
     "build": "next build",
     "start": "NODE_ENV=production next start",
     "prod": "npm run build && npm run start",
@@ -51,7 +52,7 @@
     "graphql-tag": "^2.10.1",
     "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
-    "mjml": "^4.4.0",
+    "mjml": "^4.4.1",
     "next": "^9.0.3-canary.4",
     "next-i18next": "^0.51.0",
     "ow": "^0.8.0",
