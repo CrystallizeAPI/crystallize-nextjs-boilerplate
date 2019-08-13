@@ -10,9 +10,9 @@
     "type": "git"
   },
   "scripts": {
-    "dev": "node ./index.js",
+    "dev": "next",
     "build": "next build",
-    "start": "NODE_ENV=production node ./index.js",
+    "start": "NODE_ENV=production next start",
     "prod": "npm run build && npm run start",
     "lint": "eslint .",
     "validate": "lint-staged",
