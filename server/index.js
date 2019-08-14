@@ -3,12 +3,10 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const next = require('next');
-const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const { parse } = require('url');
 const { join } = require('path');
 const jwt = require('jsonwebtoken');
 
-const nextI18next = require('../lib/i18n');
 const getComponentAndDataForPath = require('../lib/get-component-and-data-for-path');
 const config = require('./config');
 
@@ -41,11 +39,7 @@ const checkLoginState = headers => {
 
 app.prepare().then(() => {
   const server = express();
-
   server.use(helmet());
-
-  server.use(nextI18NextMiddleware(nextI18next));
-
   server.use('/api', api);
 
   // Helper function for throwing 404's from Next pages
