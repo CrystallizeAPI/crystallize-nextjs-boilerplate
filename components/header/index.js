@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { IconLogo } from 'ui';
 import { AuthContext } from 'components/auth-context';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
+import { logout } from 'utils/auth';
 
 import BasketButton from './basket-button';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
@@ -62,7 +63,7 @@ const Header = ({ simple }) => {
               <AuthContext.Consumer>
                 {state =>
                   state && state.isLoggedIn === true ? (
-                    <button type="button" onClick={state.actions.logout}>
+                    <button type="button" onClick={logout}>
                       Logout
                     </button>
                   ) : (
