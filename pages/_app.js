@@ -1,16 +1,26 @@
 import React from 'react';
 import App, { Container } from 'next/app';
 import { ApolloProvider } from 'react-apollo';
-import { parse } from 'cookie';
+import { parseCookie } from 'cookie';
+import cookie from 'js-cookie';
 
 import withData from 'lib/with-data';
 import AuthGate from 'components/auth-context';
 import BasketProvider from 'components/basket-provider';
 
+const getToken = ctx => {
+  if (ctx.req) {
+    const { token } = parseCookie(ctx.req.headers.cookie);
+    return token;
+  }
+
+  return cookie.get('token');
+};
+
 class MyApp extends App {
-  static async getInitialProps(props) {
-    const { pageProps } = props;
-    const { token } = parse(props.ctx.req.headers.cookie);
+  static async getInitialProps(ctx) {
+    const { pageProps } = ctx;
+    const token = getToken(ctx);
     const apiUrl = `http://localhost:3000/api/verify`;
 
     try {
