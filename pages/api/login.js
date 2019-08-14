@@ -1,15 +1,11 @@
 import fetch from 'isomorphic-unfetch';
 
 export default async (req, res) => {
-  if (!('authorization' in req.headers)) {
-    return res.status(401).send('Authorization header missing');
-  }
-
-  const auth = await req.headers.authorization;
+  const { username } = await req.body;
+  console.log('username', username);
+  const url = `https://api.github.com/users/${username}`;
 
   try {
-    const { token } = JSON.parse(auth);
-    const url = `https://api.github.com/user/${token}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -19,10 +15,8 @@ export default async (req, res) => {
       throw error;
     }
 
-    const js = await response.json();
-    // Need camelcase in the frontend
-    const data = Object.assign({}, { avatarUrl: js.avatar_url }, js);
-    return res.status(200).json({ data });
+    const { id } = await response.json();
+    return res.status(200).json({ token: id });
   } catch (error) {
     const { response } = error;
     return response

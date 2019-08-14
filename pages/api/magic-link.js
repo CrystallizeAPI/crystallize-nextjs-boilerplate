@@ -31,7 +31,9 @@ module.exports = (req, res) => {
   const token = jwt.sign({ email }, secret, {
     expiresIn: '36000s'
   });
-  const hostUrl = `${req.headers['x-forwarded-proto']}://${req.headers.host}`;
+  const hostUrl = `${req.headers['x-forwarded-proto']}://${
+    req.headers['x-forwarded-host']
+  }`;
   const magicLink = `${hostUrl}/api/verify/${token}`;
 
   const exists = users.some(u => u.token === token);
