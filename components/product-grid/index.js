@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Product from 'components/category-item';
-import { withTranslation } from 'lib/i18n';
 import { responsive } from 'ui';
 
 export const Grid = styled.ul`
@@ -43,4 +42,4 @@ const ProductGrid = ({ products }) => (
   </Grid>
 );
 
-export default withTranslation('product')(ProductGrid);
+export default ProductGrid;

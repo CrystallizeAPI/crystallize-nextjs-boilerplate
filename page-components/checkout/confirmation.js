@@ -1,7 +1,7 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
 
-import { withTranslation } from 'lib/i18n';
+import { CurrencyValue } from 'components/currency-value';
 import { BasketContext } from 'components/basket';
 import Layout from 'components/layout';
 
@@ -26,7 +26,7 @@ class Inner extends React.Component {
   }
 
   render() {
-    const { order, t } = this.props;
+    const { order } = this.props;
     if (!order) {
       return null;
     }
@@ -41,9 +41,7 @@ class Inner extends React.Component {
         </div>
         <div>
           Total price incl. tax:
-          {t('currency', {
-            amount: order.cart.total_price_including_tax / 100
-          })}
+          <CurrencyValue value={order.cart.total_price_including_tax / 100} />
         </div>
       </div>
     );
@@ -64,4 +62,4 @@ class CheckoutConfirmation extends React.Component {
   }
 }
 
-export default withTranslation(['common', 'checkout'])(CheckoutConfirmation);
+export default CheckoutConfirmation;

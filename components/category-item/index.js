@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { withTranslation } from 'lib/i18n';
+import { CurrencyValue } from 'components/currency-value';
 import { screen } from 'ui';
 import { Outer, Inner, Figure, Img, Footer, Price, imageWidth } from './styles';
 
@@ -9,7 +9,7 @@ const placeHolderImg = '/static/placeholder.png';
 
 class CategoryItem extends React.Component {
   render() {
-    const { data, t, key } = this.props;
+    const { data, key } = this.props;
     const { name, path, variants } = data;
 
     if (!data) {
@@ -51,9 +51,7 @@ class CategoryItem extends React.Component {
               <div>
                 <span>{name}</span>
                 <Price>
-                  {price
-                    ? t('currency', { amount: price })
-                    : t('currency', { amount: price })}
+                  <CurrencyValue value={price} />
                 </Price>
               </div>
             </Footer>
@@ -64,4 +62,4 @@ class CategoryItem extends React.Component {
   }
 }
 
-export default withTranslation('product')(CategoryItem);
+export default CategoryItem;
