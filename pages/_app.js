@@ -2,49 +2,19 @@ import React from 'react';
 import { ApolloProvider, Query } from 'react-apollo';
 import { IntlProvider } from 'react-intl';
 import App, { Container } from 'next/app';
-import { parseCookie } from 'cookie';
-import cookie from 'js-cookie';
+import dynamic from 'next/dynamic';
 
 import withData from 'lib/with-data';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
-import AuthGate from 'components/auth-context';
 import BasketProvider from 'components/basket-provider';
 
-const getToken = ctx => {
-  if (ctx.req) {
-    const { token } = parseCookie(ctx.req.headers.cookie);
-    return token;
-  }
-
-  return cookie.get('token');
-};
+const AuthGate = dynamic(() => import('components/auth-context'), {
+  ssr: false
+});
 
 class MyApp extends App {
-  static async getInitialProps(ctx) {
-    const { pageProps } = ctx;
-    const token = getToken(ctx);
-    const apiUrl = `http://localhost:3000/api/verify`;
-
-    try {
-      const response = await fetch(apiUrl, {
-        credentials: 'include',
-        headers: {
-          Authorization: JSON.stringify({ token })
-        }
-      });
-
-      if (!response.ok) {
-        return null;
-      }
-
-      return { isLoggedIn: true, pageProps };
-    } catch (error) {
-      return null;
-    }
-  }
-
   render() {
-    const { Component, pageProps, apolloClient, isLoggedIn } = this.props;
+    const { Component, pageProps, apolloClient } = this.props;
 
     return (
       <Container>
@@ -59,7 +29,7 @@ class MyApp extends App {
               return (
                 <IntlProvider locale={data.tenant.defaults.language}>
                   <BasketProvider>
-                    <AuthGate isLoggedIn={isLoggedIn}>
+                    <AuthGate>
                       <Component {...pageProps} />;
                     </AuthGate>
                   </BasketProvider>

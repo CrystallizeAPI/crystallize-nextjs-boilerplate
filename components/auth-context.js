@@ -1,28 +1,69 @@
 import React from 'react';
-import { logoutUser } from 'lib/rest-api';
+import cookie from 'js-cookie';
+import { login, logout } from 'utils/auth';
 
 export const AuthContext = React.createContext();
 
-export default class AuthGate extends React.PureComponent {
-  componentDidMount() {
-    const { isLoggedIn } = this.props;
+const verifyLogin = async () => {
+  const token = cookie.get('token');
+  const apiUrl = `http://localhost:3000/api/verify`;
 
-    window.isLoggedIn = isLoggedIn;
+  try {
+    const response = await fetch(apiUrl, {
+      credentials: 'include',
+      headers: {
+        Authorization: JSON.stringify({ token })
+      }
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export default class AuthGate extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoggedIn: false
+    };
+
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
-  logout = async () => {
-    const response = await logoutUser();
-    if (response && response.message === 'OK') {
-      window.location.reload();
-    }
-  };
+  async componentDidMount() {
+    const isLoggedIn = await verifyLogin();
+    window.isLoggedIn = isLoggedIn;
+    this.setState({ isLoggedIn });
+  }
+
+  login(token) {
+    login({ token });
+    this.setState({ isLoggedIn: true });
+  }
+
+  logout() {
+    logout();
+    this.setState({ isLoggedIn: false });
+  }
 
   render() {
-    const { children, isLoggedIn } = this.props;
+    const { children } = this.props;
+    const { isLoggedIn } = this.state;
 
     return (
       <AuthContext.Provider
-        value={{ isLoggedIn, actions: { logout: this.logout } }}
+        value={{
+          isLoggedIn,
+          actions: { login: this.login, logout: this.logout }
+        }}
       >
         {children}
       </AuthContext.Provider>
