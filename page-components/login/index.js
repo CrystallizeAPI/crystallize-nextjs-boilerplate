@@ -16,7 +16,9 @@ const Login = ({ router }) => {
     const { username } = userData;
 
     try {
-      const response = await loginRequest(username);
+      const response = await loginRequest({
+        body: JSON.stringify({ username })
+      });
       const { token, error } = response;
 
       if (error) {

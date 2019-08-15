@@ -1,26 +1,26 @@
 import React from 'react';
 import cookie from 'js-cookie';
+import { verifyRequest } from 'lib/rest-api';
 import { login, logout } from 'utils/auth';
 
 export const AuthContext = React.createContext();
 
 const verifyLogin = async () => {
   const token = cookie.get('token');
-  const apiUrl = `http://localhost:3000/api/verify`;
 
   try {
-    const response = await fetch(apiUrl, {
+    const response = await verifyRequest({
       credentials: 'include',
       headers: {
         Authorization: JSON.stringify({ token })
       }
     });
 
-    if (!response.ok) {
-      return false;
+    if (response.data) {
+      return true;
     }
 
-    return true;
+    return false;
   } catch (error) {
     return false;
   }
