@@ -2,15 +2,11 @@ import React from 'react';
 import { ApolloProvider, Query } from 'react-apollo';
 import { IntlProvider } from 'react-intl';
 import App, { Container } from 'next/app';
-import dynamic from 'next/dynamic';
 
+import AuthGate from 'components/auth-context';
 import withData from 'lib/with-data';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 import BasketProvider from 'components/basket-provider';
-
-const AuthGate = dynamic(() => import('components/auth-context'), {
-  ssr: false
-});
 
 class MyApp extends App {
   render() {
