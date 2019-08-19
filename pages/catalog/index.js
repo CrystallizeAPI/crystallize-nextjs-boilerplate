@@ -1,0 +1,48 @@
+import React from 'react';
+import { Query } from 'react-apollo';
+
+import Layout from 'components/layout';
+import FolderPage from 'page-components/folder';
+import ProductPage from 'page-components/product';
+import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
+
+export default class CatalogPage extends React.Component {
+  static getInitialProps({ query, asPath }) {
+    const path = query.path ? `/${query.path}` : asPath.substr(2);
+    return { path };
+  }
+
+  render() {
+    const { path } = this.props;
+
+    return (
+      <Query
+        variables={{ path, language: 'en' }}
+        query={FETCH_TREE_NODE_AND_MENU}
+      >
+        {({ loading, error, data }) => {
+          if (loading) {
+            return <Layout loading title="Loading" />;
+          }
+
+          if (error || !data.tree || !data.tree.length) {
+            return <Layout error />;
+          }
+
+          const { tree } = data;
+          const { type } = tree[0];
+
+          if (type === 'product') {
+            return <ProductPage asPath={path} />;
+          }
+
+          if (type === 'folder') {
+            return <FolderPage asPath={path} />;
+          }
+
+          return null;
+        }}
+      </Query>
+    );
+  }
+}
