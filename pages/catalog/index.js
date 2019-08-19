@@ -2,6 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 
 import Layout from 'components/layout';
+import DocumentPage from 'page-components/document';
 import FolderPage from 'page-components/folder';
 import ProductPage from 'page-components/product';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
@@ -38,6 +39,10 @@ export default class CatalogPage extends React.Component {
 
           if (type === 'folder') {
             return <FolderPage data={data} />;
+          }
+
+          if (type === 'document') {
+            return <DocumentPage data={data} />;
           }
 
           return null;
