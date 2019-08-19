@@ -21,7 +21,15 @@
       "dest": "/api/verify?token=$1"
     },
     {
-      "src": "/p/([^/].+)",
+      "src": "/static/([^/].+)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/_next/([^/].+)",
+      "dest": "/_next/$1"
+    },
+    {
+      "src": "/([^/].+)",
       "dest": "/catalog?path=$1"
     }
   ]
