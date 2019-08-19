@@ -10,8 +10,7 @@
     "type": "git"
   },
   "scripts": {
-    "dev": "next",
-    "now-dev": "now dev",
+    "dev": "now dev",
     "build": "next build",
     "start": "NODE_ENV=production next start",
     "prod": "npm run build && npm run start",
