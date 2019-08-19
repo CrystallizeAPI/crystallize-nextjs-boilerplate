@@ -8,7 +8,7 @@ import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 
 export default class CatalogPage extends React.Component {
   static getInitialProps({ query, asPath }) {
-    const path = query.path ? `/${query.path}` : asPath.substr(2);
+    const path = query.path ? `/${query.path}` : asPath.substring(2);
     return { path };
   }
 
@@ -33,11 +33,11 @@ export default class CatalogPage extends React.Component {
           const { type } = tree[0];
 
           if (type === 'product') {
-            return <ProductPage asPath={path} />;
+            return <ProductPage data={data} />;
           }
 
           if (type === 'folder') {
-            return <FolderPage asPath={path} />;
+            return <FolderPage data={data} />;
           }
 
           return null;

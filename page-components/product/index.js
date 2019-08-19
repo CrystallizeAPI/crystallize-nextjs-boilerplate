@@ -1,11 +1,9 @@
 /* eslint react/no-multi-comp: 0 */
 import React, { useState, useContext } from 'react';
-import { Query } from 'react-apollo';
 import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import { withRouter } from 'next/router';
 
-import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 import { H1, Button, screen, Outer } from 'ui';
 import { CurrencyValue } from 'components/currency-value';
 import { useBasket, getVariantVATprops } from 'components/basket';
@@ -89,50 +87,23 @@ const ProductPage = ({ product, defaultVariant }) => {
   );
 };
 
-const ProductPageDataLoader = props => {
-  const { asPath: path } = props;
+const ProductPageDataLoader = ({ data }) => {
+  const [product] = data.tree;
+  const defaultVariant = product.variants.find(v => v.isDefault);
+
+  if (!defaultVariant) {
+    return <Layout title={product.name}>This product has no variants</Layout>;
+  }
 
   return (
-    <Query
-      variables={{ path, language: 'en' }}
-      query={FETCH_TREE_NODE_AND_MENU}
-    >
-      {({ loading, error, data }) => {
-        if (loading) {
-          return <Layout loading title="Loading" />;
-        }
-
-        if (error || !data.tree) {
-          return <Layout error />;
-        }
-
-        const [product] = data.tree;
-
-        const defaultVariant = product.variants.find(v => v.isDefault);
-
-        if (!defaultVariant) {
-          return (
-            <Layout title={product.name}>This product has no variants</Layout>
-          );
-        }
-
-        return (
-          <Layout title={product.name}>
-            <ProductPage
-              key={product.id}
-              product={product}
-              defaultVariant={defaultVariant}
-              {...props}
-            />
-          </Layout>
-        );
-      }}
-    </Query>
+    <Layout title={product.name}>
+      <ProductPage
+        key={product.id}
+        product={product}
+        defaultVariant={defaultVariant}
+      />
+    </Layout>
   );
 };
-
-ProductPageDataLoader.getInitialProps = ({ asPath }) => ({
-  asPath
-});
 
 export default withRouter(ProductPageDataLoader);
