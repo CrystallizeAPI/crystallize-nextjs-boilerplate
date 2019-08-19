@@ -61,10 +61,4 @@ const Checkout = () => {
   );
 };
 
-Checkout.getInitialProps = () => {
-  return {
-    namespacesRequired: ['common', 'basket', 'product']
-  };
-};
-
 export default Checkout;

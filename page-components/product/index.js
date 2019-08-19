@@ -132,7 +132,6 @@ const ProductPageDataLoader = props => {
 };
 
 ProductPageDataLoader.getInitialProps = ({ asPath }) => ({
-  namespacesRequired: ['common', 'basket', 'product'],
   asPath
 });
 

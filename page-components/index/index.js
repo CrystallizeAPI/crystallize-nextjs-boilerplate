@@ -8,12 +8,6 @@ import { H1, Outer, Header } from 'ui';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 
 export default class FrontPage extends React.Component {
-  static async getInitialProps() {
-    return {
-      namespacesRequired: ['common', 'basket']
-    };
-  }
-
   render() {
     return (
       <Query

@@ -12,7 +12,6 @@ import { List } from './styles';
 export default class FolderPage extends React.PureComponent {
   static async getInitialProps({ asPath }) {
     return {
-      namespacesRequired: ['common', 'basket', 'product'],
       asPath
     };
   }

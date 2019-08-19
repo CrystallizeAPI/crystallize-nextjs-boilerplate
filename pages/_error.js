@@ -11,15 +11,14 @@ export const Outer = styled.div`
 
 export default class Error extends React.Component {
   static getInitialProps({ res, err }) {
-    const namespacesRequired = ['common', 'error'];
     if (res) {
-      return { statusCode: res.statusCode, namespacesRequired };
+      return { statusCode: res.statusCode };
     }
     if (err) {
-      return { statusCode: err.statusCode, namespacesRequired };
+      return { statusCode: err.statusCode };
     }
 
-    return { namespacesRequired };
+    return {};
   }
 
   render() {
