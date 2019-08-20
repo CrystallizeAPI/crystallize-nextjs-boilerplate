@@ -8,11 +8,16 @@ import { AuthContext } from 'components/auth-context';
 import { LoginStyle, Outer } from './styles';
 
 const Login = ({ router }) => {
-  const [userData, setUserData] = useState({ username: '', error: '' });
+  const [userData, setUserData] = useState({
+    loading: false,
+    email: '',
+    message: '',
+    error: ''
+  });
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setUserData(Object.assign({}, userData, { error: '' }));
+    setUserData(Object.assign({}, userData, { loading: true, error: '' }));
     const { email } = userData;
 
     try {
@@ -23,6 +28,13 @@ const Login = ({ router }) => {
         console.error('Login failed');
         throw error;
       }
+
+      setUserData(
+        Object.assign({}, userData, {
+          loading: false,
+          message: response.message
+        })
+      );
     } catch (error) {
       console.error(
         'You have an error in your code or there are Network issues.',
@@ -32,6 +44,7 @@ const Login = ({ router }) => {
       const { response } = error;
       setUserData(
         Object.assign({}, userData, {
+          loading: false,
           error: response ? response.statusText : error.message
         })
       );
@@ -68,7 +81,7 @@ const Login = ({ router }) => {
                     }
                   />
                   <Button
-                    // loading={loading}
+                    loading={userData.loading}
                     primary
                     type="submit"
                     value="Submit"
