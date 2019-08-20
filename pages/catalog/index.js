@@ -9,7 +9,7 @@ import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 
 export default class CatalogPage extends React.Component {
   static getInitialProps({ query, asPath }) {
-    const path = query.path ? `/${query.path}` : asPath.substring(2);
+    const path = query.path ? `/${query.path}` : asPath;
     return { path };
   }
 

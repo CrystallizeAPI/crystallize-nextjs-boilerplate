@@ -20,7 +20,7 @@ class CategoryItem extends React.Component {
 
     if (type === 'folder' || type === 'document') {
       return (
-        <Link as={`/p${path}`} key={key} href="/catalog" passHref>
+        <Link as={path} key={key} href="/catalog" passHref>
           <Outer>
             <Inner onlytext>{name}</Inner>
           </Outer>
@@ -33,7 +33,7 @@ class CategoryItem extends React.Component {
       : {};
 
     return (
-      <Link as={`/p${path}`} key={key} href="/catalog" passHref>
+      <Link as={path} key={key} href="/catalog" passHref>
         <Outer>
           <Inner>
             <Figure>
