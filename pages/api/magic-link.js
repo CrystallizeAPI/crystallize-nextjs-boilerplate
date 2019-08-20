@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const mjml2html = require('mjml');
-const { users, secret } = require('./helpers');
+import jwt from 'jsonwebtoken';
+import mjml2html from 'mjml';
+import { secret } from './helpers';
 
 const tenantName = process.env.CRYSTALLIZE_TENANT_ID;
 
@@ -25,27 +25,40 @@ const formatEmail = loginLink =>
     {}
   );
 
-module.exports = (req, res) => {
+export default (req, res) => {
   const { email } = req.query;
 
   const token = jwt.sign({ email }, secret, {
     expiresIn: '36000s'
   });
-  const hostUrl = `${req.headers['x-forwarded-proto']}://${
-    req.headers['x-forwarded-host']
-  }`;
+
+  const {
+    'x-forwarded-proto': protocol,
+    'x-forwarded-host': host
+  } = req.headers;
+
+  const hostUrl = `${protocol}://${host}`;
   const magicLink = `${hostUrl}/api/verify/${token}`;
 
-  const exists = users.some(u => u.token === token);
-  if (exists === false) users.push({ email, token });
+  // Here we would want to check whether a user already exists with the email
+  // provided. This boilerplate does not have a datastore connected to it yet
+  // so we will assume that the user exists. If the user doesn't exist this
+  // would also be a good place to create the new user.
+  //
+  // The token should also be saved somewhere so that we can verify that it
+  // is a valid token in `./verify.js`.
 
   const formattedEmail = formatEmail(magicLink);
-  // Ready to send email
+
+  // Now that we have an email formatted to contain the magic link we want to
+  // send it. Because the boilerplate is not configured with an SMTP server or
+  // another mail service to use, we will just log the message to the console
+  // for development.
 
   /* eslint-disable */
   console.log(formattedEmail);
   console.log('----');
-  console.log('Login Link: ' + magicLink);
+  console.log(`Login Link: ${magicLink}`);
   console.log('----');
   /* eslint-enable */
 
@@ -54,6 +67,6 @@ module.exports = (req, res) => {
   }
 
   return res.status(200).send({
-    message: 'Email sent! The verification link is only valid for 1 hour'
+    message: 'Email sent! The verification link will expire in 1 hour'
   });
 };

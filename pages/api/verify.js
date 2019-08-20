@@ -1,32 +1,26 @@
-import fetch from 'isomorphic-unfetch';
+import jwt from 'jsonwebtoken';
+import { secret } from './helpers';
 
-export default async (req, res) => {
-  if (!('authorization' in req.headers)) {
-    return res.status(401).send('Authorization header missing');
-  }
+export default (req, res) => {
+  const { token } = req.query;
 
-  const auth = await req.headers.authorization;
+  // Here we would want to fetch an entry matching the provided token from our
+  // datastore. This boilerplate does not have a datastore connected to it yet
+  // so we will just assume the token is for a real user and sign a login token
+  // accordingly.
 
   try {
-    const { token } = JSON.parse(auth);
-    const url = `https://api.github.com/user/${token}`;
-    const response = await fetch(url);
+    const decoded = jwt.verify(token, secret);
+    const { email } = decoded;
+    const signedLoginToken = jwt.sign({ email }, secret, { expiresIn: '12h' });
 
-    if (!response.ok) {
-      // https://github.com/developit/unfetch#caveats
-      const error = new Error(response.statusText);
-      error.response = response;
-      throw error;
-    }
-
-    const js = await response.json();
-    // Need camelcase in the frontend
-    const data = Object.assign({}, { avatarUrl: js.avatar_url }, js);
-    return res.status(200).json({ data });
-  } catch (error) {
-    const { response } = error;
-    return response
-      ? res.status(response.status).json({ message: response.statusText })
-      : res.status(400).json({ message: error.message });
+    res.setHeader(
+      'Set-Cookie',
+      `token=${signedLoginToken}; HttpOnly; Max-Age=3600; Path=/`
+    );
+    res.setHeader('Location', '/');
+    return res.status(302).json({ message: 'User is verified' });
+  } catch (err) {
+    return res.status(400).json({ message: 'User cannot be verified' });
   }
 };

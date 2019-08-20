@@ -1,26 +1,17 @@
 import React from 'react';
-import cookie from 'js-cookie';
-import { verifyRequest } from 'lib/rest-api';
-import { login, logout } from 'utils/auth';
+import { authenticate } from 'lib/rest-api';
+import { logout } from 'utils/auth';
 
 export const AuthContext = React.createContext();
 
 const verifyLogin = async () => {
-  const token = cookie.get('token');
-
   try {
-    const response = await verifyRequest({
-      credentials: 'include',
-      headers: {
-        Authorization: JSON.stringify({ token })
-      }
-    });
-
-    if (response.data) {
-      return true;
+    const response = await authenticate();
+    if (response.error) {
+      return false;
     }
 
-    return false;
+    return true;
   } catch (error) {
     return false;
   }
@@ -34,7 +25,6 @@ export default class AuthGate extends React.PureComponent {
       isLoggedIn: false
     };
 
-    this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -42,11 +32,6 @@ export default class AuthGate extends React.PureComponent {
     const isLoggedIn = await verifyLogin();
     window.isLoggedIn = isLoggedIn;
     this.setState({ isLoggedIn });
-  }
-
-  login(token) {
-    login({ token });
-    this.setState({ isLoggedIn: true });
   }
 
   logout() {
@@ -62,7 +47,7 @@ export default class AuthGate extends React.PureComponent {
       <AuthContext.Provider
         value={{
           isLoggedIn,
-          actions: { login: this.login, logout: this.logout }
+          actions: { logout: this.logout }
         }}
       >
         {children}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Layout from 'components/layout';
 import { Button } from 'ui';
-import { loginRequest } from 'lib/rest-api';
+import { sendMagicLink } from 'lib/rest-api';
 import { AuthContext } from 'components/auth-context';
 
 import { LoginStyle, Outer } from './styles';
@@ -10,23 +10,19 @@ import { LoginStyle, Outer } from './styles';
 const Login = ({ router }) => {
   const [userData, setUserData] = useState({ username: '', error: '' });
 
-  async function handleSubmit(event, state) {
+  async function handleSubmit(event) {
     event.preventDefault();
     setUserData(Object.assign({}, userData, { error: '' }));
-    const { username } = userData;
+    const { email } = userData;
 
     try {
-      const response = await loginRequest({
-        body: JSON.stringify({ username })
-      });
-      const { token, error } = response;
+      const response = await sendMagicLink(email);
+      const { error } = response;
 
       if (error) {
         console.error('Login failed');
         throw error;
       }
-
-      state.actions.login(token);
     } catch (error) {
       console.error(
         'You have an error in your code or there are Network issues.',
@@ -60,13 +56,13 @@ const Login = ({ router }) => {
                 </h4>
                 <form onSubmit={e => handleSubmit(e, state)}>
                   <input
-                    // type="email"
+                    type="email"
                     placeholder="Enter your email"
                     required
                     onChange={event =>
                       setUserData(
                         Object.assign({}, userData, {
-                          username: event.target.value
+                          email: event.target.value
                         })
                       )
                     }
@@ -80,7 +76,7 @@ const Login = ({ router }) => {
                     Continue
                   </Button>
                 </form>
-                {userData.username ? <p>{userData.username}</p> : ''}
+                {userData.message ? <p>{userData.message}</p> : ''}
                 {userData.error ? (
                   <p>Please enter a valid email address</p>
                 ) : (
