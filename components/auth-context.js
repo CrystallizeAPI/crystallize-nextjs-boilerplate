@@ -1,6 +1,6 @@
 import React from 'react';
 import { authenticate } from 'lib/rest-api';
-import { logout } from 'utils/auth';
+import { logout } from 'lib/auth';
 
 export const AuthContext = React.createContext();
 
