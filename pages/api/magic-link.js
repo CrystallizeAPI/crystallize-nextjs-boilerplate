@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import mjml2html from 'mjml';
+import mjml2html from '@nerdenough/mjml-ncc-bundle';
 import { secret } from './helpers';
 
 const tenantName = process.env.CRYSTALLIZE_TENANT_ID;
