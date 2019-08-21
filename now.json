@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "crystallize-frontend-boilerplate",
   "builds": [
     {
       "src": "package.json",
