@@ -26,8 +26,12 @@ export default class CatalogPage extends React.Component {
             return <Layout loading title="Loading" />;
           }
 
-          if (error || !data.tree || !data.tree.length) {
+          if (error) {
             return <Layout error />;
+          }
+
+          if (!data.tree || !data.tree.length) {
+            return <Layout error title="Not Found" />;
           }
 
           const { tree } = data;
@@ -45,7 +49,8 @@ export default class CatalogPage extends React.Component {
             return <DocumentPage data={data} />;
           }
 
-          return null;
+          // Unsupported type
+          return <layout error />;
         }}
       </Query>
     );
