@@ -20,9 +20,25 @@ Check it out, the boilerplate is Open Source and MIT licensed.
 
 - Clone the repo or download from [the releases page](https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases)
 - Run `npm install` to install dependencies
-- Run `npm run dev` to start up
+- Run `npm run dev` or `npm run now-dev` to start up
 - - The site should be ready at [http://localhost:3000](http://localhost:3000)
 - (Optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
+
+## With Now
+
+If you intend to use Now instead of a custom server, you can run the following command:
+
+```sh
+npm run now-dev
+```
+
+## Custom Server
+
+If you intend to use a custom server for your API, run the following command:
+
+```sh
+npm run dev
+```
 
 # App structure
 
@@ -55,26 +71,6 @@ Library code to enable GraphQL and REST API communication and more
 ## ./static
 
 Resources server statically by the web server. Including translation files
-
-# Running Locally
-
-The following commands will start up the local dev server and allow you to access your app via the web browser locally.
-
-## With Now
-
-If you intend to use Now instead of a custom server, you can run the following command:
-
-```sh
-npm run now-dev
-```
-
-## Custom Server
-
-If you intend to use a custom server for your API, run the following command:
-
-```sh
-npm run dev
-```
 
 # Deploy
 
