@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Chunk from '@crystallize/content-chunk/reactChunk';
+import CrystallizeContent from '@crystallize/content-transformer/react';
 
 import ParagraphCollection from './paragraph-collection';
 
@@ -24,7 +24,7 @@ const ShapeComponents = ({ components }) => {
       }
 
       if (type === 'richText') {
-        return <Chunk key={key} {...component.content.json[0]} />;
+        return <CrystallizeContent key={key} {...component.content.json[0]} />;
       }
 
       if (type === 'singleLine') {

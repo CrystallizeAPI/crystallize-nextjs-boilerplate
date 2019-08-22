@@ -1,4 +1,4 @@
-import Chunk from '@crystallize/content-chunk/reactChunk';
+import CrystallizeContent from '@crystallize/content-transformer/react';
 import Image from '@crystallize/react-image';
 import { H1 } from 'ui';
 
@@ -19,7 +19,7 @@ const Paragraph = ({
       )}
       {!!body && body.json && body.json.length > 0 && (
         <Body>
-          <Chunk {...body.json} />
+          <CrystallizeContent {...body.json} />
         </Body>
       )}
       {!!images && images.length > 0 && (
