@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import mjml2html from '@nerdenough/mjml-ncc-bundle';
+const jwt = require('jsonwebtoken');
+const mjml2html = require('mjml');
 
 const secret = process.env.SECRET;
 const tenantName = process.env.CRYSTALLIZE_TENANT_ID;
@@ -25,8 +25,8 @@ const formatEmail = loginLink =>
     {}
   );
 
-export default (req, res) => {
-  const { email } = req.query;
+module.exports = (req, res) => {
+  const { email } = req.params;
 
   if (!email) {
     return res.status(400).json({ message: 'No email provided' });
@@ -36,12 +36,7 @@ export default (req, res) => {
     expiresIn: '36000s'
   });
 
-  const {
-    'x-forwarded-proto': protocol,
-    'x-forwarded-host': host
-  } = req.headers;
-
-  const hostUrl = `${protocol}://${host}`;
+  const hostUrl = `${req.protocol}://${req.get('host')}`;
   const magicLink = `${hostUrl}/api/verify/${token}`;
 
   // Here we would want to check whether a user already exists with the email

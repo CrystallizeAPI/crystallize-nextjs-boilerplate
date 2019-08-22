@@ -1,4 +1,4 @@
-export default (req, res) => {
+module.exports = (req, res) => {
   const { token } = req.cookies;
 
   // Here you would confirm the token provided by the cookie is a valid token

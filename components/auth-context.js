@@ -7,7 +7,7 @@ export const AuthContext = React.createContext();
 const verifyLogin = async () => {
   try {
     const response = await authenticate();
-    if (response.error) {
+    if (!response.loggedIn) {
       return false;
     }
 

@@ -10,7 +10,8 @@
     "type": "git"
   },
   "scripts": {
-    "dev": "now dev",
+    "dev": "node ./server",
+    "now-dev": "now dev",
     "build": "next build",
     "start": "NODE_ENV=production next start",
     "prod": "npm run build && npm run start",
@@ -45,8 +46,10 @@
     "babel-plugin-styled-components": "^1.10.0",
     "body-parser": "^1.19.0",
     "change-case": "^3.1.0",
+    "cookie-parser": "^1.4.4",
     "cross-fetch": "^3.0.2",
     "dotenv": "^8.0.0",
+    "express": "^4.17.1",
     "graphql": "^14.3.0",
     "graphql-tag": "^2.10.1",
     "helmet": "^3.18.0",

@@ -1,5 +1,6 @@
 /* eslint no-underscore-dangle: "off" */
 const {
+  PORT = 3000,
   NODE_ENV = 'development',
   CRYSTALLIZE_TENANT_ID = 'demo',
   CRYSTALLIZE_GRAPH_URL_BASE = 'https://graph.crystallize.com',
@@ -9,6 +10,7 @@ const {
 const DEV = NODE_ENV !== 'production';
 
 global.__crystallizeConfig = {
+  PORT,
   NODE_ENV,
   TENANT_ID: CRYSTALLIZE_TENANT_ID,
   GRAPH_URL: `${CRYSTALLIZE_GRAPH_URL_BASE}/tenant/${CRYSTALLIZE_TENANT_ID}`,
