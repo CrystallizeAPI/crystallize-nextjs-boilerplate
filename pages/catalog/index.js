@@ -1,5 +1,6 @@
 import React from 'react';
 import { Query } from 'react-apollo';
+import Error from 'pages/_error';
 
 import Layout from 'components/layout';
 import DocumentPage from 'page-components/document';
@@ -31,7 +32,7 @@ export default class CatalogPage extends React.Component {
           }
 
           if (!data.tree || !data.tree.length) {
-            return <Layout error title="Not Found" />;
+            return <Error statusCode="404" />;
           }
 
           const { tree } = data;
