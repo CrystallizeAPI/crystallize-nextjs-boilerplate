@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { secret } from './helpers';
+
+const secret = process.env.SECRET;
 
 export default (req, res) => {
   const { token } = req.query;

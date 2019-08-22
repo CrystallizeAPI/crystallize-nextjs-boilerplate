@@ -72,6 +72,7 @@ async function envFileExists() {
         }
       ]);
       envVars.CRYSTALLIZE_TENANT_ID = tenantId;
+      envVars.SECRET = 'secret';
     }
 
     // Set the env file
