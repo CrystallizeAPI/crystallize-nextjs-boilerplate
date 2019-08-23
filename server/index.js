@@ -8,7 +8,7 @@ const { parse } = require('url');
 const { join } = require('path');
 
 const getComponentAndDataForPath = require('../lib/get-component-and-data-for-path');
-const config = require('./config');
+const config = require('../config');
 
 const app = next({ dev: config.DEV });
 const handle = app.getRequestHandler();
