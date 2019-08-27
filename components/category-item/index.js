@@ -3,9 +3,7 @@ import Link from 'next/link';
 
 import { CurrencyValue } from 'components/currency-value';
 import { screen } from 'ui';
-import { Outer, Inner, Figure, Img, Footer, Price, imageWidth } from './styles';
-
-const placeHolderImg = '/static/placeholder.png';
+import { Outer, Inner, Img, Footer, Price, imageSize } from './styles';
 
 class CategoryItem extends React.Component {
   render() {
@@ -36,17 +34,11 @@ class CategoryItem extends React.Component {
       <Link as={path} key={key} href="/catalog" passHref>
         <Outer>
           <Inner>
-            <Figure>
-              <Img
-                src={image && image.url ? image.url : placeHolderImg}
-                onError={e => {
-                  e.target.onerror = null;
-                  e.target.src = placeHolderImg;
-                }}
-                alt={name}
-                sizes={`(min-width ${screen.md}px) ${imageWidth.lg}, ${imageWidth.xs}`}
-              />
-            </Figure>
+            <Img
+              {...image}
+              alt={name}
+              sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
+            />
             <Footer>
               <div>
                 <span>{name}</span>
