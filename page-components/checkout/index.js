@@ -2,6 +2,7 @@
 import React from 'react';
 
 import { useBasket } from 'components/basket';
+import { CurrencyValue } from 'components/currency-value';
 import Layout from 'components/layout';
 
 import PaymentGateway from './payment-gateway';
@@ -50,7 +51,9 @@ const Checkout = () => {
                   {item.quantity}
                   pcs
                 </ItemQuantity>
-                <ItemPrice>{item.unit_price}</ItemPrice>
+                <ItemPrice>
+                  <CurrencyValue value={item.price * item.quantity} />
+                </ItemPrice>
               </Item>
             ))}
           </Items>
@@ -59,12 +62,6 @@ const Checkout = () => {
       </Outer>
     </Layout>
   );
-};
-
-Checkout.getInitialProps = () => {
-  return {
-    namespacesRequired: ['common', 'basket', 'product']
-  };
 };
 
 export default Checkout;

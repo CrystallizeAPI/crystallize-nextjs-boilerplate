@@ -56,11 +56,11 @@ async function envFileExists() {
       }
     ]);
 
-    const envFileVars = [
-      'PORT=3000',
-      'GTM_ID=',
-      'CRYSTALLIZE_GRAPH_URL_BASE=https://graph.crystallize.com'
-    ];
+    const envVars = {
+      GTM_ID: '',
+      CRYSTALLIZE_GRAPH_URL_BASE: 'https://graph.crystallize.com',
+      CRYSTALLIZE_TENANT_ID: 'demo'
+    };
 
     if (shopToUse !== 'demo') {
       const { tenantId, tenantToken } = await inquirer.prompt([
@@ -71,13 +71,31 @@ async function envFileExists() {
           default: 'demo'
         }
       ]);
-      envFileVars.push(`CRYSTALLIZE_TENANT_ID=${tenantId}`);
-    } else {
-      envFileVars.push('CRYSTALLIZE_TENANT_ID=demo');
+      envVars.CRYSTALLIZE_TENANT_ID = tenantId;
+      envVars.SECRET = 'secret';
     }
 
     // Set the env file
-    await writeFile(join(__dirname, '..', './.env'), envFileVars.join('\n'));
+    const envFileVars = Object.keys(envVars).map(
+      key => `${key}=${envVars[key]}`
+    );
+    await writeFile(
+      join(__dirname, '..', './.env'),
+      envFileVars.join('\n') + '\n'
+    );
+
+    // Update now.json
+    const nowJson = await readFile(
+      join(__dirname, '../', './now.json'),
+      'utf8'
+    );
+    const nowJsonObj = JSON.parse(nowJson);
+    nowJsonObj.env = envVars;
+    await writeFile(
+      join(__dirname, '../', './now.json'),
+      JSON.stringify(nowJsonObj, null, 2) + '\n',
+      'utf-8'
+    );
 
     // Remove greeting from package.json
     const packageJson = await readFile(
@@ -88,7 +106,7 @@ async function envFileExists() {
     delete packageJsonObj.scripts.postinstall;
     await writeFile(
       join(__dirname, '../', './package.json'),
-      JSON.stringify(packageJsonObj, null, 2),
+      JSON.stringify(packageJsonObj, null, 2) + '\n',
       'utf-8'
     );
 

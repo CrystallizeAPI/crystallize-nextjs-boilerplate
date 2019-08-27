@@ -51,7 +51,7 @@ const Header = ({ simple }) => {
               <NavList>
                 {data.menu.map(category => (
                   <NavListItem key={category.path}>
-                    <Link as={category.path} href={`/${category.type}`}>
+                    <Link as={category.path} href="/catalog">
                       <a>{category.name}</a>
                     </Link>
                   </NavListItem>

@@ -1,16 +1,16 @@
 import React from 'react';
-import App, { Container } from 'next/app';
 import { ApolloProvider, Query } from 'react-apollo';
 import { IntlProvider } from 'react-intl';
+import App, { Container } from 'next/app';
 
+import AuthGate from 'components/auth-context';
 import withData from 'lib/with-data';
 import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
-import AuthGate from 'components/auth-context';
 import BasketProvider from 'components/basket-provider';
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps, apolloClient, isLoggedIn } = this.props;
+    const { Component, pageProps, apolloClient } = this.props;
 
     return (
       <Container>
@@ -25,7 +25,7 @@ class MyApp extends App {
               return (
                 <IntlProvider locale={data.tenant.defaults.language}>
                   <BasketProvider>
-                    <AuthGate isLoggedIn={isLoggedIn}>
+                    <AuthGate>
                       <Component {...pageProps} />;
                     </AuthGate>
                   </BasketProvider>

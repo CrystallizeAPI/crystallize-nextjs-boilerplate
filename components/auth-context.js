@@ -1,28 +1,54 @@
 import React from 'react';
-import { logoutUser } from 'lib/rest-api';
+import { authenticate } from 'lib/rest-api';
+import { logout } from 'lib/auth';
 
 export const AuthContext = React.createContext();
 
-export default class AuthGate extends React.PureComponent {
-  componentDidMount() {
-    const { isLoggedIn } = this.props;
+const verifyLogin = async () => {
+  try {
+    const response = await authenticate();
+    if (!response.loggedIn) {
+      return false;
+    }
 
-    window.isLoggedIn = isLoggedIn;
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export default class AuthGate extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoggedIn: false
+    };
+
+    this.logout = this.logout.bind(this);
   }
 
-  logout = async () => {
-    const response = await logoutUser();
-    if (response && response.message === 'OK') {
-      window.location.reload();
-    }
-  };
+  async componentDidMount() {
+    const isLoggedIn = await verifyLogin();
+    window.isLoggedIn = isLoggedIn;
+    this.setState({ isLoggedIn });
+  }
+
+  logout() {
+    logout();
+    this.setState({ isLoggedIn: false });
+  }
 
   render() {
-    const { children, isLoggedIn } = this.props;
+    const { children } = this.props;
+    const { isLoggedIn } = this.state;
 
     return (
       <AuthContext.Provider
-        value={{ isLoggedIn, actions: { logout: this.logout } }}
+        value={{
+          isLoggedIn,
+          actions: { logout: this.logout }
+        }}
       >
         {children}
       </AuthContext.Provider>

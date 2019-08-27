@@ -1,45 +1,24 @@
 require('dotenv').config();
 
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const next = require('next');
 const { parse } = require('url');
 const { join } = require('path');
-const jwt = require('jsonwebtoken');
 
 const getComponentAndDataForPath = require('../lib/get-component-and-data-for-path');
-const config = require('./config');
+const config = require('../config');
 
 const app = next({ dev: config.DEV });
 const handle = app.getRequestHandler();
 
 const api = require('./api');
 
-const checkLoginState = headers => {
-  /* eslint-disable */
-  const token =
-    (headers &&
-      headers.cookie &&
-      (headers.cookie.match('(^|;) *' + 'token' + '=([^;]*)') || '')[2]) ||
-    false;
-  if (!token) {
-    return false;
-  } else {
-    return jwt.verify(token, process.env.SECRET, (err, decoded) => {
-      if (err) {
-        return false;
-      }
-      if (decoded) {
-        return true;
-      }
-    });
-  }
-  /* eslint-enable */
-};
-
 app.prepare().then(() => {
   const server = express();
   server.use(helmet());
+  server.use(cookieParser());
   server.use('/api', api);
 
   // Helper function for throwing 404's from Next pages
@@ -69,9 +48,6 @@ app.prepare().then(() => {
       if (component) {
         // Attach the apollo state to be used in lib/with-data
         req.initialApolloState = apolloState;
-
-        req.headers.isLoggedIn = checkLoginState(req.headers);
-
         app.render(req, res, component, parsedUrl.query);
       } else {
         // Let Next.js handle the path

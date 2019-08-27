@@ -1,4 +1,50 @@
 {
-  "dotenv": true,
-  "alias": "weknowinternet.work"
+  "version": 2,
+  "name": "crystallize-frontend-boilerplate",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/next"
+    }
+  ],
+  "env": {
+    "GTM_ID": "",
+    "CRYSTALLIZE_GRAPH_URL_BASE": "https://graph.crystallize.com",
+    "CRYSTALLIZE_TENANT_ID": "demo",
+    "SECRET": "secret"
+  },
+  "routes": [
+    {
+      "src": "/api/magic-link/([^/]+)",
+      "dest": "/api/magic-link?email=$1"
+    },
+    {
+      "src": "/api/verify/([^/]+)",
+      "dest": "/api/verify?token=$1"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/static/([^/].+)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/_next/([^/].+)",
+      "dest": "/_next/$1"
+    },
+    {
+      "src": "/login",
+      "dest": "/login"
+    },
+    {
+      "src": "/checkout",
+      "dest": "/checkout"
+    },
+    {
+      "src": "/([^/].+)",
+      "dest": "/catalog?path=$1"
+    }
+  ]
 }

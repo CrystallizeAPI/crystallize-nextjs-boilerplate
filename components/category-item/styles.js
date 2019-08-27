@@ -4,7 +4,7 @@ import Image from '@crystallize/react-image';
 
 import { colors, responsive } from 'ui';
 
-export const imageWidth = {
+export const imageSize = {
   lg: '300px',
   xs: '150px'
 };
@@ -44,24 +44,26 @@ export const Inner = styled.span`
   `};
 `;
 
-export const Figure = styled.figure`
-  margin-bottom: 10px;
+export const Img = styled(Image)`
+  margin: 0 auto 10px;
   display: flex;
-  min-height: 400px;
-  height: 100%;
+  width: ${imageSize.lg};
+  height: ${imageSize.lg};
   align-items: center;
   justify-content: center;
   overflow: hidden;
-`;
-
-export const Img = styled(Image)`
-  display: block;
-  width: 100%;
-  object-fit: contain;
-  margin: 0 auto;
 
   ${responsive.xs} {
-    height: ${imageWidth.xs};
+    height: ${imageSize.xs};
+    width: ${imageSize.xs};
+  }
+
+  > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0 auto;
   }
 `;
 

@@ -4,7 +4,7 @@ The bare minimum skeleton you need to get a frontend up and running on the [head
 
 This frontend boilerplate is a great startingpoing when building [React ecommerce](https://crystallize.com/developers) experiences with [frontend performance](https://crystallize.com/blog/frontend-performance-measuring-kpis) in focus. You can have rich ecommerce content with the super structured [PIM](https://crystallize.com/product/product-information-management) engine in Crystallize powering your product catalogue.
 
-Fast frontend performance delivers a better ecommerce experience and is a key ingredient in the [ecommerce SEO checklist](https://crystallize.com/blog/ecommerce-seo-checklist). [Rich content driven ecommerce experiences](https://crystallize.com/blog/content-rich-storytelling-makes-juicy-ecommerce) builds the foundation for a  [content strategy for exponential growth marketing](https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing). 
+Fast frontend performance delivers a better ecommerce experience and is a key ingredient in the [ecommerce SEO checklist](https://crystallize.com/blog/ecommerce-seo-checklist). [Rich content driven ecommerce experiences](https://crystallize.com/blog/content-rich-storytelling-makes-juicy-ecommerce) builds the foundation for a [content strategy for exponential growth marketing](https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing).
 
 Check it out, the boilerplate is Open Source and MIT licensed.
 
@@ -20,15 +20,35 @@ Check it out, the boilerplate is Open Source and MIT licensed.
 
 - Clone the repo or download from [the releases page](https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases)
 - Run `npm install` to install dependencies
-- Run `npm run dev` to start up
+- Run `npm run dev` or `npm run now-dev` to start up
 - - The site should be ready at [http://localhost:3000](http://localhost:3000)
 - (Optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
+
+## With Now
+
+If you intend to use Now instead of a custom server, you can run the following command:
+
+```sh
+npm run now-dev
+```
+
+## Custom Server
+
+If you intend to use a custom server for your API, run the following command:
+
+```sh
+npm run dev
+```
 
 # App structure
 
 ## ./pages
 
 Put all your entry pages here
+
+## ./pages/api
+
+All your Now V2 [serverless functions](https://zeit.co/docs/v2/serverless-functions/introduction). You can delete this folder if you are not using Now.
 
 ## ./components
 
@@ -40,7 +60,9 @@ UI related components live her. Color variables and simple shared components
 
 ## ./server
 
-This is where the ultra-light frontend server lives. Its primary function is to render the React app in response to a request
+This is where the ultra-light frontend server lives. Its primary function is to render the React app in response to a request.
+
+You can delete this folder if you intend to use [Now](https://zeit.co/guides/deploying-nextjs-with-now/) instead of a custom server.
 
 ## ./lib
 

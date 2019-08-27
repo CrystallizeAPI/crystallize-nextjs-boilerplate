@@ -50,8 +50,4 @@ export const ItemQuantity = styled.div`
 
 export const ItemPrice = styled.div`
   font-size: 1.5rem;
-
-  &::after {
-    content: ',-';
-  }
 `;
