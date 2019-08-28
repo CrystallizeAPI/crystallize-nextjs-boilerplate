@@ -68,7 +68,6 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "chalk": "^2.4.2",
     "enzyme": "^3.7.0",
