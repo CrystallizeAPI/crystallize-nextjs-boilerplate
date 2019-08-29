@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Paragraphs = styled.div``;
 
-export const P = styled.p`
+export const Outer = styled.div`
   margin: 30px 0;
 `;
 
