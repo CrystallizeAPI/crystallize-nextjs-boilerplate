@@ -1,42 +1,43 @@
 import React from 'react';
-import { ApolloProvider, Query } from 'react-apollo';
+import App from 'next/app';
 import { IntlProvider } from 'react-intl';
-import App, { Container } from 'next/app';
+import { Provider } from 'urql';
 
+import withUrqlClient from 'lib/with-urql-client';
+import { useMenuAndTenantQuery } from 'lib/graph';
 import AuthGate from 'components/auth-context';
-import withData from 'lib/with-data';
-import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
 import BasketProvider from 'components/basket-provider';
+
+const AppWithIntl = ({ children }) => {
+  const { fetching, error, data } = useMenuAndTenantQuery();
+
+  if (fetching || error || !data) {
+    return null;
+  }
+
+  return (
+    <IntlProvider locale={data.tenant.defaults.language}>
+      {children}
+    </IntlProvider>
+  );
+};
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const { Component, pageProps, urqlClient } = this.props;
 
     return (
-      <Container>
-        <ApolloProvider client={apolloClient}>
-          <Query
-            variables={{ path: '/', language: 'en' }}
-            query={FETCH_TREE_NODE_AND_MENU}
-          >
-            {({ loading, error, data }) => {
-              if (loading) return null;
-              if (error) return null;
-              return (
-                <IntlProvider locale={data.tenant.defaults.language}>
-                  <BasketProvider>
-                    <AuthGate>
-                      <Component {...pageProps} />;
-                    </AuthGate>
-                  </BasketProvider>
-                </IntlProvider>
-              );
-            }}
-          </Query>
-        </ApolloProvider>
-      </Container>
+      <Provider value={urqlClient}>
+        <AppWithIntl>
+          <BasketProvider>
+            <AuthGate>
+              <Component {...pageProps} />
+            </AuthGate>
+          </BasketProvider>
+        </AppWithIntl>
+      </Provider>
     );
   }
 }
 
-export default withData(MyApp);
+export default withUrqlClient(MyApp);

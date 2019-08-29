@@ -7,7 +7,7 @@ import { Outer, Inner, Img, Footer, Price, imageSize } from './styles';
 
 class CategoryItem extends React.Component {
   render() {
-    const { data, key } = this.props;
+    const { data } = this.props;
     const { name, path, variants } = data;
 
     if (!data) {
@@ -18,7 +18,7 @@ class CategoryItem extends React.Component {
 
     if (type === 'folder' || type === 'document') {
       return (
-        <Link as={path} key={key} href="/catalog" passHref>
+        <Link as={path} href="/catalog" passHref>
           <Outer>
             <Inner onlytext>{name}</Inner>
           </Outer>
@@ -31,7 +31,7 @@ class CategoryItem extends React.Component {
       : {};
 
     return (
-      <Link as={path} key={key} href="/catalog" passHref>
+      <Link as={path} href="/catalog" passHref>
         <Outer>
           <Inner>
             <Img

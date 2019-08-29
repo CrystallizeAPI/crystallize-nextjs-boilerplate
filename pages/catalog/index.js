@@ -1,59 +1,56 @@
 import React from 'react';
-import { Query } from 'react-apollo';
 import Error from 'pages/_error';
 
 import Layout from 'components/layout';
 import DocumentPage from 'page-components/document';
 import FolderPage from 'page-components/folder';
 import ProductPage from 'page-components/product';
-import { FETCH_TREE_NODE_AND_MENU } from 'lib/graph';
+import { useTreeNodeQuery, useMenuAndTenantQuery } from 'lib/graph';
 
-export default class CatalogPage extends React.Component {
-  static getInitialProps({ query, asPath }) {
-    const path = query.path ? `/${query.path}` : asPath;
-    return { path };
+export default function CatalogPage() {
+  /**
+   * Get both the current component at the path and
+   * also the top menu and tenant settings. We do both
+   * here since the menu and tenant query most likely
+   * will be executed later anyways. This approach will
+   * save a good handful of milliseconds
+   */
+  const { fetching, error, data } = useTreeNodeQuery();
+  const menuAndTenantResult = useMenuAndTenantQuery();
+
+  if (fetching) {
+    return <Layout loading />;
   }
 
-  render() {
-    const { path } = this.props;
-
-    return (
-      <Query
-        variables={{ path, language: 'en' }}
-        query={FETCH_TREE_NODE_AND_MENU}
-      >
-        {({ loading, error, data }) => {
-          if (loading) {
-            return <Layout loading title="Loading" />;
-          }
-
-          if (error) {
-            return <Layout error />;
-          }
-
-          if (!data.tree || !data.tree.length) {
-            return <Error statusCode="404" />;
-          }
-
-          const { tree } = data;
-          const { type } = tree[0];
-
-          if (type === 'product') {
-            return <ProductPage data={data} />;
-          }
-
-          if (type === 'folder') {
-            return <FolderPage data={data} />;
-          }
-
-          if (type === 'document') {
-            return <DocumentPage data={data} />;
-          }
-
-          // Unsupported type
-          return <layout error />;
-        }}
-      </Query>
-    );
+  if (error) {
+    return <Layout error />;
   }
+
+  // Nothing in Crystallize at this path. Show 404 page
+  if (!data.tree || !data.tree.length) {
+    return <Error statusCode="404" />;
+  }
+
+  if (menuAndTenantResult.data && typeof window === 'undefined') {
+    // eslint-disable-next-line no-console
+    console.log('Populated cache for tenant and menu');
+  }
+
+  const { tree } = data;
+  const { type } = tree[0];
+
+  if (type === 'product') {
+    return <ProductPage data={data} />;
+  }
+
+  if (type === 'folder') {
+    return <FolderPage data={data} />;
+  }
+
+  if (type === 'document') {
+    return <DocumentPage data={data} />;
+  }
+
+  // Unsupported type
+  return <div>This type ({type}) is not supported</div>;
 }
