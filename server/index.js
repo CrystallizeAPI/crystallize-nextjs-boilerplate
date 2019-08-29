@@ -33,9 +33,10 @@ app.prepare().then(() => {
     const parsedUrl = parse(req.url, true);
 
     try {
-      const { component, urqlState } = await getComponentAndDataForPath(
-        parsedUrl
-      );
+      const { component, urqlState } = await getComponentAndDataForPath({
+        pathname: parsedUrl.pathname,
+        language: 'en'
+      });
 
       if (component) {
         // Attach the urql state to be used in lib/with-urql-client
