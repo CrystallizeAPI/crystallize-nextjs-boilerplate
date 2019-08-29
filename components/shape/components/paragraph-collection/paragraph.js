@@ -2,7 +2,7 @@ import CrystallizeContent from '@crystallize/content-transformer/react';
 import Image from '@crystallize/react-image';
 import { H1 } from 'ui';
 
-import { P, Title, Body, Images } from './styles';
+import { Outer, Title, Body, Images } from './styles';
 
 const Paragraph = ({
   body,
@@ -11,7 +11,7 @@ const Paragraph = ({
   headingComponent: HeadingComponent = H1
 }) => {
   return (
-    <P>
+    <Outer>
       {!!title && (
         <Title>
           <HeadingComponent>{title.text}</HeadingComponent>
@@ -30,7 +30,7 @@ const Paragraph = ({
           ))}
         </Images>
       )}
-    </P>
+    </Outer>
   );
 };
 
