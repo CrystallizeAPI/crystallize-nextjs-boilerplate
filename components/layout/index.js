@@ -3,9 +3,15 @@ import Head from 'next/head';
 import CrystallizeLayout from '@crystallize/react-layout';
 
 import Aside from 'components/aside';
+import Spinner from 'components/spinner';
 
 import Header from '../header';
-import { Main } from './styles';
+import {
+  Main,
+  LoadingWrapper,
+  SpinnerWrapper,
+  LoadingTextWrapper
+} from './styles';
 
 const Layout = ({ children, title, description, simple, loading, error }) => {
   let displayTitle = 'Crystallize';
@@ -31,8 +37,19 @@ const Layout = ({ children, title, description, simple, loading, error }) => {
       </Head>
       <CrystallizeLayout right={simple ? null : Aside}>
         <Header simple={simple} />
-        <Main loading={loading}>
-          {loading ? <div>{children || 'Loading...'}</div> : children}
+        <Main>
+          {loading ? (
+            <LoadingWrapper>
+              <SpinnerWrapper>
+                <Spinner size="40" />
+              </SpinnerWrapper>
+              {children || (
+                <LoadingTextWrapper>Please wait...</LoadingTextWrapper>
+              )}
+            </LoadingWrapper>
+          ) : (
+            children
+          )}
         </Main>
       </CrystallizeLayout>
     </>

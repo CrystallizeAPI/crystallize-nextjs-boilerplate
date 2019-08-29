@@ -5,15 +5,13 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const next = require('next');
 const { parse } = require('url');
-const { join } = require('path');
 
 const getComponentAndDataForPath = require('../lib/get-component-and-data-for-path');
 const config = require('../config');
+const api = require('./api');
 
 const app = next({ dev: config.DEV });
 const handle = app.getRequestHandler();
-
-const api = require('./api');
 
 app.prepare().then(() => {
   const server = express();
@@ -34,25 +32,21 @@ app.prepare().then(() => {
   server.get('*', async (req, res) => {
     const parsedUrl = parse(req.url, true);
 
-    if (parsedUrl.pathname === '/service-worker.js') {
-      if (config.DEV) {
-        res.status(404);
-      } else {
-        const filePath = join(__dirname, '..', '.next', parsedUrl.pathname);
-        app.serveStatic(req, res, filePath);
-      }
-    } else {
-      const { component, apolloState } = await getComponentAndDataForPath(
+    try {
+      const { component, urqlState } = await getComponentAndDataForPath(
         parsedUrl
       );
+
       if (component) {
-        // Attach the apollo state to be used in lib/with-data
-        req.initialApolloState = apolloState;
+        // Attach the urql state to be used in lib/with-urql-client
+        req.initialUrqlState = urqlState;
         app.render(req, res, component, parsedUrl.query);
       } else {
         // Let Next.js handle the path
         handle(req, res);
       }
+    } catch (error) {
+      handle(req, res);
     }
   });
 
