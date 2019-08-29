@@ -4,10 +4,10 @@ import Layout from 'components/layout';
 import ProductGrid from 'components/product-grid';
 import { H1, Outer, Header } from 'ui';
 
-import { useTreeNodeAndMenuQuery } from 'lib/graph';
+import { useTreeNodeQuery } from 'lib/graph';
 
 export default function FrontPage() {
-  const { fetching, error, data } = useTreeNodeAndMenuQuery();
+  const { fetching, error, data } = useTreeNodeQuery();
 
   if (fetching) {
     return <Layout loading />;

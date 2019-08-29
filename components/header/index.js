@@ -3,13 +3,13 @@ import Link from 'next/link';
 
 import { IconLogo } from 'ui';
 import { AuthContext } from 'components/auth-context';
-import { useTreeNodeAndMenuQuery } from 'lib/graph';
+import { useMenuAndTenantQuery } from 'lib/graph';
 
 import BasketButton from './basket-button';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
 
 const Header = ({ simple }) => {
-  const { fetching, error, data } = useTreeNodeAndMenuQuery();
+  const { fetching, error, data } = useMenuAndTenantQuery();
 
   if (fetching) {
     return null;

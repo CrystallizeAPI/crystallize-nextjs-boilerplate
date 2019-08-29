@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormattedNumber } from 'react-intl';
-import { useTreeNodeAndMenuQuery } from 'lib/graph';
+import { useMenuAndTenantQuery } from 'lib/graph';
 
 export const CurrencyValue = ({ value }) => {
-  const { loading, error, data } = useTreeNodeAndMenuQuery();
+  const { loading, error, data } = useMenuAndTenantQuery();
 
   if (loading || error || !data) {
     return null;

@@ -4,12 +4,12 @@ import { IntlProvider } from 'react-intl';
 import { Provider } from 'urql';
 
 import withUrqlClient from 'lib/with-urql-client';
-import { useTreeNodeAndMenuQuery } from 'lib/graph';
+import { useMenuAndTenantQuery } from 'lib/graph';
 import AuthGate from 'components/auth-context';
 import BasketProvider from 'components/basket-provider';
 
 const AppWithIntl = ({ children }) => {
-  const { fetching, error, data } = useTreeNodeAndMenuQuery();
+  const { fetching, error, data } = useMenuAndTenantQuery();
 
   if (fetching || error || !data) {
     return null;

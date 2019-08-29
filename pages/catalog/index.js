@@ -5,10 +5,10 @@ import Layout from 'components/layout';
 import DocumentPage from 'page-components/document';
 import FolderPage from 'page-components/folder';
 import ProductPage from 'page-components/product';
-import { useTreeNodeAndMenuQuery } from 'lib/graph';
+import { useTreeNodeQuery } from 'lib/graph';
 
 export default function CatalogPage() {
-  const { fetching, error, data } = useTreeNodeAndMenuQuery();
+  const { fetching, error, data } = useTreeNodeQuery();
 
   if (fetching) {
     return <Layout loading />;
