@@ -9,7 +9,8 @@ export const Outer = styled.header`
   justify-content: flex-start;
   align-items: center;
   max-width: 1500px;
-  margin: 0 auto 150px;
+  margin: 0 auto 50px;
+
   ${responsive.xs} {
     flex-direction: column;
   }
