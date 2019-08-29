@@ -8,16 +8,17 @@ import ProductPage from 'page-components/product';
 import { useTreeNodeAndMenuQuery } from 'lib/graph';
 
 export default function CatalogPage() {
-  const { loading, error, data } = useTreeNodeAndMenuQuery();
+  const { fetching, error, data } = useTreeNodeAndMenuQuery();
+
+  if (fetching) {
+    return <Layout loading />;
+  }
 
   if (error) {
     return <Layout error />;
   }
 
-  if (loading || !data) {
-    return <Layout loading />;
-  }
-
+  // Nothing in Crystallize at this path. Show 404 page
   if (!data.tree || !data.tree.length) {
     return <Error statusCode="404" />;
   }
@@ -38,5 +39,5 @@ export default function CatalogPage() {
   }
 
   // Unsupported type
-  return <div error />;
+  return <div>This type ({type}) is not supported</div>;
 }

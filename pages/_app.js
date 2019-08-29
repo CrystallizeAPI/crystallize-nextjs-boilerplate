@@ -9,9 +9,9 @@ import AuthGate from 'components/auth-context';
 import BasketProvider from 'components/basket-provider';
 
 const AppWithIntl = ({ children }) => {
-  const { loading, error, data } = useTreeNodeAndMenuQuery();
+  const { fetching, error, data } = useTreeNodeAndMenuQuery();
 
-  if (loading || error || !data) {
+  if (fetching || error || !data) {
     return null;
   }
 

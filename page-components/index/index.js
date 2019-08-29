@@ -7,9 +7,9 @@ import { H1, Outer, Header } from 'ui';
 import { useTreeNodeAndMenuQuery } from 'lib/graph';
 
 export default function FrontPage() {
-  const { loading, error, data } = useTreeNodeAndMenuQuery();
+  const { fetching, error, data } = useTreeNodeAndMenuQuery();
 
-  if (loading) {
+  if (fetching) {
     return <Layout loading />;
   }
 

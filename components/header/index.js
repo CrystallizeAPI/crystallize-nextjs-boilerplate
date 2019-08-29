@@ -9,10 +9,10 @@ import BasketButton from './basket-button';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
 
 const Header = ({ simple }) => {
-  const { loading, error, data } = useTreeNodeAndMenuQuery();
+  const { fetching, error, data } = useTreeNodeAndMenuQuery();
 
-  if (loading) {
-    return <Outer>...</Outer>;
+  if (fetching) {
+    return null;
   }
 
   if (error) {
