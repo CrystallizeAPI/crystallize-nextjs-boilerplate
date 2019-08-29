@@ -81,9 +81,9 @@ const Loading = styled.span`
   }
 `;
 
-export const Button = ({ children, loading, ...rest }) => {
-  return (
-    <Outer {...rest}>
+export const Button = React.forwardRef(
+  ({ children, loading, ...rest }, ref) => (
+    <Outer {...rest} ref={ref}>
       <Inner>
         <Text shown={!loading}>{children}</Text>
         {loading && (
@@ -93,5 +93,5 @@ export const Button = ({ children, loading, ...rest }) => {
         )}
       </Inner>
     </Outer>
-  );
-};
+  )
+);
