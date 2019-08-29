@@ -3,9 +3,24 @@ import App from 'next/app';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'urql';
 
-import AuthGate from 'components/auth-context';
 import withUrqlClient from 'lib/with-urql-client';
+import { useTreeNodeAndMenuQuery } from 'lib/graph';
+import AuthGate from 'components/auth-context';
 import BasketProvider from 'components/basket-provider';
+
+const AppWithIntl = ({ children }) => {
+  const { loading, error, data } = useTreeNodeAndMenuQuery();
+
+  if (loading || error || !data) {
+    return null;
+  }
+
+  return (
+    <IntlProvider locale={data.tenant.defaults.language}>
+      {children}
+    </IntlProvider>
+  );
+};
 
 class MyApp extends App {
   render() {
@@ -13,13 +28,13 @@ class MyApp extends App {
 
     return (
       <Provider value={urqlClient}>
-        <IntlProvider locale="en">
+        <AppWithIntl>
           <BasketProvider>
             <AuthGate>
               <Component {...pageProps} />
             </AuthGate>
           </BasketProvider>
-        </IntlProvider>
+        </AppWithIntl>
       </Provider>
     );
   }
