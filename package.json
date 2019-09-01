@@ -33,14 +33,11 @@
     ]
   },
   "dependencies": {
-    "@babel/core": "^7.4.4",
     "@crystallize/content-transformer": "^5.0.0",
     "@crystallize/node-klarna": "^2.1.1",
     "@crystallize/react-image": "^3.0.3",
     "@crystallize/react-layout": "^3.0.0",
     "@nerdenough/mjml-ncc-bundle": "^1.1.1",
-    "babel-plugin-module-resolver": "^3.2.0",
-    "babel-plugin-styled-components": "^1.10.0",
     "body-parser": "^1.19.0",
     "change-case": "^3.1.0",
     "cookie-parser": "^1.4.4",
@@ -54,7 +51,6 @@
     "jsonwebtoken": "^8.5.1",
     "mjml": "^4.4.1",
     "next": "9.0.3",
-    "ow": "^0.8.0",
     "polished": "^3.3.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -68,8 +64,10 @@
     "wonka": "^3.2.1"
   },
   "devDependencies": {
-    "babel-core": "7.0.0-bridge.0",
+    "@babel/core": "^7.4.4",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-plugin-styled-components": "^1.10.0",
     "chalk": "^2.4.2",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
@@ -85,6 +83,7 @@
     "inquirer": "^6.2.0",
     "lint-staged": "^8.1.6",
     "node-emoji": "^1.8.1",
+    "now": "^16.1.2",
     "prettier": "^1.18.2",
     "supports-color": "^6.1.0"
   }
