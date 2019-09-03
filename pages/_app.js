@@ -7,6 +7,7 @@ import withUrqlClient from 'lib/with-urql-client';
 import { useMenuAndTenantQuery } from 'lib/graph';
 import AuthGate from 'components/auth-context';
 import BasketProvider from 'components/basket-provider';
+import GlobalStyle from 'ui/global';
 
 const AppWithIntl = ({ children }) => {
   const { fetching, error, data } = useMenuAndTenantQuery();
@@ -28,6 +29,7 @@ class MyApp extends App {
 
     return (
       <Provider value={urqlClient}>
+        <GlobalStyle />
         <AppWithIntl>
           <BasketProvider>
             <AuthGate>
