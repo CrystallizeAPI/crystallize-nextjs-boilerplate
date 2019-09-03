@@ -2,8 +2,6 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import globalStyle from 'ui/global';
-
 import { NODE_ENV, GTM_ID, GRAPH_URL } from '../config';
 
 // These settings will be exposed to the world
@@ -96,7 +94,6 @@ export default class MyDocument extends Document {
               `
             }}
           />
-          <style dangerouslySetInnerHTML={{ __html: globalStyle }} />
           {this.props.styleTags}
         </Head>
         <body>

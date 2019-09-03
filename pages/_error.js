@@ -50,7 +50,11 @@ export default class Error extends React.Component {
       <Outer>
         <p>{message}</p>
         <p>
-          Click <Link href="/">here</Link> to go to the homepage.
+          Click{' '}
+          <Link href="/">
+            <a>here</a>
+          </Link>{' '}
+          to go to the homepage.
         </p>
       </Outer>
     );
