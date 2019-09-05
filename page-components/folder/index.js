@@ -14,10 +14,6 @@ export default class FolderPage extends React.PureComponent {
 
     const cells = children
       ? children.map(item => ({
-          layout: {
-            colspan: 1,
-            rowspan: 1
-          },
           item: {
             ...item
           }
