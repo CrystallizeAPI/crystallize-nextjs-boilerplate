@@ -1,5 +1,6 @@
 /* eslint react/no-multi-comp: 0 */
 import React, { useState, useContext } from 'react';
+import { Grid } from '@crystallize/grid-renderer/react';
 import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import { withRouter } from 'next/router';
@@ -29,10 +30,15 @@ const ProductPage = ({ product, defaultVariant }) => {
   const basket = useBasket();
 
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant);
-  const topicResult = useTopicQuery({
-    name: 'United Kingdom',
-    ancestry: 'Europe'
-  });
+
+  // Use the first 2 topics to fetch related products
+  const topics = product.topics.slice(0, 2);
+  const topicResults = topics.map(topic =>
+    useTopicQuery({
+      name: topic.name,
+      ancestry: topic.parent ? topic.parent.name : null
+    })
+  );
 
   const onSelectedVariantChange = variant => setSelectedVariant(variant);
 
@@ -89,15 +95,23 @@ const ProductPage = ({ product, defaultVariant }) => {
         </Info>
       </Sections>
       <h2>Related Products</h2>
-      {!topicResult.fetching &&
-        topicResult.data &&
-        topicResult.data.topics.length && (
-          <ul className="related-products">
-            {topicResult.data.topics[0].items.map(item => (
-              <li>{item.name}</li>
-            ))}
-          </ul>
-        )}
+
+      {topicResults.map(result => {
+        if (result.fetching || result.error || !result.data) {
+          return null;
+        }
+
+        const topic = result.data.topics[0];
+        const cells = topic.items.map(item => ({
+          item: { ...item }
+        }));
+        return (
+          <>
+            <h3>{topic.name}</h3>
+            <Grid cells={cells} totalColSpan={4} />
+          </>
+        );
+      })}
     </Outer>
   );
 };
