@@ -10,21 +10,10 @@ export const imageSize = {
 };
 
 export const Outer = styled.a`
-  flex: 1 1 auto;
+  background: white;
   display: flex;
-  justify-content: center;
-  position: relative;
-
-  &:before {
-    content: '';
-    width: 80%;
-    height: 20px;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  }
+  flex-direction: column;
+  height: 100%;
 `;
 
 export const Inner = styled.span`
@@ -44,38 +33,33 @@ export const Inner = styled.span`
   `};
 `;
 
-export const Img = styled(Image)`
-  margin: 0 auto 10px;
+export const ImageWrapper = styled.div`
   display: flex;
-  width: ${imageSize.lg};
-  height: ${imageSize.lg};
+  flex-grow: 1;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+`;
+
+export const Img = styled(Image)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
 
   ${responsive.xs} {
-    height: ${imageSize.xs};
-    width: ${imageSize.xs};
-  }
-
-  > img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    margin: 0 auto;
+    height: 150px;
+    width: 150px;
   }
 `;
 
 export const Footer = styled.footer`
-  flex: 1 1 auto;
-  padding: 15px 0;
-  margin: 0 20px;
   display: flex;
-  height: 50px;
-  flex-direction: column;
+  padding: 15px;
   justify-content: space-between;
   align-items: stretch;
+  text-overflow: ellipsis;
+
   > div {
     flex: 1;
 

@@ -5,6 +5,8 @@ import { responsive } from 'ui';
 export const List = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 300px;
+  grid-gap: 1rem;
 
   ${responsive.sm} {
     grid-template-columns: repeat(3, 1fr);
