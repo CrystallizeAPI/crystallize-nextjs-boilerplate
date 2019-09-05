@@ -10,6 +10,7 @@ import { useBasket, getVariantVATprops } from 'components/basket';
 import Layout from 'components/layout';
 import VariantSelector from 'components/variant-selector';
 import ShapeComponents from 'components/shape/components';
+import { useTopicQuery } from 'lib/graph';
 
 import {
   Sections,
@@ -28,6 +29,10 @@ const ProductPage = ({ product, defaultVariant }) => {
   const basket = useBasket();
 
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant);
+  const topicResult = useTopicQuery({
+    name: 'United Kingdom',
+    ancestry: 'Europe'
+  });
 
   const onSelectedVariantChange = variant => setSelectedVariant(variant);
 
@@ -83,6 +88,16 @@ const ProductPage = ({ product, defaultVariant }) => {
           </ProductFooter>
         </Info>
       </Sections>
+      <h2>Related Products</h2>
+      {!topicResult.fetching &&
+        topicResult.data &&
+        topicResult.data.topics.length && (
+          <ul className="related-products">
+            {topicResult.data.topics[0].items.map(item => (
+              <li>{item.name}</li>
+            ))}
+          </ul>
+        )}
     </Outer>
   );
 };
