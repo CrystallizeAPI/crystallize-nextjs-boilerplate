@@ -12,15 +12,17 @@ export default class FolderPage extends React.PureComponent {
     const [folder] = data.tree;
     const { children } = folder;
 
-    const cells = children.map(item => ({
-      layout: {
-        colspan: 1,
-        rowspan: 1
-      },
-      item: {
-        ...item
-      }
-    }));
+    const cells = children
+      ? children.map(item => ({
+          layout: {
+            colspan: 1,
+            rowspan: 1
+          },
+          item: {
+            ...item
+          }
+        }))
+      : null;
 
     return (
       <Layout title={folder.name}>
