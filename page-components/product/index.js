@@ -6,6 +6,7 @@ import Img from '@crystallize/react-image';
 import { withRouter } from 'next/router';
 
 import { H1, Button, screen, Outer } from 'ui';
+import CategoryItem from 'components/category-item';
 import { CurrencyValue } from 'components/currency-value';
 import { useBasket, getVariantVATprops } from 'components/basket';
 import Layout from 'components/layout';
@@ -108,7 +109,11 @@ const ProductPage = ({ product, defaultVariant }) => {
         return (
           <>
             <h3>{topic.name}</h3>
-            <Grid cells={cells} totalColSpan={4} />
+            <Grid
+              cells={cells}
+              renderContent={cell => <CategoryItem data={cell.item} />}
+              totalColSpan={4}
+            />
           </>
         );
       })}
