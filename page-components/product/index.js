@@ -5,7 +5,7 @@ import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import { withRouter } from 'next/router';
 
-import { H1, Button, screen, Outer } from 'ui';
+import { H1, H2, H3, Button, screen, Outer } from 'ui';
 import CategoryItem from 'components/category-item';
 import { CurrencyValue } from 'components/currency-value';
 import { useBasket, getVariantVATprops } from 'components/basket';
@@ -21,7 +21,8 @@ import {
   Info,
   Price,
   ProductFooter,
-  Description
+  Description,
+  RelatedTopics
 } from './styles';
 
 const placeHolderImg = '/static/placeholder.png';
@@ -95,28 +96,32 @@ const ProductPage = ({ product, defaultVariant }) => {
           </ProductFooter>
         </Info>
       </Sections>
-      <h2>Related Products</h2>
 
-      {topicResults.map(result => {
-        if (result.fetching || result.error || !result.data) {
-          return null;
-        }
+      <RelatedTopics>
+        <H2>Related Products</H2>
 
-        const topic = result.data.topics[0];
-        const cells = topic.items.map(item => ({
-          item: { ...item }
-        }));
-        return (
-          <>
-            <h3>{topic.name}</h3>
-            <Grid
-              cells={cells}
-              renderContent={cell => <CategoryItem data={cell.item} />}
-              totalColSpan={4}
-            />
-          </>
-        );
-      })}
+        {topicResults.map(result => {
+          if (result.fetching || result.error || !result.data) {
+            return null;
+          }
+
+          // We only want to show the first 4 products for a topic
+          const topic = result.data.topics[0];
+          const cells = topic.items.slice(0, 4).map(item => ({
+            item: { ...item }
+          }));
+          return (
+            <>
+              <H3>{topic.name}</H3>
+              <Grid
+                cells={cells}
+                renderContent={cell => <CategoryItem data={cell.item} />}
+                totalColSpan={4}
+              />
+            </>
+          );
+        })}
+      </RelatedTopics>
     </Outer>
   );
 };
