@@ -34,7 +34,7 @@ const ProductPage = ({ product, defaultVariant }) => {
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant);
 
   // Use the first 2 topics to fetch related products
-  const topics = product.topics.slice(0, 2);
+  const topics = product.topics ? product.topics.slice(0, 2) : [];
   const topicResults = topics.map(topic =>
     useTopicQuery({
       name: topic.name,
@@ -97,40 +97,42 @@ const ProductPage = ({ product, defaultVariant }) => {
         </Info>
       </Sections>
 
-      <RelatedTopics>
-        <H2>Related Products</H2>
+      {!!topics.length && (
+        <RelatedTopics>
+          <H2>Related Products</H2>
 
-        {topicResults.map(result => {
-          if (result.fetching || result.error || !result.data) {
-            return null;
-          }
+          {topicResults.map(result => {
+            if (result.fetching || result.error || !result.data) {
+              return null;
+            }
 
-          // We only want to show the first 4 products for a topic
-          const topic = result.data.topics[0];
-          const cells = topic.items
-            .filter(item => item.id !== product.id)
-            .slice(0, 4)
-            .map(item => ({
-              item: { ...item }
-            }));
+            // We only want to show the first 4 products for a topic
+            const topic = result.data.topics[0];
+            const cells = topic.items
+              .filter(item => item.id !== product.id)
+              .slice(0, 4)
+              .map(item => ({
+                item: { ...item }
+              }));
 
-          if (!cells.length) {
-            return null;
-          }
+            if (!cells.length) {
+              return null;
+            }
 
-          return (
-            <>
-              <H3>{topic.name}</H3>
-              <Grid
-                cells={cells}
-                renderCellContent={cell => (
-                  <CategoryItem key={cell.item.id} data={cell.item} />
-                )}
-              />
-            </>
-          );
-        })}
-      </RelatedTopics>
+            return (
+              <>
+                <H3>{topic.name}</H3>
+                <Grid
+                  cells={cells}
+                  renderCellContent={cell => (
+                    <CategoryItem key={cell.item.id} data={cell.item} />
+                  )}
+                />
+              </>
+            );
+          })}
+        </RelatedTopics>
+      )}
     </Outer>
   );
 };
