@@ -23,6 +23,11 @@ export const Sections = styled.div`
   }
 `;
 
+export const RelatedTopics = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Media = styled.div`
   flex: 0 0 60%;
   position: relative;
