@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@crystallize/content-transformer": "^5.0.0",
+    "@crystallize/grid-renderer": "0.0.1-4",
     "@crystallize/node-klarna": "^2.1.1",
     "@crystallize/react-image": "^3.0.3",
     "@crystallize/react-layout": "^3.0.0",
