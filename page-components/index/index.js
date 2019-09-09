@@ -30,7 +30,7 @@ export default function FrontPage() {
 
         <Grid
           model={grid}
-          renderContent={cell => <Product data={cell.item} />}
+          renderCellContent={cell => <Product data={cell.item} />}
         />
       </Outer>
     </Layout>

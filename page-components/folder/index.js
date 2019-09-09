@@ -29,8 +29,8 @@ export default class FolderPage extends React.PureComponent {
           {children ? (
             <Grid
               cells={cells}
-              renderContent={cell => <Product data={cell.item} />}
-              totalColSpan={4}
+              type="table"
+              renderCellContent={cell => <Product data={cell.item} />}
             />
           ) : (
             'This folder is empty'
