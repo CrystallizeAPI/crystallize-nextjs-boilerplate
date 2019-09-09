@@ -123,10 +123,9 @@ const ProductPage = ({ product, defaultVariant }) => {
               <H3>{topic.name}</H3>
               <Grid
                 cells={cells}
-                renderContent={cell => (
+                renderCellContent={cell => (
                   <CategoryItem key={cell.item.id} data={cell.item} />
                 )}
-                totalColSpan={4}
               />
             </>
           );
