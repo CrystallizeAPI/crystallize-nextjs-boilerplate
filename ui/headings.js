@@ -14,10 +14,21 @@ export const H1 = styled.h1`
 `;
 
 export const H2 = styled.h2`
-  padding: 5vh 20px;
+  color: ${colors.frostbite};
   font-size: 2rem;
+  padding: 2rem 0 1rem;
 
   ${responsive.smAndLess} {
     font-size: 1.5rem;
+  }
+`;
+
+export const H3 = styled.h3`
+  color: ${colors.frostbite};
+  font-size: 1.4rem;
+  padding: 1.5rem 0;
+
+  ${responsive.smAndLess} {
+    font-size: 1.2rem;
   }
 `;

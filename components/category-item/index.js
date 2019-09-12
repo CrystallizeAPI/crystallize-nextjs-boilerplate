@@ -3,18 +3,25 @@ import Link from 'next/link';
 
 import { CurrencyValue } from 'components/currency-value';
 import { screen } from 'ui';
-import { Outer, Inner, Img, Footer, Price, imageSize } from './styles';
+import {
+  Outer,
+  Inner,
+  ImageWrapper,
+  Img,
+  Footer,
+  Price,
+  imageSize
+} from './styles';
 
 class CategoryItem extends React.Component {
   render() {
     const { data } = this.props;
-    const { name, path, variants } = data;
 
     if (!data) {
       return null;
     }
 
-    const { type } = data;
+    const { name, path, type, variants } = data;
 
     if (type === 'folder' || type === 'document') {
       return (
@@ -33,21 +40,21 @@ class CategoryItem extends React.Component {
     return (
       <Link as={path} href="/catalog" passHref>
         <Outer>
-          <Inner>
+          <ImageWrapper>
             <Img
               {...image}
               alt={name}
               sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
             />
-            <Footer>
-              <div>
-                <span>{name}</span>
-                <Price>
-                  <CurrencyValue value={price} />
-                </Price>
-              </div>
-            </Footer>
-          </Inner>
+          </ImageWrapper>
+          <Footer>
+            <div>
+              <span>{name}</span>
+              <Price>
+                <CurrencyValue value={price} />
+              </Price>
+            </div>
+          </Footer>
         </Outer>
       </Link>
     );

@@ -1,17 +1,24 @@
 import React from 'react';
 
+import { Grid } from '@crystallize/grid-renderer/react';
 import { Outer, Header } from 'ui';
 import Layout from 'components/layout';
-import CategoryItem from 'components/category-item';
+import Product from 'components/category-item';
 import ShapeComponents from 'components/shape/components';
-
-import { List } from './styles';
 
 export default class FolderPage extends React.PureComponent {
   render() {
     const { data } = this.props;
     const [folder] = data.tree;
     const { children } = folder;
+
+    const cells = children
+      ? children.map(item => ({
+          item: {
+            ...item
+          }
+        }))
+      : null;
 
     return (
       <Layout title={folder.name}>
@@ -20,11 +27,11 @@ export default class FolderPage extends React.PureComponent {
             <ShapeComponents components={folder.components} />
           </Header>
           {children ? (
-            <List>
-              {children.map(p => (
-                <CategoryItem key={p.id} data={p} />
-              ))}
-            </List>
+            <Grid
+              cells={cells}
+              type="table"
+              renderCellContent={cell => <Product data={cell.item} />}
+            />
           ) : (
             'This folder is empty'
           )}
