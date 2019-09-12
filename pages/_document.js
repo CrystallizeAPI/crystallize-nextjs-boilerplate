@@ -94,6 +94,7 @@ export default class MyDocument extends Document {
               `
             }}
           />
+          <script src="https://js.stripe.com/v3/" />
           {this.props.styleTags}
         </Head>
         <body>
