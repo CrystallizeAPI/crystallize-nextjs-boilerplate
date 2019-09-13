@@ -70,7 +70,7 @@ export const Footer = styled.footer`
       align-items: center;
       justify-content: space-between;
       font-weight: 600;
-      color: ${colors.darktext};
+      color: ${colors.darkText};
     }
 
     &:last-child {
