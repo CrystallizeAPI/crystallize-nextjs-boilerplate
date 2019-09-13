@@ -1,84 +1,118 @@
-# Crystallize React ecommerce frontend boilerplate
+# Crystallize Frontend Boilerplate
 
-The bare minimum skeleton you need to get a frontend up and running on the [headless ecommerce](https://crystallize.com/product) & GraphQL based [product Information Management](https://crystallize.com/product/product-information-management) service [Crystallize](https://crystallize.com). [React commerce with Next.js SSR](https://crystallize.com/developers).
+[![React: latest][0]][1] [![Next: latest][2]][3] [![code style: prettier][4]][5]
+[![code linter: Eslint][6]][7]
 
-This frontend boilerplate is a great startingpoing when building [React ecommerce](https://crystallize.com/developers) experiences with [frontend performance](https://crystallize.com/blog/frontend-performance-measuring-kpis) in focus. You can have rich ecommerce content with the super structured [PIM](https://crystallize.com/product/product-information-management) engine in Crystallize powering your product catalogue.
+The bare minimum skeleton you need to get a frontend up and running on the
+[headless ecommerce][8] & GraphQL based [product Information Management][9]
+service [Crystallize][10]. [React commerce with Next.js SSR][11].
 
-Fast frontend performance delivers a better ecommerce experience and is a key ingredient in the [ecommerce SEO checklist](https://crystallize.com/blog/ecommerce-seo-checklist). [Rich content driven ecommerce experiences](https://crystallize.com/blog/content-rich-storytelling-makes-juicy-ecommerce) builds the foundation for a [content strategy for exponential growth marketing](https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing).
+This frontend boilerplate is a great starting point when building [React
+ecommerce][11] experiences with [frontend performance][12] in focus. You can
+have rich ecommerce content with the super structured [PIM][13] engine in
+Crystallize powering your product catalogue.
+
+Fast frontend performance delivers a better ecommerce experience and is a key
+ingredient in the [ecommerce SEO checklist][14]. [Rich content driven ecommerce
+experiences][15] builds the foundation for a [content strategy for exponential
+growth marketing][16].
 
 Check it out, the boilerplate is Open Source and MIT licensed.
 
-[![React: latest](https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square)](https://github.com/facebook/react)
+## Getting Started
 
-[![Next: latest](https://img.shields.io/badge/next-latest-44cc11.svg?style=flat-square)](https://github.com/zeit/next.js)
+You can use [Crystallize CLI][17] to bootstrap a project with this
+`Next.js + React` boilerplate.
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
-[![code linter: Eslint](https://img.shields.io/badge/code_linter-eslint-463fd4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
-# Getting started
-
-- Clone the repo or download from [the releases page](https://github.com/snowballdigital/crystallize-frontend-boilerplate/releases)
-- Run `npm install` to install dependencies
-- Run `npm run dev` or `npm run now-dev` to start up
-- - The site should be ready at [http://localhost:3000](http://localhost:3000)
-- (Optional) Install [Editor config](http://editorconfig.org/#download) and [Prettier](https://prettier.io/docs/en/editors.html) plugin for your editor
-
-## With Now
-
-If you intend to use Now instead of a custom server, you can run the following command:
+Simply run the following command (>= Node 8 required):
 
 ```sh
-npm run now-dev
+npx @crystallize/cli my-project
 ```
 
-## Custom Server
+This will walk you through the steps of specifying your tenant, choosing the
+template (Next.js + React) and adding additional features such as ZEIT Now.
 
-If you intend to use a custom server for your API, run the following command:
+Once your project has been created, you can simply navigate into your project's
+directory and run the following to start up your development server:
 
 ```sh
 npm run dev
+# or
+yarn dev
 ```
 
-# App structure
+This will start up the server on http://localhost:3000 for development.
 
-## ./pages
+## App Structure
+
+### `./pages`
 
 Put all your entry pages here
 
-## ./pages/api
+### `./pages/api`
 
-All your Now V2 [serverless functions](https://zeit.co/docs/v2/serverless-functions/introduction). You can delete this folder if you are not using Now.
+All your ZEIT Now [serverless functions][18]. You can delete this folder if you
+are not using ZEIT Now.
 
-## ./components
+### `./components`
 
 All your shared components
 
-## ./ui
+### `./ui`
 
 UI related components live her. Color variables and simple shared components
 
-## ./server
+### `./server`
 
-This is where the ultra-light frontend server lives. Its primary function is to render the React app in response to a request.
+This is where the ultra-light frontend server lives. Its primary function is to
+render the React app in response to a request.
 
-You can delete this folder if you intend to use [Now](https://zeit.co/guides/deploying-nextjs-with-now/) instead of a custom server.
+You can delete this folder if you intend to use [ZEIT Now][19] instead of a
+custom server.
 
-## ./lib
+### `./lib`
 
 Library code to enable GraphQL and REST API communication and more
 
-## ./static
+### `./static`
 
 Resources server statically by the web server. Including translation files
 
-# Deploy
+## Deploying Your Project
 
-There are multiple alternatives for deployments, however for the easiest hosting of a Node application, one option is [Now](https://zeit.co/now).
+There are multiple alternatives for deployments, however for the easiest hosting
+of a Node application, one option is [ZEIT Now][20].
 
-## Deploying with Now
+### Deploying with ZEIT Now
 
-- Register a Now account
-- Run `npm run global add now`
+- Register a ZEIT Now account
+- Run `npm install --global now`
 - Navigate to your project folder
 - Run `now`
+
+[0]: https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square
+[1]: https://github.com/facebook/react
+[2]: https://img.shields.io/badge/next-latest-44cc11.svg?style=flat-square
+[3]: https://github.com/zeit/next.js
+[4]:
+  https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[5]: https://github.com/prettier/prettier
+[6]:
+  https://img.shields.io/badge/code_linter-eslint-463fd4.svg?style=flat-square
+[7]: https://github.com/prettier/prettier
+[8]: https://crystallize.com/product
+[9]: https://crystallize.com/product/product-information-management
+[10]: https://crystallize.com
+[11]: https://crystallize.com/developers
+[12]: https://crystallize.com/blog/frontend-performance-measuring-kpis
+[13]: https://crystallize.com/product/product-information-management
+[14]: https://crystallize.com/blog/ecommerce-seo-checklist
+[15]:
+  https://crystallize.com/blog/content-rich-storytelling-makes-juicy-ecommerce
+[16]:
+  https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing
+[17]: https://github.com/crystallizeapi/crystallize-cli
+[18]: https://zeit.co/docs/v2/serverless-functions/introduction
+[19]: https://zeit.co/guides/deploying-nextjs-with-now/
+[20]: https://zeit.co/now
