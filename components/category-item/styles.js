@@ -47,11 +47,6 @@ export const Img = styled(Image)`
   justify-content: center;
   width: 150px;
   height: 150px;
-
-  ${responsive.xs} {
-    height: 150px;
-    width: 150px;
-  }
 `;
 
 export const Footer = styled.footer`
