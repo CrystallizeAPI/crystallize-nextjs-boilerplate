@@ -10,13 +10,13 @@ export const Variant = styled.div`
   margin-bottom: 15px;
 `;
 
-export const Values = styled.div`
-  margin-left: -20px;
-`;
+export const Values = styled.div``;
 
 export const Button = styled.button.attrs(() => ({
   type: 'button'
 }))`
+  color: ${colors.darkText};
+  width: 100%;
   appearance: none;
   background: transparent;
   border: none;
@@ -31,21 +31,14 @@ export const Button = styled.button.attrs(() => ({
     outline: none;
   }
   &:hover {
-    background: rgba(0, 0, 0, 0.04);
+    background: white;
   }
+  border: 2px solid #cecece;
+  border-radius: 5px;
 
   ${is('selected')`
     font-weight:600;
-    &:before {
-      content:'';
-      position:absolute;
-      top:50%;
-      margin-top:-4px;
-      left:5px;
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:${colors.glacier};
-    }
+    background: white;
+    border: 2px solid ${colors.glacier};
   `};
 `;
