@@ -26,7 +26,7 @@ export const H2 = styled.h2`
 export const H3 = styled.h3`
   color: ${colors.frostbite};
   font-size: 1.4rem;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
 
   ${responsive.smAndLess} {
     font-size: 1.2rem;
