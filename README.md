@@ -46,24 +46,33 @@ This will start up the server on http://localhost:3000 for development.
 
 ## App Structure
 
-### `./pages`
+### `components/`
 
-Put all your entry pages here
+All your shared React components.
 
-### `./pages/api`
+### `lib/`
+
+Library code to enable GraphQL and REST API communication and more
+
+### `page-components/`
+
+We use the `page-components/` directory to hold the actual component content
+related to entries in the `pages/` directory. This is because we store our
+styled components in separate files to our default exported components, which
+causes some conflict with the way Next.js handles files in the `pages/`
+directory.
+
+### `pages/`
+
+Put all your entry pages here. These are interpreted as separate routes by
+Next.js.
+
+### `pages/api/`
 
 All your ZEIT Now [serverless functions][18]. You can delete this folder if you
 are not using ZEIT Now.
 
-### `./components`
-
-All your shared components
-
-### `./ui`
-
-UI related components live her. Color variables and simple shared components
-
-### `./server`
+### `server/`
 
 This is where the ultra-light frontend server lives. Its primary function is to
 render the React app in response to a request.
@@ -71,13 +80,13 @@ render the React app in response to a request.
 You can delete this folder if you intend to use [ZEIT Now][19] instead of a
 custom server.
 
-### `./lib`
+### `static/`
 
-Library code to enable GraphQL and REST API communication and more
+Static resources used by the web server.
 
-### `./static`
+### `ui/`
 
-Resources server statically by the web server. Including translation files
+UI related components live her. Color variables and simple shared components
 
 ## Deploying Your Project
 
