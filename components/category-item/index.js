@@ -16,13 +16,12 @@ import {
 class CategoryItem extends React.Component {
   render() {
     const { data } = this.props;
-    const { name, path, variants } = data;
 
     if (!data) {
       return null;
     }
 
-    const { type } = data;
+    const { name, path, type, variants } = data;
 
     if (type === 'folder' || type === 'document') {
       return (

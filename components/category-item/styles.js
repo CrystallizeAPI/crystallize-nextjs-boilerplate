@@ -48,9 +48,9 @@ export const Img = styled(Image)`
   width: 150px;
   height: 150px;
 
-  ${responsive.xs} {
-    height: 150px;
+  > img {
     width: 150px;
+    height: 150px;
   }
 `;
 
@@ -70,7 +70,7 @@ export const Footer = styled.footer`
       align-items: center;
       justify-content: space-between;
       font-weight: 600;
-      color: ${colors.darktext};
+      color: ${colors.darkText};
     }
 
     &:last-child {

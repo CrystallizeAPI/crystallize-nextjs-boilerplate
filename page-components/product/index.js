@@ -81,11 +81,14 @@ const ProductPage = ({ product, defaultVariant }) => {
             <ShapeComponents components={product.components} />
           </Description>
 
-          <VariantSelector
-            variants={product.variants}
-            selectedVariant={selectedVariant}
-            onChange={onSelectedVariantChange}
-          />
+          {product.variants.length > 1 && (
+            <VariantSelector
+              variants={product.variants}
+              selectedVariant={selectedVariant}
+              onChange={onSelectedVariantChange}
+            />
+          )}
+
           <ProductFooter>
             <Price>
               <strong>

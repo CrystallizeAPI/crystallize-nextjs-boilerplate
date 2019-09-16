@@ -1,3 +1,5 @@
+import { darken } from 'polished';
+
 export const colors = {
   defrost: '#f47f98',
   iceberg: '#B7E2E4',
@@ -16,5 +18,5 @@ export const colors = {
 
   darkText: '#4c505b',
   lightText: '#fff',
-  price: '#8fdecb'
+  price: darken(0.2, '#8FDDCA')
 };
