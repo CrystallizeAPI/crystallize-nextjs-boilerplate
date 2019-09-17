@@ -815,10 +815,10 @@
     ow "^0.4.0"
     parse5 "^5.0.0"
 
-"@crystallize/grid-renderer@0.0.1-4":
-  version "0.0.1-4"
-  resolved "https://registry.yarnpkg.com/@crystallize/grid-renderer/-/grid-renderer-0.0.1-4.tgz#6ad008ae64a70b28ae122e314398bb652bd69f42"
-  integrity sha512-IRVjALrFDW/NmpSuYO9sOUZfnOSy15hk3/OGh3H8z4Cq9Tnz3onhHIdhjN5JrujnzM5nt7Neut6sC3qFa0zu6w==
+"@crystallize/grid-renderer@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@crystallize/grid-renderer/-/grid-renderer-1.0.1.tgz#f0ec49dceced13f276c5182f2195ecd91b98b9b1"
+  integrity sha512-FrRsoXb3Mffqp1vUaLb1SMm/kPqh5rx2sfmmpkNL5gpfggvxWRfoYsvq7E9BS6xK/fDcM33tdYCDZ3knkbyj3A==
   dependencies:
     "@crystallize/react-image" "^3.0.3"
 

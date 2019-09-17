@@ -4,10 +4,7 @@ import React from 'react';
 import { useBasket } from 'components/basket';
 import { CurrencyValue } from 'components/currency-value';
 import Layout from 'components/layout';
-import { Elements, StripeProvider } from 'react-stripe-elements';
-
-// import PaymentGateway from './payment-gateway';
-import StripeCheckout from './stripe';
+import PaymentGateway from './payment-gateway';
 import {
   Outer,
   Inner,
@@ -60,16 +57,8 @@ const Checkout = () => {
             ))}
           </Items>
         </Inner>
-        {/* <PaymentGateway /> */}
+        <PaymentGateway />
       </Outer>
-
-      <div>
-        <StripeProvider apiKey="stripe">
-          <Elements>
-            <StripeCheckout />
-          </Elements>
-        </StripeProvider>
-      </div>
     </Layout>
   );
 };
