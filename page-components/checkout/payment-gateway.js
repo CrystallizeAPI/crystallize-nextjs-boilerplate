@@ -5,15 +5,19 @@ import { Elements, StripeProvider } from 'react-stripe-elements';
 import { Spinner } from 'ui';
 import StripeCheckout from './stripe';
 
+// const Outer = styled.div`
+//   flex-grow: 1;
+//   flex: 0 1 500px;
+//   background: #eee;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: 1.5rem;
+//   min-height: 500px;
+// `;
+
 const Outer = styled.div`
   flex-grow: 1;
-  flex: 0 1 500px;
-  background: #eee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  min-height: 500px;
 `;
 
 const InitiatingText = styled.div`
@@ -24,7 +28,8 @@ class PaymentGateway extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      stripe: null
+      stripe: null,
+      clientSecret: null
     };
   }
 
@@ -35,17 +40,17 @@ class PaymentGateway extends React.Component {
     }).then(res => res.json());
 
     if (window.Stripe) {
-      this.setState({ stripe: window.Stripe(clientSecret) });
+      this.setState({ stripe: window.Stripe(clientSecret), clientSecret });
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
         // Create Stripe instance once Stripe.js loads
-        this.setState({ stripe: window.Stripe(clientSecret) });
+        this.setState({ stripe: window.Stripe(clientSecret), clientSecret });
       });
     }
   }
 
   render() {
-    const { stripe } = this.state;
+    const { stripe, clientSecret } = this.state;
 
     return (
       <Outer>
@@ -57,7 +62,7 @@ class PaymentGateway extends React.Component {
         ) : (
           <StripeProvider stripe={stripe}>
             <Elements>
-              <StripeCheckout />
+              <StripeCheckout clientSecret={clientSecret} />
             </Elements>
           </StripeProvider>
         )}
