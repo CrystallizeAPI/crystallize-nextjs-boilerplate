@@ -21,6 +21,7 @@ import {
   Info,
   Price,
   ProductFooter,
+  Summary,
   Description,
   RelatedTopics
 } from './styles';
@@ -59,6 +60,9 @@ const ProductPage = ({ product, defaultVariant }) => {
   const selectedVariantImg =
     (selectedVariant.image || {}).url || placeHolderImg;
 
+  const summaryComponent = product.components.find(c => c.name === 'Summary');
+  const description = product.components.find(c => c.name === 'Description');
+
   return (
     <Outer>
       <Sections>
@@ -77,9 +81,11 @@ const ProductPage = ({ product, defaultVariant }) => {
         </Media>
         <Info>
           <H1>{product.name}</H1>
-          <Description>
-            <ShapeComponents components={product.components} />
-          </Description>
+          <Summary>
+            {summaryComponent && (
+              <ShapeComponents components={[summaryComponent]} />
+            )}
+          </Summary>
 
           {product.variants.length > 1 && (
             <VariantSelector
@@ -99,6 +105,10 @@ const ProductPage = ({ product, defaultVariant }) => {
           </ProductFooter>
         </Info>
       </Sections>
+
+      <Description>
+        <ShapeComponents className="description" components={[description]} />
+      </Description>
 
       {!!topics.length && (
         <RelatedTopics>

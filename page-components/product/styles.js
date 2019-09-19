@@ -82,10 +82,21 @@ export const Info = styled.div`
   }
 `;
 
-export const Description = styled.div`
-  max-width: 400px;
+export const Summary = styled.div`
   color: ${colors.darkText};
+  font-size: 18px;
   margin-bottom: 15px;
+`;
+
+export const Description = styled.div`
+  color: ${colors.darkText};
+  font-size: 18px;
+  margin-bottom: 15px;
+
+  img {
+    max-height: 300px;
+    margin: 1rem 0;
+  }
 `;
 
 export const ProductFooter = styled.div`
