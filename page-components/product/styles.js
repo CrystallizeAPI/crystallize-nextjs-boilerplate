@@ -85,6 +85,7 @@ export const Info = styled.div`
 export const Summary = styled.div`
   color: ${colors.darkText};
   font-size: 18px;
+  line-height: 1.4;
   margin-bottom: 15px;
 `;
 
@@ -92,6 +93,7 @@ export const Description = styled.div`
   color: ${colors.darkText};
   font-size: 18px;
   margin-bottom: 15px;
+  line-height: 1.4;
 
   img {
     max-height: 300px;
@@ -100,6 +102,15 @@ export const Description = styled.div`
 
   h1:empty {
     display: none;
+  }
+
+  ul {
+    margin: 1rem 0;
+    padding-left: 1.2rem;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
   }
 `;
 
