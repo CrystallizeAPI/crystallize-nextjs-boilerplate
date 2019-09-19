@@ -15,6 +15,7 @@ export const Outer = styled.a`
   flex-direction: column;
   height: 100%;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+  justify-content: center;
 `;
 
 export const Inner = styled.span`

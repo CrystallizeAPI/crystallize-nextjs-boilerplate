@@ -29,7 +29,6 @@ export default class FolderPage extends React.PureComponent {
           {children ? (
             <Grid
               cells={cells}
-              type="table"
               renderCellContent={cell => <Product data={cell.item} />}
             />
           ) : (
