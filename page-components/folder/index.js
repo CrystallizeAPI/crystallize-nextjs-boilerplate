@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid } from '@crystallize/grid-renderer/react';
-import { Outer, Header } from 'ui';
+import { Outer, Header, H1 } from 'ui';
 import Layout from 'components/layout';
 import Product from 'components/category-item';
 import ShapeComponents from 'components/shape/components';
@@ -24,6 +24,7 @@ export default class FolderPage extends React.PureComponent {
       <Layout title={folder.name}>
         <Outer>
           <Header>
+            <H1>{folder.name}</H1>
             <ShapeComponents components={folder.components} />
           </Header>
           {children ? (
