@@ -97,6 +97,10 @@ export const Description = styled.div`
     max-height: 300px;
     margin: 1rem 0;
   }
+
+  h1:empty {
+    display: none;
+  }
 `;
 
 export const ProductFooter = styled.div`
