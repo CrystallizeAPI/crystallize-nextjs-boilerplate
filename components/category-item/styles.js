@@ -26,6 +26,10 @@ export const Inner = styled.span`
   width: 100%;
   position: relative;
   z-index: 10;
+  font-weight: 600;
+  color: ${colors.darkText};
+  text-align: center;
+  padding: 1rem;
 
   ${is('onlytext')`
     flex-direction: row;
