@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 export const Main = styled.main`
-  padding-bottom: 200px;
+  padding-bottom: 50px;
 `;
 
 export const LoadingWrapper = styled.div`

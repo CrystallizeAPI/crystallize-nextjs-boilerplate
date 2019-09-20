@@ -15,6 +15,7 @@ export const Outer = styled.a`
   flex-direction: column;
   height: 100%;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+  justify-content: center;
 `;
 
 export const Inner = styled.span`
@@ -25,6 +26,10 @@ export const Inner = styled.span`
   width: 100%;
   position: relative;
   z-index: 10;
+  font-weight: 600;
+  color: ${colors.darkText};
+  text-align: center;
+  padding: 1rem;
 
   ${is('onlytext')`
     flex-direction: row;

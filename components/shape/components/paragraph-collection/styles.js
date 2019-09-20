@@ -15,8 +15,8 @@ export const Body = styled.div`
 `;
 
 export const Images = styled.div`
-  > img {
-    display: inline-block;
-    margin: 0 15px 15px;
+  img {
+    max-height: 300px;
+    margin: 15px 0;
   }
 `;

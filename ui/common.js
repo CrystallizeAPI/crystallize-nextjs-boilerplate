@@ -15,18 +15,13 @@ export const Outer = styled.div`
 `;
 
 export const Header = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 50px;
+
   p {
-    max-width: 700px;
-    font-size: 1.3rem;
-    line-height: 1.3em;
+    font-size: 18px;
+    line-height: 1.8rem;
     color: ${colors.darkText};
-  }
-  img {
-    right: 0;
-    top: 0;
-    position: absolute;
-    width: 100px;
   }
 `;

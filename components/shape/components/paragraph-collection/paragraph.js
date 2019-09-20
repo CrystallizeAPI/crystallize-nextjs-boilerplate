@@ -1,6 +1,6 @@
 import CrystallizeContent from '@crystallize/content-transformer/react';
 import Image from '@crystallize/react-image';
-import { H1 } from 'ui';
+import { H2 } from 'ui';
 
 import { Outer, Title, Body, Images } from './styles';
 
@@ -8,11 +8,11 @@ const Paragraph = ({
   body,
   title,
   images,
-  headingComponent: HeadingComponent = H1
+  headingComponent: HeadingComponent = H2
 }) => {
   return (
     <Outer>
-      {!!title && (
+      {!!title && title.text && (
         <Title>
           <HeadingComponent>{title.text}</HeadingComponent>
         </Title>
