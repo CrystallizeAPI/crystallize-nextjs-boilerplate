@@ -107,7 +107,13 @@ const ProductPage = ({ product, defaultVariant }) => {
       </Sections>
 
       <Description>
-        <ShapeComponents className="description" components={[description]} />
+        <ShapeComponents
+          className="description"
+          components={[description]}
+          paragraphOverrides={{
+            headingComponent: H2
+          }}
+        />
       </Description>
 
       {!!topics.length && (

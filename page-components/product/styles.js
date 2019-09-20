@@ -100,7 +100,7 @@ export const Description = styled.div`
     margin: 1rem 0;
   }
 
-  h1:empty {
+  h2:empty {
     display: none;
   }
 
