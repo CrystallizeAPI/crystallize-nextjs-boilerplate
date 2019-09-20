@@ -5,6 +5,9 @@ import { Elements, StripeProvider } from 'react-stripe-elements';
 import { Spinner } from 'ui';
 import StripeCheckout from './stripe';
 
+// You can get this from https://dashboard.stripe.com/test/apikeys in test mode
+const stripeClientSecret = 'stripe';
+
 // const Outer = styled.div`
 //   flex-grow: 1;
 //   flex: 0 1 500px;
@@ -40,11 +43,17 @@ class PaymentGateway extends React.Component {
     }).then(res => res.json());
 
     if (window.Stripe) {
-      this.setState({ stripe: window.Stripe(clientSecret), clientSecret });
+      this.setState({
+        stripe: window.Stripe(stripeClientSecret),
+        clientSecret
+      });
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
         // Create Stripe instance once Stripe.js loads
-        this.setState({ stripe: window.Stripe(clientSecret), clientSecret });
+        this.setState({
+          stripe: window.Stripe(stripeClientSecret),
+          clientSecret
+        });
       });
     }
   }
