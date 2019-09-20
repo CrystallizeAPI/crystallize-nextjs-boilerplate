@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid } from '@crystallize/grid-renderer/react';
-import { Outer, Header, H1 } from 'ui';
+import { Outer, Header, H1, H2 } from 'ui';
 import Layout from 'components/layout';
 import Product from 'components/category-item';
 import ShapeComponents from 'components/shape/components';
@@ -25,15 +25,18 @@ export default class FolderPage extends React.PureComponent {
         <Outer>
           <Header>
             <H1>{folder.name}</H1>
-            <ShapeComponents components={folder.components} />
+            <ShapeComponents
+              components={folder.components}
+              paragraphOverrides={{
+                headingComponent: H2
+              }}
+            />
           </Header>
-          {children ? (
+          {children && (
             <Grid
               cells={cells}
               renderCellContent={cell => <Product data={cell.item} />}
             />
-          ) : (
-            'This folder is empty'
           )}
         </Outer>
       </Layout>

@@ -12,7 +12,7 @@ const Paragraph = ({
 }) => {
   return (
     <Outer>
-      {!!title && (
+      {!!title && title.text && (
         <Title>
           <HeadingComponent>{title.text}</HeadingComponent>
         </Title>
