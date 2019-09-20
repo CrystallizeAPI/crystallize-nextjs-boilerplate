@@ -4,7 +4,7 @@ import CrystallizeContent from '@crystallize/content-transformer/react';
 
 import ParagraphCollection from './paragraph-collection';
 
-const ShapeComponents = ({ components, paragraphOverrides }) => {
+const ShapeComponents = ({ components }) => {
   if (!components) {
     return null;
   }
@@ -19,7 +19,6 @@ const ShapeComponents = ({ components, paragraphOverrides }) => {
           <ParagraphCollection
             key={key}
             paragraphs={component.content.paragraphs}
-            paragraphOverrides={paragraphOverrides}
           />
         );
       }
@@ -40,8 +39,7 @@ const ShapeComponents = ({ components, paragraphOverrides }) => {
 };
 
 ShapeComponents.propTypes = {
-  components: PropTypes.array.isRequired,
-  paragraphOverrides: PropTypes.object
+  components: PropTypes.array.isRequired
 };
 
 export default ShapeComponents;
