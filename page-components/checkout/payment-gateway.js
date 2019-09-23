@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 
-import { Spinner } from 'ui';
+// import { Spinner } from 'ui';
 import StripeCheckout from './stripe';
 
 // You can get this from https://dashboard.stripe.com/test/apikeys in test mode
@@ -23,20 +23,18 @@ const Outer = styled.div`
   flex-grow: 1;
 `;
 
-const InitiatingText = styled.div`
-  margin-right: 15px;
-`;
+// const InitiatingText = styled.div`
+//   margin-right: 15px;
+// `;
 
 class PaymentGateway extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      stripe: null,
-      clientSecret: null
-    };
-  }
+  state = {
+    chosenPaymentMethod: null,
+    clientSecret: null,
+    stripe: null
+  };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { items } = this.props;
     const amount =
       items.reduce((acc, item) => acc + item.price * item.quantity, 0) * 100;
@@ -65,22 +63,30 @@ class PaymentGateway extends React.Component {
   }
 
   render() {
-    const { stripe, clientSecret } = this.state;
+    const { chosenPaymentMethod, clientSecret, stripe } = this.state;
+
+    if (chosenPaymentMethod === 'stripe' && stripe) {
+      return (
+        <StripeProvider stripe={stripe}>
+          <Elements>
+            <StripeCheckout clientSecret={clientSecret} />
+          </Elements>
+        </StripeProvider>
+      );
+    }
 
     return (
       <Outer>
-        {!stripe ? (
-          <>
-            <InitiatingText>Initiating payment gateway...</InitiatingText>
-            <Spinner />
-          </>
-        ) : (
-          <StripeProvider stripe={stripe}>
-            <Elements>
-              <StripeCheckout clientSecret={clientSecret} />
-            </Elements>
-          </StripeProvider>
-        )}
+        <h2>Choose a way to pay:</h2>
+        <div>
+          <button
+            type="button"
+            onClick={() => this.setState({ chosenPaymentMethod: 'stripe' })}
+          >
+            Stripe
+          </button>
+          <button type="button">Klarna</button>
+        </div>
       </Outer>
     );
   }
