@@ -57,7 +57,7 @@ const Checkout = () => {
             ))}
           </Items>
         </Inner>
-        <PaymentGateway />
+        <PaymentGateway items={items} />
       </Outer>
     </Layout>
   );
