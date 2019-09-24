@@ -11,8 +11,12 @@ const DocumentPage = ({ data }) => {
     <Layout title={document.name}>
       <Outer>
         <Header>
-          <H1>{document.name}</H1>
-          <ShapeComponents components={document.components} />
+          <ShapeComponents
+            components={document.components}
+            overrides={{
+              Title: H1
+            }}
+          />
         </Header>
       </Outer>
     </Layout>
