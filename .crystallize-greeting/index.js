@@ -48,8 +48,8 @@ async function envFileExists() {
         message: 'Which shop do you want to use?',
         choices: [
           {
-            value: 'demo',
-            name: 'The demo shop - prefilled with lots of data'
+            value: 'teddy-bear-shop',
+            name: 'The teddy bear shop - prefilled with lots of teddy bears'
           },
           'My very own tenant please'
         ]
@@ -59,7 +59,7 @@ async function envFileExists() {
     const envVars = {
       GTM_ID: '',
       CRYSTALLIZE_GRAPH_URL_BASE: 'https://graph.crystallize.com',
-      CRYSTALLIZE_TENANT_ID: 'demo'
+      CRYSTALLIZE_TENANT_ID: 'teddy-bear-shop'
     };
 
     if (shopToUse !== 'demo') {
@@ -68,7 +68,7 @@ async function envFileExists() {
           type: 'input',
           name: 'tenantId',
           message: 'Your tenant ID',
-          default: 'demo'
+          default: 'teddy-bear-shop'
         }
       ]);
       envVars.CRYSTALLIZE_TENANT_ID = tenantId;
