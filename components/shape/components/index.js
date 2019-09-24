@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CrystallizeContent from '@crystallize/content-transformer/react';
+import Image from '@crystallize/react-image';
 
 import ParagraphCollection from './paragraph-collection';
+import { Images } from './paragraph-collection/styles';
 
 const ShapeComponents = ({ components, overrides }) => {
   if (!components) {
@@ -25,6 +27,19 @@ const ShapeComponents = ({ components, overrides }) => {
 
         return (
           <Component key={key} paragraphs={component.content.paragraphs} />
+        );
+      }
+
+      if (type === 'images') {
+        return (
+          component.content && (
+            <Images>
+              {component.content.images.map((image, idx) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <Image key={idx} {...image} />
+              ))}
+            </Images>
+          )
         );
       }
 
