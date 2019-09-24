@@ -3,15 +3,7 @@ import Link from 'next/link';
 
 import { CurrencyValue } from 'components/currency-value';
 import { screen } from 'ui';
-import {
-  Outer,
-  Inner,
-  ImageWrapper,
-  Img,
-  Footer,
-  Price,
-  imageSize
-} from './styles';
+import { Outer, ImageWrapper, Img, Footer, Price, imageSize } from './styles';
 
 class CategoryItem extends React.Component {
   render() {
@@ -24,10 +16,26 @@ class CategoryItem extends React.Component {
     const { name, path, type, variants } = data;
 
     if (type === 'folder' || type === 'document') {
+      const images = data.components.find(c => c.type === 'images');
+      const image = images && images.content ? images.content.images[0] : null;
+
       return (
         <Link as={path} href="/catalog" passHref>
           <Outer>
-            <Inner onlytext>{name}</Inner>
+            <ImageWrapper>
+              {image && (
+                <Img
+                  {...image}
+                  alt={name}
+                  sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
+                />
+              )}
+            </ImageWrapper>
+            <Footer>
+              <div>
+                <span>{name}</span>
+              </div>
+            </Footer>
           </Outer>
         </Link>
       );
