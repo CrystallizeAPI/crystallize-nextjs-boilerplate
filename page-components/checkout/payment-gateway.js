@@ -36,13 +36,17 @@ class PaymentGateway extends React.Component {
 
   async componentDidMount() {
     const { items } = this.props;
-    const amount =
-      items.reduce((acc, item) => acc + item.price * item.quantity, 0) * 100;
+
+    const lineItems = items.map(item => ({
+      id: item.id,
+      path: item.path,
+      quantity: item.quantity
+    }));
 
     const { clientSecret } = await fetch('/api/stripe/create-payment-intent', {
       method: 'POST',
       body: JSON.stringify({
-        amount
+        lineItems
       })
     }).then(res => res.json());
 

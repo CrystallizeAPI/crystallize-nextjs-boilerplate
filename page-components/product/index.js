@@ -49,7 +49,8 @@ const ProductPage = ({ product, defaultVariant }) => {
     const basketItemToAdd = {
       ...getVariantVATprops({ product, variant: selectedVariant }),
       ...selectedVariant,
-      name: product.name
+      name: product.name,
+      path: product.path
     };
 
     basket.actions.addItem(basketItemToAdd);
