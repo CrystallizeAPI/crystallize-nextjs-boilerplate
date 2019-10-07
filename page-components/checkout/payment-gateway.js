@@ -43,7 +43,7 @@ class PaymentGateway extends React.Component {
       quantity: item.quantity
     }));
 
-    const { clientSecret } = await fetch('/api/stripe/create-payment-intent', {
+    const { client_secret } = await fetch('/api/stripe/create-payment-intent', {
       method: 'POST',
       body: JSON.stringify({
         lineItems
@@ -53,27 +53,28 @@ class PaymentGateway extends React.Component {
     if (window.Stripe) {
       this.setState({
         stripe: window.Stripe(stripeClientSecret),
-        clientSecret
+        clientSecret: client_secret
       });
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
         // Create Stripe instance once Stripe.js loads
         this.setState({
           stripe: window.Stripe(stripeClientSecret),
-          clientSecret
+          clientSecret: client_secret
         });
       });
     }
   }
 
   render() {
+    const { items } = this.props;
     const { chosenPaymentMethod, clientSecret, stripe } = this.state;
 
     if (chosenPaymentMethod === 'stripe' && stripe) {
       return (
         <StripeProvider stripe={stripe}>
           <Elements>
-            <StripeCheckout clientSecret={clientSecret} />
+            <StripeCheckout clientSecret={clientSecret} items={items} />
           </Elements>
         </StripeProvider>
       );

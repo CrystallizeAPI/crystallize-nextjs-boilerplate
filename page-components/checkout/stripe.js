@@ -7,26 +7,50 @@ class StripeCheckout extends React.Component {
     this.state = {
       success: false,
       error: null,
-      firstname: null,
-      lastname: null
+      firstname: '',
+      lastname: ''
     };
     this.submit = this.submit.bind(this);
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
   }
 
-  async submit() {
+  async submit(event) {
+    event.preventDefault();
     const { firstname, lastname } = this.state;
 
-    const { stripe, clientSecret } = this.props;
-    const { error } = await stripe.handleCardPayment(clientSecret, {
+    const { stripe, clientSecret, items } = this.props;
+    const paymentIntent = await stripe.handleCardPayment(clientSecret, {
       payment_method_data: {
         billing_details: { name: `${firstname} ${lastname}` }
       }
     });
 
+    const { error } = paymentIntent;
     if (error) {
       return this.setState({ error });
+    }
+
+    // Create order within Crystallize
+    try {
+      await fetch('/api/order-confirmation', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          paymentIntent,
+          lineItems: items.map(item => ({
+            name: item.name,
+            sku: item.sku,
+            quantity: item.quantity,
+            subscription: item.subscription
+          }))
+        })
+      });
+    } catch (err) {
+      console.log('ERROR', err);
     }
 
     return this.setState({ success: true });

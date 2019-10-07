@@ -35,27 +35,27 @@ export default async (req, res) => {
 
   // Get an array of individual product variants we've ordered
   const products = lineItems
-    .map(
-      item =>
-        data.tree.find(product => {
+    .map(item =>
+      data.tree
+        .find(product => {
           const variant = product.variants.find(v => v.id === item.id);
           if (!variant) return false;
 
           variant.quantity = item.quantity;
           return variant;
-        }).variants
+        })
+        .variants.filter(variant => variant.id === item.id)
     )
     .flat();
 
-  const amount = products.reduce(
-    (acc, val) => acc + val.price * val.quantity,
-    0
-  );
+  const amount = products.reduce((acc, val) => {
+    return acc + val.price * val.quantity;
+  }, 0);
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount: amount * 100,
     currency: 'nok'
   });
 
-  return res.json({ clientSecret: paymentIntent.client_secret });
+  return res.json(paymentIntent);
 };
