@@ -6,17 +6,17 @@ module.exports = async (req, res) => {
   let paymentMethod;
   const data = req.body;
   try {
-    const { paymentIntent } = data;
+    const { paymentIntentId } = data;
 
     // @extraStripe
     const sig = req.headers['stripe-signature'];
 
-    if (paymentIntent || sig) paymentMethod = 'stripe';
+    if (paymentIntentId || sig) paymentMethod = 'stripe';
     const mutationBody = await orderQueryNormalizer(data, paymentMethod, {
       // @extraStripe
       stripeSignature: sig,
 
-      paymentIntentId: paymentIntent.paymentIntent.id,
+      paymentIntentId,
       stripeRawBody: req.rawBody
     });
 

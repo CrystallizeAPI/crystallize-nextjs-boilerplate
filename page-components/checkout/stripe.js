@@ -20,13 +20,15 @@ class StripeCheckout extends React.Component {
     const { firstname, lastname } = this.state;
 
     const { stripe, clientSecret, items } = this.props;
-    const paymentIntent = await stripe.handleCardPayment(clientSecret, {
-      payment_method_data: {
-        billing_details: { name: `${firstname} ${lastname}` }
+    const { paymentIntent, error } = await stripe.handleCardPayment(
+      clientSecret,
+      {
+        payment_method_data: {
+          billing_details: { name: `${firstname} ${lastname}` }
+        }
       }
-    });
+    );
 
-    const { error } = paymentIntent;
     if (error) {
       return this.setState({ error });
     }
@@ -40,7 +42,7 @@ class StripeCheckout extends React.Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          paymentIntent,
+          paymentIntentId: paymentIntent.id,
           lineItems: items.map(item => ({
             name: item.name,
             sku: item.sku,

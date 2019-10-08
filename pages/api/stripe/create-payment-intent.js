@@ -29,7 +29,7 @@ export default async (req, res) => {
   `;
 
   const data = await request(
-    `${crystallizeGraphUrlBase}/tenant/${crystallizeTenantId}`,
+    `${crystallizeGraphUrlBase}/${crystallizeTenantId}/catalogue`,
     query
   );
 
