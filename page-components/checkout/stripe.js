@@ -1,22 +1,36 @@
 import React from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
+import { H3, Button, colors } from 'ui';
+import {
+  Form,
+  Input,
+  CardElementWrapper,
+  ErrorMessage,
+  StripeWrapper
+} from './styles';
 
 class StripeCheckout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       success: false,
+      processing: false,
       error: null,
       firstname: '',
-      lastname: ''
+      lastname: '',
+      email: '',
+      cardElementStyle: null
     };
     this.submit = this.submit.bind(this);
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleCardChange = this.handleCardChange.bind(this);
   }
 
   async submit(event) {
     event.preventDefault();
+    this.setState({ processing: true });
     const { firstname, lastname } = this.state;
 
     const { stripe, clientSecret, items } = this.props;
@@ -30,7 +44,7 @@ class StripeCheckout extends React.Component {
     );
 
     if (error) {
-      return this.setState({ error });
+      return this.setState({ error, processing: false });
     }
 
     // Create order within Crystallize
@@ -55,7 +69,7 @@ class StripeCheckout extends React.Component {
       console.log('ERROR', err);
     }
 
-    return this.setState({ success: true });
+    return this.setState({ success: true, processing: false });
   }
 
   handleFirstNameChange(event) {
@@ -66,34 +80,82 @@ class StripeCheckout extends React.Component {
     this.setState({ lastname: event.target.value });
   }
 
+  handleEmailChange(event) {
+    this.setState({ email: event.target.value });
+  }
+
+  handleCardChange(event) {
+    let borderColor = colors.light;
+    if (event.complete) borderColor = colors.glacier;
+    else if (event.error) borderColor = colors.error;
+
+    return this.setState({
+      cardElementStyle: {
+        borderBottom: `1px solid ${borderColor}`
+      }
+    });
+  }
+
   render() {
-    const { error, success, firstname, lastname } = this.state;
-    if (success) return <h1>Purchase Complete</h1>;
-    if (error) return <h1>Error: {error.message}</h1>;
+    const {
+      error,
+      processing,
+      success,
+      firstname,
+      lastname,
+      email,
+      cardElementStyle
+    } = this.state;
 
     return (
-      <form onSubmit={this.submit}>
-        <label htmlFor="firstname">
-          First name:
-          <input
-            id="firstname"
-            type="text"
-            value={firstname}
-            onChange={this.handleFirstNameChange}
-          />
-        </label>
-        <label htmlFor="lastname">
-          Last name:
-          <input
-            id="lastname"
-            type="text"
-            value={lastname}
-            onChange={this.handleLastNameChange}
-          />
-        </label>
-        <CardElement />
-        <button type="submit">Send</button>
-      </form>
+      <StripeWrapper>
+        <H3>Pay with Stripe</H3>
+        {success ? (
+          <p>Payment successful!</p>
+        ) : (
+          <Form onSubmit={this.submit} noValidate>
+            <Input
+              type="text"
+              placeholder="First name"
+              value={firstname}
+              onChange={this.handleFirstNameChange}
+              required
+            />
+            <Input
+              type="text"
+              placeholder="Last name"
+              value={lastname}
+              onChange={this.handleLastNameChange}
+              required
+            />
+            <Input
+              type="email"
+              placeholder="Email address"
+              value={email}
+              onChange={this.handleEmailChange}
+              required
+            />
+            <CardElementWrapper style={cardElementStyle}>
+              <CardElement
+                style={{
+                  base: {
+                    color: colors.darkText,
+                    fontSize: '16px'
+                  },
+                  invalid: {
+                    color: colors.error
+                  }
+                }}
+                onChange={this.handleCardChange}
+              />
+            </CardElementWrapper>
+            <Button type="submit" loading={processing} disabled={processing}>
+              Pay Now
+            </Button>
+            {error && <ErrorMessage>{error.message}</ErrorMessage>}
+          </Form>
+        )}
+      </StripeWrapper>
     );
   }
 }

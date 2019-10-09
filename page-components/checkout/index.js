@@ -4,9 +4,10 @@ import React from 'react';
 import { useBasket } from 'components/basket';
 import { CurrencyValue } from 'components/currency-value';
 import Layout from 'components/layout';
+import { H1, Outer } from 'ui';
 import PaymentGateway from './payment-gateway';
 import {
-  Outer,
+  // Outer,
   Inner,
   Item,
   ItemImage,
@@ -40,24 +41,30 @@ const Checkout = () => {
   return (
     <Layout title="Checkout" simple>
       <Outer>
+        <H1>Checkout</H1>
         <Inner>
           <Items>
-            {items.map(item => (
-              <Item key={item.id}>
-                <ItemImage {...item.image} alt={item.name} />
-                <ItemName>{item.name}</ItemName>
-                <ItemQuantity>
-                  {item.quantity}
-                  pcs
-                </ItemQuantity>
-                <ItemPrice>
-                  <CurrencyValue value={item.price * item.quantity} />
-                </ItemPrice>
-              </Item>
-            ))}
+            {items.map(item => {
+              return (
+                <Item key={item.id}>
+                  <ItemImage {...item.image} alt={item.name} />
+                  <ItemName>
+                    <p>{item.name}</p>
+                    <p>{item.sku}</p>
+                  </ItemName>
+                  <ItemQuantity>
+                    {item.quantity}
+                    pcs
+                  </ItemQuantity>
+                  <ItemPrice>
+                    <CurrencyValue value={item.price * item.quantity} />
+                  </ItemPrice>
+                </Item>
+              );
+            })}
           </Items>
+          <PaymentGateway items={items} />
         </Inner>
-        <PaymentGateway items={items} />
       </Outer>
     </Layout>
   );

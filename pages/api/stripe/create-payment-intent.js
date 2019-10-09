@@ -9,13 +9,10 @@ export default async (req, res) => {
   // frontend to pass them through as they can easily be manipulated.
   const { lineItems } = JSON.parse(req.body);
 
-  const query = `
-    query {
-      ${lineItems.map(item => {
-        return `
-          tree(language: "en", path: "${item.path}") {
-            path
-            type
+  const queries = lineItems.map(
+    (item, i) => `
+        query PRODUCT_${i} {
+          tree (language: "en", path: "${item.path}") {
             ... on Product {
               variants {
                 id
@@ -23,28 +20,30 @@ export default async (req, res) => {
               }
             }
           }
-        `;
-      })}
-    }
-  `;
-
-  const data = await request(
-    `${crystallizeGraphUrlBase}/${crystallizeTenantId}/catalogue`,
-    query
+        }
+      `
   );
+
+  const requests = queries.map(query =>
+    request(
+      `${crystallizeGraphUrlBase}/${crystallizeTenantId}/catalogue`,
+      query
+    )
+  );
+  const data = await Promise.all(requests);
 
   // Get an array of individual product variants we've ordered
   const products = lineItems
     .map(item =>
-      data.tree
-        .find(product => {
-          const variant = product.variants.find(v => v.id === item.id);
+      data
+        .map(({ tree }) => {
+          const variant = tree[0].variants.find(v => v.id === item.id);
           if (!variant) return false;
 
           variant.quantity = item.quantity;
           return variant;
         })
-        .variants.filter(variant => variant.id === item.id)
+        .filter(variant => variant)
     )
     .flat();
 

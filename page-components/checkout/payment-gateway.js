@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 
 // import { Spinner } from 'ui';
@@ -19,9 +18,9 @@ const stripeClientSecret = 'stripe';
 //   min-height: 500px;
 // `;
 
-const Outer = styled.div`
-  flex-grow: 1;
-`;
+// const Outer = styled.div`
+//   flex-grow: 1;
+// `;
 
 // const InitiatingText = styled.div`
 //   margin-right: 15px;
@@ -29,7 +28,7 @@ const Outer = styled.div`
 
 class PaymentGateway extends React.Component {
   state = {
-    chosenPaymentMethod: null,
+    // chosenPaymentMethod: null,
     clientSecret: null,
     stripe: null
   };
@@ -68,32 +67,35 @@ class PaymentGateway extends React.Component {
 
   render() {
     const { items } = this.props;
-    const { chosenPaymentMethod, clientSecret, stripe } = this.state;
+    const { clientSecret, stripe } = this.state;
 
-    if (chosenPaymentMethod === 'stripe' && stripe) {
-      return (
-        <StripeProvider stripe={stripe}>
-          <Elements>
-            <StripeCheckout clientSecret={clientSecret} items={items} />
-          </Elements>
-        </StripeProvider>
-      );
+    if (!stripe) {
+      return null;
     }
 
     return (
-      <Outer>
-        <h2>Choose a way to pay:</h2>
-        <div>
-          <button
-            type="button"
-            onClick={() => this.setState({ chosenPaymentMethod: 'stripe' })}
-          >
-            Stripe
-          </button>
-          <button type="button">Klarna</button>
-        </div>
-      </Outer>
+      <StripeProvider stripe={stripe}>
+        <Elements>
+          <StripeCheckout clientSecret={clientSecret} items={items} />
+        </Elements>
+      </StripeProvider>
     );
+
+    // TODO: Allow multiple payment gateways
+    // return (
+    //   <Outer>
+    //     <h2>Choose a way to pay:</h2>
+    //     <div>
+    //       <button
+    //         type="button"
+    //         onClick={() => this.setState({ chosenPaymentMethod: 'stripe' })}
+    //       >
+    //         Stripe
+    //       </button>
+    //       <button type="button">Klarna</button>
+    //     </div>
+    //   </Outer>
+    // );
   }
 }
 
