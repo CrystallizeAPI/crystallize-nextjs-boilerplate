@@ -49,7 +49,7 @@ const TinyBasketItem = ({ actions, item }) => {
         />
         <ItemInfoText>
           <ItemName>
-            {isSubscription ? item.subscriptionName : `${item.name}`}
+            {isSubscription ? item.subscriptionName : item.name}
           </ItemName>
           {attributes && attributes.length > 0 && (
             <Attributes>

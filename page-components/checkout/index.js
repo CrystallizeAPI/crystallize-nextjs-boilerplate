@@ -14,7 +14,9 @@ import {
   ItemName,
   Items,
   ItemQuantity,
-  ItemPrice
+  ItemPrice,
+  ItemAttributes,
+  Attribute
 } from './styles';
 
 const Checkout = () => {
@@ -46,7 +48,16 @@ const Checkout = () => {
             {items.map(item => (
               <Item key={item.id}>
                 <ItemImage {...item.image} alt={item.name} />
-                <ItemName>{item.name}</ItemName>
+                <div>
+                  <ItemName>{item.name}</ItemName>
+                  <ItemAttributes>
+                    {item.attributes.map(({ attribute, value }) => (
+                      <Attribute key={attribute}>
+                        {attribute}: {value}
+                      </Attribute>
+                    ))}
+                  </ItemAttributes>
+                </div>
                 <ItemQuantity>
                   {item.quantity}
                   pcs
