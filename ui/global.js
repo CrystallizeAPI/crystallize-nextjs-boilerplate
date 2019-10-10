@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { colors } from './colors';
 
 export default createGlobalStyle`
   html {
@@ -11,6 +12,7 @@ export default createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     background:#fafafa;
+    color: ${colors.darkText};
   }
   * {
     box-sizing: border-box;
