@@ -70,12 +70,11 @@ export const Input = styled.input`
   padding: 0.3rem 0;
   margin-bottom: 0.3rem;
   border: none;
-  border-bottom: 1px solid ${colors.light};
+  border-bottom: 1px solid ${colors.frost};
   transition: border 0.2s ease-in-out;
 
-  &:focus,
   &:valid {
-    border-bottom: 1px solid ${colors.glacier};
+    border-bottom: 1px solid ${colors.iceberg};
   }
 
   &:invalid {
@@ -83,12 +82,12 @@ export const Input = styled.input`
   }
 
   &[value=''] {
-    border-bottom: 1px solid ${colors.light};
+    border-bottom: 1px solid ${colors.frost};
   }
 `;
 
 export const CardElementWrapper = styled.div`
-  border-bottom: 1px solid ${colors.light};
+  border-bottom: 1px solid ${colors.frost};
   padding: 0.3rem 0;
   margin-bottom: 1rem;
   transition: border 0.2s ease-in-out;

@@ -85,7 +85,7 @@ class StripeCheckout extends React.Component {
   }
 
   handleCardChange(event) {
-    let borderColor = colors.light;
+    let borderColor = colors.frost;
     if (event.complete) borderColor = colors.glacier;
     else if (event.error) borderColor = colors.error;
 
@@ -108,54 +108,56 @@ class StripeCheckout extends React.Component {
     } = this.state;
 
     return (
-      <StripeWrapper>
-        <H3>Pay with Stripe</H3>
-        {success ? (
-          <p>Payment successful!</p>
-        ) : (
-          <Form onSubmit={this.submit} noValidate>
-            <Input
-              type="text"
-              placeholder="First name"
-              value={firstname}
-              onChange={this.handleFirstNameChange}
-              required
-            />
-            <Input
-              type="text"
-              placeholder="Last name"
-              value={lastname}
-              onChange={this.handleLastNameChange}
-              required
-            />
-            <Input
-              type="email"
-              placeholder="Email address"
-              value={email}
-              onChange={this.handleEmailChange}
-              required
-            />
-            <CardElementWrapper style={cardElementStyle}>
-              <CardElement
-                style={{
-                  base: {
-                    color: colors.darkText,
-                    fontSize: '16px'
-                  },
-                  invalid: {
-                    color: colors.error
-                  }
-                }}
-                onChange={this.handleCardChange}
+      <div>
+        <StripeWrapper>
+          <H3>Pay with Stripe</H3>
+          {success ? (
+            <p>Payment successful!</p>
+          ) : (
+            <Form onSubmit={this.submit} noValidate>
+              <Input
+                type="text"
+                placeholder="First name"
+                value={firstname}
+                onChange={this.handleFirstNameChange}
+                required
               />
-            </CardElementWrapper>
-            <Button type="submit" loading={processing} disabled={processing}>
-              Pay Now
-            </Button>
-            {error && <ErrorMessage>{error.message}</ErrorMessage>}
-          </Form>
-        )}
-      </StripeWrapper>
+              <Input
+                type="text"
+                placeholder="Last name"
+                value={lastname}
+                onChange={this.handleLastNameChange}
+                required
+              />
+              <Input
+                type="email"
+                placeholder="Email address"
+                value={email}
+                onChange={this.handleEmailChange}
+                required
+              />
+              <CardElementWrapper style={cardElementStyle}>
+                <CardElement
+                  style={{
+                    base: {
+                      color: colors.darkText,
+                      fontSize: '16px'
+                    },
+                    invalid: {
+                      color: colors.error
+                    }
+                  }}
+                  onChange={this.handleCardChange}
+                />
+              </CardElementWrapper>
+              <Button type="submit" loading={processing} disabled={processing}>
+                Pay Now
+              </Button>
+              {error && <ErrorMessage>{error.message}</ErrorMessage>}
+            </Form>
+          )}
+        </StripeWrapper>
+      </div>
     );
   }
 }
