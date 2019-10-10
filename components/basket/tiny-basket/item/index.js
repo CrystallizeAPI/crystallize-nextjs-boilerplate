@@ -49,13 +49,13 @@ const TinyBasketItem = ({ actions, item }) => {
         />
         <ItemInfoText>
           <ItemName>
-            {isSubscription ? item.subscriptionName : item.name}
+            {isSubscription ? item.subscriptionName : `${item.name}`}
           </ItemName>
           {attributes && attributes.length > 0 && (
             <Attributes>
-              {attributes.map(a => (
-                <Attribute key={a.attribute_key}>
-                  {a.attribute_key}: {a.attribute_value}
+              {attributes.map(({ attribute, value }) => (
+                <Attribute key={attribute}>
+                  {attribute}: {value}
                 </Attribute>
               ))}
             </Attributes>
