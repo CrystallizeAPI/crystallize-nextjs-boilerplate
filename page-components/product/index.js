@@ -4,6 +4,7 @@ import { Grid } from '@crystallize/grid-renderer/react';
 import { LayoutContext } from '@crystallize/react-layout';
 import Img from '@crystallize/react-image';
 import { withRouter } from 'next/router';
+import isEqual from 'lodash/isEqual';
 
 import { H1, H2, H3, Button, screen, Outer } from 'ui';
 import CategoryItem from 'components/category-item';
@@ -13,6 +14,7 @@ import Layout from 'components/layout';
 import VariantSelector from 'components/variant-selector';
 import ShapeComponents from 'components/shape/components';
 import { useTopicQuery } from 'lib/graph';
+import { attributesToObject } from 'lib/util/variants';
 
 import {
   Sections,
@@ -43,7 +45,19 @@ const ProductPage = ({ product, defaultVariant }) => {
     })
   );
 
-  const onSelectedVariantChange = variant => setSelectedVariant(variant);
+  const onAttributeChange = (attributes, newAttribute) => {
+    const newAttributes = attributesToObject(attributes);
+    newAttributes[newAttribute.attribute] = newAttribute.value;
+
+    const newSelectedVariant = product.variants.find(variant => {
+      const variantAttributes = attributesToObject(variant.attributes);
+      return isEqual(variantAttributes, newAttributes);
+    });
+
+    setSelectedVariant(newSelectedVariant);
+  };
+
+  const onVariantChange = variant => setSelectedVariant(variant);
 
   const buy = async () => {
     const basketItemToAdd = {
@@ -92,7 +106,8 @@ const ProductPage = ({ product, defaultVariant }) => {
             <VariantSelector
               variants={product.variants}
               selectedVariant={selectedVariant}
-              onChange={onSelectedVariantChange}
+              onVariantChange={onVariantChange}
+              onAttributeChange={onAttributeChange}
             />
           )}
 

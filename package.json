@@ -52,6 +52,7 @@
     "helmet": "^3.18.0",
     "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
     "mjml": "^4.4.1",
     "next": "9.0.3",
     "polished": "^3.3.0",

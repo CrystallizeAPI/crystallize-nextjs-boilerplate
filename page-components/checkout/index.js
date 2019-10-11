@@ -14,7 +14,9 @@ import {
   ItemName,
   Items,
   ItemQuantity,
-  ItemPrice
+  ItemPrice,
+  ItemAttributes,
+  Attribute
 } from './styles';
 
 const Checkout = () => {
@@ -44,24 +46,28 @@ const Checkout = () => {
         <H1>Checkout</H1>
         <Inner>
           <Items>
-            {items.map(item => {
-              return (
-                <Item key={item.id}>
-                  <ItemImage {...item.image} alt={item.name} />
-                  <ItemName>
-                    <p>{item.name}</p>
-                    <p>{item.sku}</p>
-                  </ItemName>
-                  <ItemQuantity>
-                    {item.quantity}
-                    pcs
-                  </ItemQuantity>
-                  <ItemPrice>
-                    <CurrencyValue value={item.price * item.quantity} />
-                  </ItemPrice>
-                </Item>
-              );
-            })}
+            {items.map(item => (
+              <Item key={item.id}>
+                <ItemImage {...item.image} alt={item.name} />
+                <div>
+                  <ItemName>{item.name}</ItemName>
+                  <ItemAttributes>
+                    {item.attributes.map(({ attribute, value }) => (
+                      <Attribute key={attribute}>
+                        {attribute}: {value}
+                      </Attribute>
+                    ))}
+                  </ItemAttributes>
+                </div>
+                <ItemQuantity>
+                  {item.quantity}
+                  pcs
+                </ItemQuantity>
+                <ItemPrice>
+                  <CurrencyValue value={item.price * item.quantity} />
+                </ItemPrice>
+              </Item>
+            ))}
           </Items>
           <PaymentGateway items={items} />
         </Inner>

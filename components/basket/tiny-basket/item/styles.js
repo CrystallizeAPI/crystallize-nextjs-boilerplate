@@ -82,7 +82,10 @@ export const Attributes = styled.div`
   margin-top: 5px;
   font-size: 0.8rem;
 `;
-export const Attribute = styled.div``;
+export const Attribute = styled.div`
+  margin-bottom: 0.1rem;
+  text-transform: capitalize;
+`;
 
 export const PriceWrap = styled.div`
   display: flex;
