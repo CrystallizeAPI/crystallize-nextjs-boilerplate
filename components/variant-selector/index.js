@@ -13,16 +13,16 @@ const reduceAttributes = variants =>
   variants.reduce((acc, variant) => {
     const attrs = acc;
 
-    variant.attributes.forEach(attr => {
-      const currentAttribute = attrs[attr.attribute];
+    variant.attributes.forEach(({ attribute, value }) => {
+      const currentAttribute = attrs[attribute];
       if (!currentAttribute) {
-        attrs[attr.attribute] = [attr.value];
+        attrs[attribute] = [value];
         return;
       }
 
-      const valueExists = currentAttribute.find(str => str === attr.value);
+      const valueExists = currentAttribute.find(str => str === value);
       if (!valueExists) {
-        attrs[attr.attribute].push(attr.value);
+        attrs[attribute].push(value);
       }
     });
 
