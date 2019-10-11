@@ -21,12 +21,14 @@ export const Items = styled.div`
 `;
 
 export const Item = styled.div`
-  border: 1px solid ${colors.light};
   color: ${colors.darkText};
+  background: white;
   margin-bottom: 1rem;
   padding: 15px;
   display: flex;
   align-items: center;
+  border-radius: 0.2rem;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
 `;
 
 export const ItemImage = styled(Image).attrs(() => ({
@@ -78,7 +80,7 @@ export const Input = styled.input`
   font-size: 16px;
   font-weight: 500;
   padding: 0.3rem 0;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
   border: none;
   border-bottom: 1px solid ${colors.frost};
   transition: border 0.2s ease-in-out;
@@ -104,18 +106,11 @@ export const CardElementWrapper = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
+  font-size: 16px;
   color: ${colors.error};
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 `;
 
 export const StripeWrapper = styled.div`
-  min-width: 300px;
-  background: white;
-  padding: 1rem;
-  border: 1px solid ${colors.light};
-
-  h3 {
-    padding-top: 0;
-    padding-bottom: 0.5rem;
-  }
+  padding-bottom: 1rem;
 `;

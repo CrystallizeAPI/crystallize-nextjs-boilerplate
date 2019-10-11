@@ -1,5 +1,6 @@
 import React from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
+import styled from 'styled-components';
 
 // import { Spinner } from 'ui';
 import StripeCheckout from './stripe';
@@ -7,24 +8,19 @@ import StripeCheckout from './stripe';
 // You can get this from https://dashboard.stripe.com/test/apikeys in test mode
 const stripeClientSecret = 'stripe';
 
-// const Outer = styled.div`
-//   flex-grow: 1;
-//   flex: 0 1 500px;
-//   background: #eee;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   font-size: 1.5rem;
-//   min-height: 500px;
-// `;
-
-// const Outer = styled.div`
-//   flex-grow: 1;
-// `;
-
-// const InitiatingText = styled.div`
-//   margin-right: 15px;
-// `;
+const Outer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 300px;
+  background: white;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+`;
 
 class PaymentGateway extends React.Component {
   state = {
@@ -69,33 +65,19 @@ class PaymentGateway extends React.Component {
     const { items } = this.props;
     const { clientSecret, stripe } = this.state;
 
-    if (!stripe) {
-      return null;
-    }
-
     return (
-      <StripeProvider stripe={stripe}>
-        <Elements>
-          <StripeCheckout clientSecret={clientSecret} items={items} />
-        </Elements>
-      </StripeProvider>
+      <Outer>
+        {stripe ? (
+          <StripeProvider stripe={stripe}>
+            <Elements>
+              <StripeCheckout clientSecret={clientSecret} items={items} />
+            </Elements>
+          </StripeProvider>
+        ) : (
+          <p>Initialising payment gateway...</p>
+        )}
+      </Outer>
     );
-
-    // TODO: Allow multiple payment gateways
-    // return (
-    //   <Outer>
-    //     <h2>Choose a way to pay:</h2>
-    //     <div>
-    //       <button
-    //         type="button"
-    //         onClick={() => this.setState({ chosenPaymentMethod: 'stripe' })}
-    //       >
-    //         Stripe
-    //       </button>
-    //       <button type="button">Klarna</button>
-    //     </div>
-    //   </Outer>
-    // );
   }
 }
 

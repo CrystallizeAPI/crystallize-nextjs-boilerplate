@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
-import { H3, Button, colors } from 'ui';
+import { H2, Button, colors } from 'ui';
 import {
   Form,
   Input,
@@ -16,30 +16,28 @@ class StripeCheckout extends React.Component {
       success: false,
       processing: false,
       error: null,
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       cardElementStyle: null
     };
     this.submit = this.submit.bind(this);
-    this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-    this.handleLastNameChange = this.handleLastNameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleCardChange = this.handleCardChange.bind(this);
   }
 
   async submit(event) {
     event.preventDefault();
     this.setState({ processing: true });
-    const { firstname, lastname } = this.state;
+    const { firstName, lastName, email } = this.state;
 
     const { stripe, clientSecret, items } = this.props;
     const { paymentIntent, error } = await stripe.handleCardPayment(
       clientSecret,
       {
         payment_method_data: {
-          billing_details: { name: `${firstname} ${lastname}` }
-        }
+          billing_details: { name: `${firstName} ${lastName}` }
+        },
+        receipt_email: email
       }
     );
 
@@ -72,18 +70,6 @@ class StripeCheckout extends React.Component {
     return this.setState({ success: true, processing: false });
   }
 
-  handleFirstNameChange(event) {
-    this.setState({ firstname: event.target.value });
-  }
-
-  handleLastNameChange(event) {
-    this.setState({ lastname: event.target.value });
-  }
-
-  handleEmailChange(event) {
-    this.setState({ email: event.target.value });
-  }
-
   handleCardChange(event) {
     let borderColor = colors.frost;
     if (event.complete) borderColor = colors.glacier;
@@ -101,63 +87,61 @@ class StripeCheckout extends React.Component {
       error,
       processing,
       success,
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
       cardElementStyle
     } = this.state;
 
     return (
-      <div>
-        <StripeWrapper>
-          <H3>Pay with Stripe</H3>
-          {success ? (
-            <p>Payment successful!</p>
-          ) : (
-            <Form onSubmit={this.submit} noValidate>
-              <Input
-                type="text"
-                placeholder="First name"
-                value={firstname}
-                onChange={this.handleFirstNameChange}
-                required
+      <StripeWrapper>
+        <H2>Pay with Stripe</H2>
+        {success ? (
+          <p>Payment successful!</p>
+        ) : (
+          <Form onSubmit={this.submit} noValidate>
+            <Input
+              type="text"
+              placeholder="First name"
+              value={firstName}
+              onChange={e => this.setState({ firstName: e.target.value })}
+              required
+            />
+            <Input
+              type="text"
+              placeholder="Last name"
+              value={lastName}
+              onChange={e => this.setState({ lastName: e.target.value })}
+              required
+            />
+            <Input
+              type="email"
+              placeholder="Email address"
+              value={email}
+              onChange={e => this.setState({ email: e.target.value })}
+              required
+            />
+            <CardElementWrapper style={cardElementStyle}>
+              <CardElement
+                style={{
+                  base: {
+                    color: colors.darkText,
+                    fontSize: '16px'
+                  },
+                  invalid: {
+                    color: colors.error
+                  }
+                }}
+                onChange={this.handleCardChange}
               />
-              <Input
-                type="text"
-                placeholder="Last name"
-                value={lastname}
-                onChange={this.handleLastNameChange}
-                required
-              />
-              <Input
-                type="email"
-                placeholder="Email address"
-                value={email}
-                onChange={this.handleEmailChange}
-                required
-              />
-              <CardElementWrapper style={cardElementStyle}>
-                <CardElement
-                  style={{
-                    base: {
-                      color: colors.darkText,
-                      fontSize: '16px'
-                    },
-                    invalid: {
-                      color: colors.error
-                    }
-                  }}
-                  onChange={this.handleCardChange}
-                />
-              </CardElementWrapper>
-              <Button type="submit" loading={processing} disabled={processing}>
-                Pay Now
-              </Button>
-              {error && <ErrorMessage>{error.message}</ErrorMessage>}
-            </Form>
-          )}
-        </StripeWrapper>
-      </div>
+            </CardElementWrapper>
+            <Button type="submit" loading={processing} disabled={processing}>
+              Pay Now
+            </Button>
+            {error && <ErrorMessage>{error.message}</ErrorMessage>}
+          </Form>
+        )}
+      </StripeWrapper>
     );
   }
 }
