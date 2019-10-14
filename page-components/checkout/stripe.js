@@ -58,6 +58,8 @@ class StripeCheckout extends React.Component {
           lineItems: items.map(item => ({
             name: item.name,
             sku: item.sku,
+            net: item.price,
+            gross: item.priceWithoutVat,
             quantity: item.quantity,
             subscription: item.subscription
           }))

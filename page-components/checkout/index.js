@@ -10,7 +10,9 @@ import {
   // Outer,
   Inner,
   Item,
+  ItemAmount,
   ItemImage,
+  ItemInfo,
   ItemName,
   Items,
   ItemQuantity,
@@ -49,23 +51,22 @@ const Checkout = () => {
             {items.map(item => (
               <Item key={item.id}>
                 <ItemImage {...item.image} alt={item.name} />
-                <div>
+                <ItemInfo>
                   <ItemName>{item.name}</ItemName>
                   <ItemAttributes>
                     {item.attributes.map(({ attribute, value }) => (
-                      <Attribute key={attribute}>
-                        {attribute}: {value}
-                      </Attribute>
+                      <Attribute key={attribute}>{value}</Attribute>
                     ))}
                   </ItemAttributes>
-                </div>
-                <ItemQuantity>
-                  {item.quantity}
-                  pcs
-                </ItemQuantity>
-                <ItemPrice>
-                  <CurrencyValue value={item.price * item.quantity} />
-                </ItemPrice>
+                </ItemInfo>
+                <ItemAmount>
+                  <ItemQuantity>
+                    {item.quantity} x <CurrencyValue value={item.price} />
+                  </ItemQuantity>
+                  <ItemPrice>
+                    <CurrencyValue value={item.price * item.quantity} />
+                  </ItemPrice>
+                </ItemAmount>
               </Item>
             ))}
           </Items>

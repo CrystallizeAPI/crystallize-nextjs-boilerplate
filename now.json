@@ -11,7 +11,9 @@
     "GTM_ID": "",
     "CRYSTALLIZE_GRAPH_URL_BASE": "https://graph.crystallize.com",
     "CRYSTALLIZE_TENANT_ID": "teddy-bear-shop",
-    "SECRET": "secret"
+    "SECRET": "secret",
+    "STRIPE_SECRET_KEY": "@stripe-secret-key",
+    "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key"
   },
   "routes": [
     {

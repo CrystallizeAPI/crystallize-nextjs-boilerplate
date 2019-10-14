@@ -2,7 +2,7 @@ import React from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import styled from 'styled-components';
 
-// import { Spinner } from 'ui';
+import { responsive } from 'ui';
 import StripeCheckout from './stripe';
 
 // You can get this from https://dashboard.stripe.com/test/apikeys in test mode
@@ -20,6 +20,10 @@ const Outer = styled.div`
   padding: 1rem;
   border-radius: 0.2rem;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+
+  ${responsive.xs} {
+    width: 100%;
+  }
 `;
 
 class PaymentGateway extends React.Component {

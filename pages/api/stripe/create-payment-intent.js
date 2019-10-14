@@ -5,8 +5,6 @@ const stripe = require('stripe')(stripeSecretKey);
 const { request } = require('graphql-request');
 
 export default async (req, res) => {
-  // TODO fetch product prices separately - it's not ideal to rely on the
-  // frontend to pass them through as they can easily be manipulated.
   const { lineItems } = JSON.parse(req.body);
 
   const queries = lineItems.map(
