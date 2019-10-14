@@ -9,21 +9,25 @@ import StripeCheckout from './stripe';
 const stripeClientSecret = 'stripe';
 
 const Outer = styled.div`
+  width: 300px;
+
+  ${responsive.xs} {
+    width: 100%;
+  }
+`;
+
+const Inner = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 300px;
   background: white;
   font-size: 1.5rem;
   padding: 1rem;
   border-radius: 0.2rem;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
-
-  ${responsive.xs} {
-    width: 100%;
-  }
 `;
 
 class PaymentGateway extends React.Component {
@@ -71,15 +75,17 @@ class PaymentGateway extends React.Component {
 
     return (
       <Outer>
-        {stripe ? (
-          <StripeProvider stripe={stripe}>
-            <Elements>
-              <StripeCheckout clientSecret={clientSecret} items={items} />
-            </Elements>
-          </StripeProvider>
-        ) : (
-          <p>Initialising payment gateway...</p>
-        )}
+        <Inner>
+          {stripe ? (
+            <StripeProvider stripe={stripe}>
+              <Elements>
+                <StripeCheckout clientSecret={clientSecret} items={items} />
+              </Elements>
+            </StripeProvider>
+          ) : (
+            <p>Initialising payment gateway...</p>
+          )}
+        </Inner>
       </Outer>
     );
   }
