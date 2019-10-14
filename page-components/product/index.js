@@ -117,7 +117,7 @@ const ProductPage = ({ product, defaultVariant }) => {
                 <CurrencyValue value={selectedVariant.price} />
               </strong>
             </Price>
-            <Button onClick={buy}>Add to basket</Button>
+            <Button onClick={buy}>Add to Basket</Button>
           </ProductFooter>
         </Info>
       </Sections>

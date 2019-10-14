@@ -35,7 +35,7 @@ const Aside = () => {
             disabled={!basket.state.items.length}
             onClick={onCheckoutClick}
           >
-            Go to checkout
+            Go to Checkout
           </Button>
         </Link>
       </Footer>

@@ -1,6 +1,7 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
 
+import AttributeList from 'components/attribute-list';
 import { useBasket } from 'components/basket';
 import { CurrencyValue } from 'components/currency-value';
 import Layout from 'components/layout';
@@ -16,9 +17,7 @@ import {
   ItemName,
   Items,
   ItemQuantity,
-  ItemPrice,
-  ItemAttributes,
-  Attribute
+  ItemPrice
 } from './styles';
 
 const Checkout = () => {
@@ -53,11 +52,7 @@ const Checkout = () => {
                 <ItemImage {...item.image} alt={item.name} />
                 <ItemInfo>
                   <ItemName>{item.name}</ItemName>
-                  <ItemAttributes>
-                    {item.attributes.map(({ attribute, value }) => (
-                      <Attribute key={attribute}>{value}</Attribute>
-                    ))}
-                  </ItemAttributes>
+                  <AttributeList attributes={item.attributes} />
                 </ItemInfo>
                 <ItemAmount>
                   <ItemQuantity>
