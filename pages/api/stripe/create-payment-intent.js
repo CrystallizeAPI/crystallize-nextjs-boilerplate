@@ -3,6 +3,7 @@ const crystallizeGraphUrlBase = process.env.CRYSTALLIZE_GRAPH_URL_BASE;
 const crystallizeTenantId = process.env.CRYSTALLIZE_TENANT_ID;
 const stripe = require('stripe')(stripeSecretKey);
 const { request } = require('graphql-request');
+const flatten = require('lodash/flatten');
 
 export default async (req, res) => {
   const { lineItems } = JSON.parse(req.body);
@@ -31,8 +32,9 @@ export default async (req, res) => {
   const data = await Promise.all(requests);
 
   // Get an array of individual product variants we've ordered
-  const products = lineItems
-    .map(item =>
+  // Note: Node < 11 does not support Array.flat()
+  const products = flatten(
+    lineItems.map(item =>
       data
         .map(({ tree }) => {
           const variant = tree[0].variants.find(v => v.id === item.id);
@@ -43,7 +45,7 @@ export default async (req, res) => {
         })
         .filter(variant => variant)
     )
-    .flat();
+  );
 
   const amount = products.reduce((acc, val) => {
     return acc + val.price * val.quantity;
