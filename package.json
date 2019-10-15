@@ -40,6 +40,7 @@
     "@crystallize/react-image": "^3.0.3",
     "@crystallize/react-layout": "^3.0.0",
     "@nerdenough/mjml-ncc-bundle": "^1.1.1",
+    "@sendgrid/mail": "^6.4.0",
     "body-parser": "^1.19.0",
     "change-case": "^3.1.0",
     "cookie-parser": "^1.4.4",

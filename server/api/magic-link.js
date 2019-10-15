@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 const mjml2html = require('mjml');
+const sgMail = require('@sendgrid/mail');
 
 const secret = process.env.SECRET;
 const tenantName = process.env.CRYSTALLIZE_TENANT_ID;
+const sendGridApiKey = process.env.SENDGRID_API_KEY;
 
 const formatEmail = loginLink =>
   mjml2html(
@@ -11,12 +13,9 @@ const formatEmail = loginLink =>
     <mj-body>
       <mj-section>
         <mj-column>
-          <mj-text>
-            Welcome to ${tenantName}
-            <mj-button href="${loginLink}" align="center">
-              Click here to login
-            </mj-button>
-          </mj-text>
+          <mj-text>Welcome to ${tenantName}! Simply follow the link below to login.</mj-text>
+          <mj-button href="${loginLink}" align="center">Click here to login</mj-button>
+          <mj-text>${loginLink}</mj-text>
         </mj-column>
       </mj-section>
     </mj-body>
@@ -47,15 +46,23 @@ module.exports = (req, res) => {
   // The token should also be saved somewhere so that we can verify that it
   // is a valid token in `./verify.js`.
 
-  const formattedEmail = formatEmail(magicLink);
+  const { html } = formatEmail(magicLink);
 
   // Now that we have an email formatted to contain the magic link we want to
-  // send it. Because the boilerplate is not configured with an SMTP server or
-  // another mail service to use, we will just log the message to the console
-  // for development.
+  // send it. If configured to use SendGrid, an email will be sent with the
+  // login link. If not, the link will be logged to console.
+  if (sendGridApiKey) {
+    sgMail.setApiKey(sendGridApiKey);
+    sgMail.send({
+      to: email,
+      from: 'example@crystallize.com',
+      subject: 'Magic Link',
+      html
+    });
+  }
 
   /* eslint-disable */
-  console.log(formattedEmail);
+  console.log(html);
   console.log('----');
   console.log(`Login Link: ${magicLink}`);
   console.log('----');
