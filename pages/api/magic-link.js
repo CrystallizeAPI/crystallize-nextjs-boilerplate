@@ -13,12 +13,9 @@ const formatEmail = loginLink =>
     <mj-body>
       <mj-section>
         <mj-column>
-          <mj-text>
-            Welcome to ${tenantName}
-            <mj-button href="${loginLink}" align="center">
-              Click here to login
-            </mj-button>
-          </mj-text>
+          <mj-text>Welcome to ${tenantName}! Simply follow the link below to login.</mj-text>
+          <mj-button href="${loginLink}" align="center">Click here to login</mj-button>
+          <mj-text>${loginLink}</mj-text>
         </mj-column>
       </mj-section>
     </mj-body>
