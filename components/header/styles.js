@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { responsive } from 'ui';
+import { colors, responsive } from 'ui';
 
 export const Outer = styled.header`
   text-align: center;
@@ -71,6 +71,9 @@ export const Basket = styled.button`
   img,
   svg {
     width: 40px;
+  }
+  svg path {
+    stroke: ${colors.darkText};
   }
   &:hover,
   &:active {

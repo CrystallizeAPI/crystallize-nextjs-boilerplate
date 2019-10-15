@@ -51,3 +51,13 @@ export const ItemQuantity = styled.div`
 export const ItemPrice = styled.div`
   font-size: 1.5rem;
 `;
+
+export const ItemAttributes = styled.div`
+  margin-top: 5px;
+  font-size: 0.8rem;
+`;
+
+export const Attribute = styled.div`
+  margin-bottom: 0.1rem;
+  text-transform: capitalize;
+`;
