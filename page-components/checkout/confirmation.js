@@ -6,8 +6,6 @@ import { BasketContext } from 'components/basket';
 import Layout from 'components/layout';
 
 class Inner extends React.Component {
-  static contextType = BasketContext;
-
   state = {
     emptied: false
   };
@@ -15,6 +13,8 @@ class Inner extends React.Component {
   componentDidMount() {
     this.empty();
   }
+
+  static contextType = BasketContext;
 
   empty() {
     const { emptied } = this.state;
