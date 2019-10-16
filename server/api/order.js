@@ -1,6 +1,5 @@
 const createCrystallizeOrder = require('../../lib/order-creator');
 const { orderQueryNormalizer } = require('../../lib/order-normalizer');
-// const { ORDER } = require('../../lib/graph');
 
 module.exports = async (req, res) => {
   // TODO: Handle understanding the payment method by some body fields e.g. stripe has customer_id
