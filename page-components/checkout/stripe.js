@@ -30,7 +30,7 @@ class StripeCheckout extends React.Component {
     this.setState({ processing: true });
     const { firstName, lastName, email } = this.state;
 
-    const { stripe, clientSecret, items } = this.props;
+    const { stripe, clientSecret, items, onSuccess } = this.props;
     const { paymentIntent, error } = await stripe.handleCardPayment(
       clientSecret,
       {
@@ -47,7 +47,7 @@ class StripeCheckout extends React.Component {
 
     // Create order within Crystallize
     try {
-      await fetch('/api/order-confirmation', {
+      const response = await fetch('/api/order-confirmation', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -65,6 +65,9 @@ class StripeCheckout extends React.Component {
           }))
         })
       });
+
+      const { data } = await response.json();
+      onSuccess(data.orders.create.id);
     } catch (err) {
       console.log('ERROR', err);
     }

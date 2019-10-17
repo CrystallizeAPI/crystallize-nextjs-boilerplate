@@ -45,6 +45,10 @@
       "dest": "/checkout"
     },
     {
+      "src": "/confirmation/([^/]+)",
+      "dest": "/confirmation?id=$1"
+    },
+    {
       "src": "/([^/].+)",
       "dest": "/catalog?path=$1"
     }

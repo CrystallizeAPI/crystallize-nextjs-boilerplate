@@ -21,6 +21,7 @@
     "prettier/prettier": "error",
     "no-plusplus": 0,
     "no-use-before-define": ["error", "nofunc"],
+    "no-underscore-dangle": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {

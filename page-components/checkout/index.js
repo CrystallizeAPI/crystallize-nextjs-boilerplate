@@ -1,24 +1,12 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
 
-import AttributeList from 'components/attribute-list';
 import { useBasket } from 'components/basket';
-import { CurrencyValue } from 'components/currency-value';
 import Layout from 'components/layout';
+import OrderItems from 'components/order-items';
 import { H1, Outer } from 'ui';
 import PaymentGateway from './payment-gateway';
-import {
-  // Outer,
-  Inner,
-  Item,
-  ItemAmount,
-  ItemImage,
-  ItemInfo,
-  ItemName,
-  Items,
-  ItemQuantity,
-  ItemPrice
-} from './styles';
+import { Inner } from './styles';
 
 const Checkout = () => {
   const basket = useBasket();
@@ -46,25 +34,7 @@ const Checkout = () => {
       <Outer>
         <H1>Checkout</H1>
         <Inner>
-          <Items>
-            {items.map(item => (
-              <Item key={item.id}>
-                <ItemImage {...item.image} alt={item.name} />
-                <ItemInfo>
-                  <ItemName>{item.name}</ItemName>
-                  <AttributeList attributes={item.attributes} />
-                </ItemInfo>
-                <ItemAmount>
-                  <ItemQuantity>
-                    {item.quantity} x <CurrencyValue value={item.price} />
-                  </ItemQuantity>
-                  <ItemPrice>
-                    <CurrencyValue value={item.price * item.quantity} />
-                  </ItemPrice>
-                </ItemAmount>
-              </Item>
-            ))}
-          </Items>
+          <OrderItems items={items} />
           <PaymentGateway items={items} />
         </Inner>
       </Outer>
