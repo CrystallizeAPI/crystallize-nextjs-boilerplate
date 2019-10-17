@@ -78,7 +78,7 @@ const emailReceipt = async orderId => {
 
   if (sendGridApiKey) {
     sgMail.setApiKey(sendGridApiKey);
-    sgMail.send({
+    await sgMail.send({
       to: email,
       from: 'example@crystallize.com',
       subject: 'Order Summary',
