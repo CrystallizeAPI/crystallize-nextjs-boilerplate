@@ -1,6 +1,7 @@
 # Crystallize Frontend Boilerplate
 
-[![React: latest][0]][1] [![Next: latest][2]][3] [![code style: prettier][4]][5]
+[![Crystallize Community Slack][21]][22] [![React: latest][0]][1]
+[![Next: latest][2]][3] [![code style: prettier][4]][5]
 [![code linter: Eslint][6]][7]
 
 The bare minimum skeleton you need to get a frontend up and running on the
@@ -125,3 +126,6 @@ of a Node application, one option is [ZEIT Now][20].
 [18]: https://zeit.co/docs/v2/serverless-functions/introduction
 [19]: https://zeit.co/guides/deploying-nextjs-with-now/
 [20]: https://zeit.co/now
+[21]:
+  https://img.shields.io/static/v1?label=Slack&logo=slack&message=Crystallize%20Community&color=68d1b7
+[22]: https://slack.com
