@@ -24,7 +24,7 @@ const formatEmail = loginLink =>
     {}
   );
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   const { email } = req.params;
 
   if (!email) {
@@ -53,7 +53,7 @@ module.exports = (req, res) => {
   // login link. If not, the link will be logged to console.
   if (sendGridApiKey) {
     sgMail.setApiKey(sendGridApiKey);
-    sgMail.send({
+    await sgMail.send({
       to: email,
       from: 'example@crystallize.com',
       subject: 'Magic Link',
@@ -62,10 +62,7 @@ module.exports = (req, res) => {
   }
 
   /* eslint-disable */
-  console.log(html);
-  console.log('----');
   console.log(`Login Link: ${magicLink}`);
-  console.log('----');
   /* eslint-enable */
 
   return res.json({
