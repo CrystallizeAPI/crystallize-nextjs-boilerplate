@@ -58,6 +58,7 @@
     "next": "9.0.3",
     "polished": "^3.3.0",
     "prop-types": "^15.7.2",
+    "query-string": "^6.8.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intl": "^3.1.5",

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
+import Router from 'next/router';
 import styled from 'styled-components';
 
 import { responsive } from 'ui';
@@ -79,7 +80,11 @@ class PaymentGateway extends React.Component {
           {stripe ? (
             <StripeProvider stripe={stripe}>
               <Elements>
-                <StripeCheckout clientSecret={clientSecret} items={items} />
+                <StripeCheckout
+                  clientSecret={clientSecret}
+                  items={items}
+                  onSuccess={orderId => Router.push(`/confirmation/${orderId}`)}
+                />
               </Elements>
             </StripeProvider>
           ) : (
