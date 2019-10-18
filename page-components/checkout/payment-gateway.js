@@ -7,7 +7,7 @@ import { responsive } from 'ui';
 import StripeCheckout from './stripe';
 
 // You can get this from https://dashboard.stripe.com/test/apikeys in test mode
-const stripeClientSecret = 'stripe';
+const stripeClientSecret = process.env.STRIPE_PUBLISHABLE_KEY;
 
 const Outer = styled.div`
   width: 300px;
