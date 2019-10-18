@@ -2,7 +2,7 @@
 const {
   PORT = 3000,
   NODE_ENV = 'development',
-  CRYSTALLIZE_TENANT_ID = 'super-awesome-tenant',
+  CRYSTALLIZE_TENANT_ID = 'demo',
   CRYSTALLIZE_GRAPH_URL_BASE = 'https://api-dev.crystallize.digital',
   CRYSTALLIZE_ORDER_API_URL = 'https://api-dev.crystallize.digital',
   SUCCESS_PAYMENT_STRIPE_WEBHOOK_TOKEN,
