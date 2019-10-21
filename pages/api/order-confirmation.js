@@ -1,10 +1,30 @@
 const createCrystallizeOrder = require('lib/order-creator');
 const { orderQueryNormalizer } = require('lib/order-normalizer');
 
-module.exports = async (req, res) => {
+// TODO: Remove body parsing once zeit has updated error handling
+// @RemoveWhenZeitErrorHandledComplete
+const bodyParser = request => {
+  return new Promise(resolve => {
+    let data = '';
+    request.on('data', chunk => {
+      data += chunk;
+    });
+    request.on('end', () => {
+      try {
+        const body = JSON.parse(data);
+        resolve(body);
+      } catch (error) {
+        resolve({});
+      }
+    });
+  });
+};
+export default async (req, res) => {
   // TODO: Handle understanding the payment method by some body fields e.g. stripe has customer_id
   let paymentMethod;
-  const data = req.body;
+  let response;
+  const data = await bodyParser(req);
+
   try {
     const { paymentIntentId } = data;
 
@@ -12,23 +32,40 @@ module.exports = async (req, res) => {
     const sig = req.headers['stripe-signature'];
 
     if (paymentIntentId || sig) paymentMethod = 'stripe';
+    if (req.query.klarna_order_id) paymentMethod = 'klarna';
+
+    if (!paymentMethod)
+      return res.status(200).send({
+        success: true,
+        message: 'No payment method seems to be selected'
+      });
+
     const mutationBody = await orderQueryNormalizer(data, paymentMethod, {
       // @extraStripe
       stripeSignature: sig,
 
       paymentIntentId,
-      stripeRawBody: req.rawBody
+      stripeRawBody: req.rawBody,
+      klarnaOrderId: req.query.klarna_order_id
     });
 
-    const response = await createCrystallizeOrder(mutationBody);
-    res.status(200).send({
-      success: true,
-      ...response
-    });
+    response = await createCrystallizeOrder(mutationBody);
+    console.log('%o', response);
   } catch (error) {
-    res.status(503).send({
+    return res.status(503).send({
       success: false,
       ...error
     });
+  }
+  return res.status(200).send({
+    success: true,
+    ...response
+  });
+};
+
+// @RemoveWhenZeitErrorHandledComplete
+export const config = {
+  api: {
+    bodyParser: false
   }
 };

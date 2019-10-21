@@ -1,16 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-const request = require('request-promise');
 const config = require('../../../config');
+const klarnaApiCall = require('../../../lib/util/klarna-utils');
 
-const {
-  KLARNA_USERNAME,
-  KLARNA_PASSWORD,
-  STORE_URI,
-  TERMS_URI,
-  KLARNA_CONFIRMATION_URI,
-  NGROK_URL,
-  KLARNA_API_URL
-} = config;
+const { NGROK_URL } = config;
 
 const orderToKlarnaCart = lineItems => {
   return lineItems.map(item => {
@@ -29,26 +21,6 @@ const orderToKlarnaCart = lineItems => {
     };
   });
 };
-const createAuthKey = () =>
-  Buffer.from(`${KLARNA_USERNAME}:${KLARNA_PASSWORD}`).toString('base64');
-
-const apiCall = async orderBody => {
-  return new Promise(async (resolve, reject) => {
-    const options = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${createAuthKey()}`
-      },
-      uri: `${KLARNA_API_URL}/checkout/v3/orders`,
-      json: true,
-      method: 'POST',
-      body: orderBody
-    };
-    request(options)
-      .then(res => resolve(res))
-      .catch(err => reject(err));
-  });
-};
 
 export default async (req, res) => {
   try {
@@ -58,19 +30,23 @@ export default async (req, res) => {
       return acc + val.net * 100 * val.quantity;
     }, 0);
 
-    const response = await apiCall({
-      order_lines: orderToKlarnaCart(lineItems),
-      purchase_country: 'NO',
-      purchase_currency: 'NOK',
-      locale: 'nb-no',
-      order_amount: amount,
-      order_tax_amount: 0,
-      merchant_urls: {
-        // back_to_store_uri: STORE_URI,
-        terms: TERMS_URI,
-        checkout: `${STORE_URI}/checkout`,
-        confirmation: `${KLARNA_CONFIRMATION_URI}/?id={checkout.order.id}`,
-        push: `${NGROK_URL}/?id={checkout.order.id}`
+    const response = await klarnaApiCall({
+      method: 'POST',
+      uri: '/checkout/v3/orders',
+      body: {
+        order_lines: orderToKlarnaCart(lineItems),
+        purchase_country: 'NO',
+        purchase_currency: 'NOK',
+        locale: 'nb-no',
+        order_amount: amount,
+        order_tax_amount: 0,
+        merchant_urls: {
+          // back_to_store_uri: STORE_URI,
+          terms: 'http://google.com',
+          checkout: `http://google.com`,
+          confirmation: `${NGROK_URL}/`,
+          push: `${NGROK_URL}/api/order-confirmation?klarna_order_id={checkout.order.id}`
+        }
       }
     });
     return res.send(`

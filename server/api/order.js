@@ -12,6 +12,8 @@ module.exports = async (req, res) => {
     const sig = req.headers['stripe-signature'];
 
     if (paymentIntent || sig) paymentMethod = 'stripe';
+    if (data.merchant_urls) paymentMethod = 'klarna';
+
     const mutationBody = await orderQueryNormalizer(data, paymentMethod, {
       // @extraStripe
       stripeSignature: sig,
