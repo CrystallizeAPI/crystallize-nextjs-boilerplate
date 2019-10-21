@@ -1,13 +1,20 @@
 import React from 'react';
 import queryString from 'query-string';
+import styled from 'styled-components';
 
 import Layout from 'components/layout';
 import BillingDetails from 'components/billing-details';
 import OrderItems from 'components/order-items';
 import { useOrderByIdQuery } from 'lib/graph';
-import { H1, Outer, Header } from 'ui';
+import { H1, Outer, Header, responsive } from 'ui';
 
-import { Inner } from './styles';
+export const Inner = styled.div`
+  display: flex;
+
+  ${responsive.xs} {
+    flex-direction: column;
+  }
+`;
 
 const Confirmation = ({ orderId }) => {
   const { fetching, error, data } = useOrderByIdQuery({
