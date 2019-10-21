@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { responsive } from 'ui';
 import StripeCheckout from './stripe';
+import KlarnaCheckout from './klarna';
 
 // You can get this from https://dashboard.stripe.com/test/apikeys in test mode
 const stripeClientSecret = process.env.STRIPE_PUBLISHABLE_KEY;
@@ -90,6 +91,9 @@ class PaymentGateway extends React.Component {
           ) : (
             <p>Initialising payment gateway...</p>
           )}
+          <div>
+            <KlarnaCheckout items={items} />
+          </div>
         </Inner>
       </Outer>
     );
