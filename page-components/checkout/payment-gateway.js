@@ -1,14 +1,12 @@
 import React from 'react';
-import { Elements, StripeProvider } from 'react-stripe-elements';
 import Router from 'next/router';
 import styled from 'styled-components';
 
-import { responsive } from 'ui';
+import { responsive, H3 } from 'ui';
 import StripeCheckout from './stripe';
 import KlarnaCheckout from './klarna';
 
-// You can get this from https://dashboard.stripe.com/test/apikeys in test mode
-const stripeClientSecret = process.env.STRIPE_PUBLISHABLE_KEY;
+import { Form, Input, PaymentMethods, PaymentButton } from './styles';
 
 const Outer = styled.div`
   width: 300px;
@@ -24,7 +22,6 @@ const Inner = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-  text-align: center;
   background: white;
   font-size: 1.5rem;
   padding: 1rem;
@@ -34,66 +31,76 @@ const Inner = styled.div`
 
 class PaymentGateway extends React.Component {
   state = {
-    // chosenPaymentMethod: null,
-    clientSecret: null,
-    stripe: null
+    paymentMethod: null
   };
-
-  async componentDidMount() {
-    const { items } = this.props;
-
-    const lineItems = items.map(item => ({
-      id: item.id,
-      path: item.path,
-      quantity: item.quantity
-    }));
-
-    const { client_secret } = await fetch('/api/stripe/create-payment-intent', {
-      method: 'POST',
-      body: JSON.stringify({
-        lineItems
-      })
-    }).then(res => res.json());
-
-    if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe(stripeClientSecret),
-        clientSecret: client_secret
-      });
-    } else {
-      document.querySelector('#stripe-js').addEventListener('load', () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe(stripeClientSecret),
-          clientSecret: client_secret
-        });
-      });
-    }
-  }
 
   render() {
     const { items } = this.props;
-    const { clientSecret, stripe } = this.state;
+    const {
+      clientSecret,
+      paymentMethod,
+      firstName,
+      lastName,
+      email
+    } = this.state;
 
     return (
       <Outer>
         <Inner>
-          {stripe ? (
-            <StripeProvider stripe={stripe}>
-              <Elements>
+          <Form noValidate>
+            <H3>Personal Details</H3>
+            <Input
+              name="firstname"
+              type="text"
+              placeholder="First name"
+              value={firstName}
+              onChange={e => this.setState({ firstName: e.target.value })}
+              required
+            />
+            <Input
+              name="lastname"
+              type="text"
+              placeholder="Last name"
+              value={lastName}
+              onChange={e => this.setState({ lastName: e.target.value })}
+              required
+            />
+            <Input
+              name="email"
+              type="email"
+              placeholder="Email address"
+              value={email}
+              onChange={e => this.setState({ email: e.target.value })}
+              required
+            />
+
+            <H3>Payment Method</H3>
+
+            <PaymentMethods>
+              <PaymentButton
+                type="button"
+                active={paymentMethod === null}
+                onClick={() => this.setState({ paymentMethod: 'stripe' })}
+              >
+                Stripe
+              </PaymentButton>
+              {paymentMethod === 'stripe' && (
                 <StripeCheckout
                   clientSecret={clientSecret}
                   items={items}
                   onSuccess={orderId => Router.push(`/confirmation/${orderId}`)}
                 />
-              </Elements>
-            </StripeProvider>
-          ) : (
-            <p>Initialising payment gateway...</p>
-          )}
-          <div>
-            <KlarnaCheckout items={items} />
-          </div>
+              )}
+              <PaymentButton
+                type="button"
+                active={paymentMethod === 'klarna'}
+                onClick={() => this.setState({ paymentMethod: 'klarna' })}
+              >
+                Klarna
+              </PaymentButton>
+              {paymentMethod === 'klarna' && <KlarnaCheckout items={items} />}
+            </PaymentMethods>
+          </Form>
         </Inner>
       </Outer>
     );

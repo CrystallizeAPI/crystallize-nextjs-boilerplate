@@ -1,36 +1,67 @@
 import React from 'react';
-import { CardElement, injectStripe } from 'react-stripe-elements';
-import { H2, Button, colors } from 'ui';
 import {
-  Form,
-  Input,
-  CardElementWrapper,
-  ErrorMessage,
-  StripeWrapper
-} from './styles';
+  Elements,
+  StripeProvider,
+  CardElement,
+  injectStripe
+} from 'react-stripe-elements';
+import { Button, colors } from 'ui';
+import { CardElementWrapper, ErrorMessage } from './styles';
+
+const { STRIPE_PUBLISHABLE_KEY } = process.env;
 
 class StripeCheckout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      success: false,
+      clientSecret: null,
       processing: false,
       error: null,
-      firstName: '',
-      lastName: '',
-      email: '',
       cardElementStyle: null
     };
     this.submit = this.submit.bind(this);
     this.handleCardChange = this.handleCardChange.bind(this);
   }
 
+  async componentDidMount() {
+    const { items } = this.props;
+
+    const lineItems = items.map(item => ({
+      id: item.id,
+      path: item.path,
+      quantity: item.quantity
+    }));
+
+    const { client_secret } = await fetch('/api/stripe/create-payment-intent', {
+      method: 'POST',
+      body: JSON.stringify({
+        lineItems
+      })
+    }).then(res => res.json());
+
+    if (window.Stripe) {
+      this.setState({
+        stripe: window.Stripe(STRIPE_PUBLISHABLE_KEY),
+        clientSecret: client_secret
+      });
+    } else {
+      document.querySelector('#stripe-js').addEventListener('load', () => {
+        // Create Stripe instance once Stripe.js loads
+        this.setState({
+          stripe: window.Stripe(STRIPE_PUBLISHABLE_KEY),
+          clientSecret: client_secret
+        });
+      });
+    }
+  }
+
   async submit(event) {
     event.preventDefault();
     this.setState({ processing: true });
-    const { firstName, lastName, email } = this.state;
+    const { clientSecret } = this.state;
 
-    const { stripe, clientSecret, items, onSuccess } = this.props;
+    const { stripe, items, onSuccess, personalDetails } = this.props;
+    const { firstName, lastName, email } = personalDetails;
     const { paymentIntent, error } = await stripe.handleCardPayment(
       clientSecret,
       {
@@ -72,7 +103,7 @@ class StripeCheckout extends React.Component {
       console.log('ERROR', err);
     }
 
-    return this.setState({ success: true, processing: false });
+    return this.setState({ processing: false });
   }
 
   handleCardChange(event) {
@@ -88,65 +119,33 @@ class StripeCheckout extends React.Component {
   }
 
   render() {
-    const {
-      error,
-      processing,
-      success,
-      firstName,
-      lastName,
-      email,
-      cardElementStyle
-    } = this.state;
+    const { error, processing, cardElementStyle, stripe } = this.state;
 
-    return (
-      <StripeWrapper>
-        <H2>Pay with Stripe</H2>
-        {success ? (
-          <p>Payment successful!</p>
-        ) : (
-          <Form onSubmit={this.submit} noValidate>
-            <Input
-              type="text"
-              placeholder="First name"
-              value={firstName}
-              onChange={e => this.setState({ firstName: e.target.value })}
-              required
+    return stripe ? (
+      <StripeProvider stripe={stripe}>
+        <Elements>
+          <CardElementWrapper style={cardElementStyle}>
+            <CardElement
+              style={{
+                base: {
+                  color: colors.darkText,
+                  fontSize: '16px'
+                },
+                invalid: {
+                  color: colors.error
+                }
+              }}
+              onChange={this.handleCardChange}
             />
-            <Input
-              type="text"
-              placeholder="Last name"
-              value={lastName}
-              onChange={e => this.setState({ lastName: e.target.value })}
-              required
-            />
-            <Input
-              type="email"
-              placeholder="Email address"
-              value={email}
-              onChange={e => this.setState({ email: e.target.value })}
-              required
-            />
-            <CardElementWrapper style={cardElementStyle}>
-              <CardElement
-                style={{
-                  base: {
-                    color: colors.darkText,
-                    fontSize: '16px'
-                  },
-                  invalid: {
-                    color: colors.error
-                  }
-                }}
-                onChange={this.handleCardChange}
-              />
-            </CardElementWrapper>
-            <Button type="submit" loading={processing} disabled={processing}>
-              Pay Now
-            </Button>
-            {error && <ErrorMessage>{error.message}</ErrorMessage>}
-          </Form>
-        )}
-      </StripeWrapper>
+          </CardElementWrapper>
+          <Button type="submit" loading={processing} disabled={processing}>
+            Pay Now
+          </Button>
+          {error && <ErrorMessage>{error.message}</ErrorMessage>}
+        </Elements>
+      </StripeProvider>
+    ) : (
+      <p>Initialising payment gateway...</p>
     );
   }
 }

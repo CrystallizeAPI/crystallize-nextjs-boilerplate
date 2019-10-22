@@ -55,3 +55,22 @@ export const StripeWrapper = styled.div`
   width: 100%;
   padding-bottom: 1rem;
 `;
+
+export const PaymentMethods = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid ${colors.light};
+  overflow: hidden;
+`;
+
+export const PaymentButton = styled.button`
+  ${props => `background: ${props.active ? colors.light : 'white'}`};
+  font-size: 18px;
+  border-top: 1px solid ${colors.light};
+  border-bottom: 1px solid ${colors.light};
+  padding: 0.5rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
