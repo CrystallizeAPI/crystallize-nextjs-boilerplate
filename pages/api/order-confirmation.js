@@ -57,7 +57,7 @@ export default async (req, res) => {
   } catch (error) {
     return res.status(503).send({
       success: false,
-      ...error
+      error: error.stack
     });
   }
   return res.status(200).send({
