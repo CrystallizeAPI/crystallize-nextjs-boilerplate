@@ -1,18 +1,21 @@
 import React from 'react';
-import { Button } from 'ui';
 
 export default class KlarnaCheckout extends React.Component {
   constructor(props) {
     super(props);
-    this.onRenderKlarnaCheckout = this.onRenderKlarnaCheckout.bind(this);
+    this.state = {
+      loading: false,
+      error: null
+    };
   }
 
-  onRenderKlarnaCheckout = async () => {
+  async componentDidMount() {
     const { items } = this.props;
+
+    this.setState({ loading: true });
     // Create order within Crystallize
-    let response;
     try {
-      response = await fetch('/api/klarna/render-checkout', {
+      const response = await fetch('/api/klarna/render-checkout', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -29,16 +32,42 @@ export default class KlarnaCheckout extends React.Component {
           }))
         })
       });
-    } catch (err) {
-      console.log('ERROR', err);
-    }
 
-    return response || <h2>${response}</h2>;
-  };
+      this.setState({ loading: false });
+
+      // https://developers.klarna.com/documentation/klarna-checkout/integration-guide/render-the-checkout/
+      const klarnaHtml = await response.text();
+      const checkoutContainer = document.getElementById(
+        'klarna-checkout-container'
+      );
+      checkoutContainer.innerHTML = klarnaHtml;
+
+      const scriptsTags = checkoutContainer.getElementsByTagName('script');
+      // This is necessary otherwise the scripts tags are not going to be evaluated
+      for (let i = 0; i < scriptsTags.length; i++) {
+        const { parentNode } = scriptsTags[i];
+        const newScriptTag = document.createElement('script');
+        newScriptTag.type = 'text/javascript';
+        newScriptTag.text = scriptsTags[i].text;
+        parentNode.removeChild(scriptsTags[i]);
+        parentNode.appendChild(newScriptTag);
+      }
+    } catch (err) {
+      this.setState({ loading: false, error: err.message });
+    }
+  }
 
   render() {
-    return (
-      <Button onClick={this.onRenderKlarnaCheckout}>Klarna checkout</Button>
-    );
+    const { loading, error } = this.state;
+
+    if (loading) {
+      return <p>Loading...</p>;
+    }
+
+    if (error) {
+      return <p>Unable to initialise Klarna payment!</p>;
+    }
+
+    return <div id="klarna-checkout-container" />;
   }
 }

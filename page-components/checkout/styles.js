@@ -10,6 +10,7 @@ export const Inner = styled.div`
 `;
 
 export const Form = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -66,11 +67,16 @@ export const PaymentMethods = styled.div`
 export const PaymentButton = styled.button`
   ${props => `background: ${props.active ? colors.light : 'white'}`};
   font-size: 18px;
-  border-top: 1px solid ${colors.light};
   border-bottom: 1px solid ${colors.light};
   padding: 0.5rem;
 
   &:last-child {
     border-bottom: none;
   }
+`;
+
+export const PaymentMethod = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
 `;

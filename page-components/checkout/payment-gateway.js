@@ -6,10 +6,16 @@ import { responsive, H3 } from 'ui';
 import StripeCheckout from './stripe';
 import KlarnaCheckout from './klarna';
 
-import { Form, Input, PaymentMethods, PaymentButton } from './styles';
+import {
+  Form,
+  Input,
+  PaymentMethods,
+  PaymentButton,
+  PaymentMethod
+} from './styles';
 
 const Outer = styled.div`
-  width: 300px;
+  width: 500px;
 
   ${responsive.xs} {
     width: 100%;
@@ -36,13 +42,7 @@ class PaymentGateway extends React.Component {
 
   render() {
     const { items } = this.props;
-    const {
-      clientSecret,
-      paymentMethod,
-      firstName,
-      lastName,
-      email
-    } = this.state;
+    const { paymentMethod, firstName, lastName, email } = this.state;
 
     return (
       <Outer>
@@ -79,17 +79,20 @@ class PaymentGateway extends React.Component {
             <PaymentMethods>
               <PaymentButton
                 type="button"
-                active={paymentMethod === null}
+                active={paymentMethod === 'stripe'}
                 onClick={() => this.setState({ paymentMethod: 'stripe' })}
               >
                 Stripe
               </PaymentButton>
               {paymentMethod === 'stripe' && (
-                <StripeCheckout
-                  clientSecret={clientSecret}
-                  items={items}
-                  onSuccess={orderId => Router.push(`/confirmation/${orderId}`)}
-                />
+                <PaymentMethod>
+                  <StripeCheckout
+                    items={items}
+                    onSuccess={orderId =>
+                      Router.push(`/confirmation/${orderId}`)
+                    }
+                  />
+                </PaymentMethod>
               )}
               <PaymentButton
                 type="button"
@@ -98,7 +101,11 @@ class PaymentGateway extends React.Component {
               >
                 Klarna
               </PaymentButton>
-              {paymentMethod === 'klarna' && <KlarnaCheckout items={items} />}
+              {paymentMethod === 'klarna' && (
+                <PaymentMethod>
+                  <KlarnaCheckout items={items} />
+                </PaymentMethod>
+              )}
             </PaymentMethods>
           </Form>
         </Inner>
