@@ -5,26 +5,36 @@ const klarnaApiCall = require('../../../lib/util/klarna-utils');
 const { NGROK_URL } = config;
 
 const orderToKlarnaCart = lineItems => {
-  return lineItems.map(item => {
+  let totalTaxAmount = 0;
+  let totalCartAmount = 0;
+  const cartItems = lineItems.map(item => {
+    totalTaxAmount += item.product_tax_amount;
     // Klarna expects integers
     const amount = item.net * 100 * item.quantity;
+    totalCartAmount += amount;
     return {
       name: item.name,
       reference: item.sku,
       quantity: item.quantity,
-      tax_rate: item.tax_rate * 100 || 0,
+      tax_rate: item.tax_group.percent * 100 || 0,
       discount_rate: item.discount_rate * 100 || 0,
       unit_price: item.net * 100,
       merchant_data: JSON.stringify({
         productId: item.product_id,
-        productVariantId: item.product_variant_id
+        productVariantId: item.product_variant_id,
+        taxGroup: item.tax_group
       }),
       image_url: item.image_url,
       total_amount: amount,
-      total_tax_amount: 0
+      total_tax_amount: item.product_tax_amount
       // amount - (amount * 10000) / (10000 + item.tax_rate * 100)
     };
   });
+  return {
+    cart: cartItems,
+    total_cart_tax_amount: totalTaxAmount,
+    total_cart_amount: totalCartAmount
+  };
 };
 
 export default async (req, res) => {
@@ -32,20 +42,21 @@ export default async (req, res) => {
     const { lineItems } = req.body;
     const { metadata } = req.body;
 
-    const amount = lineItems.reduce((acc, val) => {
-      return acc + val.net * 100 * val.quantity;
-    }, 0);
+    // const amount = lineItems.reduce((acc, val) => {
+    //  return acc + val.net * 100 * val.quantity;
+    // }, 0);
+    const klarnaCartInfo = orderToKlarnaCart(lineItems);
 
     const response = await klarnaApiCall({
       method: 'POST',
       uri: '/checkout/v3/orders',
       body: {
-        order_lines: orderToKlarnaCart(lineItems),
+        order_lines: klarnaCartInfo.cart,
         purchase_country: 'NO',
         purchase_currency: 'NOK',
         locale: 'nb-no',
-        order_amount: amount,
-        order_tax_amount: 0,
+        order_amount: klarnaCartInfo.total_cart_amount,
+        order_tax_amount: klarnaCartInfo.total_cart_tax_amount,
         merchant_data: metadata,
         merchant_urls: {
           // back_to_store_uri: STORE_URI,

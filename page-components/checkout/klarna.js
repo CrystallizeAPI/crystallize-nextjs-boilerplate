@@ -31,7 +31,9 @@ export default class KlarnaCheckout extends React.Component {
             product_id: item.productId,
             product_variant_id: item.productVariantId,
             image_url: item.image.url,
-            subscription: item.subscription
+            subscription: item.subscription,
+            tax_group: item.taxGroup,
+            product_tax_amount: item.vatAmount
           }))
         })
       });
