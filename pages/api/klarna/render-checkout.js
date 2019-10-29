@@ -15,6 +15,11 @@ const orderToKlarnaCart = lineItems => {
       tax_rate: item.tax_rate * 100 || 0,
       discount_rate: item.discount_rate * 100 || 0,
       unit_price: item.net * 100,
+      merchant_data: JSON.stringify({
+        productId: item.product_id,
+        productVariantId: item.product_variant_id
+      }),
+      image_url: item.image_url,
       total_amount: amount,
       total_tax_amount: 0
       // amount - (amount * 10000) / (10000 + item.tax_rate * 100)
@@ -25,6 +30,7 @@ const orderToKlarnaCart = lineItems => {
 export default async (req, res) => {
   try {
     const { lineItems } = req.body;
+    const { metadata } = req.body;
 
     const amount = lineItems.reduce((acc, val) => {
       return acc + val.net * 100 * val.quantity;
@@ -40,6 +46,7 @@ export default async (req, res) => {
         locale: 'nb-no',
         order_amount: amount,
         order_tax_amount: 0,
+        merchant_data: metadata,
         merchant_urls: {
           // back_to_store_uri: STORE_URI,
           terms: 'http://google.com',
@@ -60,10 +67,9 @@ export default async (req, res) => {
      </html>
       `);
   } catch (error) {
-    console.log(error);
     return res.json({
       success: false,
-      ...error
+      error: error.stack
     });
   }
 };
