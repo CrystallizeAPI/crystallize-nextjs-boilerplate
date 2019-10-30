@@ -97,7 +97,8 @@ class StripeCheckout extends React.Component {
             image_url: item.imageUrl,
             subscription: item.subscription,
             tax_rate: item.taxGroup.percent,
-            tax_group: item.taxGroup
+            tax_group: item.taxGroup,
+            product_tax_amount: item.vatAmount
           }))
         })
       });
