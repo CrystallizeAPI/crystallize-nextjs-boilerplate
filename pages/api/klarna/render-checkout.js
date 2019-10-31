@@ -41,7 +41,6 @@ export default async (req, res) => {
   try {
     const { lineItems } = req.body;
     const { metadata } = req.body;
-
     // const amount = lineItems.reduce((acc, val) => {
     //  return acc + val.net * 100 * val.quantity;
     // }, 0);

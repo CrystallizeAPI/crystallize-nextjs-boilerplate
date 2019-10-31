@@ -1,6 +1,7 @@
-import createCrystallizeOrder from 'lib/crystallize-order-handler';
+import { createCrystallizeOrder } from 'lib/crystallize-order-handler';
 import { orderQueryNormalizer } from 'lib/order-normalizer';
 import { emailOrderConfirmation } from 'lib/emails';
+import klarnaOrderAcknowledger from 'lib/util/klarna-order-acknowledger';
 
 // TODO: Remove body parsing once zeit has updated error handling
 // @RemoveWhenZeitErrorHandledComplete
@@ -53,6 +54,10 @@ export default async (req, res) => {
     });
 
     response = await createCrystallizeOrder(mutationBody);
+
+    if (paymentMethod === 'klarna')
+      await klarnaOrderAcknowledger(req.query.klarna_order_id);
+
     await emailOrderConfirmation(response.data.orders.create.id);
   } catch (error) {
     return res.status(503).send({

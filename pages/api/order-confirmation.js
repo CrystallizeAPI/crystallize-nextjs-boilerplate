@@ -1,8 +1,6 @@
 import { orderRetriever } from 'lib/order-retriever';
 import { orderDataDenormalizer } from 'lib/order-denormalizer';
 
-console.log(orderDataDenormalizer);
-
 export default async (req, res) => {
   // TODO: Handle requests with tokens from client side
   let response;
