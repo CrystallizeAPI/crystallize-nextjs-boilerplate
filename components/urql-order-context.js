@@ -1,17 +1,7 @@
-import React from 'react';
-import { createClient } from 'urql';
+const React = require('react');
 
-export const UrqlOrderContext = React.createContext();
+const UrqlOrderContext = React.createContext();
 
-const UrqlOrderProvider = ({ children }) => {
-  const urqlClient = createClient({
-    url: 'https://api-dev.crystallize.digital/nerdenough/orders'
-  });
-  return (
-    <UrqlOrderContext.Provider value={urqlClient}>
-      {children}
-    </UrqlOrderContext.Provider>
-  );
+module.exports = {
+  UrqlOrderContext
 };
-
-export default UrqlOrderProvider;
