@@ -78,7 +78,7 @@ class StripeCheckout extends React.Component {
 
     // Create order within Crystallize
     try {
-      const response = await fetch('/api/order-confirmation', {
+      const response = await fetch('/api/order-persistence', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

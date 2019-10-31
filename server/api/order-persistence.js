@@ -1,4 +1,4 @@
-const createCrystallizeOrder = require('../../lib/order-creator');
+const createCrystallizeOrder = require('../../lib/crystallize-order-handler');
 const { orderQueryNormalizer } = require('../../lib/order-normalizer');
 
 module.exports = async (req, res) => {

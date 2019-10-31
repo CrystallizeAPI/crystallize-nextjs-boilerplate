@@ -62,8 +62,8 @@ export default async (req, res) => {
           // back_to_store_uri: STORE_URI,
           terms: 'http://google.com',
           checkout: `http://google.com`,
-          confirmation: `${NGROK_URL}/`,
-          push: `${NGROK_URL}/api/order-confirmation?klarna_order_id={checkout.order.id}`
+          confirmation: `${NGROK_URL}/api/order-confirmation?payment_method=klarna&order_id={checkout.order.id}`,
+          push: `${NGROK_URL}/api/order-persistence?klarna_order_id={checkout.order.id}`
         }
       }
     });
