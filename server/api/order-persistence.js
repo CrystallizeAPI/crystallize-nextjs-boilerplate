@@ -1,5 +1,8 @@
-const createCrystallizeOrder = require('../../lib/order-creator');
+const {
+  createCrystallizeOrder
+} = require('../../lib/crystallize-order-handler');
 const { orderQueryNormalizer } = require('../../lib/order-normalizer');
+const klarnaOrderAcknowledger = require('../../lib/util/klarna-order-acknowledger');
 
 module.exports = async (req, res) => {
   // TODO: Handle understanding the payment method by some body fields e.g. stripe has customer_id
@@ -18,9 +21,14 @@ module.exports = async (req, res) => {
       stripeSignature: sig,
 
       paymentIntentId: paymentIntent,
-      stripeRawBody: req.rawBody
+      stripeRawBody: req.rawBody,
+      klarnaOrderId: req.params.klarna_order_id
     });
     const response = await createCrystallizeOrder(mutationBody);
+
+    if (paymentMethod === 'klarna')
+      await klarnaOrderAcknowledger(req.params.klarna_order_id);
+
     res.status(200).send({
       success: true,
       ...response

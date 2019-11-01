@@ -43,7 +43,7 @@ class StripeCheckout extends React.Component {
 
     // Create order within Crystallize
     try {
-      const response = await fetch('/api/order-confirmation', {
+      const response = await fetch('/api/order-persistence', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -60,7 +60,10 @@ class StripeCheckout extends React.Component {
             product_id: item.productId,
             product_variant_id: item.productVariantId,
             image_url: item.imageUrl,
-            subscription: item.subscription
+            subscription: item.subscription,
+            tax_rate: item.taxGroup.percent,
+            tax_group: item.taxGroup,
+            product_tax_amount: item.vatAmount
           }))
         })
       });

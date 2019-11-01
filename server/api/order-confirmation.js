@@ -1,7 +1,7 @@
-import { orderRetriever } from 'lib/order-retriever';
-import { orderDataDenormalizer } from 'lib/order-denormalizer';
+const orderRetriever = require('../../lib/order-retriever');
+const { orderDataDenormalizer } = require('../../lib/order-denormalizer');
 
-export default async (req, res) => {
+module.exports = async (req, res) => {
   // TODO: Handle requests with tokens from client side
   let response;
   const paymentMethod = req.query.payment_method;
@@ -34,11 +34,4 @@ export default async (req, res) => {
     success: true,
     ...response
   });
-};
-
-// @RemoveWhenZeitErrorHandledComplete
-export const config = {
-  api: {
-    bodyParser: false
-  }
 };
