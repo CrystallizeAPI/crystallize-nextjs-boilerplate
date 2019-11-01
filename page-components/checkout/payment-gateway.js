@@ -37,12 +37,21 @@ const Inner = styled.div`
 
 class PaymentGateway extends React.Component {
   state = {
-    paymentMethod: null
+    paymentMethod: null,
+    firstName: '',
+    lastName: '',
+    email: ''
   };
 
   render() {
     const { items } = this.props;
     const { paymentMethod, firstName, lastName, email } = this.state;
+
+    const personalDetails = {
+      firstName,
+      lastName,
+      email
+    };
 
     return (
       <Outer>
@@ -87,6 +96,7 @@ class PaymentGateway extends React.Component {
               {paymentMethod === 'stripe' && (
                 <PaymentMethod>
                   <StripeCheckout
+                    personalDetails={personalDetails}
                     items={items}
                     onSuccess={orderId =>
                       Router.push(`/confirmation/${orderId}`)
@@ -103,7 +113,10 @@ class PaymentGateway extends React.Component {
               </PaymentButton>
               {paymentMethod === 'klarna' && (
                 <PaymentMethod>
-                  <KlarnaCheckout items={items} />
+                  <KlarnaCheckout
+                    personalDetails={personalDetails}
+                    items={items}
+                  />
                 </PaymentMethod>
               )}
             </PaymentMethods>
