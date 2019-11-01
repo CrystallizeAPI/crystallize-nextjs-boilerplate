@@ -15,7 +15,8 @@ const {
   KLARNA_USERNAME,
   KLARNA_PASSWORD,
   NGROK_URL,
-  KLARNA_API_URL = 'https://api.playground.klarna.com'
+  KLARNA_API_URL = 'https://api.playground.klarna.com',
+  HOST_URL = 'http://localhost:3000'
 } = process.env;
 
 const DEV = NODE_ENV !== 'production';
@@ -37,7 +38,8 @@ global.__crystallizeConfig = {
   KLARNA_API_URL,
   KLARNA_USERNAME,
   KLARNA_PASSWORD,
-  NGROK_URL
+  NGROK_URL,
+  HOST_URL
 };
 
 module.exports = global.__crystallizeConfig;

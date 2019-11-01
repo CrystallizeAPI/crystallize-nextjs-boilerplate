@@ -2,7 +2,7 @@
 const config = require('../../../config');
 const klarnaApiCall = require('../../../lib/util/klarna-utils');
 
-const { NGROK_URL } = config;
+const { NGROK_URL, HOST_URL } = config;
 
 const orderToKlarnaCart = lineItems => {
   let totalTaxAmount = 0;
@@ -61,7 +61,7 @@ export default async (req, res) => {
           // back_to_store_uri: STORE_URI,
           terms: 'http://google.com',
           checkout: `http://google.com`,
-          confirmation: `${NGROK_URL}/api/order-confirmation?payment_method=klarna&order_id={checkout.order.id}`,
+          confirmation: `${HOST_URL}/confirmation/klarna/{checkout.order.id}`,
           push: `${NGROK_URL}/api/order-persistence?klarna_order_id={checkout.order.id}`
         }
       }

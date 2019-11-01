@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import styled from 'styled-components';
 
 import Layout from 'components/layout';
 import BillingDetails from 'components/billing-details';
 import OrderItems from 'components/order-items';
-import { useOrderByIdQuery } from 'lib/graph';
 import { H1, Outer, Header, responsive } from 'ui';
 
 export const Inner = styled.div`
@@ -16,20 +15,26 @@ export const Inner = styled.div`
   }
 `;
 
-const Confirmation = ({ orderId }) => {
-  const { fetching, error, data } = useOrderByIdQuery({
-    id: orderId
-  });
+const Confirmation = ({ orderId, paymentMethod }) => {
+  const [orderData, setOrder] = useState({});
 
-  if (error) {
-    return <Layout error />;
-  }
+  useEffect(() => {
+    async function fetchData() {
+      let url = `/api/order-confirmation?order_id=${orderId}`;
+      if (paymentMethod) url = `${url}&payment_method=${paymentMethod}`;
+      const response = await fetch(url);
+      const order = await response.json();
 
-  if (fetching || !data) {
+      return setOrder(order);
+    }
+    fetchData();
+  }, [orderId, paymentMethod]);
+
+  if (!orderData.data) {
     return <Layout loading />;
   }
 
-  const order = data.orders.get;
+  const order = orderData.data.orders.get;
   const { email } = order.customer.addresses[0];
 
   const items = order.cart.map(item => ({
@@ -58,7 +63,7 @@ const Confirmation = ({ orderId }) => {
 
 Confirmation.getInitialProps = async ({ req }) => {
   const { query } = queryString.parseUrl(req.url);
-  return { orderId: query.id };
+  return { orderId: query.order_id, paymentMethod: query.payment_method };
 };
 
 export default Confirmation;

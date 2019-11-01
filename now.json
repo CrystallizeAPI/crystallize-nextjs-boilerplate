@@ -46,7 +46,11 @@
     },
     {
       "src": "/confirmation/([^/]+)",
-      "dest": "/confirmation?id=$1"
+      "dest": "/confirmation?order_id=$1"
+    },
+    {
+      "src": "/confirmation/([^/]+)/([^/]+)",
+      "dest": "/confirmation?&payment_method=$1&order_id=$2"
     },
     {
       "src": "/([^/].+)",
