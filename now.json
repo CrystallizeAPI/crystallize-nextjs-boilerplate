@@ -13,7 +13,10 @@
     "CRYSTALLIZE_TENANT_ID": "teddy-bear-shop",
     "SECRET": "secret",
     "STRIPE_SECRET_KEY": "@stripe-secret-key",
-    "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key"
+    "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
+    "KLARNA_USERNAME": "@klarna-username",
+    "KLARNA_PASSWORD": "@klarna-password",
+    "KLARNA_STORE_KEY": "@klarna-store-key"
   },
   "routes": [
     {
