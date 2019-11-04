@@ -43,7 +43,7 @@ const Confirmation = ({ orderId, paymentMethod }) => {
   }));
 
   return (
-    <Layout title="Order Sumary">
+    <Layout title="Order Summary">
       <Outer>
         <Header>
           <H1>Order Summary</H1>
