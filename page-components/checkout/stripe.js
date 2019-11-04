@@ -16,7 +16,7 @@ class StripeWrapper extends React.Component {
   async componentDidMount() {
     this.setState({ loading: true });
 
-    const { items } = this.props;
+    const { items, currency } = this.props;
 
     const lineItems = items.map(item => ({
       id: item.variant_id,
@@ -27,6 +27,7 @@ class StripeWrapper extends React.Component {
     const { client_secret } = await fetch('/api/stripe/create-payment-intent', {
       method: 'POST',
       body: JSON.stringify({
+        currency,
         lineItems
       })
     }).then(res => res.json());

@@ -2,7 +2,7 @@
 const config = require('../../../config');
 const klarnaApiCall = require('../../../lib/util/klarna-utils');
 
-const { NGROK_URL, HOST_URL } = config;
+const { NGROK_URL, HOST_URL, COUNTRY_CODE } = config;
 
 const orderToKlarnaCart = lineItems => {
   let totalTaxAmount = 0;
@@ -39,7 +39,7 @@ const orderToKlarnaCart = lineItems => {
 
 export default async (req, res) => {
   try {
-    const { lineItems } = req.body;
+    const { lineItems, currency } = req.body;
     const { metadata } = req.body;
     // const amount = lineItems.reduce((acc, val) => {
     //  return acc + val.net * 100 * val.quantity;
@@ -51,9 +51,9 @@ export default async (req, res) => {
       uri: '/checkout/v3/orders',
       body: {
         order_lines: klarnaCartInfo.cart,
-        purchase_country: 'NO',
-        purchase_currency: 'NOK',
-        locale: 'nb-no',
+        purchase_country: COUNTRY_CODE,
+        purchase_currency: currency,
+        // locale: 'nb-no',
         order_amount: klarnaCartInfo.total_cart_amount,
         order_tax_amount: klarnaCartInfo.total_cart_tax_amount,
         merchant_data: metadata,

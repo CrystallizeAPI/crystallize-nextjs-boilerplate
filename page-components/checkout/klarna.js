@@ -10,7 +10,7 @@ export default class KlarnaCheckout extends React.Component {
   }
 
   async componentDidMount() {
-    const { items } = this.props;
+    const { items, currency } = this.props;
 
     this.setState({ loading: true });
     // Create order within Crystallize
@@ -22,6 +22,7 @@ export default class KlarnaCheckout extends React.Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          currency,
           lineItems: items.map(item => ({
             name: item.name,
             sku: item.sku,
