@@ -2,16 +2,17 @@
 const config = require('../../../config');
 const klarnaApiCall = require('../../../lib/util/klarna-utils');
 
-const { NGROK_URL, HOST_URL } = config;
+const { NGROK_URL, HOST_URL, COUNTRY_CODE, CHECKOUT_URI, TERMS_URI } = config;
 
 const orderToKlarnaCart = lineItems => {
   let totalTaxAmount = 0;
   let totalCartAmount = 0;
   const cartItems = lineItems.map(item => {
-    totalTaxAmount += item.product_tax_amount;
+    totalTaxAmount += item.product_tax_amount * 100;
     // Klarna expects integers
     const amount = item.net * 100 * item.quantity;
     totalCartAmount += amount;
+
     return {
       name: item.name,
       reference: item.sku,
@@ -26,7 +27,7 @@ const orderToKlarnaCart = lineItems => {
       }),
       image_url: item.image_url,
       total_amount: amount,
-      total_tax_amount: item.product_tax_amount
+      total_tax_amount: item.product_tax_amount * 100
       // amount - (amount * 10000) / (10000 + item.tax_rate * 100)
     };
   });
@@ -39,7 +40,7 @@ const orderToKlarnaCart = lineItems => {
 
 export default async (req, res) => {
   try {
-    const { lineItems } = req.body;
+    const { lineItems, currency } = req.body;
     const { metadata } = req.body;
     // const amount = lineItems.reduce((acc, val) => {
     //  return acc + val.net * 100 * val.quantity;
@@ -51,16 +52,16 @@ export default async (req, res) => {
       uri: '/checkout/v3/orders',
       body: {
         order_lines: klarnaCartInfo.cart,
-        purchase_country: 'NO',
-        purchase_currency: 'NOK',
-        locale: 'nb-no',
+        purchase_country: COUNTRY_CODE,
+        purchase_currency: currency,
+        // locale: 'nb-no',
         order_amount: klarnaCartInfo.total_cart_amount,
         order_tax_amount: klarnaCartInfo.total_cart_tax_amount,
         merchant_data: metadata,
         merchant_urls: {
           // back_to_store_uri: STORE_URI,
-          terms: 'http://google.com',
-          checkout: `http://google.com`,
+          terms: TERMS_URI,
+          checkout: CHECKOUT_URI,
           confirmation: `${HOST_URL}/confirmation/klarna/{checkout.order.id}`,
           push: `${NGROK_URL}/api/order-persistence?klarna_order_id={checkout.order.id}`
         }

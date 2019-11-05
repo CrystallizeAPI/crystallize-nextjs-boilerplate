@@ -44,7 +44,7 @@ class PaymentGateway extends React.Component {
   };
 
   render() {
-    const { items } = this.props;
+    const { items, currency } = this.props;
     const { paymentMethod, firstName, lastName, email } = this.state;
 
     const personalDetails = {
@@ -98,6 +98,7 @@ class PaymentGateway extends React.Component {
                   <StripeCheckout
                     personalDetails={personalDetails}
                     items={items}
+                    currency={currency}
                     onSuccess={orderId =>
                       Router.push(`/confirmation/${orderId}`)
                     }
@@ -116,6 +117,7 @@ class PaymentGateway extends React.Component {
                   <KlarnaCheckout
                     personalDetails={personalDetails}
                     items={items}
+                    currency={currency}
                   />
                 </PaymentMethod>
               )}

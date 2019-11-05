@@ -19,7 +19,7 @@ const Checkout = () => {
     );
   }
 
-  const { items } = basket.state;
+  const { items, currency } = basket.state;
 
   if (!items.length) {
     return (
@@ -34,8 +34,8 @@ const Checkout = () => {
       <Outer>
         <H1>Checkout</H1>
         <Inner>
-          <OrderItems items={items} />
-          <PaymentGateway items={items} />
+          <OrderItems items={items} currency={currency} />
+          <PaymentGateway items={items} currency={currency} />
         </Inner>
       </Outer>
     </Layout>

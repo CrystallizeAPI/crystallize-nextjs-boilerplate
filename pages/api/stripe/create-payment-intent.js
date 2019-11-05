@@ -3,7 +3,7 @@ const { validateItems } = require('../../../lib/util/cart-validation');
 
 export default async (req, res) => {
   try {
-    const { lineItems } = JSON.parse(req.body);
+    const { lineItems, currency } = JSON.parse(req.body);
     const validatedItems = await validateItems(lineItems);
     const amount = validatedItems.reduce((acc, val) => {
       return acc + val.price * val.quantity;
@@ -11,7 +11,7 @@ export default async (req, res) => {
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount * 100,
-      currency: 'nok'
+      currency
     });
 
     return res.json(paymentIntent);
