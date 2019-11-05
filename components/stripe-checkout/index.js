@@ -59,7 +59,7 @@ class StripeCheckout extends React.Component {
             quantity: item.quantity,
             product_id: item.productId,
             product_variant_id: item.productVariantId,
-            image_url: item.imageUrl,
+            image_url: item.image ? item.image.url : null,
             subscription: item.subscription,
             tax_rate: item.taxGroup.percent,
             tax_group: item.taxGroup,

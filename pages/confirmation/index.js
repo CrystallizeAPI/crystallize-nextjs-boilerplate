@@ -39,6 +39,9 @@ const Confirmation = ({ orderId, paymentMethod }) => {
 
   const items = order.cart.map(item => ({
     ...item,
+    image: {
+      url: item.imageUrl
+    },
     price: item.price.net
   }));
 
