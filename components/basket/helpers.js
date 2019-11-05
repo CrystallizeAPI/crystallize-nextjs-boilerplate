@@ -36,7 +36,7 @@ export function calculateTotals({ items, discount, options, shipping }) {
   }, 0);
 
   const totalVatAmount = items.reduce((acc, i) => {
-    const p = i.quantity * (i.vat || 0);
+    const p = i.quantity * (i.vatAmount || 0);
     return acc + p;
   }, 0);
 
