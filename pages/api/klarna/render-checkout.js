@@ -8,10 +8,11 @@ const orderToKlarnaCart = lineItems => {
   let totalTaxAmount = 0;
   let totalCartAmount = 0;
   const cartItems = lineItems.map(item => {
-    totalTaxAmount += item.product_tax_amount;
+    totalTaxAmount += item.product_tax_amount * 100;
     // Klarna expects integers
     const amount = item.net * 100 * item.quantity;
     totalCartAmount += amount;
+
     return {
       name: item.name,
       reference: item.sku,
@@ -26,7 +27,7 @@ const orderToKlarnaCart = lineItems => {
       }),
       image_url: item.image_url,
       total_amount: amount,
-      total_tax_amount: item.product_tax_amount
+      total_tax_amount: item.product_tax_amount * 100
       // amount - (amount * 10000) / (10000 + item.tax_rate * 100)
     };
   });
