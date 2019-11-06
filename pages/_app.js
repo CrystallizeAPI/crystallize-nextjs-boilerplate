@@ -6,7 +6,6 @@ import { Provider } from 'urql';
 import withUrqlClient from 'lib/with-urql-client';
 import { useMenuAndTenantQuery } from 'lib/graph';
 import AuthGate from 'components/auth-context';
-import UrqlOrderProvider from 'components/urql-order-provider';
 import BasketProvider from 'components/basket-provider';
 import GlobalStyle from 'ui/global';
 
@@ -30,16 +29,14 @@ class MyApp extends App {
 
     return (
       <Provider value={urqlClient}>
-        <UrqlOrderProvider>
-          <GlobalStyle />
-          <AppWithIntl>
-            <BasketProvider>
-              <AuthGate>
-                <Component {...pageProps} />
-              </AuthGate>
-            </BasketProvider>
-          </AppWithIntl>
-        </UrqlOrderProvider>
+        <GlobalStyle />
+        <AppWithIntl>
+          <BasketProvider>
+            <AuthGate>
+              <Component {...pageProps} />
+            </AuthGate>
+          </BasketProvider>
+        </AppWithIntl>
       </Provider>
     );
   }
