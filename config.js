@@ -5,7 +5,7 @@ const {
   COUNTRY_CODE = 'NO',
   CRYSTALLIZE_TENANT_ID = 'demo',
   CRYSTALLIZE_GRAPH_URL_BASE = 'https://graph.crystallize.com',
-  CRYSTALLIZE_ORDER_API_URL = 'https://api.crystallize.com',
+  CRYSTALLIZE_ORDER_API_URL = 'https://graph.crystallize.com',
   SUCCESS_PAYMENT_STRIPE_WEBHOOK_TOKEN,
   GTM_ID,
   MY_CRYSTALLIZE_SECRET_TOKEN,
