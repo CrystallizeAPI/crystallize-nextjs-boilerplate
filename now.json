@@ -10,8 +10,13 @@
   "env": {
     "GTM_ID": "",
     "CRYSTALLIZE_GRAPH_URL_BASE": "https://graph.crystallize.com",
-    "CRYSTALLIZE_TENANT_ID": "demo",
-    "SECRET": "secret"
+    "CRYSTALLIZE_ORDER_API_URL": "https://api.crystallize.com",
+    "CRYSTALLIZE_TENANT_ID": "teddy-bear-shop",
+    "SECRET": "secret",
+    "STRIPE_SECRET_KEY": "@stripe-secret-key",
+    "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
+    "KLARNA_USERNAME": "@klarna-username",
+    "KLARNA_PASSWORD": "@klarna-password"
   },
   "routes": [
     {
@@ -41,6 +46,14 @@
     {
       "src": "/checkout",
       "dest": "/checkout"
+    },
+    {
+      "src": "/confirmation/([^/]+)",
+      "dest": "/confirmation?order_id=$1"
+    },
+    {
+      "src": "/confirmation/([^/]+)/([^/]+)",
+      "dest": "/confirmation?&payment_method=$1&order_id=$2"
     },
     {
       "src": "/([^/].+)",

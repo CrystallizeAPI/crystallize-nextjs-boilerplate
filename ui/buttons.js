@@ -13,7 +13,7 @@ const Inner = styled.span`
   font-weight: 600;
   text-decoration: none;
   text-align: center;
-  border-radius: 25px;
+  border-radius: 0.2rem;
   padding: 16px 25px;
 `;
 
@@ -27,6 +27,7 @@ const Outer = styled.button.attrs(() => ({
   appearance: none;
   cursor: pointer;
   text-decoration: none;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
 
   ${is('fullWidth')`
     width: 100%;

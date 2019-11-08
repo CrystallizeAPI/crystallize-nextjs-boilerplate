@@ -1,63 +1,75 @@
 import styled from 'styled-components';
-import Image from '@crystallize/react-image';
-
-export const Outer = styled.div`
-  max-width: 1000px;
-  margin: 20px auto;
-  display: flex;
-`;
+import { colors, responsive } from 'ui';
 
 export const Inner = styled.div`
-  flex: 1 1 auto;
-  padding: 30px;
-`;
-
-export const Items = styled.div`
-  display: block;
-`;
-
-export const Item = styled.div`
-  margin: 0 0 10px;
-  border: 1px solid #eee;
-  padding: 15px;
   display: flex;
-  align-items: center;
-`;
 
-export const ItemImage = styled(Image).attrs(() => ({
-  sizes: '100px'
-}))`
-  display: block;
-  flex: 0 0 auto;
-  width: 100px;
-  margin: 0 15px 0 0;
-`;
-
-export const ItemName = styled.div`
-  flex: 1 1 auto;
-`;
-
-export const ItemQuantity = styled.div`
-  font-size: 1.5rem;
-  margin: 0 10px;
-
-  &::after {
-    content: '/';
-    display: inline-block;
-    margin-left: 15px;
+  ${responsive.xs} {
+    flex-direction: column;
   }
 `;
 
-export const ItemPrice = styled.div`
-  font-size: 1.5rem;
+export const Form = styled.form`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
-export const ItemAttributes = styled.div`
-  margin-top: 5px;
-  font-size: 0.8rem;
+export const Input = styled.input`
+  background: transparent;
+  color: ${colors.darkText};
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0.3rem 0;
+  margin-bottom: 0.5rem;
+  border: none;
+  border-bottom: 1px solid ${colors.frost};
+  transition: border 0.2s ease-in-out;
+
+  &:valid {
+    border-bottom: 1px solid ${colors.iceberg};
+  }
+
+  &:invalid {
+    border-bottom: 1px solid ${colors.error};
+  }
+
+  &[value=''] {
+    border-bottom: 1px solid ${colors.frost};
+  }
 `;
 
-export const Attribute = styled.div`
-  margin-bottom: 0.1rem;
-  text-transform: capitalize;
+export const ErrorMessage = styled.p`
+  font-size: 16px;
+  color: ${colors.error};
+  margin-top: 1rem;
+`;
+
+export const StripeWrapper = styled.div`
+  width: 100%;
+  padding-bottom: 1rem;
+`;
+
+export const PaymentMethods = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid ${colors.light};
+  overflow: hidden;
+`;
+
+export const PaymentButton = styled.button`
+  ${props => `background: ${props.active ? colors.light : 'white'}`};
+  font-size: 18px;
+  border-bottom: 1px solid ${colors.light};
+  padding: 0.5rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+export const PaymentMethod = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
 `;

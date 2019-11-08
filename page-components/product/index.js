@@ -63,7 +63,11 @@ const ProductPage = ({ product, defaultVariant }) => {
     const basketItemToAdd = {
       ...getVariantVATprops({ product, variant: selectedVariant }),
       ...selectedVariant,
-      name: product.name
+      taxGroup: { ...product.vatType },
+      id: product.id,
+      variant_id: selectedVariant.id,
+      name: product.name,
+      path: product.path
     };
 
     basket.actions.addItem(basketItemToAdd);
@@ -116,7 +120,7 @@ const ProductPage = ({ product, defaultVariant }) => {
                 <CurrencyValue value={selectedVariant.price} />
               </strong>
             </Price>
-            <Button onClick={buy}>Add to basket</Button>
+            <Button onClick={buy}>Add to Basket</Button>
           </ProductFooter>
         </Info>
       </Sections>
