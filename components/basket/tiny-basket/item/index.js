@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AttributeList from 'components/attribute-list';
 import { CurrencyValue } from 'components/currency-value';
 
 import {
@@ -11,8 +12,6 @@ import {
   ItemQuantityChanger,
   ItemQuantity,
   ItemDelete,
-  Attributes,
-  Attribute,
   PriceWrap,
   Price,
   PriceVat,
@@ -52,13 +51,7 @@ const TinyBasketItem = ({ actions, item }) => {
             {isSubscription ? item.subscriptionName : item.name}
           </ItemName>
           {attributes && attributes.length > 0 && (
-            <Attributes>
-              {attributes.map(({ attribute, value }) => (
-                <Attribute key={attribute}>
-                  {attribute}: {value}
-                </Attribute>
-              ))}
-            </Attributes>
+            <AttributeList attributes={attributes} />
           )}
           {isSubscription ? (
             <SubInfoOuter>
