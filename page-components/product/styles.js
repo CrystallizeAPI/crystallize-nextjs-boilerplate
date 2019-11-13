@@ -2,11 +2,6 @@ import styled from 'styled-components';
 
 import { colors, responsive } from 'ui';
 
-export const Outer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto 30px;
-`;
-
 export const Loader = styled.div`
   text-align: center;
   margin: 50px;
@@ -26,16 +21,36 @@ export const Sections = styled.div`
 export const RelatedTopics = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 150px;
+  h2 {
+    font-family: 'Roboto Slab', sans-serif;
+    padding-left: 50px;
+  }
+`;
+
+export const TopicMap = styled.div`
+  padding-left: 50px;
+  position: relative;
+  margin-top: 30px;
+  h3 {
+    font-size: 16px;
+    opacity: 0.6;
+    top: 0;
+    height: 40px;
+    left: 40px;
+    position: absolute;
+    transform-origin: top left;
+    transform: rotate(90deg);
+  }
 `;
 
 export const Media = styled.div`
-  flex: 0 0 60%;
+  flex: 0 0 50%;
   position: relative;
   padding-top: 60%;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
 
   ${responsive.mdAndLess} {
-    flex-basis: 40%;
+    flex-basis: 50%;
   }
 
   &:before {
@@ -51,6 +66,7 @@ export const Media = styled.div`
 
 export const MediaInner = styled.div`
   width: 100%;
+  max-width: 550px;
   height: 100%;
   position: absolute;
   z-index: 10;
@@ -59,7 +75,6 @@ export const MediaInner = styled.div`
   justify-content: center;
   top: 0;
   left: 0;
-  background: #fff;
   padding: 2rem;
 
   img {
@@ -74,7 +89,7 @@ export const MediaInner = styled.div`
 
 export const Info = styled.div`
   flex: 1 1 auto;
-  margin-left: 100px;
+  margin: 0 50px 0 50px;
 
   ${responsive.smAndLess} {
     margin-left: 0;
@@ -92,7 +107,8 @@ export const Summary = styled.div`
 export const Description = styled.div`
   color: ${colors.darkText};
   font-size: 18px;
-  margin-bottom: 15px;
+  max-width: 700px;
+  margin: 0 auto 15px;
   line-height: 1.4;
 
   img {
@@ -133,7 +149,7 @@ export const ProductFooter = styled.div`
 export const Price = styled.div`
   text-align: center;
   color: ${colors.darkText};
-  font-size: 50px;
+  font-size: 30px;
   margin-right: 20px;
 
   strong {

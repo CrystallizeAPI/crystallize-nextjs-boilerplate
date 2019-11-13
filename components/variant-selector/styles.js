@@ -43,8 +43,11 @@ export const Button = styled.button.attrs(() => ({
 `;
 
 export const AttributeName = styled.h4`
-  text-transform: capitalize;
+  text-transform: uppercase;
   margin-bottom: 0.2rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 13px;
 `;
 
 export const AttributeSelector = styled.div`
@@ -58,14 +61,14 @@ export const AttributeButton = styled.button`
   text-transform: capitalize;
   border: 1px solid ${colors.light};
   font-weight: bold;
-  padding: 0.5rem;
+  padding: 0.8rem;
 
   ${props =>
     props.selected &&
     css`
-      background: ${darken(0.1, colors.glacier)};
+      background: ${darken(0.1, colors.prettyPink)};
       color: white;
-      border: 1px solid ${darken(0.1, colors.glacier)};
+      border: 1px solid ${darken(0.1, colors.prettyPink)};
     `}
 
   &:first-child {

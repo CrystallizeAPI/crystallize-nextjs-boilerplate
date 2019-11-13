@@ -5,12 +5,18 @@ import { responsive } from './responsive';
 export const Outer = styled.div`
   margin-bottom: 30px;
   max-width: 1500px;
-  padding: 0 50px;
+  padding: 0 75px;
   margin: 0 auto;
   display: block;
 
   ${responsive.smAndLess} {
     padding: 0 1rem;
+  }
+  .crystallize-grid-cell {
+    background: transparent;
+  }
+  .crystallize-grid-renderer-grid {
+    grid-auto-rows: 400px;
   }
 `;
 
@@ -18,6 +24,7 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
+  padding: 50px;
 
   p {
     font-size: 18px;

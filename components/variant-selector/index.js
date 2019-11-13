@@ -1,4 +1,3 @@
-import { H3 } from 'ui';
 import {
   Outer,
   AttributeName,
@@ -40,7 +39,6 @@ export default ({
   if (!Object.keys(attributes).length) {
     return (
       <Outer>
-        <H3>Variants</H3>
         {variants.map(variant => (
           <Variant key={variant.id}>
             <Values>
@@ -60,8 +58,6 @@ export default ({
 
   return (
     <Outer>
-      <H3>Variants</H3>
-
       {Object.keys(attributes).map(name => {
         const attr = attributes[name];
         const selectedAttr = selectedVariant.attributes.find(

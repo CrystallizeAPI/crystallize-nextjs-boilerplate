@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { Grid } from '@crystallize/grid-renderer/react';
+// import { Grid } from '@crystallize/grid-renderer/react';
 import { Outer, Header, H1 } from 'ui';
 import Layout from 'components/layout';
 import Product from 'components/category-item';
 import ShapeComponents from 'components/shape/components';
+
+import { List } from './styles';
 
 export default class FolderPage extends React.PureComponent {
   render() {
@@ -28,10 +30,11 @@ export default class FolderPage extends React.PureComponent {
             <ShapeComponents components={folder.components} />
           </Header>
           {children && (
-            <Grid
-              cells={cells}
-              renderCellContent={cell => <Product data={cell.item} />}
-            />
+            <List>
+              {cells.map(cell => (
+                <Product data={cell.item} key={cell.id} />
+              ))}
+            </List>
           )}
         </Outer>
       </Layout>

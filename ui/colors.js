@@ -18,5 +18,6 @@ export const colors = {
 
   darkText: '#4c505b',
   lightText: '#fff',
+  prettyPink: '#F9C3C7',
   price: darken(0.2, '#8FDDCA')
 };

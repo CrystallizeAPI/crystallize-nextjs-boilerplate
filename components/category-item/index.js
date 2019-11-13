@@ -3,7 +3,15 @@ import Link from 'next/link';
 
 import { CurrencyValue } from 'components/currency-value';
 import { screen } from 'ui';
-import { Outer, ImageWrapper, Img, Footer, Price, imageSize } from './styles';
+import {
+  Outer,
+  Inner,
+  ImageWrapper,
+  Img,
+  ContentLine,
+  Price,
+  imageSize
+} from './styles';
 
 class CategoryItem extends React.Component {
   render() {
@@ -22,20 +30,22 @@ class CategoryItem extends React.Component {
       return (
         <Link as={path} href="/catalog" passHref>
           <Outer>
-            <ImageWrapper>
-              {image && (
-                <Img
-                  {...image}
-                  alt={name}
-                  sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
-                />
-              )}
-            </ImageWrapper>
-            <Footer>
-              <div>
-                <span>{name}</span>
-              </div>
-            </Footer>
+            <Inner>
+              <ContentLine>
+                <div>
+                  <span>{name}</span>
+                </div>
+              </ContentLine>
+              <ImageWrapper>
+                {image && (
+                  <Img
+                    {...image}
+                    alt={name}
+                    sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
+                  />
+                )}
+              </ImageWrapper>
+            </Inner>
           </Outer>
         </Link>
       );
@@ -48,21 +58,23 @@ class CategoryItem extends React.Component {
     return (
       <Link as={path} href="/catalog" passHref>
         <Outer>
-          <ImageWrapper>
-            <Img
-              {...image}
-              alt={name}
-              sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
-            />
-          </ImageWrapper>
-          <Footer>
-            <div>
+          <Inner>
+            <ContentLine>
               <span>{name}</span>
+            </ContentLine>
+            <ImageWrapper>
+              <Img
+                {...image}
+                alt={name}
+                sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
+              />
+            </ImageWrapper>
+            <ContentLine right>
               <Price>
                 <CurrencyValue value={price} />
               </Price>
-            </div>
-          </Footer>
+            </ContentLine>
+          </Inner>
         </Outer>
       </Link>
     );

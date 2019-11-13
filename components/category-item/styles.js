@@ -10,26 +10,49 @@ export const imageSize = {
 };
 
 export const Outer = styled.a`
-  background: white;
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+  align-items: stretch;
   justify-content: center;
+  border-radius: 12px;
+  position: relative;
+  &:after {
+    content: '';
+    background: ${colors.frostbite};
+    width: 80%;
+    height: 5%;
+    position: absolute;
+    left: 10%;
+    bottom: -1px;
+    filter: blur(9px);
+    opacity: 0.15;
+    transition: opacity 0.2s ease-in-out, filter 0.2s ease-in-out;
+  }
+  &:hover:after {
+    filter: blur(4px);
+    opacity: 0.35;
+  }
 `;
 
 export const Inner = styled.span`
   text-decoration: none;
-  display: flex;
-  background: #fff;
-  flex-direction: column;
   width: 100%;
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   font-weight: 600;
   color: ${colors.darkText};
   text-align: center;
-  padding: 1rem;
+  align-items: stretch;
+  justify-content: stretch;
+  background: #fff;
+  border-radius: 12px;
+  &:hover {
+    background: #fefefe;
+  }
 
   ${is('onlytext')`
     flex-direction: row;
@@ -59,28 +82,17 @@ export const Img = styled(Image)`
   }
 `;
 
-export const Footer = styled.footer`
+export const ContentLine = styled.div`
   display: flex;
   padding: 15px;
+  margin:8px;  
+  flex-direction ${p => (p.right ? 'row-reverse' : 'row')};
   justify-content: space-between;
   align-items: stretch;
   text-overflow: ellipsis;
 
   > div {
     flex: 1;
-
-    &:first-child {
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 600;
-      color: ${colors.darkText};
-    }
-
-    &:last-child {
-      text-align: center;
-    }
   }
 
   ${responsive.xs} {
@@ -90,5 +102,4 @@ export const Footer = styled.footer`
 
 export const Price = styled.span`
   color: ${colors.price};
-  margin-left: 10px;
 `;

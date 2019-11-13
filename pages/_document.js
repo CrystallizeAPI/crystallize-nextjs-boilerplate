@@ -44,7 +44,12 @@ export default class MyDocument extends Document {
             content="width=device-width, initial-scale=1, minimal-ui"
           />
           <meta name="apple-mobile-web-app-capable" content="yes" />
-
+          <link
+            rel="preload"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,700|Roboto+Slab:700&display=swap"
+            as="fetch"
+            crossOrigin="anonymous"
+          />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
