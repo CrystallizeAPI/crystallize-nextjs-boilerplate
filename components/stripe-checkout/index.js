@@ -2,9 +2,12 @@ import React from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { Button, colors } from 'ui';
 import { CardElementWrapper, ErrorMessage } from './styles';
+import { Input } from '../../page-components/checkout/styles';
 
 class StripeCheckout extends React.Component {
   state = {
+    address: '',
+    postCode: '',
     cardElementStyle: null,
     error: null,
     processing: false
@@ -19,6 +22,8 @@ class StripeCheckout extends React.Component {
   async submit() {
     this.setState({ processing: true });
 
+    const { address, postCode } = this.state;
+
     const {
       clientSecret,
       items,
@@ -31,7 +36,13 @@ class StripeCheckout extends React.Component {
       clientSecret,
       {
         payment_method_data: {
-          billing_details: { name: `${firstName} ${lastName}` }
+          billing_details: {
+            name: `${firstName} ${lastName}`,
+            address: {
+              line1: address,
+              postal_code: postCode
+            }
+          }
         },
         receipt_email: email
       }
@@ -88,10 +99,32 @@ class StripeCheckout extends React.Component {
   }
 
   render() {
-    const { cardElementStyle, error, processing } = this.state;
+    const {
+      address,
+      cardElementStyle,
+      error,
+      postCode,
+      processing
+    } = this.state;
 
     return (
       <>
+        <Input
+          name="address"
+          type="text"
+          placeholder="Street address"
+          value={address}
+          onChange={e => this.setState({ address: e.target.value })}
+          required
+        />
+        <Input
+          name="postCode"
+          type="text"
+          placeholder="Postal code"
+          value={postCode}
+          onChange={e => this.setState({ postCode: e.target.value })}
+          required
+        />
         <CardElementWrapper style={cardElementStyle}>
           <CardElement
             style={{
