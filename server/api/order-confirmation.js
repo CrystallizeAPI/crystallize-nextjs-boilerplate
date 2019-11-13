@@ -1,4 +1,4 @@
-const orderRetriever = require('../../lib/order-retriever');
+const { orderRetriever } = require('../../lib/order-retriever');
 const { orderDataDenormalizer } = require('../../lib/order-denormalizer');
 
 module.exports = async (req, res) => {
