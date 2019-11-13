@@ -6,19 +6,20 @@ import Layout from 'components/layout';
 import { BasketContext } from 'components/basket';
 import BillingDetails from 'components/billing-details';
 import OrderItems from 'components/order-items';
-import { H1, Outer, Header, responsive } from 'ui';
+import { H1, H3, Outer, Header, colors } from 'ui';
 
-export const Inner = styled.div`
-  display: flex;
+const CustomHeader = styled(Header)`
+  margin-bottom: 0;
+  padding-bottom: 0;
+`;
 
-  ${responsive.xs} {
-    flex-direction: column;
-  }
+const Line = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid ${colors.light};
 `;
 
 class Confirmation extends React.Component {
-  static contextType = BasketContext;
-
   state = {
     emptied: false,
     orderData: null
@@ -39,6 +40,8 @@ class Confirmation extends React.Component {
       .then(res => res.json())
       .then(orderData => this.setState({ orderData }));
   }
+
+  static contextType = BasketContext;
 
   empty() {
     const { emptied } = this.state;
@@ -71,17 +74,18 @@ class Confirmation extends React.Component {
     return (
       <Layout title="Order Summary">
         <Outer>
-          <Header>
+          <CustomHeader>
             <H1>Order Summary</H1>
             <p>
               Your order (<strong>#{orderId}</strong>) has been confirmed. A
               copy of your order has been sent to <strong>{email}</strong>.
             </p>
-          </Header>
-          <Inner>
-            <OrderItems items={items} />
+            <Line />
             <BillingDetails order={order} />
-          </Inner>
+            <Line />
+            <H3>Order Items</H3>
+            <OrderItems items={items} />
+          </CustomHeader>
         </Outer>
       </Layout>
     );

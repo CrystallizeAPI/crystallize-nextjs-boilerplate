@@ -6,7 +6,7 @@ import Layout from 'components/layout';
 import OrderItems from 'components/order-items';
 import { H1, Outer } from 'ui';
 import PaymentGateway from './payment-gateway';
-import { Inner } from './styles';
+import { Inner, OrderItemsWrapper } from './styles';
 
 const Checkout = () => {
   const basket = useBasket();
@@ -35,7 +35,9 @@ const Checkout = () => {
         <H1>Checkout</H1>
         <Inner>
           <PaymentGateway items={items} currency={currency} />
-          <OrderItems items={items} currency={currency} />
+          <OrderItemsWrapper>
+            <OrderItems items={items} currency={currency} />
+          </OrderItemsWrapper>
         </Inner>
       </Outer>
     </Layout>

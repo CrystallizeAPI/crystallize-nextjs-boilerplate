@@ -81,7 +81,7 @@ export const PaymentButton = styled.button`
   width: 32%;
   margin-right:1%;
   height: 80px;
-  border-radius: 10px; 
+  border-radius: 10px;
   img {
     max-width:100px;
   }
@@ -97,4 +97,9 @@ export const PaymentMethod = styled.div`
 `;
 export const PaymentSelector = styled.div`
   display: flex;
+`;
+
+export const OrderItemsWrapper = styled.div`
+  width: 50%;
+  padding-left: 50px;
 `;

@@ -4,8 +4,7 @@ import { colors, responsive } from 'ui';
 
 export const Items = styled.div`
   display: block;
-  width: 50%;
-  padding-left: 50px;
+  width: 100%;
   margin-right: 1rem;
 
   ${responsive.xs} {
