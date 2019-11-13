@@ -17,6 +17,8 @@ export const Inner = styled.div`
 `;
 
 class Confirmation extends React.Component {
+  static contextType = BasketContext;
+
   state = {
     emptied: false,
     orderData: null
@@ -37,8 +39,6 @@ class Confirmation extends React.Component {
       .then(res => res.json())
       .then(orderData => this.setState({ orderData }));
   }
-
-  static contextType = BasketContext;
 
   empty() {
     const { emptied } = this.state;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import is from 'styled-is';
 import Image from '@crystallize/react-image';
 
 import { colors, responsive } from 'ui';
@@ -10,33 +9,82 @@ export const imageSize = {
 };
 
 export const Outer = styled.a`
-  background: white;
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+  align-items: stretch;
   justify-content: center;
+  border-radius: 12px;
+  position: relative;
+  grid-column: span 2;
+  grid-row: span 2;
 `;
 
 export const Inner = styled.span`
   text-decoration: none;
-  display: flex;
-  background: #fff;
-  flex-direction: column;
   width: 100%;
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   font-weight: 600;
   color: ${colors.darkText};
   text-align: center;
-  padding: 1rem;
+  align-items: center;
+  justify-content: stretch;
+  border: 2px solid #dfdfdf;
+  border-radius: 12px;
+  &:hover {
+    border: 2px solid #fff;
+    background: #fff;
+  }
+`;
 
-  ${is('onlytext')`
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-  `};
+export const ProductOuter = styled.a`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: stretch;
+  justify-content: center;
+  border-radius: 12px;
+  position: relative;
+  &:after {
+    content: '';
+    background: ${colors.frostbite};
+    width: 80%;
+    height: 5%;
+    position: absolute;
+    left: 10%;
+    bottom: -1px;
+    filter: blur(9px);
+    opacity: 0.15;
+    transition: opacity 0.2s ease-in-out, filter 0.2s ease-in-out;
+  }
+  &:hover:after {
+    filter: blur(4px);
+    opacity: 0.35;
+  }
+`;
+
+export const ProductInner = styled.span`
+  text-decoration: none;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-weight: 600;
+  color: ${colors.darkText};
+  text-align: center;
+  align-items: stretch;
+  justify-content: stretch;
+  background: #fff;
+  border-radius: 12px;
+  &:hover {
+    background: #fefefe;
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -52,35 +100,36 @@ export const Img = styled(Image)`
   justify-content: center;
   width: 150px;
   height: 150px;
-
+  position: relative;
   > img {
+    position: relative;
+    object-fit: contain;
     width: 150px;
     height: 150px;
   }
 `;
 
-export const Footer = styled.footer`
+export const MicroFormat = styled.div`
+  text-align: left;
+  padding: 1em;
+  flex: 1;
+  h3 {
+    font-size: 2.5em;
+    color: ${colors.frostbite};
+    font-family: 'Roboto Slab', 'Roboto', 'sans-serif';
+  }
+`;
+export const ContentLine = styled.div`
   display: flex;
   padding: 15px;
+  margin:8px;  
+  flex-direction ${p => (p.right ? 'row-reverse' : 'row')};
   justify-content: space-between;
   align-items: stretch;
   text-overflow: ellipsis;
 
   > div {
     flex: 1;
-
-    &:first-child {
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 600;
-      color: ${colors.darkText};
-    }
-
-    &:last-child {
-      text-align: center;
-    }
   }
 
   ${responsive.xs} {
@@ -90,5 +139,4 @@ export const Footer = styled.footer`
 
 export const Price = styled.span`
   color: ${colors.price};
-  margin-left: 10px;
 `;

@@ -4,7 +4,8 @@ import { colors, responsive } from 'ui';
 
 export const Items = styled.div`
   display: block;
-  flex-grow: 1;
+  width: 50%;
+  padding-left: 50px;
   margin-right: 1rem;
 
   ${responsive.xs} {
@@ -14,13 +15,12 @@ export const Items = styled.div`
 
 export const Item = styled.div`
   color: ${colors.darkText};
-  background: white;
   margin-bottom: 1rem;
   padding: 15px;
   display: flex;
   align-items: center;
   border-radius: 0.2rem;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px dashed #dfdfdf;
 `;
 
 export const ItemAmount = styled.div`
@@ -28,14 +28,14 @@ export const ItemAmount = styled.div`
 `;
 
 export const ItemImage = styled(Image).attrs(() => ({
-  sizes: '100px'
+  sizes: '80px'
 }))`
   display: flex;
   flex: 0 0 auto;
-  width: 100px;
+  width: 60px;
   justify-content: center;
   align-items: center;
-  margin: 0 15px 0 0;
+  margin: 0 25px 0 0;
 
   img {
     max-height: 100px;
@@ -47,7 +47,8 @@ export const ItemInfo = styled.div`
 `;
 
 export const ItemName = styled.p`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  font-weight: 500;
 `;
 
 export const ItemQuantity = styled.div`
@@ -56,5 +57,6 @@ export const ItemQuantity = styled.div`
 `;
 
 export const ItemPrice = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
 `;

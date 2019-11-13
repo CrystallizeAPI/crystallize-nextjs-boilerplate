@@ -43,28 +43,31 @@ export const Button = styled.button.attrs(() => ({
 `;
 
 export const AttributeName = styled.h4`
-  text-transform: capitalize;
+  text-transform: uppercase;
   margin-bottom: 0.2rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 13px;
 `;
 
 export const AttributeSelector = styled.div`
   display: flex;
+  border: 1px solid #dfdfdf;
   margin-bottom: 0.5rem;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
 `;
 
 export const AttributeButton = styled.button`
   flex-grow: 1;
+  border-right: 1px solid #dfdfdf;
   flex-basis: 0;
-  background: ${colors.light};
   text-transform: capitalize;
   font-weight: bold;
-  padding: 0.5rem;
+  padding: 0.8rem;
 
   ${props =>
     props.selected &&
     css`
-      background: ${darken(0.1, colors.glacier)};
+      background: ${darken(0.1, colors.prettyPink)};
       color: white;
     `}
 
@@ -76,5 +79,6 @@ export const AttributeButton = styled.button`
   &:last-child {
     border-top-right-radius: 0.2rem;
     border-bottom-right-radius: 0.2rem;
+    border-right: none;
   }
 `;

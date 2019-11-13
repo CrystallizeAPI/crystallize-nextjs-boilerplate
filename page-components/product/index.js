@@ -25,7 +25,8 @@ import {
   ProductFooter,
   Summary,
   Description,
-  RelatedTopics
+  RelatedTopics,
+  TopicMap
 } from './styles';
 
 const placeHolderImg = '/static/placeholder.png';
@@ -152,7 +153,7 @@ const ProductPage = ({ product, defaultVariant }) => {
             }
 
             return (
-              <>
+              <TopicMap>
                 <H3>{topic.name}</H3>
                 <Grid
                   cells={cells}
@@ -160,7 +161,7 @@ const ProductPage = ({ product, defaultVariant }) => {
                     <CategoryItem key={cell.item.id} data={cell.item} />
                   )}
                 />
-              </>
+              </TopicMap>
             );
           })}
         </RelatedTopics>

@@ -9,17 +9,26 @@ import KlarnaCheckout from './klarna';
 import {
   Form,
   Input,
+  InputGroup,
+  Label,
+  PaymentSelector,
   PaymentMethods,
   PaymentButton,
   PaymentMethod
 } from './styles';
 
 const Outer = styled.div`
-  width: 500px;
+  width: 50%;
+  padding-right: 50px;
+  border-right: 1px solid #dfdfdf;
 
   ${responsive.xs} {
     width: 100%;
   }
+`;
+const Row = styled.div`
+  display: flex;
+  margin-bottom: 10px;
 `;
 
 const Inner = styled.div`
@@ -28,13 +37,13 @@ const Inner = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-  background: white;
   font-size: 1.5rem;
-  padding: 1rem;
   border-radius: 0.2rem;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
 `;
-
+const SectionHeader = styled(H3)`
+  font-size: 14px;
+  font-weight: 600;
+`;
 class PaymentGateway extends React.Component {
   state = {
     paymentMethod: null,
@@ -57,42 +66,65 @@ class PaymentGateway extends React.Component {
       <Outer>
         <Inner>
           <Form noValidate>
-            <H3>Personal Details</H3>
-            <Input
-              name="firstname"
-              type="text"
-              placeholder="First name"
-              value={firstName}
-              onChange={e => this.setState({ firstName: e.target.value })}
-              required
-            />
-            <Input
-              name="lastname"
-              type="text"
-              placeholder="Last name"
-              value={lastName}
-              onChange={e => this.setState({ lastName: e.target.value })}
-              required
-            />
-            <Input
-              name="email"
-              type="email"
-              placeholder="Email address"
-              value={email}
-              onChange={e => this.setState({ email: e.target.value })}
-              required
-            />
+            <SectionHeader />
+            <Row>
+              <InputGroup>
+                <Label for="firstname"> First Name</Label>
+                <Input
+                  name="firstname"
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={e => this.setState({ firstName: e.target.value })}
+                  required
+                />
+              </InputGroup>
+              <InputGroup>
+                <Label for="lastname"> Last Name</Label>
+                <Input
+                  name="lastname"
+                  type="text"
+                  placeholder="Last name"
+                  value={lastName}
+                  onChange={e => this.setState({ lastName: e.target.value })}
+                  required
+                />
+              </InputGroup>
+            </Row>
+            <Row>
+              <InputGroup>
+                <Label for="email"> Email</Label>
+                <Input
+                  name="email"
+                  type="email"
+                  placeholder="Email address"
+                  value={email}
+                  onChange={e => this.setState({ email: e.target.value })}
+                  required
+                />
+              </InputGroup>
+            </Row>
 
-            <H3>Payment Method</H3>
-
+            <SectionHeader>Choose payment method</SectionHeader>
             <PaymentMethods>
-              <PaymentButton
-                type="button"
-                active={paymentMethod === 'stripe'}
-                onClick={() => this.setState({ paymentMethod: 'stripe' })}
-              >
-                Stripe
-              </PaymentButton>
+              <PaymentSelector>
+                <PaymentButton
+                  color="#6773E6"
+                  type="button"
+                  active={paymentMethod === 'stripe'}
+                  onClick={() => this.setState({ paymentMethod: 'stripe' })}
+                >
+                  <img src="/static/stripe-logo.png" alt="stripe logo" />
+                </PaymentButton>
+                <PaymentButton
+                  color="#F8AEC2"
+                  type="button"
+                  active={paymentMethod === 'klarna'}
+                  onClick={() => this.setState({ paymentMethod: 'klarna' })}
+                >
+                  <img src="/static/klarna-logo.png" alt="Klarna logo" />
+                </PaymentButton>
+              </PaymentSelector>
               {paymentMethod === 'stripe' && (
                 <PaymentMethod>
                   <StripeCheckout
@@ -105,13 +137,7 @@ class PaymentGateway extends React.Component {
                   />
                 </PaymentMethod>
               )}
-              <PaymentButton
-                type="button"
-                active={paymentMethod === 'klarna'}
-                onClick={() => this.setState({ paymentMethod: 'klarna' })}
-              >
-                Klarna
-              </PaymentButton>
+
               {paymentMethod === 'klarna' && (
                 <PaymentMethod>
                   <KlarnaCheckout

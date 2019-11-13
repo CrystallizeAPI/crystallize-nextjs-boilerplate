@@ -4,7 +4,7 @@ import { colors, responsive } from 'ui';
 
 export const Outer = styled.header`
   text-align: center;
-  padding: 10px 25px;
+  padding: 10px 75px;
   display: flex;
   justify-content: flex-start;
   align-items: center;

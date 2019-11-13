@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { CurrencyValue } from 'components/currency-value';
 import { useBasket } from '../context';
@@ -28,7 +28,7 @@ export const Totals = () => {
           </span>
         </Row>
         {discount && (
-          <Fragment>
+          <>
             <Row modifier="discount">
               <span>Discount:</span>
               <span>
@@ -41,7 +41,7 @@ export const Totals = () => {
                 <CurrencyValue value={totalPriceMinusDiscount} />
               </span>
             </Row>
-          </Fragment>
+          </>
         )}
         <Row modifier="shipping">
           <span>Shipping:</span>
@@ -62,7 +62,7 @@ export const Totals = () => {
         </Row>
 
         <Row modifier="total-vat">
-          <span>VAT amount:</span>
+          <span>TAX amount:</span>
           <span>
             <CurrencyValue value={totalVatAmount} />
           </span>

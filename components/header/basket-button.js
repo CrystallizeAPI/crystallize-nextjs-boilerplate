@@ -18,7 +18,12 @@ const BasketButton = () => {
       </Basket>
     );
   }
-  return '...';
+  return (
+    <Basket type="button">
+      <IconBasket />
+      <BasketQuantity />
+    </Basket>
+  );
 };
 
 export default BasketButton;

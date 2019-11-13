@@ -34,8 +34,8 @@ const Checkout = () => {
       <Outer>
         <H1>Checkout</H1>
         <Inner>
-          <OrderItems items={items} currency={currency} />
           <PaymentGateway items={items} currency={currency} />
+          <OrderItems items={items} currency={currency} />
         </Inner>
       </Outer>
     </Layout>

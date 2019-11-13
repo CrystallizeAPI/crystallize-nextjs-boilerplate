@@ -35,18 +35,12 @@ export default function CatalogPage() {
   const { tree } = data;
   const { type } = tree[0];
 
-  if (type === 'product') {
-    return <ProductPage data={data} />;
-  }
-
-  if (type === 'folder') {
-    return <FolderPage data={data} />;
-  }
-
-  if (type === 'document') {
-    return <DocumentPage data={data} />;
-  }
+  const render = {
+    product: <ProductPage data={data} />,
+    folder: <FolderPage data={data} />,
+    document: <DocumentPage data={data} />
+  };
 
   // Unsupported type
-  return <div>This type ({type}) is not supported</div>;
+  return render[type];
 }
