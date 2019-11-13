@@ -1,11 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
+import ShapeComponents from 'components/shape/components';
 
 import { CurrencyValue } from 'components/currency-value';
-import { screen } from 'ui';
+
+import { screen, H3 } from 'ui';
 import {
   Outer,
+  ProductOuter,
   Inner,
+  ProductInner,
+  MicroFormat,
   ImageWrapper,
   Img,
   ContentLine,
@@ -25,17 +30,12 @@ class CategoryItem extends React.Component {
 
     if (type === 'folder' || type === 'document') {
       const images = data.components.find(c => c.type === 'images');
+      const richText = data.components.find(c => c.type === 'richText');
       const image = images && images.content ? images.content.images[0] : null;
-
       return (
         <Link as={path} href="/catalog" passHref>
-          <Outer>
+          <Outer type={type}>
             <Inner>
-              <ContentLine>
-                <div>
-                  <span>{name}</span>
-                </div>
-              </ContentLine>
               <ImageWrapper>
                 {image && (
                   <Img
@@ -45,6 +45,10 @@ class CategoryItem extends React.Component {
                   />
                 )}
               </ImageWrapper>
+              <MicroFormat>
+                <H3>{name}</H3>
+                <ShapeComponents components={[richText]} />
+              </MicroFormat>
             </Inner>
           </Outer>
         </Link>
@@ -57,8 +61,8 @@ class CategoryItem extends React.Component {
 
     return (
       <Link as={path} href="/catalog" passHref>
-        <Outer>
-          <Inner>
+        <ProductOuter>
+          <ProductInner>
             <ContentLine>
               <span>{name}</span>
             </ContentLine>
@@ -74,8 +78,8 @@ class CategoryItem extends React.Component {
                 <CurrencyValue value={price} />
               </Price>
             </ContentLine>
-          </Inner>
-        </Outer>
+          </ProductInner>
+        </ProductOuter>
       </Link>
     );
   }

@@ -4,6 +4,10 @@ import { Paragraphs } from './styles';
 import Paragraph from './paragraph';
 
 const ParagraphCollection = ({ paragraphs }) => {
+  if (!paragraphs) {
+    return <div />;
+  }
+
   return (
     <Paragraphs>
       {paragraphs.map((paragraph, index) => (

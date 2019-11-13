@@ -21,11 +21,10 @@ export default class FolderPage extends React.PureComponent {
           }
         }))
       : null;
-
     return (
       <Layout title={folder.name}>
         <Outer>
-          <Header>
+          <Header centerContent={!children}>
             <H1>{folder.name}</H1>
             <ShapeComponents components={folder.components} />
           </Header>

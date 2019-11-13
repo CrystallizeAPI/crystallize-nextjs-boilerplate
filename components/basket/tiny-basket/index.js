@@ -48,18 +48,19 @@ export const TinyBasket = ({
           </ItemOuter>
         ))}
       </Items>
+      <div>
+        {!hideTotals && <Totals />}
 
-      {!hideTotals && <Totals />}
-
-      {!hideRemainingUntilFreeShipping &&
-        !freeShipping &&
-        remainingUntilFreeShippingApplies > 0 && (
-          <RemainingUntilFreeShipping>
-            Add another{' '}
-            <CurrencyValue value={remainingUntilFreeShippingApplies} /> to your
-            order for free shipping.
-          </RemainingUntilFreeShipping>
-        )}
+        {!hideRemainingUntilFreeShipping &&
+          !freeShipping &&
+          remainingUntilFreeShippingApplies > 0 && (
+            <RemainingUntilFreeShipping>
+              Add another{' '}
+              <CurrencyValue value={remainingUntilFreeShippingApplies} /> to
+              your order for free shipping.
+            </RemainingUntilFreeShipping>
+          )}
+      </div>
     </Outer>
   );
 };

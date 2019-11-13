@@ -21,54 +21,17 @@ const animationItemHighlight = keyframes`
     }
   `;
 
-export const Item = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-  position: relative;
-
-  ${p =>
-    p.animate &&
-    css`
-      animation: ${animationItemHighlight} ${animationSpeedMs}ms 1;
-    `};
+export const Row = styled.div`
+  /* display: flex; */
+  width: 100%;
+  /* justify-content: space-between; */
 `;
-
-export const ItemInfo = styled.span`
-  display: flex;
-  align-items: center;
-`;
-
-export const ItemInfoText = styled.div``;
-
-export const ItemImage = styled(CrystallizeImage).attrs(() => ({
-  sizes: '50px'
-}))`
-  width: 50px;
-  margin-right: 10px;
-`;
-
-export const ItemName = styled.div``;
-
-export const ItemQuantityChanger = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const ItemQuantity = styled.span`
-  display: inline-block;
-  margin: 0 3px;
-  min-width: 23px;
-  text-align: center;
-`;
-
 export const ItemDelete = styled.button`
   position: absolute;
   top: 2px;
   right: 2px;
   font-size: 0px;
+  display: none;
 
   &:before {
     content: '+';
@@ -78,18 +41,72 @@ export const ItemDelete = styled.button`
   }
 `;
 
-export const Attributes = styled.div`
-  margin-top: 5px;
-  font-size: 0.8rem;
-`;
-export const Attribute = styled.div`
-  margin-bottom: 0.1rem;
-  text-transform: capitalize;
+export const Item = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.5fr;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+  position: relative;
+
+  ${p =>
+    p.animate &&
+    css`
+      animation: ${animationItemHighlight} ${animationSpeedMs}ms 1;
+    `};
+  &:hover {
+    ${ItemDelete} {
+      display: block;
+    }
+  }
 `;
 
+export const ItemInfo = styled.span`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+`;
+
+export const ItemInfoText = styled.div``;
+
+export const ItemImage = styled(CrystallizeImage).attrs(() => ({
+  sizes: '50px'
+}))`
+  width: 50px;
+  img {
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+  }
+`;
+
+export const ItemName = styled.div``;
+
+export const ItemQuantityChanger = styled.span`
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: space-between;
+  button {
+    margin: 6px 0;
+  }
+`;
+
+export const ItemQuantity = styled.span`
+  display: inline-block;
+  margin: 0 3px;
+  min-width: 23px;
+  text-align: center;
+`;
+
+export const PriceWrapper = styled.div`
+  /* display: flex; */
+  font-size: 14px;
+  padding: 5px 10px 0 0;
+  /* justify-content: space-between; */
+`;
 export const PriceWrap = styled.div`
   display: flex;
-  margin-top: 5px;
 `;
 
 export const Price = styled.div`
@@ -98,6 +115,7 @@ export const Price = styled.div`
 
 export const PriceVat = styled.div`
   display: block;
+  font-size: 12px;
 `;
 
 export const SubInfoOuter = styled.div`

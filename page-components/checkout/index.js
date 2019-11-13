@@ -2,22 +2,11 @@
 import React from 'react';
 
 import { useBasket } from 'components/basket';
-import { CurrencyValue } from 'components/currency-value';
 import Layout from 'components/layout';
-
+import OrderItems from 'components/order-items';
+import { H1, Outer } from 'ui';
 import PaymentGateway from './payment-gateway';
-import {
-  Outer,
-  Inner,
-  Item,
-  ItemImage,
-  ItemName,
-  Items,
-  ItemQuantity,
-  ItemPrice,
-  ItemAttributes,
-  Attribute
-} from './styles';
+import { Inner } from './styles';
 
 const Checkout = () => {
   const basket = useBasket();
@@ -30,7 +19,7 @@ const Checkout = () => {
     );
   }
 
-  const { items } = basket.state;
+  const { items, currency } = basket.state;
 
   if (!items.length) {
     return (
@@ -43,33 +32,11 @@ const Checkout = () => {
   return (
     <Layout title="Checkout" simple>
       <Outer>
+        <H1>Checkout</H1>
         <Inner>
-          <Items>
-            {items.map(item => (
-              <Item key={item.id}>
-                <ItemImage {...item.image} alt={item.name} />
-                <div>
-                  <ItemName>{item.name}</ItemName>
-                  <ItemAttributes>
-                    {item.attributes.map(({ attribute, value }) => (
-                      <Attribute key={attribute}>
-                        {attribute}: {value}
-                      </Attribute>
-                    ))}
-                  </ItemAttributes>
-                </div>
-                <ItemQuantity>
-                  {item.quantity}
-                  pcs
-                </ItemQuantity>
-                <ItemPrice>
-                  <CurrencyValue value={item.price * item.quantity} />
-                </ItemPrice>
-              </Item>
-            ))}
-          </Items>
+          <PaymentGateway items={items} currency={currency} />
+          <OrderItems items={items} currency={currency} />
         </Inner>
-        <PaymentGateway />
       </Outer>
     </Layout>
   );

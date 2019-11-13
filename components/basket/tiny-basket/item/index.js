@@ -1,18 +1,18 @@
 import React from 'react';
 
+import AttributeList from 'components/attribute-list';
 import { CurrencyValue } from 'components/currency-value';
 
 import {
   Item,
+  Row,
   ItemInfo,
-  ItemInfoText,
+  PriceWrapper,
   ItemImage,
   ItemName,
   ItemQuantityChanger,
   ItemQuantity,
   ItemDelete,
-  Attributes,
-  Attribute,
   PriceWrap,
   Price,
   PriceVat,
@@ -39,27 +39,24 @@ const TinyBasketItem = ({ actions, item }) => {
 
   return (
     <Item animate={item.animate} isSubscription={isSubscription}>
+      <ItemImage
+        {...item.image}
+        onError={e => {
+          e.target.onerror = null;
+          e.target.src = item.placeholder_image;
+        }}
+      />
       <ItemInfo>
-        <ItemImage
-          {...item.image}
-          onError={e => {
-            e.target.onerror = null;
-            e.target.src = item.placeholder_image;
-          }}
-        />
-        <ItemInfoText>
+        <Row>
           <ItemName>
             {isSubscription ? item.subscriptionName : item.name}
           </ItemName>
           {attributes && attributes.length > 0 && (
-            <Attributes>
-              {attributes.map(({ attribute, value }) => (
-                <Attribute key={attribute}>
-                  {attribute}: {value}
-                </Attribute>
-              ))}
-            </Attributes>
+            <AttributeList attributes={attributes} />
           )}
+        </Row>
+
+        <PriceWrapper>
           {isSubscription ? (
             <SubInfoOuter>
               <SubInfoLine>{item.subscriptionInitialInfo}</SubInfoLine>
@@ -75,24 +72,27 @@ const TinyBasketItem = ({ actions, item }) => {
 
           <PriceVat>
             <span>
-              <CurrencyValue value={item.vatAmount} />
+              VAT <CurrencyValue value={item.vatAmount} />
             </span>
           </PriceVat>
-        </ItemInfoText>
+        </PriceWrapper>
       </ItemInfo>
-      <ItemQuantityChanger>
-        <button
-          onClick={decrement}
-          type="button"
-          disabled={item.quantity === 1}
-        >
-          -
-        </button>
-        <ItemQuantity>{item.quantity}</ItemQuantity>
-        <button onClick={increment} type="button">
-          +
-        </button>
-      </ItemQuantityChanger>
+      <div>
+        <ItemQuantityChanger>
+          <button
+            onClick={decrement}
+            type="button"
+            disabled={item.quantity === 1}
+          >
+            {' '}
+            -{' '}
+          </button>
+          <ItemQuantity>{item.quantity}</ItemQuantity>
+          <button onClick={increment} type="button">
+            +
+          </button>
+        </ItemQuantityChanger>
+      </div>
       <ItemDelete onClick={remove}>Remove {item.name} from basket</ItemDelete>
     </Item>
   );

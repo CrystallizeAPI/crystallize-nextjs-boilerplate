@@ -67,7 +67,7 @@ const Login = ({ router }) => {
                   Enter your email address and we’ll send a magic login link to
                   your inbox.
                 </h4>
-                <form onSubmit={e => handleSubmit(e, state)}>
+                <form>
                   <input
                     type="email"
                     placeholder="Enter your email"
@@ -83,8 +83,9 @@ const Login = ({ router }) => {
                   <Button
                     loading={userData.loading}
                     primary
-                    type="submit"
+                    type="button"
                     value="Submit"
+                    onClick={handleSubmit}
                   >
                     Continue
                   </Button>

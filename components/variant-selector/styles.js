@@ -20,7 +20,7 @@ export const Button = styled.button.attrs(() => ({
   width: 100%;
   font-weight: bold;
   appearance: none;
-  background: transparent;
+  background: white;
   border: none;
   padding: 8px 20px;
   margin: 0;
@@ -33,7 +33,7 @@ export const Button = styled.button.attrs(() => ({
     outline: none;
   }
   border: 1px solid #cecece;
-  border-radius: 5px;
+  border-radius: 0.2rem;
 
   ${is('selected')`
     background: ${darken(0.1, colors.glacier)};
@@ -52,14 +52,15 @@ export const AttributeName = styled.h4`
 
 export const AttributeSelector = styled.div`
   display: flex;
+  border: 1px solid #dfdfdf;
   margin-bottom: 0.5rem;
 `;
 
 export const AttributeButton = styled.button`
   flex-grow: 1;
+  border-right: 1px solid #dfdfdf;
   flex-basis: 0;
   text-transform: capitalize;
-  border: 1px solid ${colors.light};
   font-weight: bold;
   padding: 0.8rem;
 
@@ -68,16 +69,16 @@ export const AttributeButton = styled.button`
     css`
       background: ${darken(0.1, colors.prettyPink)};
       color: white;
-      border: 1px solid ${darken(0.1, colors.prettyPink)};
     `}
 
   &:first-child {
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
+    border-top-left-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
   }
 
   &:last-child {
-    border-top-right-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
+    border-top-right-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+    border-right: none;
   }
 `;

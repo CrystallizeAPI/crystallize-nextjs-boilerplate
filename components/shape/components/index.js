@@ -10,7 +10,6 @@ const ShapeComponents = ({ components, overrides }) => {
   if (!components) {
     return null;
   }
-
   return components
     .filter(component => component.content != null)
     .map(({ type, ...component }, index) => {
