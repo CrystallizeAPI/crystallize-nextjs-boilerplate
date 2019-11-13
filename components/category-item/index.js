@@ -13,6 +13,8 @@ import {
   MicroFormat,
   ImageWrapper,
   Img,
+  ArticleImageWrapper,
+  ArticleImg,
   ContentLine,
   Price,
   imageSize
@@ -36,19 +38,19 @@ class CategoryItem extends React.Component {
         <Link as={path} href="/catalog" passHref>
           <Outer type={type}>
             <Inner>
-              <ImageWrapper>
+              <MicroFormat>
+                <H3>{name}</H3>
+                <ShapeComponents components={[richText]} />
+              </MicroFormat>
+              <ArticleImageWrapper>
                 {image && (
-                  <Img
+                  <ArticleImg
                     {...image}
                     alt={name}
                     sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
                   />
                 )}
-              </ImageWrapper>
-              <MicroFormat>
-                <H3>{name}</H3>
-                <ShapeComponents components={[richText]} />
-              </MicroFormat>
+              </ArticleImageWrapper>
             </Inner>
           </Outer>
         </Link>
