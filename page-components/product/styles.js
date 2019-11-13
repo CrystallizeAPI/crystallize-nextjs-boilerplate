@@ -32,18 +32,18 @@ export const TopicMap = styled.div`
   padding-left: 50px;
   position: relative;
   margin-top: 30px;
-  h3 {
-    font-size: 16px;
-    opacity: 0.6;
-    top: 0;
-    height: 40px;
-    left: 40px;
-    position: absolute;
-    transform-origin: top left;
-    transform: rotate(90deg);
-  }
 `;
 
+export const TopicTitle = styled.h3`
+  font-size: 16px;
+  opacity: 0.6;
+  top: 0;
+  height: 40px;
+  left: 40px;
+  position: absolute;
+  transform-origin: top left;
+  transform: rotate(90deg);
+`;
 export const Media = styled.div`
   flex: 0 0 50%;
   position: relative;
@@ -159,5 +159,24 @@ export const Price = styled.div`
 
   ${responsive.xs} {
     flex-grow: 1;
+  }
+`;
+
+export const List = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 300px;
+  grid-gap: 1rem;
+
+  ${responsive.sm} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  ${responsive.md} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  ${responsive.lg} {
+    grid-template-columns: repeat(4, 1fr);
   }
 `;
