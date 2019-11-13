@@ -93,7 +93,7 @@ export const PaymentButton = styled.button`
 export const PaymentMethod = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0.5rem;
+  padding: 2rem 0;
 `;
 export const PaymentSelector = styled.div`
   display: flex;

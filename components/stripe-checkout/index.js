@@ -1,8 +1,17 @@
 import React from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
+import styled from 'styled-components';
 import { Button, colors } from 'ui';
 import { CardElementWrapper, ErrorMessage } from './styles';
-import { Input } from '../../page-components/checkout/styles';
+import {
+  Input,
+  InputGroup,
+  Label
+} from '../../page-components/checkout/styles';
+
+const ShippingDetails = styled.div`
+  display: flex;
+`;
 
 class StripeCheckout extends React.Component {
   state = {
@@ -109,22 +118,30 @@ class StripeCheckout extends React.Component {
 
     return (
       <>
-        <Input
-          name="address"
-          type="text"
-          placeholder="Street address"
-          value={address}
-          onChange={e => this.setState({ address: e.target.value })}
-          required
-        />
-        <Input
-          name="postCode"
-          type="text"
-          placeholder="Postal code"
-          value={postCode}
-          onChange={e => this.setState({ postCode: e.target.value })}
-          required
-        />
+        <ShippingDetails>
+          <InputGroup>
+            <Label for="address">Street Address</Label>
+            <Input
+              name="address"
+              type="text"
+              placeholder="Street address"
+              value={address}
+              onChange={e => this.setState({ address: e.target.value })}
+              required
+            />
+          </InputGroup>
+          <InputGroup>
+            <Label for="postCode">Postal Code</Label>
+            <Input
+              name="postCode"
+              type="text"
+              placeholder="Postal code"
+              value={postCode}
+              onChange={e => this.setState({ postCode: e.target.value })}
+              required
+            />
+          </InputGroup>
+        </ShippingDetails>
         <CardElementWrapper style={cardElementStyle}>
           <CardElement
             style={{
