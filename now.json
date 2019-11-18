@@ -1,12 +1,6 @@
 {
   "version": 2,
   "name": "crystallize-frontend-boilerplate",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@now/next"
-    }
-  ],
   "env": {
     "GTM_ID": "",
     "CRYSTALLIZE_GRAPH_URL_BASE": "https://graph.crystallize.com",
