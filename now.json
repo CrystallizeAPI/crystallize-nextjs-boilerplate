@@ -51,7 +51,7 @@
     },
     {
       "src": "/([^/].+)",
-      "dest": "/catalog?path=$1"
+      "dest": "/catalogue?path=$1"
     }
   ]
 }
