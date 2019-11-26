@@ -142,11 +142,11 @@ const ProductPage = ({ product, defaultVariant }) => {
 
             // We only want to show the first 4 products for a topic
             const topic = result.data.topics[0];
-            const cells = topic.items
-              .filter(item => item.id !== product.id)
+            const cells = topic.items.edges
+              .filter(({ node }) => node.id !== product.id)
               .slice(0, 4)
-              .map(item => ({
-                item: { ...item }
+              .map(({ node }) => ({
+                item: { ...node }
               }));
 
             if (!cells.length) {
