@@ -1,5 +1,5 @@
 import React from 'react';
-import Error from 'pages/_error';
+// import Error from 'pages/_error';
 
 import Layout from 'components/layout';
 import DocumentPage from 'page-components/document';
@@ -7,7 +7,7 @@ import FolderPage from 'page-components/folder';
 import ProductPage from 'page-components/product';
 import { useTreeNodeQuery, useMenuAndTenantQuery } from 'lib/graph';
 
-export default function CatalogPage() {
+export default function CataloguePage() {
   /**
    * Get both the current component at the path and
    * also the top menu and tenant settings. We do both
@@ -29,7 +29,10 @@ export default function CatalogPage() {
 
   // Nothing in Crystallize at this path. Show 404 page
   if (!data.tree || !data.tree.length) {
-    return <Error statusCode="404" />;
+    // TODO: This should return a 404 ideally. However the tree is currently being
+    // returned as null prior to being populated with data. This needs further
+    // investigation to solve.
+    return null;
   }
 
   const { tree } = data;
