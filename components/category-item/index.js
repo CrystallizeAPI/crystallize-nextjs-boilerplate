@@ -35,7 +35,7 @@ class CategoryItem extends React.Component {
       const richText = data.components.find(c => c.type === 'richText');
       const image = images && images.content ? images.content.images[0] : null;
       return (
-        <Link as={path} href="/catalog" passHref>
+        <Link as={path} href="/catalogue" passHref>
           <Outer type={type}>
             <Inner>
               <MicroFormat>
@@ -62,7 +62,7 @@ class CategoryItem extends React.Component {
       : {};
 
     return (
-      <Link as={path} href="/catalog" passHref>
+      <Link as={path} href="/catalogue" passHref>
         <ProductOuter>
           <ProductInner>
             <ContentLine>

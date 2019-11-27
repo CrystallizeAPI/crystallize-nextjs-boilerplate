@@ -1,5 +1,5 @@
 import React from 'react';
-// import Error from 'pages/_error';
+import Error from 'pages/_error';
 
 import Layout from 'components/layout';
 import DocumentPage from 'page-components/document';
@@ -29,10 +29,7 @@ export default function CataloguePage() {
 
   // Nothing in Crystallize at this path. Show 404 page
   if (!data.tree || !data.tree.length) {
-    // TODO: This should return a 404 ideally. However the tree is currently being
-    // returned as null prior to being populated with data. This needs further
-    // investigation to solve.
-    return null;
+    return <Error statusCode="404" />;
   }
 
   const { tree } = data;
