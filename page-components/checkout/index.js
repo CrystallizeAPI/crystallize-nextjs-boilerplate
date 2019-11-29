@@ -1,6 +1,6 @@
 /* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
-
+import Head from 'next/head';
 import { useBasket } from 'components/basket';
 import Layout from 'components/layout';
 import OrderItems from 'components/order-items';
@@ -31,6 +31,10 @@ const Checkout = () => {
 
   return (
     <Layout title="Checkout" simple>
+      <Head>
+        <script id="stripe-js" src="https://js.stripe.com/v3/" async />
+      </Head>
+
       <Outer>
         <H1>Checkout</H1>
         <Inner>

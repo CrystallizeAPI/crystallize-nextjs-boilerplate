@@ -99,7 +99,6 @@ export default class MyDocument extends Document {
               `
             }}
           />
-          <script id="stripe-js" src="https://js.stripe.com/v3/" async />
           {this.props.styleTags}
         </Head>
         <body>
