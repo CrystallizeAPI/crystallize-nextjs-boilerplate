@@ -3,7 +3,7 @@ const { validateItems } = require('../../../lib/util/cart-validation');
 
 export default async (req, res) => {
   try {
-    const { lineItems, currency } = JSON.parse(req.body);
+    const { lineItems, currency } = req.body;
     const validatedItems = await validateItems(lineItems);
     const amount = validatedItems.reduce((acc, val) => {
       return acc + val.price * val.quantity;

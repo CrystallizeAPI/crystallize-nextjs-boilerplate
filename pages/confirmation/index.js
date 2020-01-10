@@ -26,8 +26,10 @@ class Confirmation extends React.Component {
   };
 
   static async getInitialProps({ req }) {
-    const { orderId, paymentMethod } = req.params;
-    if (orderId) return { orderId, paymentMethod };
+    if (req.params && req.params.orderId) {
+      const { orderId, paymentMethod } = req.params;
+      return { orderId, paymentMethod };
+    }
 
     const { query } = queryString.parseUrl(req.url);
     return { orderId: query.order_id, paymentMethod: query.payment_method };
