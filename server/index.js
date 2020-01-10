@@ -22,6 +22,10 @@ app.prepare().then(() => {
   server.use(bodyParser.json());
   server.use('/api', api);
 
+  server.get('/confirmation/:orderId', (req, res) => {
+    app.render(req, res, '/confirmation', { orderId: req.params.orderId });
+  });
+
   // Helper function for throwing 404's from Next pages
   server.get('*', async (req, res, doNext) => {
     req.throw404 = function throw404() {
