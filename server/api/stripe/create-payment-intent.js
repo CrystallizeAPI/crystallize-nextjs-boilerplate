@@ -1,7 +1,7 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { validateItems } = require('../../../lib/util/cart-validation');
 
-export default async (req, res) => {
+module.exports = async (req, res) => {
   try {
     const { lineItems, currency } = req.body;
     const validatedItems = await validateItems(lineItems);

@@ -26,6 +26,7 @@ class StripeWrapper extends React.Component {
 
     const { client_secret } = await fetch('/api/stripe/create-payment-intent', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         currency,
         lineItems

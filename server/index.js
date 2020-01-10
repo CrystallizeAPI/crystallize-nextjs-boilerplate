@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const next = require('next');
@@ -17,7 +18,13 @@ app.prepare().then(() => {
   const server = express();
   server.use(helmet());
   server.use(cookieParser());
+  server.use(bodyParser.urlencoded({ extended: false }));
+  server.use(bodyParser.json());
   server.use('/api', api);
+
+  server.get('/confirmation/:orderId', (req, res) => {
+    app.render(req, res, '/confirmation', { orderId: req.params.orderId });
+  });
 
   // Helper function for throwing 404's from Next pages
   server.get('*', async (req, res, doNext) => {
