@@ -55,24 +55,20 @@ export const ProductInner = styled.span`
 `;
 
 export const ImageWrapper = styled.div`
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const Img = styled(Image)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
   position: relative;
+  overflow: hidden;
   > img {
-    position: relative;
     object-fit: contain;
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 `;
 export const Outer = styled.a`
@@ -146,8 +142,8 @@ export const MicroFormat = styled.div`
 export const ContentLine = styled.div`
   display: flex;
   padding: 15px;
-  margin:8px;  
-  flex-direction ${p => (p.right ? 'row-reverse' : 'row')};
+  margin: 8px;
+  flex-direction: ${p => (p.right ? 'row-reverse' : 'row')};
   justify-content: space-between;
   align-items: stretch;
   text-overflow: ellipsis;
