@@ -42,7 +42,7 @@ const ShapeComponents = ({ components, overrides }) => {
         );
       }
 
-      if (type === 'richText') {
+      if (type === 'richText' && component.content.json) {
         Component = Component || CrystallizeContent;
         return <Component key={key} {...component.content.json[0]} />;
       }
