@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import ShapeComponents from 'components/shape/components';
 
 import { CurrencyValue } from 'components/currency-value';
 
@@ -13,8 +12,6 @@ import {
   MicroFormat,
   ImageWrapper,
   Img,
-  ArticleImageWrapper,
-  ArticleImg,
   ContentLine,
   Price,
   imageSize
@@ -32,25 +29,24 @@ class CategoryItem extends React.Component {
 
     if (type === 'folder' || type === 'document') {
       const images = data.components.find(c => c.type === 'images');
-      const richText = data.components.find(c => c.type === 'richText');
       const image = images && images.content ? images.content.images[0] : null;
       return (
         <Link as={path} href="/catalog" passHref>
           <Outer type={type}>
             <Inner>
-              <MicroFormat>
-                <H3>{name}</H3>
-                <ShapeComponents components={[richText]} />
-              </MicroFormat>
-              <ArticleImageWrapper>
+              <ImageWrapper>
                 {image && (
-                  <ArticleImg
+                  <Img
                     {...image}
                     alt={name}
                     sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
                   />
                 )}
-              </ArticleImageWrapper>
+              </ImageWrapper>
+
+              <MicroFormat>
+                <H3>{name}</H3>
+              </MicroFormat>
             </Inner>
           </Outer>
         </Link>

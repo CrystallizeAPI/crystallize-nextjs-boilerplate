@@ -57,6 +57,7 @@ export const ProductInner = styled.span`
 export const ImageWrapper = styled.div`
   position: relative;
   overflow: hidden;
+  flex-grow: 1;
 `;
 
 export const Img = styled(Image)`
@@ -87,9 +88,9 @@ export const Inner = styled.span`
   width: 100%;
   position: relative;
   z-index: 10;
-  padding: 40px;
+  padding: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 100%;
   font-weight: 600;
   color: ${colors.darkText};
@@ -99,33 +100,6 @@ export const Inner = styled.span`
   &:hover {
     border: 2px solid #fff;
     background: #fff;
-  }
-`;
-
-export const ArticleImageWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 40%;
-`;
-
-export const ArticleImg = styled(Image)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  max-height: 350px;
-  max-width: 100%;
-  position: relative;
-
-  > img {
-    position: relative;
-    width: 100%;
-    object-fit: contain;
-    height: 100%;
-    max-height: 100%;
   }
 `;
 
