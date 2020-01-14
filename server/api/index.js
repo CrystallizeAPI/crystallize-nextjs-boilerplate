@@ -4,6 +4,7 @@ const authenticate = require('./authenticate');
 const verify = require('./verify');
 const orderPersistence = require('./order-persistence');
 const orderConfirmation = require('./order-confirmation');
+const fetchPublishableKey = require('./stripe/fetch-publishable-key');
 const createPaymentIntent = require('./stripe/create-payment-intent');
 
 // @extraStripe
@@ -24,5 +25,6 @@ router.get('/verify/:token', verify);
 router.post('/order-persistence', orderPersistence);
 router.post('/order-confirmation', orderConfirmation);
 router.post('/stripe/create-payment-intent', createPaymentIntent);
+router.post('/stripe/fetch-publishable-key', fetchPublishableKey);
 
 module.exports = router;
