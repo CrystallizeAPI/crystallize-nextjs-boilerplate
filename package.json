@@ -65,7 +65,7 @@
     "react-stripe-elements": "^5.0.0",
     "request-promise": "^4.2.4",
     "stripe": "^7.9.0",
-    "styled-components": "^5.0.0-rc.1",
+    "styled-components": "^5.0.0",
     "styled-is": "^1.3.0",
     "urql": "^1.4.0",
     "uuid": "^3.3.2",
