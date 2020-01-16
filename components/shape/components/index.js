@@ -35,14 +35,17 @@ const ShapeComponents = ({ components, overrides }) => {
             <Images>
               {component.content.images.map((image, idx) => (
                 // eslint-disable-next-line react/no-array-index-key
-                <Image key={idx} {...image} />
+                <Image key={idx} {...image} sizes="80vw" />
               ))}
             </Images>
           )
         );
       }
 
-      if (type === 'richText' && component.content.json) {
+      if (type === 'richText') {
+        if (!component.content.json) {
+          return null;
+        }
         Component = Component || CrystallizeContent;
         return <Component key={key} {...component.content.json[0]} />;
       }
