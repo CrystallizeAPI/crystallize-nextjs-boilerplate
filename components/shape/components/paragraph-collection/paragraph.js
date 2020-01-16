@@ -26,7 +26,7 @@ const Paragraph = ({
         <Images>
           {images.map((image, index) => (
             // eslint-disable-next-line react/no-array-index-key
-            <Image key={index} {...image} />
+            <Image key={index} {...image} sizes="80vw" />
           ))}
         </Images>
       )}
