@@ -17,70 +17,65 @@ import {
   imageSize
 } from './styles';
 
-class CategoryItem extends React.Component {
-  render() {
-    const { data } = this.props;
+export default function CategoryItem({ data }) {
+  if (!data) {
+    return null;
+  }
 
-    if (!data) {
-      return null;
-    }
+  const { name, path, type, variants } = data;
 
-    const { name, path, type, variants } = data;
-
-    if (type === 'folder' || type === 'document') {
-      const images = data.components.find(c => c.type === 'images');
-      const image = images && images.content ? images.content.images[0] : null;
-      return (
-        <Link as={path} href="/catalog" passHref>
-          <Outer type={type}>
-            <Inner>
-              <ImageWrapper>
-                {image && (
-                  <Img
-                    {...image}
-                    alt={name}
-                    sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
-                  />
-                )}
-              </ImageWrapper>
-
-              <MicroFormat>
-                <H3>{name}</H3>
-              </MicroFormat>
-            </Inner>
-          </Outer>
-        </Link>
-      );
-    }
-
-    const { price, image } = variants
-      ? variants.find(variant => variant.isDefault)
-      : {};
+  if (type === 'folder' || type === 'document') {
+    const images = data.components.find(c => c.type === 'images');
+    const image = images && images.content ? images.content.images[0] : null;
 
     return (
-      <Link as={path} href="/catalog" passHref>
-        <ProductOuter>
-          <ProductInner>
-            <ContentLine>
-              <span>{name}</span>
-            </ContentLine>
+      <Link as={path} href={`/${type}`} passHref>
+        <Outer type={type}>
+          <Inner>
             <ImageWrapper>
-              <Img
-                {...image}
-                alt={name}
-                sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
-              />
+              {image && (
+                <Img
+                  {...image}
+                  alt={name}
+                  sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
+                />
+              )}
             </ImageWrapper>
-            <ContentLine right>
-              <Price>
-                <CurrencyValue value={price} />
-              </Price>
-            </ContentLine>
-          </ProductInner>
-        </ProductOuter>
+
+            <MicroFormat>
+              <H3>{name}</H3>
+            </MicroFormat>
+          </Inner>
+        </Outer>
       </Link>
     );
   }
-}
 
-export default CategoryItem;
+  const { price, image } = variants
+    ? variants.find(variant => variant.isDefault)
+    : {};
+
+  return (
+    <Link as={path} href="/product" passHref>
+      <ProductOuter>
+        <ProductInner>
+          <ContentLine>
+            <span>{name}</span>
+          </ContentLine>
+          <ImageWrapper>
+            <Img
+              {...image}
+              alt={name}
+              sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
+            />
+          </ImageWrapper>
+          <ContentLine right>
+            <Price>
+              <CurrencyValue value={price} />
+            </Price>
+          </ContentLine>
+        </ProductInner>
+      </ProductOuter>
+    </Link>
+  );
+}

@@ -1,27 +1,25 @@
 /* eslint react/no-multi-comp: 0 */
-import React, { useState, useContext } from 'react';
-import { LayoutContext } from '@crystallize/react-layout';
+import React, { useState } from 'react';
 import Img from '@crystallize/react-image';
-import { withRouter } from 'next/router';
 import isEqual from 'lodash/isEqual';
+import { useRouter } from 'next/router';
 
-import { H1, H2, Button, screen, Outer } from 'ui';
+import { useSettings } from 'components/settings-context';
+import { useSafePathQuery } from 'lib/graph';
+import { H1, H2, screen, Outer } from 'ui';
 import CategoryItem from 'components/category-item';
-import { CurrencyValue } from 'components/currency-value';
-import { useBasket, getVariantVATprops } from 'components/basket';
 import Layout from 'components/layout';
 import VariantSelector from 'components/variant-selector';
 import ShapeComponents from 'components/shape/components';
-import { useTopicQuery } from 'lib/graph';
 import { attributesToObject } from 'lib/util/variants';
 
+import Buy from './buy';
+import productPageQuery from './query';
 import {
   Sections,
   Media,
   MediaInner,
   Info,
-  Price,
-  ProductFooter,
   Summary,
   Description,
   RelatedTopics,
@@ -30,22 +28,35 @@ import {
   List
 } from './styles';
 
-const placeHolderImg = '/static/placeholder.png';
+export default function ProductPage() {
+  const { language } = useSettings();
+  const router = useRouter();
+  const [{ fetching, error, data }] = useSafePathQuery({
+    query: productPageQuery,
+    variables: {
+      language,
+      path: router.asPath
+    }
+  });
 
-const ProductPage = ({ product, defaultVariant }) => {
-  const layout = useContext(LayoutContext);
-  const basket = useBasket();
+  // Set the selected variant to the default
+  const [chosenVariant, setChosenVariant] = useState(null);
 
-  const [selectedVariant, setSelectedVariant] = useState(defaultVariant);
+  if (error) {
+    return <Layout error />;
+  }
 
-  // Use the first 2 topics to fetch related products
-  const topics = product.topics ? product.topics.slice(0, 2) : [];
-  const topicResults = topics.map(topic =>
-    useTopicQuery({
-      name: topic.name,
-      ancestry: topic.parent ? topic.parent.name : null
-    })
-  );
+  if (fetching) {
+    return <Layout loading />;
+  }
+
+  if (!data.tree || data.tree.length === 0) {
+    return <Layout error />;
+  }
+
+  const [product] = data.tree;
+  const selectedVariant =
+    chosenVariant || product.variants.find(v => v.isDefault);
 
   const onAttributeChange = (attributes, newAttribute) => {
     const newAttributes = attributesToObject(attributes);
@@ -56,137 +67,81 @@ const ProductPage = ({ product, defaultVariant }) => {
       return isEqual(variantAttributes, newAttributes);
     });
 
-    setSelectedVariant(newSelectedVariant);
+    setChosenVariant(newSelectedVariant);
   };
 
-  const onVariantChange = variant => setSelectedVariant(variant);
-
-  const buy = async () => {
-    const basketItemToAdd = {
-      ...getVariantVATprops({ product, variant: selectedVariant }),
-      ...selectedVariant,
-      taxGroup: { ...product.vatType },
-      id: product.id,
-      variant_id: selectedVariant.id,
-      name: product.name,
-      path: product.path
-    };
-
-    basket.actions.addItem(basketItemToAdd);
-    await layout.actions.showRight();
-    basket.actions.pulsateItemInBasket(basketItemToAdd);
-  };
-
-  const selectedVariantImg =
-    (selectedVariant.image || {}).url || placeHolderImg;
+  const onVariantChange = variant => setChosenVariant(variant);
 
   const summaryComponent = product.components.find(c => c.name === 'Summary');
-  const description = product.components.find(c => c.name === 'Description');
-
-  return (
-    <Outer>
-      <Sections>
-        <Media>
-          <MediaInner>
-            <Img
-              src={selectedVariantImg}
-              onError={e => {
-                e.target.onerror = null;
-                e.target.src = placeHolderImg;
-              }}
-              sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
-              alt={product.name}
-            />
-          </MediaInner>
-        </Media>
-        <Info>
-          <H1>{product.name}</H1>
-          <Summary>
-            {summaryComponent && (
-              <ShapeComponents components={[summaryComponent]} />
-            )}
-          </Summary>
-
-          {product.variants.length > 1 && (
-            <VariantSelector
-              variants={product.variants}
-              selectedVariant={selectedVariant}
-              onVariantChange={onVariantChange}
-              onAttributeChange={onAttributeChange}
-            />
-          )}
-
-          <ProductFooter>
-            <Price>
-              <strong>
-                <CurrencyValue value={selectedVariant.price} />
-              </strong>
-            </Price>
-            <Button onClick={buy}>Add to Basket</Button>
-          </ProductFooter>
-        </Info>
-      </Sections>
-
-      <Description>
-        <ShapeComponents className="description" components={[description]} />
-      </Description>
-
-      {!!topics.length && (
-        <RelatedTopics>
-          <H2>Related</H2>
-
-          {topicResults.map(result => {
-            if (result.fetching || result.error || !result.data) {
-              return null;
-            }
-
-            // We only want to show the first 4 products for a topic
-            const topic = result.data.topics[0];
-            const cells = topic.items
-              .filter(item => item.id !== product.id)
-              .slice(0, 4)
-              .map(item => ({
-                item: { ...item }
-              }));
-
-            if (!cells.length) {
-              return null;
-            }
-
-            return (
-              <TopicMap>
-                <TopicTitle>{topic.name}</TopicTitle>
-                <List>
-                  {cells.map(cell => (
-                    <CategoryItem data={cell.item} key={cell.id} />
-                  ))}
-                </List>
-              </TopicMap>
-            );
-          })}
-        </RelatedTopics>
-      )}
-    </Outer>
+  const descriptionComponent = product.components.find(
+    c => c.name === 'Description'
   );
-};
-
-const ProductPageDataLoader = ({ data }) => {
-  const [product] = data.tree;
-  const defaultVariant = product.variants.find(v => v.isDefault);
-
-  if (!defaultVariant) {
-    return <Layout title={product.name}>This product has no variants</Layout>;
-  }
+  const componentsRest = product.components.filter(
+    c => !['Summary', 'Description'].includes(c.name)
+  );
 
   return (
     <Layout title={product.name}>
-      <ProductPage
-        key={product.id}
-        product={product}
-        defaultVariant={defaultVariant}
-      />
+      <Outer>
+        <Sections>
+          <Media>
+            <MediaInner>
+              <Img
+                {...selectedVariant.image}
+                sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
+                alt={product.name}
+              />
+            </MediaInner>
+          </Media>
+          <Info>
+            <H1>{product.name}</H1>
+            {summaryComponent && (
+              <Summary>
+                <ShapeComponents components={[summaryComponent]} />
+              </Summary>
+            )}
+
+            {product.variants.length > 1 && (
+              <VariantSelector
+                variants={product.variants}
+                selectedVariant={selectedVariant}
+                onVariantChange={onVariantChange}
+                onAttributeChange={onAttributeChange}
+              />
+            )}
+
+            <Buy product={product} selectedVariant={selectedVariant} />
+          </Info>
+        </Sections>
+
+        {descriptionComponent && (
+          <Description>
+            <ShapeComponents
+              className="description"
+              components={[descriptionComponent]}
+            />
+          </Description>
+        )}
+
+        <ShapeComponents components={componentsRest} />
+
+        {product.topics && !!product.topics.length && (
+          <RelatedTopics>
+            <H2>Related</H2>
+
+            {product.topics.map(topic => (
+              <TopicMap key={topic.name}>
+                <TopicTitle>{topic.name}</TopicTitle>
+                <List>
+                  {topic.items.edges.map(({ node }) => (
+                    <CategoryItem data={node} key={node.id} />
+                  ))}
+                </List>
+              </TopicMap>
+            ))}
+          </RelatedTopics>
+        )}
+      </Outer>
     </Layout>
   );
-};
-
-export default withRouter(ProductPageDataLoader);
+}

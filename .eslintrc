@@ -17,6 +17,7 @@
     "__crystallizeConfig": true
   },
   "rules": {
+    "no-console": 0,
     "camelcase": 0,
     "prettier/prettier": "error",
     "no-plusplus": 0,

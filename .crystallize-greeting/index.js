@@ -57,7 +57,6 @@ async function envFileExists() {
     ]);
 
     const envVars = {
-      GTM_ID: '',
       CRYSTALLIZE_GRAPH_URL_BASE: 'https://graph.crystallize.com',
       CRYSTALLIZE_TENANT_ID: 'teddy-bear-shop'
     };

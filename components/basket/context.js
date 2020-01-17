@@ -1,7 +1,6 @@
 import React, { createContext } from 'react';
 import uuid from 'uuid/v1';
 
-import { getTenantVariables } from 'lib/graph/index';
 import * as helpers from './helpers';
 import * as cache from './cache';
 
@@ -22,7 +21,6 @@ function createId() {
 export class BasketProvider extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     return {
-      ...getTenantVariables(),
       options: {
         ...prevState.options,
         ...getSupportedOptionsFromProps(nextProps)
