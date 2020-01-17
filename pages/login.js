@@ -1,3 +1,4 @@
-import LoginPage from 'page-components/login';
+import withGraphQLAndBasket from 'lib/with-graphql-and-basket';
+import Login from 'page-components/login';
 
-export default LoginPage;
+export default withGraphQLAndBasket(Login);
