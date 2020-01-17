@@ -21,8 +21,6 @@ const Line = styled.div`
 `;
 
 class Confirmation extends React.Component {
-  static contextType = BasketContext;
-
   static async getInitialProps({ req }) {
     if (req.params && req.params.orderId) {
       const { orderId, paymentMethod } = req.params;
@@ -48,6 +46,8 @@ class Confirmation extends React.Component {
       .then(res => res.json())
       .then(orderData => this.setState({ orderData }));
   }
+
+  static contextType = BasketContext;
 
   empty() {
     const { emptied } = this.state;
