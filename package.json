@@ -1,9 +1,9 @@
 {
   "name": "crystallize-frontend-boilerplate",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "license": "MIT",
   "engines": {
-    "node": ">=8.10"
+    "node": ">=10.10"
   },
   "repository": {
     "url": "git@github.com:CrystallizeAPI/crystallize-frontend-boilerplate.git",
@@ -54,14 +54,13 @@
     "mjml": "^4.4.1",
     "next": "9.2.0",
     "next-urql": "^0.2.4",
-    "polished": "^3.3.0",
+    "polished": "^3.4.2",
     "prop-types": "^15.7.2",
     "query-string": "^6.8.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-intl": "^3.1.5",
     "react-is": "^16.12.0",
-    "react-ssr-prepass": "^1.0.6",
     "react-stripe-elements": "^5.0.0",
     "request-promise": "^4.2.4",
     "stripe": "^7.9.0",
@@ -71,7 +70,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
+    "@babel/core": "^7.8.3",
     "babel-eslint": "^10.0.1",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-styled-components": "^1.10.0",
