@@ -11,7 +11,6 @@
   },
   "scripts": {
     "dev": "node ./server",
-    "doctor": "node --inspect-brk ./server",
     "now-dev": "now dev",
     "build": "next build",
     "start": "NODE_ENV=production next start",
