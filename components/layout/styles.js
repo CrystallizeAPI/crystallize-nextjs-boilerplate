@@ -6,7 +6,11 @@ export const Main = styled.main`
 `;
 
 export const LoadingWrapper = styled.div`
-  margin: 50px;
+  margin: 5em;
+  min-height: calc(75vh - 10em);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const SpinnerWrapper = styled.div`

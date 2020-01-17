@@ -1,8 +1,7 @@
 {
   "version": 2,
-  "name": "crystallize-frontend-boilerplate",
+  "name": "crystallize-nextjs-boilerplate",
   "env": {
-    "GTM_ID": "",
     "CRYSTALLIZE_GRAPH_URL_BASE": "https://graph.crystallize.com",
     "CRYSTALLIZE_ORDER_API_URL": "https://api.crystallize.com",
     "CRYSTALLIZE_TENANT_ID": "teddy-bear-shop",
@@ -11,47 +10,5 @@
     "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
     "KLARNA_USERNAME": "@klarna-username",
     "KLARNA_PASSWORD": "@klarna-password"
-  },
-  "routes": [
-    {
-      "src": "/api/magic-link/([^/]+)",
-      "dest": "/api/magic-link?email=$1"
-    },
-    {
-      "src": "/api/verify/([^/]+)",
-      "dest": "/api/verify?token=$1"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/static/([^/].+)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/_next/([^/].+)",
-      "dest": "/_next/$1"
-    },
-    {
-      "src": "/login",
-      "dest": "/login"
-    },
-    {
-      "src": "/checkout",
-      "dest": "/checkout"
-    },
-    {
-      "src": "/confirmation/([^/]+)",
-      "dest": "/confirmation?order_id=$1"
-    },
-    {
-      "src": "/confirmation/([^/]+)/([^/]+)",
-      "dest": "/confirmation?&payment_method=$1&order_id=$2"
-    },
-    {
-      "src": "/([^/].+)",
-      "dest": "/catalogue?path=$1"
-    }
-  ]
+  }
 }
