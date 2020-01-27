@@ -69,11 +69,12 @@ export default ({
         }
 
         return (
-          <div>
+          <div key={name}>
             <AttributeName>{name}</AttributeName>
             <AttributeSelector>
               {attr.map(value => (
                 <AttributeButton
+                  key={value}
                   onClick={() =>
                     onAttributeChange(selectedVariant.attributes, {
                       attribute: name,

@@ -2,6 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import styled from 'styled-components';
 
+import withGraphQLAndBasket from 'lib/with-graphql-and-basket';
 import Layout from 'components/layout';
 import { BasketContext } from 'components/basket';
 import BillingDetails from 'components/billing-details';
@@ -20,11 +21,6 @@ const Line = styled.div`
 `;
 
 class Confirmation extends React.Component {
-  state = {
-    emptied: false,
-    orderData: null
-  };
-
   static async getInitialProps({ req }) {
     if (req.params && req.params.orderId) {
       const { orderId, paymentMethod } = req.params;
@@ -34,6 +30,11 @@ class Confirmation extends React.Component {
     const { query } = queryString.parseUrl(req.url);
     return { orderId: query.order_id, paymentMethod: query.payment_method };
   }
+
+  state = {
+    emptied: false,
+    orderData: null
+  };
 
   componentDidMount() {
     const { orderId, paymentMethod } = this.props;
@@ -97,4 +98,4 @@ class Confirmation extends React.Component {
   }
 }
 
-export default Confirmation;
+export default withGraphQLAndBasket(Confirmation);

@@ -17,7 +17,9 @@ const OrderItems = ({ items }) => (
   <Items>
     {items.map(item => (
       <Item key={item.sku}>
-        {item.image && <ItemImage {...item.image} alt={item.name} />}
+        {item.image && (
+          <ItemImage {...item.image} alt={item.name} sizes="50vw" />
+        )}
         <ItemInfo>
           <ItemName>{item.name}</ItemName>
           {item.attributes ? (

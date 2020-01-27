@@ -41,6 +41,7 @@ const TinyBasketItem = ({ actions, item }) => {
     <Item animate={item.animate} isSubscription={isSubscription}>
       <ItemImage
         {...item.image}
+        sizes="200px"
         onError={e => {
           e.target.onerror = null;
           e.target.src = item.placeholder_image;

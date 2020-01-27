@@ -7,9 +7,10 @@ import ParagraphCollection from './paragraph-collection';
 import { Images } from './paragraph-collection/styles';
 
 const ShapeComponents = ({ components, overrides }) => {
-  if (!components) {
+  if (!components || !Array.isArray(components)) {
     return null;
   }
+
   return components
     .filter(component => component.content != null)
     .map(({ type, ...component }, index) => {
@@ -22,6 +23,10 @@ const ShapeComponents = ({ components, overrides }) => {
       }
 
       if (type === 'paragraphCollection') {
+        if (!component.content.paragraphs) {
+          return null;
+        }
+
         Component = Component || ParagraphCollection;
 
         return (
@@ -30,19 +35,23 @@ const ShapeComponents = ({ components, overrides }) => {
       }
 
       if (type === 'images') {
+        if (!component.content || !component.content.images) {
+          return null;
+        }
         return (
-          component.content && (
-            <Images>
-              {component.content.images.map((image, idx) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <Image key={idx} {...image} />
-              ))}
-            </Images>
-          )
+          <Images>
+            {component.content.images.map((image, idx) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Image key={idx} {...image} sizes="80vw" />
+            ))}
+          </Images>
         );
       }
 
-      if (type === 'richText' && component.content.json) {
+      if (type === 'richText') {
+        if (!component.content.json) {
+          return null;
+        }
         Component = Component || CrystallizeContent;
         return <Component key={key} {...component.content.json[0]} />;
       }

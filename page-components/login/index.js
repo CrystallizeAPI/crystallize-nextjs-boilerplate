@@ -7,7 +7,7 @@ import { AuthContext } from 'components/auth-context';
 
 import { LoginStyle, Outer } from './styles';
 
-const Login = ({ router }) => {
+const Login = () => {
   const [userData, setUserData] = useState({
     loading: false,
     email: '',
@@ -52,7 +52,7 @@ const Login = ({ router }) => {
   }
 
   return (
-    <Layout router={router} title="Login">
+    <Layout title="Login">
       <Outer>
         <AuthContext.Consumer>
           {state =>

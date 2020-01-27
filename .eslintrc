@@ -17,6 +17,7 @@
     "__crystallizeConfig": true
   },
   "rules": {
+    "no-console": 0,
     "camelcase": 0,
     "prettier/prettier": "error",
     "no-plusplus": 0,
@@ -36,6 +37,7 @@
     ],
     "import/prefer-default-export": false,
     "jsx-a11y/anchor-is-valid": false,
+    "react/sort-comp": false,
     "react/jsx-filename-extension": false,
     "react/react-in-jsx-scope": false,
     "react/prop-types": "skipUndeclared",
