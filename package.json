@@ -90,7 +90,7 @@
     "lint-staged": "^8.1.6",
     "node-emoji": "^1.8.1",
     "now": "^16.7.3",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "supports-color": "^6.1.0"
   }
 }
