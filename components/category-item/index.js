@@ -26,7 +26,7 @@ export default function CategoryItem({ data }) {
 
   if (type === 'folder' || type === 'document') {
     const images = data.components.find(c => c.type === 'images');
-    const image = images.content?.images?.[0];
+    const image = images?.content?.images?.[0];
 
     return (
       <Link as={path} href={`/${type}`} passHref>
