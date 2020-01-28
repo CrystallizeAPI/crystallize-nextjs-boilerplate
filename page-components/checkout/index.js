@@ -24,7 +24,7 @@ const Checkout = () => {
   if (!items.length) {
     return <Outer>Basket is empty</Outer>;
   }
-  console.log(settings);
+
   return (
     <Outer>
       <H1>Checkout</H1>
