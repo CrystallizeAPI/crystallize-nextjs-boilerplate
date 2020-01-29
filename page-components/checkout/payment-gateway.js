@@ -132,7 +132,10 @@ class PaymentGateway extends React.Component {
                     items={items}
                     currency={currency}
                     onSuccess={orderId =>
-                      Router.push(`/confirmation/${orderId}`)
+                      Router.push(
+                        '/confirmation/[orderId]',
+                        `/confirmation/${orderId}`
+                      )
                     }
                   />
                 </PaymentMethod>
