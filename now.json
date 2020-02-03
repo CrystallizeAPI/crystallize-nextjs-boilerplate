@@ -2,7 +2,7 @@
   "version": 2,
   "name": "crystallize-nextjs-boilerplate",
   "env": {
-    "CRYSTALLIZE_GRAPH_URL_BASE": "https://graph.crystallize.com",
+    "CRYSTALLIZE_GRAPH_URL_BASE": "https://api.crystallize.com",
     "CRYSTALLIZE_ORDER_API_URL": "https://api.crystallize.com",
     "CRYSTALLIZE_TENANT_ID": "teddy-bear-shop",
     "SECRET": "secret",
