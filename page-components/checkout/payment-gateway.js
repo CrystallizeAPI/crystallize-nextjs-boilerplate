@@ -69,7 +69,7 @@ class PaymentGateway extends React.Component {
             <SectionHeader />
             <Row>
               <InputGroup>
-                <Label for="firstname"> First Name</Label>
+                <Label htmlFor="firstname"> First Name</Label>
                 <Input
                   name="firstname"
                   type="text"
@@ -80,7 +80,7 @@ class PaymentGateway extends React.Component {
                 />
               </InputGroup>
               <InputGroup>
-                <Label for="lastname"> Last Name</Label>
+                <Label htmlFor="lastname"> Last Name</Label>
                 <Input
                   name="lastname"
                   type="text"
@@ -93,7 +93,7 @@ class PaymentGateway extends React.Component {
             </Row>
             <Row>
               <InputGroup>
-                <Label for="email"> Email</Label>
+                <Label htmlFor="email"> Email</Label>
                 <Input
                   name="email"
                   type="email"
@@ -132,7 +132,10 @@ class PaymentGateway extends React.Component {
                     items={items}
                     currency={currency}
                     onSuccess={orderId =>
-                      Router.push(`/confirmation/${orderId}`)
+                      Router.push(
+                        '/confirmation/[orderId]',
+                        `/confirmation/${orderId}`
+                      )
                     }
                   />
                 </PaymentMethod>
