@@ -120,7 +120,7 @@ class StripeCheckout extends React.Component {
       <>
         <ShippingDetails>
           <InputGroup>
-            <Label for="address">Street Address</Label>
+            <Label htmlFor="address">Street Address</Label>
             <Input
               name="address"
               type="text"
@@ -131,7 +131,7 @@ class StripeCheckout extends React.Component {
             />
           </InputGroup>
           <InputGroup>
-            <Label for="postCode">Postal Code</Label>
+            <Label htmlFor="postCode">Postal Code</Label>
             <Input
               name="postCode"
               type="text"

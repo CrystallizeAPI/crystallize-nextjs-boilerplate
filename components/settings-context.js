@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 
 // A simple context for handling the current settings
 export const SettingsContext = React.createContext({
-  language: 'en'
+  language: 'en',
+  currency: 'eur'
 });
 
 export const useSettings = () => useContext(SettingsContext);

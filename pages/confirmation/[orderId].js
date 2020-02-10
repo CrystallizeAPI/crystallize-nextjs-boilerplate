@@ -1,10 +1,11 @@
-import React from 'react';
-import queryString from 'query-string';
+import React, { useState, useEffect } from 'react';
+// import queryString from 'query-string';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import withGraphQLAndBasket from 'lib/with-graphql-and-basket';
 import Layout from 'components/layout';
-import { BasketContext } from 'components/basket';
+import { useBasket } from 'components/basket';
 import BillingDetails from 'components/billing-details';
 import OrderItems from 'components/order-items';
 import { H1, H3, Outer, Header, colors } from 'ui';
@@ -20,82 +21,80 @@ const Line = styled.div`
   border-bottom: 1px solid ${colors.light};
 `;
 
-class Confirmation extends React.Component {
-  static async getInitialProps({ req }) {
-    if (req.params && req.params.orderId) {
-      const { orderId, paymentMethod } = req.params;
-      return { orderId, paymentMethod };
+const Loader = styled.div`
+  margin: 5em;
+  text-align: center;
+`;
+
+function Confirmation() {
+  const router = useRouter();
+  const basket = useBasket();
+
+  const { orderId, paymentMethod } = router.query;
+
+  // static async getInitialProps({ req, ...rest }) {
+  //   console.log(rest);
+  //   if (req.query && req.query.orderId) {
+  //     const { orderId, paymentMethod } = req.query;
+  //     return { orderId, paymentMethod };
+  //   }
+
+  //   const { query } = queryString.parseUrl(req.url);
+  //   return { orderId: query.order_id, paymentMethod: query.payment_method };
+  // }
+
+  const [emptied, setEmptied] = useState(false);
+  const [orderData, setOrderData] = useState(null);
+
+  useEffect(() => {
+    if (!emptied) {
+      basket.actions.empty();
+      setEmptied(true);
     }
-
-    const { query } = queryString.parseUrl(req.url);
-    return { orderId: query.order_id, paymentMethod: query.payment_method };
-  }
-
-  state = {
-    emptied: false,
-    orderData: null
-  };
-
-  componentDidMount() {
-    const { orderId, paymentMethod } = this.props;
-    this.empty();
 
     let url = `/api/order-confirmation?order_id=${orderId}`;
     if (paymentMethod) url = `${url}&payment_method=${paymentMethod}`;
+
     fetch(url)
       .then(res => res.json())
-      .then(orderData => this.setState({ orderData }));
+      .then(data => setOrderData(data));
+  }, []);
+
+  if (!orderData || !orderData.data) {
+    return <Loader>Please wait. Getting receipt...</Loader>;
   }
 
-  static contextType = BasketContext;
+  const order = orderData.data.orders.get;
+  const { email } = order.customer.addresses[0];
 
-  empty() {
-    const { emptied } = this.state;
-    const { actions } = this.context;
-    if (!emptied) {
-      actions.empty();
-      this.setState({ emptied: true });
-    }
-  }
+  const items = order.cart.map(item => ({
+    ...item,
+    image: {
+      url: item.imageUrl
+    },
+    price: item.price.net
+  }));
 
-  render() {
-    const { orderId } = this.props;
-    const { orderData } = this.state;
-
-    if (!orderData || !orderData.data) {
-      return <Layout loading />;
-    }
-
-    const order = orderData.data.orders.get;
-    const { email } = order.customer.addresses[0];
-
-    const items = order.cart.map(item => ({
-      ...item,
-      image: {
-        url: item.imageUrl
-      },
-      price: item.price.net
-    }));
-
-    return (
-      <Layout title="Order Summary">
-        <Outer>
-          <CustomHeader>
-            <H1>Order Summary</H1>
-            <p>
-              Your order (<strong>#{orderId}</strong>) has been confirmed. A
-              copy of your order has been sent to <strong>{email}</strong>.
-            </p>
-            <Line />
-            <BillingDetails order={order} />
-            <Line />
-            <H3>Order Items</H3>
-            <OrderItems items={items} />
-          </CustomHeader>
-        </Outer>
-      </Layout>
-    );
-  }
+  return (
+    <Outer>
+      <CustomHeader>
+        <H1>Order Summary</H1>
+        <p>
+          Your order (<strong>#{orderId}</strong>) has been confirmed. A copy of
+          your order has been sent to <strong>{email}</strong>.
+        </p>
+        <Line />
+        <BillingDetails order={order} />
+        <Line />
+        <H3>Order Items</H3>
+        <OrderItems items={items} />
+      </CustomHeader>
+    </Outer>
+  );
 }
 
-export default withGraphQLAndBasket(Confirmation);
+export default withGraphQLAndBasket(props => (
+  <Layout title="Order Summary">
+    <Confirmation {...props} />
+  </Layout>
+));

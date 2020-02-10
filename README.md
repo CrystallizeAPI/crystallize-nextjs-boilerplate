@@ -72,14 +72,6 @@ Next.js.
 All your ZEIT Now [serverless functions][18]. You can delete this folder if you
 are not using ZEIT Now.
 
-### `server/`
-
-This is where the ultra-light frontend server lives. Its primary function is to
-render the React app in response to a request.
-
-You can delete this folder if you intend to use [ZEIT Now][19] instead of a
-custom server.
-
 ### `static/`
 
 Static resources used by the web server.
