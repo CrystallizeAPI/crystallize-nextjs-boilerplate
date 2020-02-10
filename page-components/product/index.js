@@ -9,10 +9,10 @@ import { useSafePathQuery } from 'lib/graph';
 import { H1, H2, screen, Outer } from 'ui';
 import CategoryItem from 'components/category-item';
 import Layout from 'components/layout';
-import VariantSelector from 'components/variant-selector';
 import ShapeComponents from 'components/shape/components';
 import { attributesToObject } from 'lib/util/variants';
 
+import VariantSelector from './variant-selector';
 import Buy from './buy';
 import productPageQuery from './query';
 import {
