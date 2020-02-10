@@ -69,4 +69,11 @@ function CataloguePage() {
   return Cmp ? <Cmp /> : <Error statusCode="404" />;
 }
 
+// Enable Zeit Now edge caching
+CataloguePage.getInitialProps = ctx => {
+  if (ctx.res) {
+    ctx.res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate');
+  }
+};
+
 export default withGraphQLAndBasket(CataloguePage);
