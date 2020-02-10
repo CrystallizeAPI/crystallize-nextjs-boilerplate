@@ -1,4 +1,3 @@
-/* eslint react/no-multi-comp: 0 */
 import React, { useState } from 'react';
 import Img from '@crystallize/react-image';
 import isEqual from 'lodash/isEqual';

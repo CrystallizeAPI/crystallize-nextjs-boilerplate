@@ -57,7 +57,7 @@ async function envFileExists() {
     ]);
 
     const envVars = {
-      CRYSTALLIZE_GRAPH_URL_BASE: 'https://graph.crystallize.com',
+      CRYSTALLIZE_API_URL: 'https://api.crystallize.com',
       CRYSTALLIZE_TENANT_ID: 'teddy-bear-shop'
     };
 

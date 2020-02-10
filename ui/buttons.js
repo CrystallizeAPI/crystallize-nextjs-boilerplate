@@ -29,10 +29,6 @@ const Outer = styled.button.attrs(() => ({
   text-decoration: none;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
 
-  ${is('fullWidth')`
-    width: 100%;
-  `};
-
   &:hover ${Inner} {
     background: ${darken(0.1, colors.glacier)};
   }
@@ -96,3 +92,5 @@ export const Button = React.forwardRef(
     </Outer>
   )
 );
+
+Button.displayName = 'Button';

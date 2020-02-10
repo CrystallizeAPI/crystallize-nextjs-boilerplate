@@ -1,4 +1,3 @@
-/* eslint react/no-multi-comp: 0, react/no-danger: 0 */
 import React from 'react';
 import Head from 'next/head';
 

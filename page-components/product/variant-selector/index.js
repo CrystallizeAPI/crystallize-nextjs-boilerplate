@@ -28,7 +28,7 @@ const reduceAttributes = variants =>
     return attrs;
   }, {});
 
-export default ({
+const VariantSelector = ({
   variants,
   selectedVariant,
   onVariantChange,
@@ -94,3 +94,7 @@ export default ({
     </Outer>
   );
 };
+
+VariantSelector.displayName = 'VariantSelector';
+
+export default VariantSelector;

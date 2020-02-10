@@ -41,7 +41,6 @@ const ShapeComponents = ({ components, overrides }) => {
         return (
           <Images>
             {component.content.images.map((image, idx) => (
-              // eslint-disable-next-line react/no-array-index-key
               <Image key={idx} {...image} sizes="80vw" />
             ))}
           </Images>
