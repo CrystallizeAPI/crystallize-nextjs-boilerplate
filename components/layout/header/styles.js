@@ -42,6 +42,7 @@ export const Nav = styled.nav`
     top: 0;
     left: 0;
     width: 100%;
+    min-height: 100vh;
     height: 100%;
     overflow-x: auto;
     scroll-behavior: smooth;
@@ -100,6 +101,7 @@ export const Basket = styled.button`
   padding: 0;
   border-radius: 5px;
   justify-self: flex-end;
+
   img,
   svg {
     width: 40px;
