@@ -66,14 +66,7 @@ function CataloguePage() {
    * Render the corresponding type template, or 404
    * if there is no template for the type
    */
-  return Cmp ? <Cmp /> : <Error statusCode="404" />;
+  return Cmp ? <Cmp key={router.asPath} /> : <Error statusCode="404" />;
 }
-
-// Enable Zeit Now edge caching
-CataloguePage.getInitialProps = ctx => {
-  if (ctx.res) {
-    ctx.res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate');
-  }
-};
 
 export default withGraphQLAndBasket(CataloguePage);

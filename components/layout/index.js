@@ -5,12 +5,12 @@ import { IntlProvider } from 'react-intl';
 import { useQuery } from 'urql';
 
 import AuthGate from 'components/auth-context';
-import Aside from 'components/aside';
 import { Spinner } from 'ui';
 import GlobalStyle from 'ui/global';
 import { SettingsProvider } from 'components/settings-context';
 
-import Header from '../header';
+import Aside from './aside';
+import Header from './header';
 import {
   Main,
   LoadingWrapper,

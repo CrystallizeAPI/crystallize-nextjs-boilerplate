@@ -6,6 +6,10 @@ import { darken } from 'polished';
 import { Spinner } from './spinner';
 import { colors } from './colors';
 
+const STATES = {
+  LOADING: 'loading'
+};
+
 const Inner = styled.span`
   flex: 1 1 auto;
   background: ${darken(0.1, colors.glacier)};
@@ -78,19 +82,17 @@ const Loading = styled.span`
   }
 `;
 
-export const Button = React.forwardRef(
-  ({ children, loading, ...rest }, ref) => (
-    <Outer {...rest} ref={ref}>
-      <Inner>
-        <Text shown={!loading}>{children}</Text>
-        {loading && (
-          <Loading>
-            <Spinner />
-          </Loading>
-        )}
-      </Inner>
-    </Outer>
-  )
-);
+export const Button = React.forwardRef(({ children, state, ...rest }, ref) => (
+  <Outer {...rest} ref={ref}>
+    <Inner>
+      <Text shown={state !== STATES.LOADING}>{children}</Text>
+      {state === STATES.LOADING && (
+        <Loading>
+          <Spinner />
+        </Loading>
+      )}
+    </Inner>
+  </Outer>
+));
 
 Button.displayName = 'Button';

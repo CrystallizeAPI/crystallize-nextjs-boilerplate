@@ -1,12 +1,12 @@
 {
-  "name": "crystallize-frontend-boilerplate",
+  "name": "crystallize-nextjs-boilerplate",
   "version": "4.1.0",
   "license": "MIT",
   "engines": {
     "node": ">=10.10"
   },
   "repository": {
-    "url": "git@github.com:CrystallizeAPI/crystallize-frontend-boilerplate.git",
+    "url": "git@github.com:CrystallizeAPI/crystallize-nextjs-boilerplate.git",
     "type": "git"
   },
   "scripts": {
