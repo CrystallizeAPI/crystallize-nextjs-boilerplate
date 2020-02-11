@@ -65,3 +65,5 @@ typings/
 
 # Release-it settings
 .release-it.json
+
+.now
