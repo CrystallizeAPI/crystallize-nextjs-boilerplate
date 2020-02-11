@@ -25,7 +25,7 @@ const Header = ({ simple, menuItems }) => {
           {menuItems.map(category => (
             <NavListItem key={category.path}>
               <Link as={category.path} href={`/${category.type}`}>
-                <a>{category.name}</a>
+                <a onClick={() => setNavOpen(false)}>{category.name}</a>
               </Link>
             </NavListItem>
           ))}
@@ -40,9 +40,7 @@ const Header = ({ simple, menuItems }) => {
               </button>
             ) : (
               <Link href="/login">
-                <a role="button" tabIndex="0">
-                  Login
-                </a>
+                <a>Login</a>
               </Link>
             )
           }

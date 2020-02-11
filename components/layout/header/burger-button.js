@@ -8,6 +8,7 @@ const Outer = styled.button.attrs(() => ({
   appearance: none;
   display: none;
   cursor: pointer;
+  background: transparent;
   width: 40px;
   height: 40px;
   position: absolute;
@@ -16,11 +17,6 @@ const Outer = styled.button.attrs(() => ({
   right: 15px;
   z-index: 100;
   padding: 0;
-
-  &:hover,
-  &:active {
-    background: rgba(0, 0, 0, 0.05);
-  }
 
   ${responsive.smAndLess} {
     display: block;
