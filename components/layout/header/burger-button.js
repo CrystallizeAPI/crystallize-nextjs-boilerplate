@@ -13,10 +13,14 @@ const Outer = styled.button.attrs(() => ({
   position: absolute;
   margin-right: 15px;
   margin-top: 5px;
-  right: 20px;
+  right: 15px;
   z-index: 100;
+  padding: 0;
 
-  transition: all 0.2s ease-out 0.05s;
+  &:hover,
+  &:active {
+    background: rgba(0, 0, 0, 0.05);
+  }
 
   ${responsive.smAndLess} {
     display: block;

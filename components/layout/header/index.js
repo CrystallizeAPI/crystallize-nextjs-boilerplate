@@ -31,7 +31,6 @@ const Header = ({ simple, menuItems }) => {
           ))}
         </NavList>
       </Nav>
-      <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
       <NavActions open={navOpen}>
         <AuthContext.Consumer>
           {state =>
@@ -50,6 +49,7 @@ const Header = ({ simple, menuItems }) => {
         </AuthContext.Consumer>
       </NavActions>
       <BasketButton />
+      <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
     </Outer>
   );
 };

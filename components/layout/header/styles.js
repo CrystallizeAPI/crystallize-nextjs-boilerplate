@@ -37,14 +37,16 @@ export const Nav = styled.nav`
 
   ${responsive.smAndLess} {
     display: none;
-    position: fixed;
+    position: absolute;
     z-index: 99;
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
     border: none;
-    background: #fff;
+    background: #fafafa;
     margin: 0;
     padding: 2em;
     font-size: 1.5rem;
@@ -105,6 +107,7 @@ export const Basket = styled.button`
   svg path {
     stroke: ${colors.darkText};
   }
+
   &:hover,
   &:active {
     background: rgba(0, 0, 0, 0.05);
