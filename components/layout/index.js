@@ -82,7 +82,7 @@ const Layout = ({ children, title, description, simple, loading }) => {
   return (
     <>
       <Head>
-        <title key="title">{title}</title>
+        <title key="title">{title || ''}</title>
         {description && (
           <meta key="description" name="description" content={description} />
         )}
