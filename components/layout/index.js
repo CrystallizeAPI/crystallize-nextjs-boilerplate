@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import CrystallizeLayout from '@crystallize/react-layout';
 import { IntlProvider } from 'react-intl';
 import { useQuery } from 'urql';
@@ -63,6 +64,8 @@ const Layout = ({ children, title, description, simple, loading, error }) => {
     }
   });
 
+  const router = useRouter();
+
   if (queryResult.fetching) {
     return (
       <>
@@ -87,6 +90,9 @@ const Layout = ({ children, title, description, simple, loading, error }) => {
         {description && (
           <meta key="description" name="description" content={description} />
         )}
+
+        {/* Set a canonical link for every page */}
+        <link rel="canonical" href={`https://your.domain${router.asPath}`} />
       </Head>
       <GlobalStyle />
       <SettingsProvider language={language} currency={tenant.defaults.currency}>
