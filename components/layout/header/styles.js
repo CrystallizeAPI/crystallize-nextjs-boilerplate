@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import is from 'styled-is';
 
 import { colors, responsive } from 'ui';
 
@@ -11,8 +12,9 @@ export const Outer = styled.header`
   max-width: 1500px;
   margin: 0 auto 50px;
 
-  ${responsive.xs} {
-    flex-direction: column;
+  ${responsive.smAndLess} {
+    padding: 10px 90px 10px 20px;
+    justify-content: space-between;
   }
 `;
 
@@ -20,6 +22,7 @@ export const Logo = styled.div`
   height: 84px;
   display: block;
   object-fit: contain;
+
   img,
   svg {
     height: 100%;
@@ -29,9 +32,27 @@ export const Logo = styled.div`
 export const Nav = styled.nav`
   display: flex;
   margin: 10px 0 0 15px;
-  width: 100%;
   border-left: 1px solid #dfdfdf;
   padding-left: 15px;
+
+  ${responsive.smAndLess} {
+    display: none;
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    border: none;
+    background: #fff;
+    margin: 0;
+    padding: 2em;
+    font-size: 1.5rem;
+
+    ${is('open')`
+      display: block;
+    `};
+  }
 `;
 
 export const NavList = styled.ul`
@@ -39,6 +60,11 @@ export const NavList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+
+  /* Make space for logout button */
+  ${responsive.smAndLess} {
+    margin-top: 30px;
+  }
 `;
 
 export const NavListItem = styled.li`
@@ -55,6 +81,10 @@ export const NavListItem = styled.li`
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  ${responsive.smAndLess} {
+    display: block;
   }
 `;
 
@@ -90,10 +120,29 @@ export const BasketQuantity = styled.div`
 `;
 
 export const NavActions = styled.div`
-  cursor: pointer;
-  margin: 0px 10px;
+  margin: 10px 10px 0;
 
-  a:hover {
-    text-decoration: underline;
+  button {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  ${responsive.smAndLess} {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+    text-align: center;
+    margin: 0;
+    font-size: 1.5rem;
+
+    ${is('open')`
+      display: block;
+    `};
   }
 `;
