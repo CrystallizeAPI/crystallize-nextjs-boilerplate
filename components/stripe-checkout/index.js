@@ -158,7 +158,7 @@ class StripeCheckout extends React.Component {
         </CardElementWrapper>
         <Button
           type="button"
-          loading={processing}
+          state={processing ? 'loading' : null}
           disabled={processing}
           onClick={() => this.submit()}
         >

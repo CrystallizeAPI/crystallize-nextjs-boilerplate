@@ -30,10 +30,10 @@ const Aside = () => {
         <Link href="/checkout" passHref>
           <Button
             as="a"
-            fullWidth
-            loading={going}
+            state={going ? 'loading' : null}
             disabled={!basket.state.items.length}
             onClick={onCheckoutClick}
+            css={{ width: '100%' }}
           >
             Go to Checkout
           </Button>

@@ -52,6 +52,7 @@ export const Spinner = ({
     />
   </Svg>
 );
+
 Spinner.propTypes = {
   color: PropTypes.string,
   thickness: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8]),
@@ -59,3 +60,5 @@ Spinner.propTypes = {
   speed: PropTypes.oneOf(['fast', 'slow']),
   size: PropTypes.string
 };
+
+Spinner.displayName = 'Spinner';

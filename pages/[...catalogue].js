@@ -66,7 +66,7 @@ function CataloguePage() {
    * Render the corresponding type template, or 404
    * if there is no template for the type
    */
-  return Cmp ? <Cmp /> : <Error statusCode="404" />;
+  return Cmp ? <Cmp key={router.asPath} /> : <Error statusCode="404" />;
 }
 
 export default withGraphQLAndBasket(CataloguePage);

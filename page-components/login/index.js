@@ -81,8 +81,7 @@ const Login = () => {
                     }
                   />
                   <Button
-                    loading={userData.loading}
-                    primary
+                    state={userData.loading ? 'loading' : null}
                     type="button"
                     value="Submit"
                     onClick={handleSubmit}

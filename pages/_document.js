@@ -1,4 +1,3 @@
-/* eslint react/no-danger: 0  */
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
