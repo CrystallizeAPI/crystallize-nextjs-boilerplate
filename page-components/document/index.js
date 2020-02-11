@@ -1,4 +1,5 @@
 import React from 'react';
+import Error from 'pages/_error';
 import { useRouter } from 'next/router';
 
 import { useSettings } from 'components/settings-context';
@@ -34,7 +35,7 @@ const DocumentPage = () => {
 
   const [document] = data.tree;
   if (!document) {
-    return <Layout error />;
+    return <Error statusCode="404" />;
   }
 
   return (

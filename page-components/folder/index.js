@@ -1,4 +1,5 @@
 import React from 'react';
+import Error from 'pages/_error';
 import { useRouter } from 'next/router';
 
 import { useSettings } from 'components/settings-context';
@@ -35,7 +36,7 @@ export default function FolderPage() {
 
   const [folder] = data.tree;
   if (!folder) {
-    return <Layout error />;
+    return <Error statusCode="404" />;
   }
 
   const { children } = folder;

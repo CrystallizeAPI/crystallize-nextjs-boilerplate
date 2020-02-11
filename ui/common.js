@@ -12,12 +12,6 @@ export const Outer = styled.div`
   ${responsive.smAndLess} {
     padding: 0 1rem;
   }
-  .crystallize-grid-cell {
-    background: transparent;
-  }
-  .crystallize-grid-renderer-grid {
-    grid-auto-rows: 400px;
-  }
 `;
 
 export const Header = styled.div`
