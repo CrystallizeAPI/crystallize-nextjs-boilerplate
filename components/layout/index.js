@@ -30,7 +30,7 @@ const Loader = ({ children }) => (
   </LoadingWrapper>
 );
 
-const Layout = ({ children, title, description, simple, loading, error }) => {
+const Layout = ({ children, title, description, simple, loading }) => {
   /**
    * Set the default language.
    * You can also determine this any way you want.
@@ -73,10 +73,6 @@ const Layout = ({ children, title, description, simple, loading, error }) => {
         <Loader />
       </>
     );
-  }
-
-  if (queryResult.error || error) {
-    return 'Oh no...';
   }
 
   const {

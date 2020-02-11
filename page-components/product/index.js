@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Error from 'pages/_error';
 import Img from '@crystallize/react-image';
 import isEqual from 'lodash/isEqual';
 import { useRouter } from 'next/router';
@@ -50,7 +51,7 @@ export default function ProductPage() {
   }
 
   if (!data.tree || data.tree.length === 0) {
-    return <Layout error />;
+    return <Error statusCode="404" />;
   }
 
   const [product] = data.tree;

@@ -1,9 +1,9 @@
 import React from 'react';
-import Grid from '@crystallize/grid-renderer/react';
 import { useQuery } from 'urql';
 
+import Grid from 'components/grid-renderer';
 import Layout from 'components/layout';
-import Product from 'components/category-item';
+import CategoryItem from 'components/category-item';
 import { H1, Outer, Header } from 'ui';
 import itemFragment from 'lib/graph/fragments/item';
 import productFragment from 'lib/graph/fragments/product';
@@ -60,7 +60,7 @@ export default function FrontPage() {
 
         <Grid
           model={grid}
-          renderCellContent={cell => <Product data={cell.item} />}
+          renderCellContent={cell => <CategoryItem data={cell.item} />}
         />
       </Outer>
     </Layout>
