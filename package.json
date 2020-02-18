@@ -64,7 +64,7 @@
     "stripe": "^7.9.0",
     "styled-components": "^5.0.1",
     "styled-is": "^1.3.0",
-    "urql": "^1.8.2",
+    "urql": "1.8.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
