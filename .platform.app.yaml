@@ -20,7 +20,7 @@ type: nodejs:12
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-   start: "next start"
+   start: "next build && NODE_ENV=production next start"
 
 dependencies:
   nodejs:
@@ -33,3 +33,6 @@ mounts:
     'run':
         source: local
         source_path: run
+    '/.global':
+        source: local
+        source_path: global_source
