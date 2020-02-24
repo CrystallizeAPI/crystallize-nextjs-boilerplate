@@ -5,9 +5,14 @@
 
 # The name of this app. Must be unique within a project.
 name: app
-
+# The size of the persistent disk of the application (in MB).
+disk: 1024
 # The runtime the application uses.
 type: nodejs:12
+
+variables:
+    env:
+        NODE_ENV: production
 
 # The relationships of the application with services or other applications.
 #
@@ -20,14 +25,11 @@ type: nodejs:12
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-   start: "next build && NODE_ENV=production next start"
+   start: "next start"
 
 dependencies:
   nodejs:
     next: "^9.2.2"
-
-# The size of the persistent disk of the application (in MB).
-disk: 1024
 
 mounts:
     'run':
