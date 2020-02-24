@@ -33,3 +33,6 @@ mounts:
     'run':
         source: local
         source_path: run
+    '.global':
+        source: local
+        source_path: global_source
