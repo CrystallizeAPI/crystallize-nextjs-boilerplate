@@ -34,6 +34,7 @@ web:
 dependencies:
   nodejs:
     next: "^9.2.2"
+    babel-plugin-module-resolver: "^4.0.0"
 
 mounts:
     'run':
