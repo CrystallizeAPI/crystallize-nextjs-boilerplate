@@ -22,6 +22,10 @@ variables:
 #relationships:
 # database: "db:mysql"
 
+# The hooks executed at various points in the lifecycle of the application.
+hooks:
+    build: next build
+
 # The configuration of app when it is exposed to the web.
 web:
   commands:
