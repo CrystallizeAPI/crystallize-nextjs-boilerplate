@@ -35,3 +35,6 @@ mounts:
     'run':
         source: local
         source_path: run
+    '/.next':
+        source: local
+        source_path: next_source
