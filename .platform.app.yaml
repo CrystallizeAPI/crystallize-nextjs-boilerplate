@@ -41,6 +41,7 @@ dependencies:
     babel-plugin-module-resolver: "^3.2.0"
     babel-loader: "^8.0.6"
     babel-core: "^7.0.0-bridge.0"
+    @babel/core: "7.7.2"
 
 mounts:
     'run':
