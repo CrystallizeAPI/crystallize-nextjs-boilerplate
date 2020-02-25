@@ -22,9 +22,14 @@ variables:
 #relationships:
 # database: "db:mysql"
 
+build:
+  flavor: none
 # The hooks executed at various points in the lifecycle of the application.
 hooks:
-    build: next build
+    build: |
+       npm -d install
+       npm -d run build
+       next build
 # The configuration of app when it is exposed to the web.
 web:
   commands:
