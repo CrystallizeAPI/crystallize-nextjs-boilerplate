@@ -35,11 +35,6 @@ web:
   commands:
    start: "next start"
 
-dependencies:
-  nodejs:
-    next: "^9.2.1"
-    babel-plugin-module-resolver: "^3.2.0"
-
 mounts:
     'run':
         source: local
