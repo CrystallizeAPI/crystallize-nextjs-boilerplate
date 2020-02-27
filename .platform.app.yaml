@@ -8,7 +8,7 @@ name: app
 # The size of the persistent disk of the application (in MB).
 disk: 1024
 # The runtime the application uses.
-type: nodejs:12
+type: nodejs:8
 
 variables:
     env:
