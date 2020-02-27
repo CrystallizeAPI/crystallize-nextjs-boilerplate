@@ -29,7 +29,6 @@ hooks:
     build: |
        npm -d install
        npm -d run build
-       next build
 # The configuration of app when it is exposed to the web.
 web:
   commands:
