@@ -37,7 +37,7 @@ export default function FrontPage() {
       ${itemFragment}
       ${productFragment}
     `,
-    variables: { id: '5e551e1514097a38e5586255', language: 'en' }
+    variables: { id: '5dc3fe4d43b90109229ee27b', language: 'en' }
   });
 
   if (fetching) {
