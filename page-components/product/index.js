@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useSettings } from 'components/settings-context';
 import { useSafePathQuery } from 'lib/graph';
-import { H1, H2, screen, Outer } from 'ui';
+import { H1, H2, screen } from 'ui';
 import CategoryItem from 'components/category-item';
 import Layout from 'components/layout';
 import ShapeComponents from 'components/shape/components';
@@ -16,11 +16,13 @@ import VariantSelector from './variant-selector';
 import Buy from './buy';
 import productPageQuery from './query';
 import {
+  Outer,
   Sections,
   Media,
   MediaInner,
   Info,
   Summary,
+  ShapeContent,
   Description,
   RelatedTopics,
   TopicMap,
@@ -123,7 +125,9 @@ export default function ProductPage() {
           </Description>
         )}
 
-        <ShapeComponents components={componentsRest} />
+        <ShapeContent>
+          <ShapeComponents components={componentsRest} />
+        </ShapeContent>
 
         {product.topics && !!product.topics.length && (
           <RelatedTopics>

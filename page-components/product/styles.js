@@ -2,6 +2,16 @@ import styled from 'styled-components';
 
 import { colors, responsive } from 'ui';
 
+export const Outer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+export const ShapeContent = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+`;
+
 export const Loader = styled.div`
   text-align: center;
   margin: 50px;
