@@ -13,7 +13,7 @@
     "dev": "next dev",
     "dev:now": "now dev",
     "build": "next build",
-    "start": "NODE_ENV=production next start",
+    "start": "NODE_ENV=production next start -p $PORT",
     "prod": "npm run build && npm run start",
     "lint": "eslint .",
     "validate": "lint-staged",
