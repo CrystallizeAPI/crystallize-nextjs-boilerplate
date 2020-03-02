@@ -78,7 +78,7 @@ Static resources used by the web server.
 
 ### `ui/`
 
-UI related components live her. Color variables and simple shared components
+UI related components live here. Color variables and simple shared components
 
 ## Deploying Your Project
 
