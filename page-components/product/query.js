@@ -3,7 +3,7 @@ import productFragment from 'lib/graph/fragments/product';
 
 export default `
   query PRODUCT_PAGE($language: String!, $path: String) {
-    tree(language: $language, path: $path) {
+    product: catalogue(language: $language, path: $path) {
       ...item
       ...product
 

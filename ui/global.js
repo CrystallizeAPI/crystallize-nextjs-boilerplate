@@ -2,6 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 import { colors } from './colors';
 
 export default createGlobalStyle`
+  :root {
+    --content-padding: 50px;
+  }
+  
   html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -26,7 +30,7 @@ export default createGlobalStyle`
   figure,
   ol,
   ul {
-    margin: 0;
+    margin: 0 0 2em;
     padding: 0;
   }
   main {

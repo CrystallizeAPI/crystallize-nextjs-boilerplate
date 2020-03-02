@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { useSettings } from 'components/settings-context';
 import { useSafePathQuery } from 'lib/graph';
-import { Outer, H1 } from 'ui';
+import { H1 } from 'ui';
 import Layout from 'components/layout';
 import ShapeComponents from 'components/shape/components';
 
@@ -33,23 +33,22 @@ const DocumentPage = () => {
     return <Layout error />;
   }
 
-  const [document] = data.tree;
+  const { document } = data;
+
   if (!document) {
     return <Error statusCode="404" />;
   }
 
   return (
     <Layout title={document.name}>
-      <Outer>
-        <Document>
-          <ShapeComponents
-            components={document.components}
-            overrides={{
-              Title: H1
-            }}
-          />
-        </Document>
-      </Outer>
+      <Document>
+        <ShapeComponents
+          components={document.components}
+          overrides={{
+            Title: H1
+          }}
+        />
+      </Document>
     </Layout>
   );
 };

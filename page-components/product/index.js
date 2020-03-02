@@ -50,11 +50,11 @@ export default function ProductPage() {
     return <Layout loading />;
   }
 
-  if (!data.tree || data.tree.length === 0) {
+  const { product } = data;
+  if (!product) {
     return <Error statusCode="404" />;
   }
 
-  const [product] = data.tree;
   const selectedVariant =
     chosenVariant || product.variants.find(v => v.isDefault);
 

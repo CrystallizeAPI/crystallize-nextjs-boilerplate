@@ -27,7 +27,7 @@ function CataloguePage() {
   const [queryResult] = useSafePathQuery({
     query: `
       query GET_ITEM_FOR_UNKNOWN_URL($language: String!, $path: String) {
-        tree(language: $language, path: $path) {
+        catalogue(language: $language, path: $path) {
           type
         }
       }
@@ -48,13 +48,14 @@ function CataloguePage() {
     return <Layout error />;
   }
 
+  const { catalogue } = data;
+
   // Nothing in Crystallize at this path. Show 404 page
-  if (!data.tree || !data.tree.length) {
+  if (!catalogue) {
     return <Error statusCode="404" />;
   }
 
-  const { tree } = data;
-  const { type } = tree[0];
+  const { type } = catalogue;
 
   const Cmp = {
     product: ProductPage,
