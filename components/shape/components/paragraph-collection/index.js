@@ -5,7 +5,7 @@ import Paragraph from './paragraph';
 
 const ParagraphCollection = ({ paragraphs }) => {
   if (!paragraphs) {
-    return <div />;
+    return null;
   }
 
   return (

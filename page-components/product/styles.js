@@ -2,6 +2,16 @@ import styled from 'styled-components';
 
 import { colors, responsive } from 'ui';
 
+export const Outer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+export const ShapeContent = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+`;
+
 export const Loader = styled.div`
   text-align: center;
   margin: 50px;
@@ -165,7 +175,7 @@ export const Price = styled.div`
 export const List = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 300px;
+  grid-auto-rows: 200px;
   grid-gap: 1rem;
 
   ${responsive.sm} {

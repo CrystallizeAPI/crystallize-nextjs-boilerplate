@@ -44,10 +44,12 @@ const Layout = ({ children, title, description, simple, loading }) => {
   const [queryResult] = useQuery({
     query: `
       query MENU_AND_TENANT($language: String!) {
-        menu: tree(language: $language, path: "/") {
-          type
-          name
-          path
+        menu: catalogue(language: $language, path: "/") {
+          children {
+            type
+            name
+            path
+          }
         }
     
         tenant(language: $language) {
@@ -95,7 +97,7 @@ const Layout = ({ children, title, description, simple, loading }) => {
         <IntlProvider locale={language}>
           <AuthGate>
             <CrystallizeLayout right={simple ? null : Aside}>
-              <Header simple={simple} menuItems={menu} />
+              <Header simple={simple} menuItems={menu.children} />
               <Main>{loading ? <Loader /> : children}</Main>
             </CrystallizeLayout>
           </AuthGate>

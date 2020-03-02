@@ -60,7 +60,9 @@ export default function FrontPage() {
 
         <Grid
           model={grid}
-          renderCellContent={cell => <CategoryItem data={cell.item} />}
+          renderCellContent={cell => (
+            <CategoryItem data={cell.item} gridCell={cell} />
+          )}
         />
       </Outer>
     </Layout>

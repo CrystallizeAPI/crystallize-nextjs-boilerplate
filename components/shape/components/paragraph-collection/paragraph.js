@@ -1,14 +1,14 @@
 import CrystallizeContent from '@crystallize/content-transformer/react';
-import Image from '@crystallize/react-image';
-import { H2 } from 'ui';
+import { H3 } from 'ui';
 
-import { Outer, Title, Body, Images } from './styles';
+import { Outer, Title, Body } from './styles';
+import Images from '../images';
 
 const Paragraph = ({
   body,
   title,
   images,
-  headingComponent: HeadingComponent = H2
+  headingComponent: HeadingComponent = H3
 }) => {
   return (
     <Outer>
@@ -22,13 +22,7 @@ const Paragraph = ({
           <CrystallizeContent {...body.json} />
         </Body>
       )}
-      {!!images && images.length > 0 && (
-        <Images>
-          {images.map((image, index) => (
-            <Image key={index} {...image} sizes="80vw" />
-          ))}
-        </Images>
-      )}
+      <Images images={images} />
     </Outer>
   );
 };

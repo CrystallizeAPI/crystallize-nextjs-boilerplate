@@ -34,7 +34,7 @@ export default function FolderPage() {
     return <Layout error />;
   }
 
-  const [folder] = data.tree;
+  const { folder } = data;
   if (!folder) {
     return <Error statusCode="404" />;
   }
