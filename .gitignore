@@ -66,4 +66,8 @@ typings/
 # Release-it settings
 .release-it.json
 
+# Now deployment settings
 .now
+
+# Yarn lock file
+yarn.lock
