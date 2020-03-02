@@ -11,8 +11,8 @@ disk: 1024
 type: nodejs:12
 
 variables:
-    env:
-        NODE_ENV: production
+  env:
+    NODE_ENV: production
 
 # The relationships of the application with services or other applications.
 #
@@ -26,15 +26,15 @@ build:
   flavor: none
 # The hooks executed at various points in the lifecycle of the application.
 hooks:
-    build: |
-       npm -d install
-       npm -d run build
+  build: |
+    npm -d install --dev
+    npm -d run build
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-   start: "npm start"
+    start: 'npm start'
 
 mounts:
-    'run':
-        source: local
-        source_path: run
+  'run':
+    source: local
+    source_path: run
