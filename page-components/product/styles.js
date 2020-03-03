@@ -22,6 +22,7 @@ export const Sections = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 4em;
 
   ${responsive.smAndLess} {
     display: block;
@@ -31,7 +32,8 @@ export const Sections = styled.div`
 export const RelatedTopics = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 150px;
+  margin-top: 4em;
+
   h2 {
     font-family: 'Roboto Slab', sans-serif;
     padding-left: 50px;
@@ -54,46 +56,30 @@ export const TopicTitle = styled.h3`
   transform-origin: top left;
   transform: rotate(90deg);
 `;
+
 export const Media = styled.div`
   flex: 0 0 50%;
   position: relative;
-  padding-top: 60%;
 
   ${responsive.mdAndLess} {
-    flex-basis: 50%;
-  }
-
-  &:before {
-    content: '';
-    width: 80%;
-    height: 20px;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-bottom: 2em;
   }
 `;
 
 export const MediaInner = styled.div`
-  width: 100%;
-  max-width: 550px;
-  height: 100%;
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  padding: 2rem;
+  ${responsive.mdAndLess} {
+    margin: 2em;
+  }
 
   img {
-    position: relative;
     object-fit: contain;
-    z-index: 10;
-    top: 0;
+    max-width: 550px;
     width: 100%;
     height: 100%;
+
+    ${responsive.mdAndLess} {
+      max-height: 40vh;
+    }
   }
 `;
 
@@ -102,8 +88,7 @@ export const Info = styled.div`
   margin: 0 50px 0 50px;
 
   ${responsive.smAndLess} {
-    margin-left: 0;
-    margin-top: 50px;
+    margin: 2em;
   }
 `;
 

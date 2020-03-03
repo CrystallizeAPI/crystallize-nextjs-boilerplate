@@ -46,7 +46,7 @@ const ShapeComponents = ({ components, overrides }) => {
             if (!component.content || !component.content.images) {
               return null;
             }
-            return <Images images={component.content.images} />;
+            return <Images key={key} images={component.content.images} />;
           }
 
           if (type === 'richText') {
