@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CrystallizeContent from '@crystallize/content-transformer/react';
 
 import ParagraphCollection from './paragraph-collection';
+import PropertiesTable from './properties-table';
 import Images from './images';
 
 const Outer = styled.div``;
@@ -68,6 +69,15 @@ const ShapeComponents = ({ components, overrides }) => {
             return (
               <ContentOuter key={key}>
                 <Component>{component.content.text}</Component>
+              </ContentOuter>
+            );
+          }
+
+          if (type === 'propertiesTable') {
+            Component = Component || PropertiesTable;
+            return (
+              <ContentOuter key={key}>
+                <Component {...component.content} />
               </ContentOuter>
             );
           }

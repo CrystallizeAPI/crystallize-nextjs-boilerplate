@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Error from 'pages/_error';
 import Img from '@crystallize/react-image';
+import CrystallizeContent from '@crystallize/content-transformer/react';
 import isEqual from 'lodash/isEqual';
 import { useRouter } from 'next/router';
 
@@ -99,7 +100,7 @@ export default function ProductPage() {
             <H1>{product.name}</H1>
             {summaryComponent && (
               <Summary>
-                <ShapeComponents components={[summaryComponent]} />
+                <CrystallizeContent {...summaryComponent?.content?.json} />
               </Summary>
             )}
 
