@@ -32,7 +32,7 @@ hooks:
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-    start: 'npm start'
+    start: 'npm run start-platformsh'
 
 mounts:
   'run':
