@@ -1,0 +1,40 @@
+# This file describes an application. You can have multiple applications
+# in the same project.
+#
+# See https://docs.platform.sh/user_guide/reference/platform-app-yaml.html
+
+# The name of this app. Must be unique within a project.
+name: app
+# The size of the persistent disk of the application (in MB).
+disk: 1024
+# The runtime the application uses.
+type: nodejs:12
+
+variables:
+  env:
+    NODE_ENV: production
+
+# The relationships of the application with services or other applications.
+#
+# The left-hand side is the name of the relationship as it will be exposed
+# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
+# side is in the form `<service name>:<endpoint name>`.
+#relationships:
+# database: "db:mysql"
+
+build:
+  flavor: none
+# The hooks executed at various points in the lifecycle of the application.
+hooks:
+  build: |
+    npm -d install --dev
+    npm -d run build
+# The configuration of app when it is exposed to the web.
+web:
+  commands:
+    start: 'npm run start-platformsh'
+
+mounts:
+  'run':
+    source: local
+    source_path: run
