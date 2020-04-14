@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
-export const Outer = styled.div`
-  margin-bottom: 30px;
+import { Outer as O } from 'ui';
+
+export const Outer = styled(O)`
+  .crystallize-grid--css-grid {
+    grid-gap: 2em;
+  }
 `;

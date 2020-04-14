@@ -1,12 +1,14 @@
 import React from 'react';
 import { useQuery } from 'urql';
+import Grid from '@crystallize/grid-renderer';
 
-import Grid from 'components/grid-renderer';
 import Layout from 'components/layout';
 import CategoryItem from 'components/category-item';
-import { H1, Outer, Header } from 'ui';
+import { H1, Header } from 'ui';
 import itemFragment from 'lib/graph/fragments/item';
 import productFragment from 'lib/graph/fragments/product';
+
+import { Outer } from './styles';
 
 export default function FrontPage() {
   const [{ fetching, error, data }] = useQuery({
@@ -60,7 +62,7 @@ export default function FrontPage() {
 
         <Grid
           model={grid}
-          renderCellContent={cell => (
+          cellComponent={({ cell }) => (
             <CategoryItem data={cell.item} gridCell={cell} />
           )}
         />
