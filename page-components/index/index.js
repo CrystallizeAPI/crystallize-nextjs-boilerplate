@@ -60,12 +60,14 @@ export default function FrontPage() {
           <p>Cool of you to join us.</p>
         </Header>
 
-        <Grid
-          model={grid}
-          cellComponent={({ cell }) => (
-            <CategoryItem data={cell.item} gridCell={cell} />
-          )}
-        />
+        {grid && (
+          <Grid
+            model={grid}
+            cellComponent={({ cell }) => (
+              <CategoryItem data={cell.item} gridCell={cell} />
+            )}
+          />
+        )}
       </Outer>
     </Layout>
   );

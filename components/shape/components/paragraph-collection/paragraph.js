@@ -3,11 +3,13 @@ import { H3 } from 'ui';
 
 import { Outer, Title, Body } from './styles';
 import Images from '../images';
+import Videos from '../videos';
 
 const Paragraph = ({
   body,
   title,
   images,
+  videos,
   headingComponent: HeadingComponent = H3
 }) => {
   return (
@@ -23,6 +25,7 @@ const Paragraph = ({
         </Body>
       )}
       <Images images={images} />
+      <Videos videos={videos} />
     </Outer>
   );
 };
