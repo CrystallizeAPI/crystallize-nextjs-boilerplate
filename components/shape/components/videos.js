@@ -8,11 +8,6 @@ const Outer = styled.div`
 
 const List = styled.div``;
 
-const StyledVideoPlayer = styled(VideoPlayer)`
-  width: 100%;
-  height: 56%;
-`;
-
 export default function Videos({ videos }) {
   if (!videos || videos.length === 0) {
     return null;
@@ -21,7 +16,7 @@ export default function Videos({ videos }) {
   if (videos.length === 1) {
     return (
       <Outer>
-        <StyledVideoPlayer {...videos[0]} />
+        <VideoPlayer {...videos[0]} />
       </Outer>
     );
   }
@@ -30,7 +25,9 @@ export default function Videos({ videos }) {
     <Outer>
       <List>
         {videos.map((video, index) => (
-          <StyledVideoPlayer key={index} {...video} />
+          <div key={index} style={{ margin: '0 0 2em' }}>
+            <VideoPlayer {...video} />
+          </div>
         ))}
       </List>
     </Outer>

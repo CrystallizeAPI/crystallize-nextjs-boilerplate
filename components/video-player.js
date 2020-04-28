@@ -27,10 +27,6 @@ export default function VideoPlayer({
   fluid = true,
   ...rest
 }) {
-  if (!playlists) {
-    return null;
-  }
-
   const el = useRef();
 
   const sources =
@@ -52,7 +48,11 @@ export default function VideoPlayer({
 
       return () => player.dispose();
     }
-  }, [sources]);
+  }, [sources, autoplay, controls, fluid]);
+
+  if (!playlists) {
+    return null;
+  }
 
   return (
     <Outer>
