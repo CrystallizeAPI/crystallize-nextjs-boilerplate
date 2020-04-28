@@ -83,11 +83,11 @@ UI related components live here. Color variables and simple shared components
 ## Deploying Your Project
 
 There are multiple alternatives for deployments, however for the easiest hosting
-of a Node application, one option is [ZEIT Now][20].
+of a Node application, one option is [Vercel Now][20].
 
-### Deploying with ZEIT Now
+### Deploying with Vercel Now
 
-- Register a ZEIT Now account
+- Register a Vercel Now account
 - Run `npm install --global now`
 - Navigate to your project folder
 - Run `now`
@@ -114,6 +114,6 @@ of a Node application, one option is [ZEIT Now][20].
 [16]:
   https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing
 [17]: https://github.com/crystallizeapi/crystallize-cli
-[18]: https://zeit.co/docs/v2/serverless-functions/introduction
-[19]: https://zeit.co/guides/deploying-nextjs-with-now/
-[20]: https://zeit.co/now
+[18]: https://vercel.com/docs/v2/serverless-functions/introduction
+[19]: https://vercel.com/guides/deploying-nextjs-with-now/
+[20]: https://vercel.com
