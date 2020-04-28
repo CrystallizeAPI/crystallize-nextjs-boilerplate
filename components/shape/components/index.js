@@ -6,6 +6,7 @@ import CrystallizeContent from '@crystallize/content-transformer/react';
 import ParagraphCollection from './paragraph-collection';
 import PropertiesTable from './properties-table';
 import Images from './images';
+import Videos from './videos';
 
 const Outer = styled.div``;
 
@@ -48,6 +49,13 @@ const ShapeComponents = ({ components, overrides }) => {
               return null;
             }
             return <Images key={key} images={component.content.images} />;
+          }
+
+          if (type === 'videos') {
+            if (!component.content || !component.content.videos) {
+              return null;
+            }
+            return <Videos key={key} videos={component.content.videos} />;
           }
 
           if (type === 'richText') {
