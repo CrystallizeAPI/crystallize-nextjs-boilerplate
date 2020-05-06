@@ -1,4 +1,4 @@
-import { createCrystallizeOrder } from 'lib/crystallize-order-handler';
+import { persistCrystallizeOrder } from 'lib/crystallize-order-handler';
 import { orderQueryNormalizer } from 'lib/order-normalizer';
 import { emailOrderConfirmation } from 'lib/emails';
 import klarnaOrderAcknowledger from 'lib/util/klarna-order-acknowledger';
@@ -24,8 +24,9 @@ const bodyParser = request => {
 
 export default async (req, res) => {
   // TODO: Handle understanding the payment method by some body fields e.g. stripe has customer_id
-  let paymentMethod;
+  let [paymentMethod] = req.query.path;
   let response;
+
   const data = await bodyParser(req);
 
   try {
@@ -33,9 +34,6 @@ export default async (req, res) => {
 
     // @extraStripe
     const sig = req.headers['stripe-signature'];
-
-    if (paymentIntentId || sig) paymentMethod = 'stripe';
-    if (req.query.klarna_order_id) paymentMethod = 'klarna';
 
     if (!paymentMethod) {
       return res.status(200).send({
@@ -50,10 +48,11 @@ export default async (req, res) => {
 
       paymentIntentId,
       stripeRawBody: req.rawBody,
-      klarnaOrderId: req.query.klarna_order_id
+      klarnaOrderId: req.query.klarna_order_id,
+      vippsOrderId: req.query.path[req.query.path.length - 1]
     });
 
-    response = await createCrystallizeOrder(mutationBody);
+    response = await persistCrystallizeOrder(mutationBody);
 
     if (paymentMethod === 'klarna')
       await klarnaOrderAcknowledger(req.query.klarna_order_id);

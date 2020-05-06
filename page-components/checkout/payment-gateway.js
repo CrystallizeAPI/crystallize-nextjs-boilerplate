@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { responsive, H3 } from 'ui';
 import StripeCheckout from './stripe';
 import KlarnaCheckout from './klarna';
+import VippsCheckout from './vipps';
 
 import {
   Form,
@@ -49,17 +50,19 @@ class PaymentGateway extends React.Component {
     paymentMethod: null,
     firstName: '',
     lastName: '',
-    email: ''
+    email: '',
+    phone: ''
   };
 
   render() {
     const { items, currency } = this.props;
-    const { paymentMethod, firstName, lastName, email } = this.state;
+    const { paymentMethod, firstName, lastName, email, phone } = this.state;
 
     const personalDetails = {
       firstName,
       lastName,
-      email
+      email,
+      phone
     };
 
     return (
@@ -104,6 +107,19 @@ class PaymentGateway extends React.Component {
                 />
               </InputGroup>
             </Row>
+            <Row>
+              <InputGroup>
+                <Label htmlFor="phone"> Phone</Label>
+                <Input
+                  name="phone"
+                  type="phone"
+                  placeholder="Personal number"
+                  value={phone}
+                  onChange={e => this.setState({ phone: e.target.value })}
+                  required
+                />
+              </InputGroup>
+            </Row>
 
             <SectionHeader>Choose payment method</SectionHeader>
             <PaymentMethods>
@@ -124,6 +140,14 @@ class PaymentGateway extends React.Component {
                 >
                   <img src="/static/klarna-logo.png" alt="Klarna logo" />
                 </PaymentButton>
+                <PaymentButton
+                  color="#FFFFFF"
+                  type="button"
+                  active={paymentMethod === 'vipps'}
+                  onClick={() => this.setState({ paymentMethod: 'vipps' })}
+                >
+                  <img src="/static/vipps-logo.png" alt="Vipps logo" />
+                </PaymentButton>
               </PaymentSelector>
               {paymentMethod === 'stripe' && (
                 <PaymentMethod>
@@ -140,7 +164,15 @@ class PaymentGateway extends React.Component {
                   />
                 </PaymentMethod>
               )}
-
+              {paymentMethod === 'vipps' && (
+                <PaymentMethod>
+                  <VippsCheckout
+                    personalDetails={personalDetails}
+                    items={items}
+                    currency={currency}
+                  />
+                </PaymentMethod>
+              )}
               {paymentMethod === 'klarna' && (
                 <PaymentMethod>
                   <KlarnaCheckout

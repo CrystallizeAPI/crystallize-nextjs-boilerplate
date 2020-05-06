@@ -63,7 +63,7 @@ export default async (req, res) => {
           terms: TERMS_URI,
           checkout: CHECKOUT_URI,
           confirmation: `${HOST_URL}/confirmation/klarna/{checkout.order.id}`,
-          push: `${NGROK_URL}/api/order-persistence?klarna_order_id={checkout.order.id}`
+          push: `${NGROK_URL}/api/order-persistence/klarna?klarna_order_id={checkout.order.id}`
         }
       }
     });

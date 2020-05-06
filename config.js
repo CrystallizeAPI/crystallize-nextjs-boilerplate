@@ -4,6 +4,7 @@ const {
   COUNTRY_CODE = 'NO',
   CRYSTALLIZE_TENANT_ID = 'teddy-bear-shop',
   CRYSTALLIZE_API_URL = 'https://api.crystallize.com',
+  CRYSTALLIZE_CORE_API_URL = 'https://pim.crystallize.com/graph/core',
   STRIPE_PUBLISHABLE_KEY,
   SUCCESS_PAYMENT_STRIPE_WEBHOOK_TOKEN,
   MY_CRYSTALLIZE_SECRET_TOKEN,
@@ -15,6 +16,8 @@ const {
   KLARNA_PASSWORD,
   NGROK_URL,
   KLARNA_API_URL = 'https://api.playground.klarna.com',
+
+  VIPPS_API_URL = 'https://api.playground.klarna.com',
   HOST_URL = 'http://localhost:3000'
 } = process.env;
 
@@ -26,6 +29,7 @@ global.__crystallizeConfig = {
   TENANT_ID: CRYSTALLIZE_TENANT_ID,
   GRAPH_URL: `${CRYSTALLIZE_API_URL}/tenant/${CRYSTALLIZE_TENANT_ID}`,
   ORDER_API_URL: `${CRYSTALLIZE_API_URL}/${CRYSTALLIZE_TENANT_ID}/orders`,
+  CRYSTALLIZE_CORE_API_URL,
   SENDGRID_API_KEY,
   SUCCESS_PAYMENT_STRIPE_WEBHOOK_TOKEN,
   MY_CRYSTALLIZE_SECRET_TOKEN,
@@ -38,6 +42,7 @@ global.__crystallizeConfig = {
   KLARNA_USERNAME,
   KLARNA_PASSWORD,
   NGROK_URL,
+  VIPPS_API_URL,
   HOST_URL
 };
 
