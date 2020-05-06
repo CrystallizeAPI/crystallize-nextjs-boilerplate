@@ -34,7 +34,7 @@ const orderToVippsBody = (
   return {
     merchantInfo: {
       merchantSerialNumber: VIPPS_MERCHANT_SERIAL,
-      callbackPrefix: `${NGROK_URL}/api/order-persistence/order?method=vipps`,
+      callbackPrefix: `${NGROK_URL}/api/order-persistence/vipps`,
       //   shippingDetailsPrefix: NGROK_URL,
       consentRemovalPrefix: NGROK_URL,
       paymentType: 'eComm Express Payment',
@@ -65,7 +65,10 @@ export default async (req, res) => {
   try {
     const { personalDetails, lineItems, currency } = req.body;
     const { metadata } = req.body;
-    const mutationBody = normallizer({}, { lineItems, currency });
+    const mutationBody = normallizer(
+      {},
+      { lineItems, currency, personalDetails }
+    );
 
     const { data } = await persistCrystallizeOrder(mutationBody);
 
