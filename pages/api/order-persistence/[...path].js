@@ -52,12 +52,19 @@ export default async (req, res) => {
       vippsOrderId: req.query.path[req.query.path.length - 1]
     });
 
-    response = await persistCrystallizeOrder(mutationBody);
+    response = await persistCrystallizeOrder(
+      mutationBody,
+      paymentMethod === 'vipps' ? true : false
+    );
 
     if (paymentMethod === 'klarna')
       await klarnaOrderAcknowledger(req.query.klarna_order_id);
 
-    await emailOrderConfirmation(response.data.orders.create.id);
+    await emailOrderConfirmation(
+      paymentMethod !== 'vipps'
+        ? response.data.orders.create.id
+        : response.data.order.update.id
+    );
   } catch (error) {
     return res.status(503).send({
       success: false,
