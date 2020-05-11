@@ -8,66 +8,139 @@
  */
 
 import React from 'react';
-import Error from 'pages/_error';
-import { useRouter } from 'next/router';
 
-import withGraphQLAndBasket from 'lib/with-graphql-and-basket';
-import { useSafePathQuery } from 'lib/graph';
-import Layout from 'components/layout';
-import DocumentPage from 'page-components/document';
-import FolderPage from 'page-components/folder';
-import ProductPage from 'page-components/product';
-import { useSettings } from 'components/settings-context';
+import { simplyFetchFromGraph } from 'lib/graph';
+import DocPage, { getData as getDataDoc } from 'page-components/document';
+import FolderPage, { getData as getDataFolder } from 'page-components/folder';
+import ProdPage, { getData as getDataProd } from 'page-components/product';
 
-function CataloguePage() {
-  const router = useRouter();
-  const { language } = useSettings();
+const typesMap = {
+  document: {
+    component: DocPage,
+    getData: getDataDoc
+  },
+  folder: {
+    component: FolderPage,
+    getData: getDataFolder
+  },
+  product: {
+    component: ProdPage,
+    getData: getDataProd
+  }
+};
 
-  // Get the item type for the current pathname
-  const [queryResult] = useSafePathQuery({
-    query: `
-      query GET_ITEM_FOR_UNKNOWN_URL($language: String!, $path: String) {
+const language = 'en';
+
+export async function getStaticProps({ params }) {
+  const { catalogue } = params;
+  const asPath = `/${catalogue.join('/')}`;
+
+  try {
+    // Get the item type
+    const getItemType = await simplyFetchFromGraph({
+      query: `
+      query ITEM_TYPE($language: String!, $path: String!) {
         catalogue(language: $language, path: $path) {
           type
         }
       }
     `,
-    variables: {
-      path: router.asPath,
-      language
-    }
-  });
+      variables: {
+        language,
+        path: asPath
+      }
+    });
+    const { type } = getItemType.data.catalogue;
 
-  const { fetching, error, data } = queryResult;
+    const renderer = typesMap[type] || typesMap.folder;
 
-  if (fetching) {
-    return <Layout loading />;
+    const data = await renderer.getData({ asPath, language });
+
+    return {
+      props: {
+        ...data,
+        type
+      }
+    };
+  } catch (error) {
+    console.error(error);
+    console.warn(`Could not get data for ${asPath}`);
   }
 
-  if (error || !data) {
-    return <Layout error />;
-  }
-
-  const { catalogue } = data;
-
-  // Nothing in Crystallize at this path. Show 404 page
-  if (!catalogue) {
-    return <Error statusCode="404" />;
-  }
-
-  const { type } = catalogue;
-
-  const Cmp = {
-    product: ProductPage,
-    folder: FolderPage,
-    document: DocumentPage
-  }[type];
-
-  /**
-   * Render the corresponding type template, or 404
-   * if there is no template for the type
-   */
-  return Cmp ? <Cmp key={router.asPath} /> : <Error statusCode="404" />;
+  return {
+    props: {}
+  };
 }
 
-export default withGraphQLAndBasket(CataloguePage);
+export async function getStaticPaths() {
+  function handleItem({ path, type, children }) {
+    paths.push({
+      params: {
+        catalogue: path.split('/').slice(1),
+        type,
+        lgn: language
+      }
+    });
+
+    children?.forEach(handleItem);
+  }
+
+  const paths = [];
+
+  try {
+    const allCatalogueItems = await simplyFetchFromGraph({
+      query: `
+        query GET_ALL_CATALOGUE_ITEMS($language: String!) {
+          catalogue(language: $language, path: "/") {
+            path
+            type
+            children {
+              path
+              type
+              children {
+                path
+                type
+                children {
+                  path
+                  type
+                  children {
+                    path
+                    type
+                    children {
+                      path
+                      type
+                      children {
+                        path
+                        type
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        language
+      }
+    });
+
+    allCatalogueItems.data.catalogue.children.forEach(handleItem);
+  } catch (error) {
+    console.error('Could not getch all catalogue items!');
+    console.log(error);
+  }
+
+  return {
+    paths,
+    fallback: false
+  };
+}
+
+export default function GenericCatalogueItem({ type, ...rest }) {
+  const renderer = typesMap[type] || typesMap.folder;
+  const Component = renderer.component;
+
+  return <Component {...rest} />;
+}

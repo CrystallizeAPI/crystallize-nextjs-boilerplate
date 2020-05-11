@@ -1,44 +1,24 @@
 import React from 'react';
-import Error from 'pages/_error';
-import { useRouter } from 'next/router';
 
-import { useSettings } from 'components/settings-context';
-import { useSafePathQuery } from 'lib/graph';
+import { simplyFetchFromGraph } from 'lib/graph';
 import { Outer, Header, H1 } from 'ui';
 import Layout from 'components/layout';
 import CategoryItem from 'components/category-item';
 import ShapeComponents from 'components/shape/components';
 
 import { List } from './styles';
-import folderPageQuery from './query';
+import query from './query';
 
-export default function FolderPage() {
-  const { language } = useSettings();
-  const router = useRouter();
-
-  const [queryResult] = useSafePathQuery({
-    query: folderPageQuery,
-    variables: {
-      language,
-      path: router.asPath
-    }
+export async function getData({ asPath, language }) {
+  const { data } = await simplyFetchFromGraph({
+    query,
+    variables: { path: asPath, language }
   });
 
-  const { fetching, error, data } = queryResult;
+  return data;
+}
 
-  if (fetching) {
-    return <Layout loading />;
-  }
-
-  if (error) {
-    return <Layout error />;
-  }
-
-  const { folder } = data;
-  if (!folder) {
-    return <Error statusCode="404" />;
-  }
-
+export default function FolderPage({ folder }) {
   const { children } = folder;
 
   return (

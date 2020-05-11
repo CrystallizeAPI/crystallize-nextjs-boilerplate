@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import Error from 'pages/_error';
 import Img from '@crystallize/react-image';
 import CrystallizeContent from '@crystallize/content-transformer/react';
 import isEqual from 'lodash/isEqual';
-import { useRouter } from 'next/router';
 
-import { useSettings } from 'components/settings-context';
-import { useSafePathQuery } from 'lib/graph';
 import { H1, H2, screen } from 'ui';
 import CategoryItem from 'components/category-item';
 import Layout from 'components/layout';
 import ShapeComponents from 'components/shape/components';
 import { attributesToObject } from 'lib/util/variants';
+import { simplyFetchFromGraph } from 'lib/graph';
 
 import VariantSelector from './variant-selector';
 import Buy from './buy';
-import productPageQuery from './query';
+import query from './query';
 import {
   Outer,
   Sections,
@@ -31,35 +28,19 @@ import {
   List
 } from './styles';
 
-export default function ProductPage() {
-  const { language } = useSettings();
-  const router = useRouter();
-  const [{ fetching, error, data }] = useSafePathQuery({
-    query: productPageQuery,
-    variables: {
-      language,
-      path: router.asPath
-    }
+export async function getData({ asPath, language }) {
+  const { data } = await simplyFetchFromGraph({
+    query,
+    variables: { path: asPath, language }
   });
+  return data;
+}
 
+export default function ProductPage({ product }) {
   // Set the selected variant to the default
-  const [chosenVariant, setChosenVariant] = useState(null);
-
-  if (error) {
-    return <Layout error />;
-  }
-
-  if (fetching) {
-    return <Layout loading />;
-  }
-
-  const { product } = data;
-  if (!product) {
-    return <Error statusCode="404" />;
-  }
-
-  const selectedVariant =
-    chosenVariant || product.variants.find(v => v.isDefault);
+  const [chosenVariant, setChosenVariant] = useState(
+    product.variants.find(v => v.isDefault)
+  );
 
   const onAttributeChange = (attributes, newAttribute) => {
     const newAttributes = attributesToObject(attributes);
@@ -90,7 +71,7 @@ export default function ProductPage() {
           <Media>
             <MediaInner>
               <Img
-                {...selectedVariant.image}
+                {...chosenVariant.image}
                 sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
                 alt={product.name}
               />
@@ -107,13 +88,13 @@ export default function ProductPage() {
             {product.variants.length > 1 && (
               <VariantSelector
                 variants={product.variants}
-                selectedVariant={selectedVariant}
+                selectedVariant={chosenVariant}
                 onVariantChange={onVariantChange}
                 onAttributeChange={onAttributeChange}
               />
             )}
 
-            <Buy product={product} selectedVariant={selectedVariant} />
+            <Buy product={product} selectedVariant={chosenVariant} />
           </Info>
         </Sections>
 

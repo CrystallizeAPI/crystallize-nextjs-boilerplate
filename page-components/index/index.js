@@ -1,57 +1,55 @@
 import React from 'react';
-import { useQuery } from 'urql';
 import Grid from '@crystallize/grid-renderer';
 
 import Layout from 'components/layout';
 import CategoryItem from 'components/category-item';
 import { H1, Header } from 'ui';
+import { simplyFetchFromGraph } from 'lib/graph';
 import itemFragment from 'lib/graph/fragments/item';
 import productFragment from 'lib/graph/fragments/product';
 
 import { Outer } from './styles';
 
-export default function FrontPage() {
-  const [{ fetching, error, data }] = useQuery({
-    query: `
-      query FRONTPAGE_GRID($id: ID!, $language: String!) {
-        grid(id: $id, language: $language) {
-          id
-          name
-          rows {
-            columns {
-              layout {
-                rowspan
-                colspan
-              }
-              itemType
-              itemId
-              item {
-                ... on Item {
-                  ...item
-                  ...product
+export async function getData() {
+  try {
+    const { data } = await simplyFetchFromGraph({
+      query: `
+        query FRONTPAGE($gridId: ID!, $language: String!) {
+          grid(language: $language, id: $gridId) {
+            id
+            name
+            rows {
+              columns {
+                layout {
+                  rowspan
+                  colspan
+                }
+                itemType
+                itemId
+                item {
+                  ... on Item {
+                    ...item
+                    ...product
+                  }
                 }
               }
             }
           }
         }
-      }
-    
-      ${itemFragment}
-      ${productFragment}
-    `,
-    variables: { id: '5dc3fe4d43b90109229ee27b', language: 'en' }
-  });
-
-  if (fetching) {
-    return <Layout loading />;
+      
+        ${itemFragment}
+        ${productFragment}
+      `,
+      variables: { gridId: '5dc3fe4d43b90109229ee27b', language: 'en' }
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
+}
 
-  if (error || !data) {
-    return <Layout error />;
-  }
-
-  const { grid } = data;
-
+export default function FrontPage({ grid }) {
   return (
     <Layout title="Home">
       <Outer>

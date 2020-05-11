@@ -1,13 +1,6 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import { GRAPH_URL } from '../config';
-
-// These settings will be exposed to the world
-const clientConfig = {
-  GRAPH_URL
-};
-
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
@@ -80,14 +73,6 @@ export default class MyDocument extends Document {
           />
           <meta name="theme-color" content="#ffffff" />
 
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              __crystallizeConfig=${JSON.stringify(clientConfig)};
-              __crystallizeConfig.HOST_NAME = location.origin;
-              `
-            }}
-          />
           {this.props.styleTags}
         </Head>
         <body>
