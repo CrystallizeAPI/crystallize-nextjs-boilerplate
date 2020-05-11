@@ -4,6 +4,7 @@ import { AuthProvider } from 'components/auth-context';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
 import { simplyFetchFromGraph } from 'lib/graph';
+import { getLanguage } from 'lib/language';
 
 function MyApp({ Component, pageProps, commonData }) {
   const { language, tenant, topNavigation } = commonData;
@@ -28,11 +29,8 @@ function MyApp({ Component, pageProps, commonData }) {
   );
 }
 
-MyApp.getInitialProps = async function() {
-  /**
-   * Specify which language to use.
-   */
-  const language = 'en';
+MyApp.getInitialProps = async function({ router: { asPath } }) {
+  const language = getLanguage({ asPath });
 
   try {
     const {

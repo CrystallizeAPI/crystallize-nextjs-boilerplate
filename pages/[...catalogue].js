@@ -10,6 +10,8 @@
 import React from 'react';
 
 import { simplyFetchFromGraph } from 'lib/graph';
+import { getLanguage } from 'lib/language';
+
 import DocPage, { getData as getDataDoc } from 'page-components/document';
 import FolderPage, { getData as getDataFolder } from 'page-components/folder';
 import ProdPage, { getData as getDataProd } from 'page-components/product';
@@ -29,22 +31,21 @@ const typesMap = {
   }
 };
 
-const language = 'en';
-
 export async function getStaticProps({ params }) {
   const { catalogue } = params;
   const asPath = `/${catalogue.join('/')}`;
+  const language = getLanguage({ asPath });
 
   try {
     // Get the item type
     const getItemType = await simplyFetchFromGraph({
       query: `
-      query ITEM_TYPE($language: String!, $path: String!) {
-        catalogue(language: $language, path: $path) {
-          type
+        query ITEM_TYPE($language: String!, $path: String!) {
+          catalogue(language: $language, path: $path) {
+            type
+          }
         }
-      }
-    `,
+      `,
       variables: {
         language,
         path: asPath
@@ -73,12 +74,10 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  function handleItem({ path, type, children }) {
+  function handleItem({ path, children }) {
     paths.push({
       params: {
-        catalogue: path.split('/').slice(1),
-        type,
-        lgn: language
+        catalogue: path.split('/').slice(1)
       }
     });
 
@@ -93,25 +92,18 @@ export async function getStaticPaths() {
         query GET_ALL_CATALOGUE_ITEMS($language: String!) {
           catalogue(language: $language, path: "/") {
             path
-            type
             children {
               path
-              type
               children {
                 path
-                type
                 children {
                   path
-                  type
                   children {
                     path
-                    type
                     children {
                       path
-                      type
                       children {
                         path
-                        type
                       }
                     }
                   }
@@ -122,7 +114,7 @@ export async function getStaticPaths() {
         }
       `,
       variables: {
-        language
+        language: getLanguage()
       }
     });
 
