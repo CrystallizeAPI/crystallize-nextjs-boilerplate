@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import queryString from 'query-string';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -21,12 +20,7 @@ const Line = styled.div`
   border-bottom: 1px solid ${colors.light};
 `;
 
-const Loader = styled.div`
-  margin: 5em;
-  text-align: center;
-`;
-
-function Confirmation() {
+export default function Confirmation() {
   const router = useRouter();
   const basket = useBasket();
 
@@ -61,7 +55,7 @@ function Confirmation() {
   }, []);
 
   if (!orderData || !orderData.data) {
-    return <Loader>Please wait. Getting receipt...</Loader>;
+    return <Layout loading>Please wait. Getting receipt...</Layout>;
   }
 
   const order = orderData.data.orders.get;
@@ -76,27 +70,21 @@ function Confirmation() {
   }));
 
   return (
-    <Outer>
-      <CustomHeader>
-        <H1>Order Summary</H1>
-        <p>
-          Your order (<strong>#{orderId}</strong>) has been confirmed. A copy of
-          your order has been sent to <strong>{email}</strong>.
-        </p>
-        <Line />
-        <BillingDetails order={order} />
-        <Line />
-        <H3>Order Items</H3>
-        <OrderItems items={items} />
-      </CustomHeader>
-    </Outer>
-  );
-}
-
-export default function ConfirmationWithLayout(props) {
-  return (
     <Layout title="Order Summary">
-      <Confirmation {...props} />
+      <Outer>
+        <CustomHeader>
+          <H1>Order Summary</H1>
+          <p>
+            Your order (<strong>#{orderId}</strong>) has been confirmed. A copy
+            of your order has been sent to <strong>{email}</strong>.
+          </p>
+          <Line />
+          <BillingDetails order={order} />
+          <Line />
+          <H3>Order Items</H3>
+          <OrderItems items={items} />
+        </CustomHeader>
+      </Outer>
     </Layout>
   );
 }
