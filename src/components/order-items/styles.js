@@ -48,6 +48,7 @@ export const ItemInfo = styled.div`
 export const ItemName = styled.p`
   font-size: 1.2rem;
   font-weight: 500;
+  margin: 0 0 10px;
 `;
 
 export const ItemQuantity = styled.div`

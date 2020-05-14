@@ -3,8 +3,8 @@ import React from 'react';
 import { simplyFetchFromGraph } from 'lib/graph';
 import { Outer, Header, H1 } from 'ui';
 import Layout from 'components/layout';
-import CategoryItem from 'components/category-item';
 import ShapeComponents from 'components/shape/components';
+import items from 'components/items';
 
 import { List } from './styles';
 import query from './query';
@@ -24,17 +24,11 @@ export default function FolderPage({ folder }) {
   return (
     <Layout title={folder.name}>
       <Outer>
-        <Header centerContent={!children}>
+        <Header centerContent>
           <H1>{folder.name}</H1>
           <ShapeComponents components={folder.components} />
         </Header>
-        {children && (
-          <List>
-            {children.map(item => (
-              <CategoryItem data={item} key={item.id} />
-            ))}
-          </List>
-        )}
+        {children && <List>{children.map(item => items(item))}</List>}
       </Outer>
     </Layout>
   );

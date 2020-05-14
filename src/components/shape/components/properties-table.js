@@ -1,24 +1,19 @@
 import styled from 'styled-components';
 
-import { colors } from 'ui';
-
-const Outer = styled.div``;
+import { colors, H3 } from 'ui';
 
 const Section = styled.div`
   margin: 3em 0;
 
   h3 {
-    margin: 0 0 0 0.5em;
+    margin: 0 0 0.5em 0;
     font-size: 1.2rem;
   }
 `;
 
 const PropertiesOuter = styled.div`
-  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid ${colors.light};
-  background: #fff;
-  margin-top: 1em;
+  border-bottom: 1px solid ${colors.light};
 `;
 
 const Properties = styled.table`
@@ -27,7 +22,7 @@ const Properties = styled.table`
 
   td {
     width: 50%;
-    padding: 1em;
+    padding: 1em 0;
     border: 0px solid ${colors.light};
   }
 
@@ -37,15 +32,11 @@ const Properties = styled.table`
 `;
 
 export default function PropertiesTable({ sections }) {
-  if (!sections) {
-    return null;
-  }
-
   return (
-    <Outer>
-      {sections.map((section, i) => (
+    <div>
+      {sections?.map((section, i) => (
         <Section key={i}>
-          <h3>{section.title}</h3>
+          <H3>{section.title}</H3>
           <PropertiesOuter>
             <Properties>
               {section.properties.map((property, i) => (
@@ -58,6 +49,6 @@ export default function PropertiesTable({ sections }) {
           </PropertiesOuter>
         </Section>
       ))}
-    </Outer>
+    </div>
   );
 }

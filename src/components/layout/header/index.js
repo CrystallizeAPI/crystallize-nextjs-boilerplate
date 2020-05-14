@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-import { IconLogo } from 'ui';
 import { useAuth } from 'components/auth-context';
 import { useSettings } from 'components/settings-context';
 
@@ -10,7 +9,7 @@ import BasketButton from './basket-button';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
 
 export default function Header({ simple }) {
-  const { topNavigation } = useSettings();
+  const { mainNavigation } = useSettings();
   const auth = useAuth();
 
   const [navOpen, setNavOpen] = useState(false);
@@ -20,13 +19,13 @@ export default function Header({ simple }) {
       <Link href="/">
         <a>
           <Logo>
-            <IconLogo />
+            <img src="/static/frntr-logo.svg" alt="Logo" />
           </Logo>
         </a>
       </Link>
       <Nav open={navOpen}>
         <NavList>
-          {topNavigation.map(category => (
+          {mainNavigation.map(category => (
             <NavListItem key={category.path}>
               <Link as={category.path} href="/[...catalogue]">
                 <a onClick={() => setNavOpen(false)}>{category.name}</a>

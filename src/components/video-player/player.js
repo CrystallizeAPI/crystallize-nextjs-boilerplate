@@ -29,8 +29,12 @@ const Outer = styled.div`
     position: absolute;
     z-index: 0;
 
-    video:not(.vjs-has-started) {
-      cursor: pointer;
+    video {
+      transform: none;
+
+      &:not(.vjs-has-started) {
+        cursor: pointer;
+      }
     }
 
     button.vjs-big-play-button {
@@ -72,6 +76,7 @@ const Overlay = styled.div`
 export default function VideoPlayer({
   playlists,
   autoplay = false,
+  loop = false,
   controls = true,
   fluid = true,
   ...rest
@@ -91,6 +96,7 @@ export default function VideoPlayer({
       // const outer = document.createElement('div');
       // outer.setAttribute('data-vjs-player', true);
       const videoElement = document.createElement('video');
+      videoElement.setAttribute('playsInline', true);
       videoElement.classList.add('video-js');
       // outer.appendChild(videoElement);
       ref.current.insertBefore(videoElement, ref.current.children[0]);
@@ -98,6 +104,7 @@ export default function VideoPlayer({
       const player = videojs(videoElement, {
         sources,
         autoplay,
+        loop,
         controls,
         fluid
       });

@@ -33,7 +33,15 @@ const Loader = styled.div`
 
 const VideoPlayer = dynamic(() => import('./player'));
 
-export default function Video({ playlists, thumbnails, ...rest }) {
+export default function Video({
+  playlists,
+  thumbnails,
+  autoplay,
+  loop,
+  controls,
+  fluid,
+  ...rest
+}) {
   const ref = useRef();
   const [load, setLoad] = useState(false);
   const isIntersecting = useIntersectionObserver({ ref });
@@ -48,7 +56,14 @@ export default function Video({ playlists, thumbnails, ...rest }) {
     <Outer ref={ref} {...rest}>
       <Inner>
         {load ? (
-          <VideoPlayer playlists={playlists} thumbnails={thumbnails} />
+          <VideoPlayer
+            playlists={playlists}
+            thumbnails={thumbnails}
+            autoplay={autoplay}
+            loop={loop}
+            controls={controls}
+            fluid={fluid}
+          />
         ) : (
           <Loader>
             <Spinner style={{ margin: 10 }} /> Loading video

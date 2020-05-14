@@ -5,9 +5,10 @@ import { useSettings } from 'components/settings-context';
 import { useBasket } from 'components/basket';
 import Layout from 'components/layout';
 import OrderItems from 'components/order-items';
-import { H1, Outer } from 'ui';
+import { Outer } from 'ui';
+
 import PaymentGateway from './payment-gateway';
-import { Inner, OrderItemsWrapper } from './styles';
+import { Inner, SectionHeader, Container } from './styles';
 
 const Checkout = () => {
   const basket = useBasket();
@@ -26,12 +27,15 @@ const Checkout = () => {
 
   return (
     <Outer>
-      <H1>Checkout</H1>
       <Inner>
-        <PaymentGateway items={items} currency={currency} />
-        <OrderItemsWrapper>
+        <Container>
+          <SectionHeader>Checkout</SectionHeader>
+          <PaymentGateway items={items} currency={currency} />
+        </Container>
+        <Container>
+          <SectionHeader>Basket</SectionHeader>
           <OrderItems items={items} currency={currency} />
-        </OrderItemsWrapper>
+        </Container>
       </Inner>
     </Outer>
   );

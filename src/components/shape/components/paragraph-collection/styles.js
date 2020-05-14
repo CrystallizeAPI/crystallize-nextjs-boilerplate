@@ -13,3 +13,10 @@ export const Title = styled.div`
 export const Body = styled.div`
   margin: 1em var(--content-padding);
 `;
+
+export const Text = styled.div`
+  margin-bottom: 100px;
+`;
+export const Media = styled.div`
+  margin-bottom: 100px;
+`;

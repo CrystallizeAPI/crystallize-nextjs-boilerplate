@@ -5,12 +5,12 @@ import { colors, responsive } from 'ui';
 
 export const Outer = styled.header`
   text-align: center;
-  padding: 10px 75px;
+  padding: 20px 75px;
+  max-width: 1600px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  max-width: 1500px;
-  margin: 0 auto 50px;
+  margin: 0 auto 0;
 
   ${responsive.smAndLess} {
     padding: 10px 90px 10px 20px;
@@ -32,16 +32,17 @@ export const Logo = styled.div`
 export const Nav = styled.nav`
   display: flex;
   margin: 10px 0 0 15px;
-  border-left: 1px solid #dfdfdf;
   padding-left: 15px;
-
+  width: 100%;
+  ${responsive.mdPlus} {
+    justify-content: center;
+  }
   ${responsive.smAndLess} {
     display: none;
     position: absolute;
     z-index: 99;
     top: 0;
     left: 0;
-    width: 100%;
     min-height: 100vh;
     height: 100%;
     overflow-x: auto;
@@ -80,7 +81,9 @@ export const NavListItem = styled.li`
     display: inline-block;
     padding: 10px 10px;
     transition: all 100ms;
-
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     &:hover {
       text-decoration: underline;
     }
@@ -125,13 +128,23 @@ export const BasketQuantity = styled.div`
 `;
 
 export const NavActions = styled.div`
-  margin: 10px 10px 0;
+  margin: 8px 10px 0;
+  display: block;
+  text-transform: uppercase;
 
-  button {
+  button,
+  a {
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1.4px solid ${colors.frostbite};
+    color: ${colors.frostbite};
+
     cursor: pointer;
 
     &:hover {
-      text-decoration: underline;
+      background: ${colors.frostbite};
+      color: #fff;
     }
   }
 

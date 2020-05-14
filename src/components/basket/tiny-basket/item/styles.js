@@ -1,6 +1,6 @@
 import styled, { keyframes, css } from 'styled-components';
 import CrystallizeImage from '@crystallize/react-image';
-
+import { colors } from 'ui';
 import { animationSpeedMs } from '../../helpers';
 
 const animationItemHighlight = keyframes`
@@ -22,10 +22,9 @@ const animationItemHighlight = keyframes`
   `;
 
 export const Row = styled.div`
-  /* display: flex; */
   width: 100%;
-  /* justify-content: space-between; */
 `;
+
 export const ItemDelete = styled.button`
   position: absolute;
   top: 2px;
@@ -80,7 +79,11 @@ export const ItemImage = styled(CrystallizeImage).attrs(() => ({
   }
 `;
 
-export const ItemName = styled.div``;
+export const ItemName = styled.div`
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+`;
 
 export const ItemQuantityChanger = styled.span`
   display: flex;
@@ -100,10 +103,10 @@ export const ItemQuantity = styled.span`
 `;
 
 export const PriceWrapper = styled.div`
-  /* display: flex; */
-  font-size: 14px;
+  font-size: 16px;
   padding: 5px 10px 0 0;
-  /* justify-content: space-between; */
+  margin: 4px 0;
+  color: ${colors.frostbite};
 `;
 export const PriceWrap = styled.div`
   display: flex;
@@ -116,6 +119,7 @@ export const Price = styled.div`
 export const PriceVat = styled.div`
   display: block;
   font-size: 12px;
+  padding-top: 4px;
 `;
 
 export const SubInfoOuter = styled.div`

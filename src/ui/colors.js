@@ -1,11 +1,9 @@
-import { darken } from 'polished';
-
 export const colors = new Proxy(
   {
     defrost: '#f47f98',
     iceberg: '#B7E2E4',
     frost: '#f3f4f6',
-    frostbite: '#4c505b',
+    frostbite: '#000',
     glacier: '#8FDDCA',
     new: '#F79F79',
     handled: '#3496A0',
@@ -16,14 +14,15 @@ export const colors = new Proxy(
     light: '#dfdfdf',
     roboto: "'Roboto', sans-serif",
     varela: "'Varela', sans-serif",
+    grey: '#efefef',
 
     darkText: '#4c505b',
     lightText: '#fff',
     prettyPink: '#F9C3C7',
-    price: darken(0.2, '#8FDDCA'),
+    price: '#d79b59'
   },
   {
-    get: function (obj, prop) {
+    get: function(obj, prop) {
       if (prop in obj) {
         return obj[prop];
       }
@@ -33,6 +32,6 @@ export const colors = new Proxy(
       }
 
       return '#000';
-    },
+    }
   }
 );

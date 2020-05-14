@@ -3,32 +3,30 @@ import Img from '@crystallize/react-image';
 import CrystallizeContent from '@crystallize/content-transformer/react';
 import isEqual from 'lodash/isEqual';
 
-import { H1, H2, screen } from 'ui';
-import CategoryItem from 'components/category-item';
+import { simplyFetchFromGraph } from 'lib/graph';
+import { screen } from 'ui';
 import Layout from 'components/layout';
 import ShapeComponents from 'components/shape/components';
-
-import { simplyFetchFromGraph } from 'lib/graph';
 
 import VariantSelector from './variant-selector';
 import Buy from './buy';
 import query from './query';
+import Topics from 'components/topics';
+
 import {
   Outer,
   Sections,
   Media,
   MediaInner,
+  Name,
   Info,
   Summary,
-  ShapeContent,
-  Description,
-  RelatedTopics,
-  TopicMap,
-  TopicTitle,
-  List,
+  Content,
+  Specs,
+  Description
 } from './styles';
 
-const attributesToObject = (attributesArray) =>
+const attributesToObject = attributesArray =>
   Object.assign(
     {},
     ...attributesArray.map(({ attribute, value }) => ({ [attribute]: value }))
@@ -37,37 +35,38 @@ const attributesToObject = (attributesArray) =>
 export async function getData({ asPath, language }) {
   const { data } = await simplyFetchFromGraph({
     query,
-    variables: { path: asPath, language },
+    variables: { path: asPath, language }
   });
   return data;
 }
 
 export default function ProductPage({ product }) {
   // Set the selected variant to the default
-  const [chosenVariant, setChosenVariant] = useState(
-    product.variants.find((v) => v.isDefault)
+  const [selectedVariant, setSelectedVariant] = useState(
+    product.variants.find(v => v.isDefault)
   );
 
   const onAttributeChange = (attributes, newAttribute) => {
     const newAttributes = attributesToObject(attributes);
     newAttributes[newAttribute.attribute] = newAttribute.value;
 
-    const newSelectedVariant = product.variants.find((variant) => {
+    const newSelectedVariant = product.variants.find(variant => {
       const variantAttributes = attributesToObject(variant.attributes);
       return isEqual(variantAttributes, newAttributes);
     });
 
-    setChosenVariant(newSelectedVariant);
+    setSelectedVariant(newSelectedVariant);
   };
 
-  const onVariantChange = (variant) => setChosenVariant(variant);
+  const onVariantChange = variant => setSelectedVariant(variant);
 
-  const summaryComponent = product.components.find((c) => c.name === 'Summary');
+  const summaryComponent = product.components.find(c => c.name === 'Summary');
   const descriptionComponent = product.components.find(
-    (c) => c.name === 'Description'
+    c => c.name === 'Description'
   );
+  const specs = product.components.find(c => c.name === 'Specs');
   const componentsRest = product.components.filter(
-    (c) => !['Summary', 'Description'].includes(c.name)
+    c => !['Summary', 'Description', 'Specs'].includes(c.name)
   );
 
   return (
@@ -77,14 +76,14 @@ export default function ProductPage({ product }) {
           <Media>
             <MediaInner>
               <Img
-                {...chosenVariant.image}
-                sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
+                {...selectedVariant.image}
+                sizes={`(max-width: ${screen.sm}px) 400px, 60vw`}
                 alt={product.name}
               />
             </MediaInner>
           </Media>
           <Info>
-            <H1>{product.name}</H1>
+            <Name>{product.name}</Name>
             {summaryComponent && (
               <Summary>
                 <CrystallizeContent {...summaryComponent?.content?.json} />
@@ -94,45 +93,34 @@ export default function ProductPage({ product }) {
             {product.variants.length > 1 && (
               <VariantSelector
                 variants={product.variants}
-                selectedVariant={chosenVariant}
+                selectedVariant={selectedVariant}
                 onVariantChange={onVariantChange}
                 onAttributeChange={onAttributeChange}
               />
             )}
 
-            <Buy product={product} selectedVariant={chosenVariant} />
+            <Buy product={product} selectedVariant={selectedVariant} />
           </Info>
         </Sections>
+        <Content>
+          {descriptionComponent && (
+            <Description>
+              <ShapeComponents
+                className="description"
+                components={[descriptionComponent]}
+              />
+            </Description>
+          )}
+          {specs && (
+            <Specs>
+              <ShapeComponents components={[specs]} />
+            </Specs>
+          )}
+        </Content>
 
-        {descriptionComponent && (
-          <Description>
-            <ShapeComponents
-              className="description"
-              components={[descriptionComponent]}
-            />
-          </Description>
-        )}
+        {product?.topics?.length && <Topics topicMaps={product.topics} />}
 
-        <ShapeContent>
-          <ShapeComponents components={componentsRest} />
-        </ShapeContent>
-
-        {product.topics && !!product.topics.length && (
-          <RelatedTopics>
-            <H2>Related</H2>
-
-            {product.topics.map((topic) => (
-              <TopicMap key={topic.name}>
-                <TopicTitle>{topic.name}</TopicTitle>
-                <List>
-                  {topic.items.edges.map(({ node }) => (
-                    <CategoryItem data={node} key={node.id} />
-                  ))}
-                </List>
-              </TopicMap>
-            ))}
-          </RelatedTopics>
-        )}
+        <ShapeComponents components={componentsRest} />
       </Outer>
     </Layout>
   );

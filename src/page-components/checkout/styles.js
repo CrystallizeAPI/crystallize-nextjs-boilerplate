@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
-import { colors, responsive } from 'ui';
+import { colors, responsive, H3 } from 'ui';
 
 export const Inner = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   padding-top: 30px;
-  ${responsive.xs} {
-    flex-direction: column;
+  grid-gap: 15px;
+  ${responsive.smAndLess} {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -16,9 +18,10 @@ export const Form = styled.form`
   flex-direction: column;
 `;
 export const Label = styled.div`
-  font-size: 0.8rem;
-  padding-left: 15px;
-  opacity: 0.7;
+  font-size: 0.7rem;
+  /* padding-left: 15px; */
+  opacity: 1;
+  text-transform: uppercase;
   padding-bottom: 8px;
   font-weight: 600;
 `;
@@ -32,11 +35,10 @@ export const Input = styled.input`
   color: ${colors.darkText};
   font-size: 16px;
   font-weight: 500;
-  border-radius: 25px;
   padding: 15px 15px;
   margin-bottom: 0.5rem;
   border: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   border-bottom: 1px solid ${colors.frost};
   transition: border 0.2s ease-in-out;
   &::placeholder {
@@ -75,8 +77,8 @@ export const PaymentMethods = styled.div`
 `;
 
 export const PaymentButton = styled.button`
-  /* ${(props) => `background: ${props.active ? colors.light : 'white'}`}; */
-  background:${(p) => p.color};
+  /* ${props => `background: ${props.active ? colors.light : 'white'}`}; */
+  background:${p => p.color};
   font-size: 18px;
   padding: 0.5rem;
   width: 32%;
@@ -99,8 +101,21 @@ export const PaymentMethod = styled.div`
 export const PaymentSelector = styled.div`
   display: flex;
 `;
-
-export const OrderItemsWrapper = styled.div`
-  width: 50%;
-  padding-left: 50px;
+export const SectionHeader = styled(H3)`
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 75px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dfdfdf;
+`;
+export const Container = styled.div`
+  width: 100%;
+  padding: 0 75px 50px 75px;
+  background: ${colors.grey};
+  ${responsive.smAndLess} {
+    margin-bottom: 25px;
+    padding: 0 40px 40px 40px;
+  }
 `;

@@ -4,7 +4,7 @@ import React, { useState, useContext } from 'react';
 export const SettingsContext = React.createContext({
   language: 'en',
   currency: 'eur',
-  topNavigation: []
+  mainNavigation: []
 });
 
 export const useSettings = () => useContext(SettingsContext);
@@ -12,7 +12,7 @@ export const useSettings = () => useContext(SettingsContext);
 export const SettingsProvider = ({
   language: lang,
   currency: cur,
-  topNavigation,
+  mainNavigation,
   children
 }) => {
   const [language, setLanguage] = useState(lang);
@@ -20,7 +20,7 @@ export const SettingsProvider = ({
 
   return (
     <SettingsContext.Provider
-      value={{ language, setLanguage, currency, setCurrency, topNavigation }}
+      value={{ language, setLanguage, currency, setCurrency, mainNavigation }}
     >
       {children}
     </SettingsContext.Provider>

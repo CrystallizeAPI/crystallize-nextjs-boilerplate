@@ -1,6 +1,6 @@
 import {
   Outer,
-  AttributeName,
+  // AttributeName,
   AttributeSelector,
   AttributeButton,
   Variant,
@@ -70,7 +70,7 @@ const VariantSelector = ({
 
         return (
           <div key={name}>
-            <AttributeName>{name}</AttributeName>
+            {/* <AttributeName>{name}</AttributeName> */}
             <AttributeSelector>
               {attr.map(value => (
                 <AttributeButton

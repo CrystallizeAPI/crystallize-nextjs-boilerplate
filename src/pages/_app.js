@@ -7,13 +7,13 @@ import { simplyFetchFromGraph } from 'lib/graph';
 import { getLanguage } from 'lib/language';
 
 function MyApp({ Component, pageProps, commonData }) {
-  const { language, tenant, topNavigation } = commonData;
+  const { language, tenant, mainNavigation } = commonData;
 
   return (
     <SettingsProvider
       language={language}
       currency={tenant.defaults.currency}
-      topNavigation={topNavigation}
+      mainNavigation={mainNavigation}
     >
       <IntlProvider locale={language}>
         <AuthProvider>
@@ -41,12 +41,12 @@ MyApp.getInitialProps = async function({ router: { asPath } }) {
     const {
       data: {
         tenant,
-        topNavigation: { children: topNavigation }
+        mainNavigation: { children: mainNavigation }
       }
     } = await simplyFetchFromGraph({
       query: `
         query COMMON_DATA($language: String!) {
-          topNavigation: catalogue(language: $language, path: "/") {
+          mainNavigation: catalogue(language: $language, path: "/") {
             children {
               type
               name
@@ -72,7 +72,7 @@ MyApp.getInitialProps = async function({ router: { asPath } }) {
       commonData: {
         language,
         tenant,
-        topNavigation
+        mainNavigation
       }
     };
   } catch (error) {
@@ -83,7 +83,7 @@ MyApp.getInitialProps = async function({ router: { asPath } }) {
     return {
       commonData: {
         language,
-        topNavigation: [],
+        mainNavigation: [],
         tenant: {
           defaults: {
             language: 'en',

@@ -3,15 +3,19 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import CrystallizeContent from '@crystallize/content-transformer/react';
 
+import { Body, responsive } from 'ui';
+
 import ParagraphCollection from './paragraph-collection';
 import PropertiesTable from './properties-table';
 import Images from './images';
 import Videos from './videos';
 
-const Outer = styled.div``;
-
 const ContentOuter = styled.div`
   margin: 1em var(--content-padding);
+
+  ${responsive.xs} {
+    margin: 0;
+  }
 `;
 
 const ShapeComponents = ({ components, overrides }) => {
@@ -20,7 +24,7 @@ const ShapeComponents = ({ components, overrides }) => {
   }
 
   return (
-    <Outer>
+    <Body>
       {components
         .filter(component => component.content != null)
         .map(({ type, ...component }, index) => {
@@ -95,7 +99,7 @@ const ShapeComponents = ({ components, overrides }) => {
 
           return <span key={key} />;
         })}
-    </Outer>
+    </Body>
   );
 };
 

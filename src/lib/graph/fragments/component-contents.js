@@ -60,6 +60,16 @@ export default `
       id
       name
       path
+      ...on Product {
+        variants {
+          price
+          isDefault
+          name
+          image {
+            ...image
+          }
+        }
+      }
     }
   }
 

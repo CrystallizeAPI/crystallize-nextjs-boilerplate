@@ -35,7 +35,9 @@ const BuyButton = ({ product, selectedVariant }) => {
           <CurrencyValue value={selectedVariant.price} />
         </strong>
       </Price>
-      <Button onClick={buy}>Add to Basket</Button>
+      <Button width="200px" onClick={buy}>
+        Add to Basket
+      </Button>
     </ProductFooter>
   );
 };

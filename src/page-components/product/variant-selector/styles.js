@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { darken } from 'polished';
 import is from 'styled-is';
+
 import { colors } from 'ui';
 
 export const Outer = styled.div`
@@ -32,8 +33,6 @@ export const Button = styled.button.attrs(() => ({
   &:active {
     outline: none;
   }
-  border: 1px solid #cecece;
-  border-radius: 0.2rem;
 
   ${is('selected')`
     background: ${darken(0.1, colors.glacier)};
@@ -52,13 +51,13 @@ export const AttributeName = styled.h4`
 
 export const AttributeSelector = styled.div`
   display: flex;
-  border: 1px solid #dfdfdf;
+  /* border: 1px solid #dfdfdf; */
   margin-bottom: 0.5rem;
 `;
 
 export const AttributeButton = styled.button`
   flex-grow: 1;
-  border-right: 1px solid #dfdfdf;
+  /* border-right: 1px solid black; */
   flex-basis: 0;
   text-transform: capitalize;
   font-weight: bold;
@@ -67,7 +66,8 @@ export const AttributeButton = styled.button`
   ${props =>
     props.selected &&
     css`
-      background: ${darken(0.1, colors.prettyPink)};
+      /* border: 1px solid black; */
+      background: black;
       color: white;
     `}
 

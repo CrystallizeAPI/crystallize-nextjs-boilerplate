@@ -6,3 +6,4 @@ export * from './buttons';
 export * from './spinner';
 export * from './icons';
 export * from './common';
+export * from './body';

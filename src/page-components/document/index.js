@@ -1,12 +1,14 @@
 import React from 'react';
+import CrystallizeContent from '@crystallize/content-transformer/react';
 
-import { simplyFetchFromGraph } from 'lib/graph';
-import { H1 } from 'ui';
+import { H1, Header, Outer } from 'ui';
 import Layout from 'components/layout';
+import { simplyFetchFromGraph } from 'lib/graph';
 import ShapeComponents from 'components/shape/components';
+import items from 'components/items';
 
 import query from './query';
-import { Document } from './styles';
+import { HeroImage, Img, List, H2, Related } from './styles';
 
 export async function getData({ asPath, language }) {
   const { data } = await simplyFetchFromGraph({
@@ -17,16 +19,40 @@ export async function getData({ asPath, language }) {
 }
 
 export default function DocumentPage({ document }) {
+  const title = document?.components.find(c => c.name === 'Title');
+  const description = document?.components.find(c => c.name === 'Intro');
+  const images = document?.components.find(c => c.name === 'Image');
+  const relatedProducts = document?.components.find(c => c.name === 'Products');
+
+  const componentsRest = document?.components.filter(
+    c => !['Intro', 'Title', 'Image', 'Products'].includes(c.name)
+  );
+
   return (
-    <Layout title={document.name}>
-      <Document>
-        <ShapeComponents
-          components={document.components}
-          overrides={{
-            Title: H1
-          }}
-        />
-      </Document>
+    <Layout title={title || document.name}>
+      <Outer>
+        <Header centerContent>
+          <H1>{title.content.text}</H1>
+          <CrystallizeContent {...description?.content?.json} />
+        </Header>
+        <HeroImage>
+          {images?.content?.images?.map((img, i) => (
+            <Img
+              key={img.url}
+              {...img}
+              alt={img.altText}
+              sizes={i > 0 ? '40vw' : '80vw'}
+            />
+          ))}
+        </HeroImage>
+        <ShapeComponents components={componentsRest} />
+      </Outer>
+      {relatedProducts?.content?.items?.length && (
+        <Related>
+          <H2>Related products</H2>
+          <List>{relatedProducts.content.items.map(item => items(item))}</List>
+        </Related>
+      )}
     </Layout>
   );
 }

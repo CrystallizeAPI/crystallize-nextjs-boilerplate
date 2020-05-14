@@ -7,6 +7,7 @@ import GlobalStyle from 'ui/global';
 
 import Aside from './aside';
 import Header from './header';
+import Footer from './footer';
 import {
   Main,
   LoadingWrapper,
@@ -47,6 +48,7 @@ export default function Layout({
       <CrystallizeLayout right={simple ? null : Aside}>
         <Header simple={simple} />
         <Main>{loading ? <Loader /> : children}</Main>
+        <Footer />
       </CrystallizeLayout>
     </>
   );
