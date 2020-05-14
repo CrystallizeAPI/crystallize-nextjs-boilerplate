@@ -1,8 +1,8 @@
 import mjml2html from '@nerdenough/mjml-ncc-bundle';
 import sgMail from '@sendgrid/mail';
 
-import { callOrdersApi } from 'lib-api/crystallize-order-handler';
-import QUERY_ORDER_BY_ID from 'lib-api/graph/queries/order-by-id';
+import { callOrdersApi } from 'lib-api/crystallize';
+import QUERY_ORDER_BY_ID from 'lib-api/crystallize/graph/queries/order-by-id';
 import { formatCurrency } from 'lib/currency';
 
 export default async function sendOrderConfirmation(orderId) {

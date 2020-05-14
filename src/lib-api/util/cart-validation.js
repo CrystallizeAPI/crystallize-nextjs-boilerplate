@@ -10,18 +10,19 @@ export async function validateItems(lineItems) {
 
   const queries = uniqueLineItems.map(
     (item, i) => `
-        query PRODUCT_${i} {
-          catalogue (language: "${getLanguage()}", path: "${item.path}") {
-            ... on Product {
-              variants {
-                id
-                price
-              }
+      query PRODUCT_${i} {
+        catalogue (language: "${getLanguage()}", path: "${item.path}") {
+          ... on Product {
+            variants {
+              id
+              price
             }
           }
         }
-      `
+      }
+    `
   );
+
   const requests = queries.map((query) => simplyFetchFromGraph({ query }));
   try {
     const data = await Promise.all(requests);

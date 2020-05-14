@@ -5,7 +5,7 @@ export default class KlarnaCheckout extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      error: null
+      error: null,
     };
   }
 
@@ -19,11 +19,11 @@ export default class KlarnaCheckout extends React.Component {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           currency,
-          lineItems: items.map(item => ({
+          lineItems: items.map((item) => ({
             name: item.name,
             sku: item.sku,
             net: item.price,
@@ -34,21 +34,29 @@ export default class KlarnaCheckout extends React.Component {
             image_url: item.image.url,
             subscription: item.subscription,
             tax_group: item.taxGroup,
-            product_tax_amount: item.vatAmount
-          }))
-        })
+            product_tax_amount: item.vatAmount,
+          })),
+        }),
       });
 
       this.setState({ loading: false });
 
       // https://developers.klarna.com/documentation/klarna-checkout/integration-guide/render-the-checkout/
-      const klarnaHtml = await response.text();
+      const klarnaResponse = await response.json();
+      if (!klarnaResponse.success) {
+        this.setState({
+          loading: false,
+          error: 'Could not load Klarna checkout',
+        });
+        return;
+      }
       const checkoutContainer = document.getElementById(
         'klarna-checkout-container'
       );
-      checkoutContainer.innerHTML = klarnaHtml;
+      checkoutContainer.innerHTML = klarnaResponse.html;
 
       const scriptsTags = checkoutContainer.getElementsByTagName('script');
+
       // This is necessary otherwise the scripts tags are not going to be evaluated
       for (let i = 0; i < scriptsTags.length; i++) {
         const { parentNode } = scriptsTags[i];

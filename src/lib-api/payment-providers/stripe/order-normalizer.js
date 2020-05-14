@@ -1,19 +1,15 @@
-import stripeSdk from 'stripe';
+import { client } from './index';
 
-const stripe = stripeSdk(process.env.STRIPE_SECRET_KEY);
-
-// TODO: only require stripe if needed to fetch order data
-export default async function stripeNormalizer(stripeData) {
-  const { lineItems } = stripeData;
-
-  const paymentIntent = await stripe.paymentIntents.retrieve(
-    stripeData.paymentIntentId
-  );
+export default async function stripeOrderNormalizer({
+  lineItems,
+  paymentIntentId,
+}) {
+  const paymentIntent = await client.paymentIntents.retrieve(paymentIntentId);
 
   const { data } = paymentIntent.charges;
   const charge = data[0];
 
-  const orderItemsArray = lineItems.map(lineItem => {
+  const orderItemsArray = lineItems.map((lineItem) => {
     const productMetaData = lineItem.merchant_data
       ? JSON.parse(lineItem.merchant_data)
       : {};
@@ -32,14 +28,14 @@ export default async function stripeNormalizer(stripeData) {
         currency: 'nok',
         discounts: [
           {
-            percent: 0
-          }
+            percent: 0,
+          },
         ],
         tax: {
           name: lineItem.tax_group.name,
-          percent: lineItem.tax_group.percent
-        }
-      }
+          percent: lineItem.tax_group.percent,
+        },
+      },
     };
   });
 
@@ -68,7 +64,7 @@ export default async function stripeNormalizer(stripeData) {
           state: charge.billing_details.address.state,
           country: charge.billing_details.address.country,
           phone: charge.billing_details.phone,
-          email: charge.receipt_email
+          email: charge.receipt_email,
         },
         {
           type: 'delivery',
@@ -82,9 +78,9 @@ export default async function stripeNormalizer(stripeData) {
           state: charge.billing_details.address.state,
           country: charge.billing_details.address.country,
           phone: charge.billing_details.phone,
-          email: charge.receipt_email
-        }
-      ]
+          email: charge.receipt_email,
+        },
+      ],
     },
     cart: orderItemsArray,
     payment: [
@@ -98,9 +94,9 @@ export default async function stripeNormalizer(stripeData) {
           paymentMethodId: charge.payment_method,
           paymentIntentId: charge.payment_intent,
           subscriptionId: charge.subscription,
-          metadata: ''
-        }
-      }
+          metadata: '',
+        },
+      },
     ],
     total: {
       gross: charge.amount / 100,
@@ -108,14 +104,14 @@ export default async function stripeNormalizer(stripeData) {
       currency: charge.currency,
       discounts: [
         {
-          percent: 0
-        }
+          percent: 0,
+        },
       ],
       tax: {
         name: vatGroup.name,
-        percent: vatGroup.percent
-      }
+        percent: vatGroup.percent,
+      },
     },
-    additionalInformation: paymentIntent.merchant_data
+    additionalInformation: paymentIntent.merchant_data,
   };
 }

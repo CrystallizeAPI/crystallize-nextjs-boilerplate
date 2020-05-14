@@ -1,14 +1,17 @@
-import klarnaApiCall from 'lib-api/util/klarna-utils';
+import { client } from 'lib-api/payment-providers/klarna';
 import getHost from 'lib-api/util/get-host';
 
 function orderToKlarnaCart(lineItems) {
-  let totalTaxAmount = 0;
-  let totalCartAmount = 0;
-  const cartItems = lineItems.map((item) => {
-    totalTaxAmount += item.product_tax_amount * 100;
-    // Klarna expects integers
+  let order_tax_amount = 0;
+  let order_amount = 0;
+
+  const order_lines = lineItems.map((item) => {
+    order_tax_amount += item.product_tax_amount * 100;
+
+    // Klarna represents numbers as number * 100
+    // Ex: 11.59 becomes 1159. 9 becomes 900
     const amount = item.net * 100 * item.quantity;
-    totalCartAmount += amount;
+    order_amount += amount;
 
     return {
       name: item.name,
@@ -25,56 +28,55 @@ function orderToKlarnaCart(lineItems) {
       image_url: item.image_url,
       total_amount: amount,
       total_tax_amount: item.product_tax_amount * 100,
-      // amount - (amount * 10000) / (10000 + item.tax_rate * 100)
     };
   });
+
   return {
-    cart: cartItems,
-    total_cart_tax_amount: totalTaxAmount,
-    total_cart_amount: totalCartAmount,
+    order_lines,
+    order_tax_amount,
+    order_amount,
   };
 }
 
 export default async (req, res) => {
   try {
     const { lineItems, currency } = req.body;
-    const { metadata } = req.body;
-    // const amount = lineItems.reduce((acc, val) => {
-    //  return acc + val.net * 100 * val.quantity;
-    // }, 0);
-    const klarnaCartInfo = orderToKlarnaCart(lineItems);
 
-    const response = await klarnaApiCall({
-      method: 'POST',
-      uri: '/checkout/v3/orders',
-      body: {
-        order_lines: klarnaCartInfo.cart,
-        purchase_country: process.env.KLARNA_COUNTRY_CODE,
-        purchase_currency: currency,
-        // locale: 'nb-no',
-        order_amount: klarnaCartInfo.total_cart_amount,
-        order_tax_amount: klarnaCartInfo.total_cart_tax_amount,
-        merchant_data: metadata,
-        merchant_urls: {
-          // back_to_store_uri: STORE_URI,
-          terms: process.env.KLARNA_TERMS_URI,
-          checkout: process.env.KLARNA_CHECKOUT_URI,
-          confirmation: `${getHost()}/confirmation/klarna/{checkout.order.id}`,
-          push: `${getHost()}/api/order-persistence?klarna_order_id={checkout.order.id}`,
-        },
+    const { success, order, error } = await client.createOrder({
+      ...orderToKlarnaCart(lineItems),
+      purchase_country: 'NO',
+      purchase_currency: currency || 'NOK',
+      locale: 'no-nb',
+      merchant_urls: {
+        terms: `${getHost()}/checkout`,
+        checkout: `${getHost()}/checkout`,
+        confirmation: `${getHost()}/confirmation/klarna/{checkout.order.id}`,
+        push: `${getHost()}/api/klarna/order-persistence/{checkout.order.id}`,
       },
     });
 
-    return res.send(`
-    <html>
-      <head><!-- ... --></head>
-      <body>
-      <!-- Your checkout page html -->
-      ${response.html_snippet}
-      <!-- More of your checkout page html -->
-      </body>
-     </html>
-      `);
+    if (success) {
+      return res.json({
+        success: true,
+        html: order.html_snippet,
+      });
+    }
+    console.log(error);
+    return res.json({
+      success: false,
+      error,
+    });
+
+    // return res.send(`
+    //   <html>
+    //     <head><!-- ... --></head>
+    //     <body>
+    //     <!-- Your checkout page html -->
+    //     ${response.html_snippet}
+    //     <!-- More of your checkout page html -->
+    //     </body>
+    //   </html>
+    // `);
   } catch (error) {
     return res.json({
       success: false,

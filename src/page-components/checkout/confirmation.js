@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 
 import Layout from 'components/layout';
 import { useBasket } from 'components/basket';
@@ -20,32 +19,17 @@ const Line = styled.div`
   border-bottom: 1px solid ${colors.light};
 `;
 
-export default function Confirmation() {
-  const router = useRouter();
+export default function Confirmation({ order: orderData }) {
   const basket = useBasket();
 
-  const { orderId, paymentMethod } = router.query;
-
   const [emptied, setEmptied] = useState(false);
-  const [orderData, setOrderData] = useState(null);
 
   useEffect(() => {
     if (!emptied) {
       basket.actions.empty();
       setEmptied(true);
     }
-
-    let url = `/api/order-confirmation?order_id=${orderId}`;
-    if (paymentMethod) url = `${url}&payment_method=${paymentMethod}`;
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setOrderData(data));
-  }, [emptied, paymentMethod, basket.actions, orderId]);
-
-  if (!orderData || !orderData.data) {
-    return <Layout loading>Please wait. Getting receipt...</Layout>;
-  }
+  }, [emptied, basket.actions]);
 
   const order = orderData.data.orders.get;
   const { email } = order.customer.addresses[0];
@@ -64,8 +48,8 @@ export default function Confirmation() {
         <CustomHeader>
           <H1>Order Summary</H1>
           <p>
-            Your order (<strong>#{orderId}</strong>) has been confirmed. A copy
-            of your order has been sent to <strong>{email}</strong>.
+            Your order has been confirmed. A copy of your order has been sent to{' '}
+            <strong>{email}</strong>.
           </p>
           <Line />
           <BillingDetails order={order} />

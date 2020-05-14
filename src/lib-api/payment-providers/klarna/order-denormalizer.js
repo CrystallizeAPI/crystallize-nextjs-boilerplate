@@ -1,17 +1,17 @@
 // Maps klarna order fetch result to Crystallize getOrder query result
 
-export default function klarnaDenormalizer(orderData) {
-  const denormalizedCart = orderData.order_lines.map(orderLine => {
+export default function klarnaOrderDenormalizer(orderData) {
+  const denormalizedCart = orderData.order_lines.map((orderLine) => {
     return {
-      sku: orderLine.reference,
+      sku: orderLine.reference || null,
       name: orderLine.name,
       quantity: orderLine.quantity,
       price: {
         net: orderLine.unit_price / 100,
         gross: orderLine.unit_price / 100,
-        currency: orderLine.purchase_currency
+        currency: orderLine.purchase_currency || null,
       },
-      imageUrl: orderLine.image_url
+      imageUrl: orderLine.image_url,
     };
   });
 
@@ -22,13 +22,13 @@ export default function klarnaDenormalizer(orderData) {
           total: {
             net: orderData.order_amount / 100,
             gross: orderData.order_amount / 100,
-            currency: orderData.purchase_currency
+            currency: orderData.purchase_currency || null,
           },
           payment: {
             provider: 'klarna',
             id: orderData.order_id,
             orderId: orderData.order_id,
-            recurringToken: orderData.recurring_token
+            recurringToken: orderData.recurring_token || null,
           },
           cart: denormalizedCart,
           customer: {
@@ -39,18 +39,18 @@ export default function klarnaDenormalizer(orderData) {
                 type: 'billing',
                 street: orderData.billing_address.street_address,
                 street2: orderData.billing_address.street_address2,
-                email: orderData.billing_address.email
+                email: orderData.billing_address.email,
               },
               {
                 type: 'shipping',
                 street: orderData.shipping_address.street_address,
                 street2: orderData.shipping_address.street_address2,
-                email: orderData.shipping_address.email
-              }
-            ]
-          }
-        }
-      }
-    }
+                email: orderData.shipping_address.email,
+              },
+            ],
+          },
+        },
+      },
+    },
   };
 }

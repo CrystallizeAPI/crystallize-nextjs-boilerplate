@@ -14,7 +14,7 @@ import {
   PaymentSelector,
   PaymentMethods,
   PaymentButton,
-  PaymentMethod
+  PaymentMethod,
 } from './styles';
 
 const Outer = styled.div`
@@ -49,7 +49,7 @@ class PaymentGateway extends React.Component {
     paymentMethod: null,
     firstName: '',
     lastName: '',
-    email: ''
+    email: '',
   };
 
   render() {
@@ -59,7 +59,7 @@ class PaymentGateway extends React.Component {
     const personalDetails = {
       firstName,
       lastName,
-      email
+      email,
     };
 
     return (
@@ -75,7 +75,7 @@ class PaymentGateway extends React.Component {
                   type="text"
                   placeholder="First name"
                   value={firstName}
-                  onChange={e => this.setState({ firstName: e.target.value })}
+                  onChange={(e) => this.setState({ firstName: e.target.value })}
                   required
                 />
               </InputGroup>
@@ -86,7 +86,7 @@ class PaymentGateway extends React.Component {
                   type="text"
                   placeholder="Last name"
                   value={lastName}
-                  onChange={e => this.setState({ lastName: e.target.value })}
+                  onChange={(e) => this.setState({ lastName: e.target.value })}
                   required
                 />
               </InputGroup>
@@ -99,7 +99,7 @@ class PaymentGateway extends React.Component {
                   type="email"
                   placeholder="Email address"
                   value={email}
-                  onChange={e => this.setState({ email: e.target.value })}
+                  onChange={(e) => this.setState({ email: e.target.value })}
                   required
                 />
               </InputGroup>
@@ -131,10 +131,10 @@ class PaymentGateway extends React.Component {
                     personalDetails={personalDetails}
                     items={items}
                     currency={currency}
-                    onSuccess={orderId =>
+                    onSuccess={(orderId) =>
                       Router.push(
-                        '/confirmation/[orderId]',
-                        `/confirmation/${orderId}`
+                        '/confirmation/stripe/[orderId]',
+                        `/confirmation/stripe/${orderId}`
                       )
                     }
                   />
