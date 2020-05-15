@@ -29,13 +29,13 @@ export default function CatalogueItem({ data, gridCell }) {
 
     image = i;
     text = (
-      <>
+      <div>
         <Price>
           <CurrencyValue value={price} />
         </Price>
         <Title>{name}</Title>
         <Button>BUY</Button>
-      </>
+      </div>
     );
   }
 
