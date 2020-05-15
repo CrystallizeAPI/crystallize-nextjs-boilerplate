@@ -64,6 +64,8 @@ export const Outer = styled.a`
 
   button {
     margin: 0 auto;
+    min-width: 200px;
+    max-width: 80%;
   }
 
   ${responsive.xs} {
