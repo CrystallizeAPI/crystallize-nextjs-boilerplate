@@ -17,7 +17,8 @@
     "start-platformsh": "NODE_ENV=production next start -p $PORT",
     "prod": "npm run build && npm run start",
     "lint": "eslint .",
-    "validate": "lint-staged"
+    "validate": "lint-staged",
+    "vercel": "vercel"
   },
   "husky": {
     "hooks": {
