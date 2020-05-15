@@ -83,15 +83,13 @@ Serverless API functions related code
 
 ## Deploying Your Project
 
-There are multiple alternatives for deployments, however for the easiest hosting
-of a Node application, one option is [Vercel][20].
+There are multiple alternatives for deployments, two of them being [Vercel][20]
+and [Platform.sh][23]
 
 ### Deploying with Vercel
 
 - Register a Vercel account
-- Run `npm install --global vercel`
-- Navigate to your project folder
-- Run `vercel`
+- Run `yarn vercel` or `npm run vercel`
 
 [0]: https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square
 [1]: https://github.com/facebook/react
@@ -121,3 +119,4 @@ of a Node application, one option is [Vercel][20].
 [21]:
   https://img.shields.io/static/v1?label=Slack&logo=slack&message=Crystallize%20Community&color=68d1b7
 [22]: https://slack.com
+[23]: https://platform.sh
