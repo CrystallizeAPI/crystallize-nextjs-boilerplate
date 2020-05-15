@@ -3,7 +3,6 @@ import Grid from '@crystallize/grid-renderer';
 
 import Layout from 'components/layout';
 import GridItem from 'components/grid-item';
-import { H1, Header } from 'ui';
 import { simplyFetchFromGraph } from 'lib/graph';
 import itemFragment from 'lib/graph/fragments/item';
 import productFragment from 'lib/graph/fragments/product';
@@ -40,7 +39,7 @@ export async function getData() {
         ${itemFragment}
         ${productFragment}
       `,
-      variables: { gridId: '5ea19e7aba5038001c0180b6', language: 'en' }
+      variables: { gridId: '5ea19e7aba5038001c0180b6', language: 'en' },
     });
     return data;
   } catch (error) {
@@ -52,10 +51,6 @@ export async function getData() {
 export default function FrontPage({ grid }) {
   return (
     <Layout title="Home">
-      {/* <Header>
-          <H1>Oh hi there!</H1>
-          <p>Cool of you to join us.</p>
-        </Header> */}
       <Outer>
         {grid && (
           <Grid

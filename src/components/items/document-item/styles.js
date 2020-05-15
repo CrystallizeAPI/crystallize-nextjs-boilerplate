@@ -2,39 +2,26 @@ import styled from 'styled-components';
 import Image from '@crystallize/react-image';
 
 import { colors, responsive } from 'ui';
+import WidescreenRatio from 'ui/widescreen-ratio';
 
 export const Outer = styled.a`
-  display: block;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  color: #fff;
-  position: relative;
-  grid-column-end: span ${p => p.span};
+
+  ${(p) => (p.span ? `grid-column-end: span ${p.span}` : null)};
+
   ${responsive.xs} {
     margin-bottom: 15px;
   }
 `;
 
-export const MediaWrapper = styled.div`
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  height: 60%;
+export const MediaWrapper = styled(WidescreenRatio)`
+  flex: 0 0 auto;
+`;
 
-  .video-js {
-    background: ${colors.grey};
-    height: 100%;
-    width: 100%;
-    position: absolute;
-
-    video {
-      height: 100%;
-      width: auto;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
+export const MediaInner = styled.div`
+  flex: 1 1 100%;
 `;
 
 export const Img = styled(Image)`
@@ -53,12 +40,8 @@ export const Img = styled(Image)`
 `;
 
 export const Text = styled.div`
-  z-index: 2;
-  bottom: 0;
-  left: 0;
-  top: 0;
-  height: 40%;
-  color: ${colors.frostbite};
+  flex: 1 1 auto;
+  color: ${colors.black};
   background: ${colors.grey};
   width: 100%;
   display: flex;

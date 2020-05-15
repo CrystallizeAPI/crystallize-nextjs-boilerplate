@@ -64,7 +64,10 @@ export default async (req, res) => {
       html,
     });
   } else {
-    console.log(`Login link for ${email}: ${magicLink}`);
+    return res.json({
+      message: 'Email sent! The verification link will expire in 1 hour',
+      magicLink,
+    });
   }
 
   return res.json({

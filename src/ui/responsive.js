@@ -10,7 +10,7 @@ export const responsive = new Proxy(
     mdAndLess: `@media (max-width: ${screen.mdMax}px)`,
     mdPlus: `@media (min-width: ${screen.mdMin}px)`,
     md: `@media (min-width: ${screen.mdMin}px) and (max-width: ${screen.mdMax}px)`,
-    lg: `@media (min-width: ${screen.lgMin}px)`
+    lg: `@media (min-width: ${screen.lgMin}px)`,
   },
   {
     get(obj, prop) {
@@ -18,9 +18,11 @@ export const responsive = new Proxy(
         return obj[prop];
       }
 
-      console.error(`responsive.${prop} does not exist`);
+      if (!['$$typeof', 'prototype'].includes(prop)) {
+        console.error(`responsive.${prop} does not exist`);
+      }
 
       return '@media (min-width: 1px)';
-    }
+    },
   }
 );

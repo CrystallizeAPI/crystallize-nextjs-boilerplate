@@ -11,9 +11,11 @@ export const Outer = styled.footer`
   padding: 50px 50px;
   justify-content: space-between;
 `;
+
 export const Logo = styled.div`
   width: 70px;
 `;
+
 export const Powered = styled.div`
   width: 100%;
   display: block;
@@ -21,10 +23,16 @@ export const Powered = styled.div`
   align-items: center;
   font-size: 12px;
   font-weight: 600;
+
+  p {
+    margin: 0;
+  }
+
   svg {
     width: 120px;
   }
 `;
+
 export const NavList = styled.footer`
   list-style: none;
   font-weight: 500;

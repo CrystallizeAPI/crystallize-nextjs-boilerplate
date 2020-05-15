@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { IconLogo } from 'ui';
+import IconLogo from 'ui/icons/logo';
 import { useSettings } from 'components/settings-context';
 
 import { Outer, Logo, NavList, Powered } from './styles';
@@ -20,9 +20,9 @@ export default function Footer() {
       </Link>
       <NavList>
         <h5>Menu</h5>
-        {mainNavigation.map(category => (
+        {mainNavigation.map((category) => (
           <li key={category.path}>
-            <Link as={category.path} href={`/${category.type}`}>
+            <Link as={category.path} href="/[...catalogue]">
               <a>{category.name}</a>
             </Link>
           </li>

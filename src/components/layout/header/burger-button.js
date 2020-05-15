@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { responsive, colors } from 'ui';
 
 const Outer = styled.button.attrs(() => ({
-  type: 'button'
+  type: 'button',
 }))`
   appearance: none;
   display: none;
@@ -26,7 +26,7 @@ const Outer = styled.button.attrs(() => ({
 const Lines = styled.div`
   width: 100%;
   position: absolute;
-  background: ${p => (p.open ? 'transparent' : colors.frostbite)};
+  background: ${(p) => (p.open ? 'transparent' : colors.black)};
   height: 4px;
   top: 50%;
   margin-top: -2px;
@@ -37,7 +37,7 @@ const Lines = styled.div`
   &:after {
     width: 100%;
     top: -14px;
-    background: ${colors.frostbite};
+    background: ${colors.black};
     height: 4px;
     content: '';
     position: absolute;
@@ -45,14 +45,14 @@ const Lines = styled.div`
     transition: all 0.2s ease-out;
   }
   &:after {
-    transform: ${p => (p.open ? 'rotate(-45deg)' : 'rotate(0deg)')};
-    left: ${p => (p.open ? '0px' : '8px')};
-    width: ${p => (p.open ? '100%' : 'calc(100% - 8px)')};
-    top: ${p => (p.open ? '0' : '14px')};
+    transform: ${(p) => (p.open ? 'rotate(-45deg)' : 'rotate(0deg)')};
+    left: ${(p) => (p.open ? '0px' : '8px')};
+    width: ${(p) => (p.open ? '100%' : 'calc(100% - 8px)')};
+    top: ${(p) => (p.open ? '0' : '14px')};
   }
   &:before {
-    transform: ${p => (p.open ? 'rotate(45deg)' : 'rotate(0deg)')};
-    top: ${p => (p.open ? '0' : '-14px')};
+    transform: ${(p) => (p.open ? 'rotate(45deg)' : 'rotate(0deg)')};
+    top: ${(p) => (p.open ? '0' : '-14px')};
   }
 `;
 

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { responsive } from 'ui';
+
+import { responsive, colors } from 'ui';
 
 export const Outer = styled.div`
   display: flex;
@@ -10,26 +11,49 @@ export const Outer = styled.div`
 
 export const LoginStyle = styled.div`
   text-align: center;
-  padding: 50px 100px;
 
-  h4 {
-    margin: 20px 0px;
+  form {
+    background: ${colors.grey};
+    padding: 50px;
+    margin: 100px auto 0;
+    max-width: 700px;
   }
 
-  input {
-    border: 5px solid white;
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.5);
-    margin: 0 0 10px 0;
+  h4 {
+    margin: 0 auto;
+    max-width: 400px;
   }
 
   p {
-    margin-top: 15px;
-    color: #cc5454;
+    margin: 50px 20px;
+  }
+`;
+
+export const Fields = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+
+  input {
+    flex: 1 1 auto;
+    border: 2px solid #000;
+    border-right-width: 0;
+    padding: 15px;
+    margin: 0;
+  }
+
+  button {
+    flex: 0 0 auto;
   }
 
   ${responsive.smAndLess} {
-    padding: 20px 20px;
+    display: block;
+
+    input {
+      width: 100%;
+      min-width: auto;
+      border-right-width: 2px;
+      margin-bottom: 20px;
+    }
   }
 `;

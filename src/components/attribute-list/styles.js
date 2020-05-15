@@ -8,7 +8,7 @@ export const Attributes = styled.div`
 `;
 
 export const Attribute = styled.div`
-  background: ${colors.frostbite};
+  background: ${colors.black};
   color: #fff;
   font-size: 0.8rem;
   border: 0;

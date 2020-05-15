@@ -1,4 +1,4 @@
-export default function getHost(req) {
+export default function getHost(req = {}) {
   // Local proxy url using Ngrok
   if (process.env.NGROK_URL) {
     return process.env.NGROK_URL;

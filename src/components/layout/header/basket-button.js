@@ -2,7 +2,7 @@ import React from 'react';
 import { LayoutContext } from '@crystallize/react-layout';
 
 import { useBasket } from 'components/basket';
-import { IconBasket } from 'ui';
+import IconBasket from 'ui/icons/basket';
 
 import { Basket, BasketQuantity } from './styles';
 
@@ -18,6 +18,7 @@ const BasketButton = () => {
       </Basket>
     );
   }
+
   return (
     <Basket type="button">
       <IconBasket />

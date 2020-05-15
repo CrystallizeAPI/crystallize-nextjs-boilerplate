@@ -1,8 +1,5 @@
-import stripeSdk from 'stripe';
-
 import { validateItems } from 'lib-api/util/cart-validation';
-
-const stripe = stripeSdk(process.env.STRIPE_SECRET_KEY);
+import { getClient } from 'lib-api/payment-providers/stripe';
 
 export default async (req, res) => {
   try {
@@ -12,7 +9,7 @@ export default async (req, res) => {
       return acc + val.price * val.quantity;
     }, 0);
 
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await getClient().paymentIntents.create({
       amount: amount * 100,
       currency,
     });

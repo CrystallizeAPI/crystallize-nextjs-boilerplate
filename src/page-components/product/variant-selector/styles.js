@@ -15,7 +15,7 @@ export const Variant = styled.div`
 export const Values = styled.div``;
 
 export const Button = styled.button.attrs(() => ({
-  type: 'button'
+  type: 'button',
 }))`
   color: ${colors.darkText};
   width: 100%;
@@ -35,9 +35,9 @@ export const Button = styled.button.attrs(() => ({
   }
 
   ${is('selected')`
-    background: ${darken(0.1, colors.glacier)};
+    background: #000;
     color: white;
-    border: 1px solid ${darken(0.1, colors.glacier)};
+    border: 1px solid #000;
   `};
 `;
 
@@ -63,7 +63,7 @@ export const AttributeButton = styled.button`
   font-weight: bold;
   padding: 0.8rem;
 
-  ${props =>
+  ${(props) =>
     props.selected &&
     css`
       /* border: 1px solid black; */

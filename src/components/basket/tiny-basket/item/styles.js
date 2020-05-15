@@ -47,7 +47,7 @@ export const Item = styled.div`
   border-bottom: 1px solid #eee;
   position: relative;
 
-  ${p =>
+  ${(p) =>
     p.animate &&
     css`
       animation: ${animationItemHighlight} ${animationSpeedMs}ms 1;
@@ -69,7 +69,7 @@ export const ItemInfo = styled.span`
 export const ItemInfoText = styled.div``;
 
 export const ItemImage = styled(CrystallizeImage).attrs(() => ({
-  sizes: '50px'
+  sizes: '50px',
 }))`
   width: 50px;
   img {
@@ -106,14 +106,14 @@ export const PriceWrapper = styled.div`
   font-size: 16px;
   padding: 5px 10px 0 0;
   margin: 4px 0;
-  color: ${colors.frostbite};
+  color: ${colors.black};
 `;
 export const PriceWrap = styled.div`
   display: flex;
 `;
 
 export const Price = styled.div`
-  ${p => p.isDiscounted && 'text-decoration: line-through'};
+  ${(p) => p.isDiscounted && 'text-decoration: line-through'};
 `;
 
 export const PriceVat = styled.div`

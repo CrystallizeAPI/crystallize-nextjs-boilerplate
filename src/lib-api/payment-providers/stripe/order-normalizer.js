@@ -1,10 +1,12 @@
-import { client } from './index';
+import { getClient } from './index';
 
 export default async function stripeOrderNormalizer({
   lineItems,
   paymentIntentId,
 }) {
-  const paymentIntent = await client.paymentIntents.retrieve(paymentIntentId);
+  const paymentIntent = await getClient().paymentIntents.retrieve(
+    paymentIntentId
+  );
 
   const { data } = paymentIntent.charges;
   const charge = data[0];

@@ -118,6 +118,7 @@ export const Basket = styled.button`
     background: rgba(0, 0, 0, 0.05);
   }
 `;
+
 export const BasketQuantity = styled.div`
   position: absolute;
   font-weight: 500;
@@ -137,14 +138,15 @@ export const NavActions = styled.div`
     padding: 5px 10px;
     font-size: 14px;
     font-weight: 500;
-    border: 1.4px solid ${colors.frostbite};
-    color: ${colors.frostbite};
+    border: 1.4px solid ${colors.black};
+    color: ${colors.black};
 
     cursor: pointer;
 
     &:hover {
-      background: ${colors.frostbite};
+      background: ${colors.black};
       color: #fff;
+      text-decoration: none;
     }
   }
 

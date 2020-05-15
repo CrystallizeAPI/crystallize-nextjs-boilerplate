@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 import Layout from 'components/layout';
-import { Button } from 'ui';
+import { H1, Button } from 'ui';
 import { sendMagicLink } from 'lib/rest-api';
 import { useAuth } from 'components/auth-context';
 
-import { LoginStyle, Outer } from './styles';
+import { LoginStyle, Outer, Fields } from './styles';
 
 export default function Login() {
   const auth = useAuth();
@@ -57,36 +57,39 @@ export default function Login() {
       <Outer>
         {auth.isLoggedIn ? (
           <div>
-            <h1>You are logged in</h1>
+            <H1>You are logged in!</H1>
           </div>
         ) : (
           <LoginStyle>
-            <h1>Login in with email</h1>
-            <h4>
-              Enter your email address and we’ll send a magic login link to your
-              inbox.
-            </h4>
+            <H1>Login</H1>
+
             <form onSubmit={handleSubmit} action="/api/loging" method="post">
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                required
-                onChange={(event) =>
-                  setUserData(
-                    Object.assign({}, userData, {
-                      email: event.target.value,
-                    })
-                  )
-                }
-              />
-              <Button
-                state={userData.loading ? 'loading' : null}
-                type="submit"
-                value="Submit"
-              >
-                Continue
-              </Button>
+              <h4>
+                Enter your email address and we’ll send a magic login link to
+                your inbox.
+              </h4>
+              <Fields>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@your.crib"
+                  required
+                  onChange={(event) =>
+                    setUserData(
+                      Object.assign({}, userData, {
+                        email: event.target.value,
+                      })
+                    )
+                  }
+                />
+                <Button
+                  state={userData.loading ? 'loading' : null}
+                  type="submit"
+                  value="Submit"
+                >
+                  Send me a magic link
+                </Button>
+              </Fields>
             </form>
             {userData.message ? <p>{userData.message}</p> : ''}
             {userData.error ? <p>Please enter a valid email address</p> : ''}

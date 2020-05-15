@@ -34,15 +34,15 @@ function MyApp({ Component, pageProps, commonData }) {
  * - Tenant settings
  * - Main naviation
  */
-MyApp.getInitialProps = async function({ router: { asPath } }) {
+MyApp.getInitialProps = async function ({ router: { asPath } }) {
   const language = getLanguage({ asPath });
 
   try {
     const {
       data: {
         tenant,
-        mainNavigation: { children: mainNavigation }
-      }
+        mainNavigation: { children: mainNavigation },
+      },
     } = await simplyFetchFromGraph({
       query: `
         query COMMON_DATA($language: String!) {
@@ -64,16 +64,16 @@ MyApp.getInitialProps = async function({ router: { asPath } }) {
         }
       `,
       variables: {
-        language
-      }
+        language,
+      },
     });
 
     return {
       commonData: {
         language,
         tenant,
-        mainNavigation
-      }
+        mainNavigation: mainNavigation.filter((i) => !i.name.startsWith('_')),
+      },
     };
   } catch (error) {
     console.error(error);
@@ -87,10 +87,10 @@ MyApp.getInitialProps = async function({ router: { asPath } }) {
         tenant: {
           defaults: {
             language: 'en',
-            currency: 'usd'
-          }
-        }
-      }
+            currency: 'usd',
+          },
+        },
+      },
     };
   }
 };

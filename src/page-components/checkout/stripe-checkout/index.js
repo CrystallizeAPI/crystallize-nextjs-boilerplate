@@ -96,7 +96,7 @@ class StripeCheckout extends React.Component {
 
   handleCardChange(event) {
     let borderColor = colors.frost;
-    if (event.complete) borderColor = colors.glacier;
+    if (event.complete) borderColor = '#000';
     else if (event.error) borderColor = colors.error;
 
     return this.setState({

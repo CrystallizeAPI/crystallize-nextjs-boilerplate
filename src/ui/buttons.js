@@ -1,39 +1,40 @@
 import React from 'react';
 import styled from 'styled-components';
-import is, { isNot } from 'styled-is';
+import { isNot } from 'styled-is';
 
 import { Spinner } from './spinner';
 import { colors } from './colors';
 
 const STATES = {
-  LOADING: 'loading'
+  LOADING: 'loading',
 };
 
 const Inner = styled.span`
   flex: 1 1 auto;
   background: ${colors.grey};
-  color: ${colors.frostbite};
+  color: ${colors.black};
   font-weight: 600;
   text-decoration: none;
   text-align: center;
   padding: 16px 25px;
+  position: relative;
 `;
 
-const Outer = styled.button.attrs(() => ({
-  type: 'button'
+const Outer = styled.button.attrs((p) => ({
+  type: p.type || 'button',
 }))`
-  width: ${p => (p.width ? p.width : '120px')};
+  min-width: ${(p) => (p.width ? p.width : '120px')};
   display: inline-flex;
   border-radius: 0;
   border: none;
-  border: 2px solid ${colors.frostbite};
+  border: 2px solid ${colors.black};
   padding: 0;
   appearance: none;
   cursor: pointer;
   text-decoration: none;
 
   &:hover ${Inner} {
-    background: ${colors.frostbite};
+    background: ${colors.black};
     color: #fff;
   }
 
@@ -51,6 +52,7 @@ const Text = styled.span`
   position: relative;
   z-index: 2;
   transition: opacity 100ms, transform 100ms;
+  white-space: nowrap;
 
   ${isNot('shown')`
     opacity: 0;
@@ -65,20 +67,13 @@ const Loading = styled.span`
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: 0;
-  transform: scale(0.7);
-  transition: opacity 100ms, transform 100ms;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  ${is('shown')`
-    opacity: 1;
-    transform: none;
-  `};
-
   svg {
     height: 50%;
+    width: auto;
   }
 `;
 

@@ -1,5 +1,5 @@
 import { createCrystallizeOrder } from 'lib-api/crystallize/order';
-import { client, orderNormalizer } from 'lib-api/payment-providers/klarna';
+import { getClient, orderNormalizer } from 'lib-api/payment-providers/klarna';
 import { emailOrderConfirmation } from 'lib-api/emails';
 
 export default async (req, res) => {
@@ -14,7 +14,7 @@ export default async (req, res) => {
       validCrystallizeOrder
     );
 
-    await client.acknowledgeOrder(klarnaOrderId);
+    await getClient().acknowledgeOrder(klarnaOrderId);
 
     await emailOrderConfirmation(createCrystallizeOrderResponse);
 

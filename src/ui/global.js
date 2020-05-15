@@ -21,10 +21,9 @@ export default createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-  p > a {
-    border-bottom:2px solid black;
-    font-weight:600;
-  }
+
+  
+
   h1,
   h2,
   h3,
@@ -55,7 +54,22 @@ export default createGlobalStyle`
   }
   a {
     text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
+
+  p > a {
+    border-bottom: 2px solid black;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: none;
+      border-bottom-color: transparent;
+    }
+  }
+
   button {
     overflow: visible;
     border: 0;

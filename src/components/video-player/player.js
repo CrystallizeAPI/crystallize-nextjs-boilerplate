@@ -85,20 +85,17 @@ export default function VideoPlayer({
 
   const sources =
     playlists
-      ?.map(playlist => ({
+      ?.map((playlist) => ({
         type: getVideoType(playlist),
-        src: playlist
+        src: playlist,
       }))
-      .sort(s => (HLS_EXTENSION.test(s.src) ? -1 : 1)) || [];
+      .sort((s) => (HLS_EXTENSION.test(s.src) ? -1 : 1)) || [];
 
   useEffect(() => {
     if (ref.current) {
-      // const outer = document.createElement('div');
-      // outer.setAttribute('data-vjs-player', true);
       const videoElement = document.createElement('video');
-      videoElement.setAttribute('playsInline', true);
+      videoElement.setAttribute('playsinline', true);
       videoElement.classList.add('video-js');
-      // outer.appendChild(videoElement);
       ref.current.insertBefore(videoElement, ref.current.children[0]);
 
       const player = videojs(videoElement, {
@@ -106,12 +103,17 @@ export default function VideoPlayer({
         autoplay,
         loop,
         controls,
-        fluid
+        fluid,
       });
+
+      // Video.js does not always autplay for some reason
+      if (autoplay) {
+        setTimeout(() => player.play(), 0);
+      }
 
       return () => player.dispose();
     }
-  }, [sources, autoplay, controls, fluid]);
+  }, [sources, autoplay, controls, loop, fluid]);
 
   if (!sources || sources.length === 0) {
     return null;
@@ -119,7 +121,7 @@ export default function VideoPlayer({
 
   return (
     <Outer {...rest} ref={ref}>
-      <Overlay />
+      {controls && <Overlay />}
     </Outer>
   );
 }

@@ -1,4 +1,4 @@
-import { client } from 'lib-api/payment-providers/klarna';
+import { getClient } from 'lib-api/payment-providers/klarna';
 import getHost from 'lib-api/util/get-host';
 
 function orderToKlarnaCart(lineItems) {
@@ -41,17 +41,18 @@ function orderToKlarnaCart(lineItems) {
 export default async (req, res) => {
   try {
     const { lineItems, currency } = req.body;
+    const host = getHost(req);
 
-    const { success, order, error } = await client.createOrder({
+    const { success, order, error } = await getClient().createOrder({
       ...orderToKlarnaCart(lineItems),
       purchase_country: 'NO',
       purchase_currency: currency || 'NOK',
       locale: 'no-nb',
       merchant_urls: {
-        terms: `${getHost()}/checkout`,
-        checkout: `${getHost()}/checkout`,
-        confirmation: `${getHost()}/confirmation/klarna/{checkout.order.id}`,
-        push: `${getHost()}/api/klarna/order-persistence/{checkout.order.id}`,
+        terms: `${host}/checkout`,
+        checkout: `${host}/checkout`,
+        confirmation: `${host}/confirmation/klarna/{checkout.order.id}`,
+        push: `${host}/api/klarna/order-persistence/{checkout.order.id}`,
       },
     });
 
@@ -61,22 +62,11 @@ export default async (req, res) => {
         html: order.html_snippet,
       });
     }
-    console.log(error);
+
     return res.json({
       success: false,
       error,
     });
-
-    // return res.send(`
-    //   <html>
-    //     <head><!-- ... --></head>
-    //     <body>
-    //     <!-- Your checkout page html -->
-    //     ${response.html_snippet}
-    //     <!-- More of your checkout page html -->
-    //     </body>
-    //   </html>
-    // `);
   } catch (error) {
     return res.json({
       success: false,

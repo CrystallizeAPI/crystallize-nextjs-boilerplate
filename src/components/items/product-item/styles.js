@@ -59,7 +59,7 @@ export const Text = styled.div`
   left: 0;
   width: 100%;
   padding: 1em;
-  color: ${colors.frostbite};
+  color: ${colors.black};
 
   h3 {
     font-size: 1.5rem;

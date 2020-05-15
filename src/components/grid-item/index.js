@@ -19,12 +19,12 @@ export default function CatalogueItem({ data, gridCell }) {
   let text;
 
   if (type === 'folder' || type === 'document') {
-    const images = data.components.find(c => c.type === 'images');
+    const images = data.components.find((c) => c.type === 'images');
     image = images?.content?.images?.[0];
     text = <Title>{name}</Title>;
   } else {
     const { price, image: i } = variants
-      ? variants.find(variant => variant.isDefault)
+      ? variants.find((variant) => variant.isDefault)
       : {};
 
     image = i;
@@ -38,12 +38,14 @@ export default function CatalogueItem({ data, gridCell }) {
       </>
     );
   }
+
   if (type === 'document') {
     return <DocumentItem data={data} colSpan="1" />;
   }
+
   return (
-    <Link as={path} href={`/${type}`} passHref>
-      <Outer className={`${cellSize}`} type={type}>
+    <Link as={path} href="/[...catalogue]" passHref>
+      <Outer className={cellSize} type={type}>
         <Text>{text}</Text>
         <ImageWrapper>
           {image && (

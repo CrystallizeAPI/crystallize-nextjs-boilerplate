@@ -1,4 +1,4 @@
-import CrystallizeContent from '@crystallize/content-transformer/react';
+import ContentTransformer from 'ui/content-transformer';
 import { H3 } from 'ui';
 
 import { Outer, Title, Body, Text, Media } from './styles';
@@ -10,7 +10,7 @@ const Paragraph = ({
   title,
   images,
   videos,
-  headingComponent: HeadingComponent = H3
+  headingComponent: HeadingComponent = H3,
 }) => {
   return (
     <Outer>
@@ -22,7 +22,7 @@ const Paragraph = ({
         )}
         {!!body && body.json && body.json.length > 0 && (
           <Body>
-            <CrystallizeContent {...body.json} />
+            <ContentTransformer {...body.json} />
           </Body>
         )}
       </Text>

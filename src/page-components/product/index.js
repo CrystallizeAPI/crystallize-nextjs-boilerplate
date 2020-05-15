@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Img from '@crystallize/react-image';
-import CrystallizeContent from '@crystallize/content-transformer/react';
+import ContentTransformer from 'ui/content-transformer';
 import isEqual from 'lodash/isEqual';
 
 import { simplyFetchFromGraph } from 'lib/graph';
@@ -23,10 +23,10 @@ import {
   Summary,
   Content,
   Specs,
-  Description
+  Description,
 } from './styles';
 
-const attributesToObject = attributesArray =>
+const attributesToObject = (attributesArray) =>
   Object.assign(
     {},
     ...attributesArray.map(({ attribute, value }) => ({ [attribute]: value }))
@@ -35,7 +35,7 @@ const attributesToObject = attributesArray =>
 export async function getData({ asPath, language }) {
   const { data } = await simplyFetchFromGraph({
     query,
-    variables: { path: asPath, language }
+    variables: { path: asPath, language },
   });
   return data;
 }
@@ -43,14 +43,14 @@ export async function getData({ asPath, language }) {
 export default function ProductPage({ product }) {
   // Set the selected variant to the default
   const [selectedVariant, setSelectedVariant] = useState(
-    product.variants.find(v => v.isDefault)
+    product.variants.find((v) => v.isDefault)
   );
 
   const onAttributeChange = (attributes, newAttribute) => {
     const newAttributes = attributesToObject(attributes);
     newAttributes[newAttribute.attribute] = newAttribute.value;
 
-    const newSelectedVariant = product.variants.find(variant => {
+    const newSelectedVariant = product.variants.find((variant) => {
       const variantAttributes = attributesToObject(variant.attributes);
       return isEqual(variantAttributes, newAttributes);
     });
@@ -58,15 +58,15 @@ export default function ProductPage({ product }) {
     setSelectedVariant(newSelectedVariant);
   };
 
-  const onVariantChange = variant => setSelectedVariant(variant);
+  const onVariantChange = (variant) => setSelectedVariant(variant);
 
-  const summaryComponent = product.components.find(c => c.name === 'Summary');
+  const summaryComponent = product.components.find((c) => c.name === 'Summary');
   const descriptionComponent = product.components.find(
-    c => c.name === 'Description'
+    (c) => c.name === 'Description'
   );
-  const specs = product.components.find(c => c.name === 'Specs');
+  const specs = product.components.find((c) => c.name === 'Specs');
   const componentsRest = product.components.filter(
-    c => !['Summary', 'Description', 'Specs'].includes(c.name)
+    (c) => !['Summary', 'Description', 'Specs'].includes(c.name)
   );
 
   return (
@@ -86,7 +86,7 @@ export default function ProductPage({ product }) {
             <Name>{product.name}</Name>
             {summaryComponent && (
               <Summary>
-                <CrystallizeContent {...summaryComponent?.content?.json} />
+                <ContentTransformer {...summaryComponent?.content?.json} />
               </Summary>
             )}
 

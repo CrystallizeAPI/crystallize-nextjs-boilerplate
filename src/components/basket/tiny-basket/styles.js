@@ -32,7 +32,6 @@ export const RemainingUntilFreeShipping = styled.div`
   margin-top: 15px;
   font-weight: 600;
   border-top: 1px dashed #dfdfdf;
-  color: ${darken(0.5, colors.glacier)};
 `;
 
 export const ItemOuter = styled.li`

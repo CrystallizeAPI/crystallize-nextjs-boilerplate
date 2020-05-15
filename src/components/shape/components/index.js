@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import CrystallizeContent from '@crystallize/content-transformer/react';
+import ContentTransformer from 'ui/content-transformer';
 
 import { Body, responsive } from 'ui';
 
@@ -26,7 +26,7 @@ const ShapeComponents = ({ components, overrides }) => {
   return (
     <Body>
       {components
-        .filter(component => component.content != null)
+        .filter((component) => component.content != null)
         .map(({ type, ...component }, index) => {
           const key = index;
           let Component;
@@ -70,7 +70,7 @@ const ShapeComponents = ({ components, overrides }) => {
             return (
               <ContentOuter key={key}>
                 <Component>
-                  <CrystallizeContent {...component.content.json} />
+                  <ContentTransformer {...component.content.json} />
                 </Component>
               </ContentOuter>
             );
@@ -105,7 +105,7 @@ const ShapeComponents = ({ components, overrides }) => {
 
 ShapeComponents.propTypes = {
   components: PropTypes.array.isRequired,
-  overrides: PropTypes.object
+  overrides: PropTypes.object,
 };
 
 export default ShapeComponents;

@@ -28,7 +28,7 @@ export const Img = styled(Image)`
 export const Title = styled(H3)`
   font-size: 2.5rem;
   text-transform: uppercase;
-  color: ${colors.frostbite};
+  color: ${colors.black};
   font-weight: 900;
   font-family: 'Roboto', 'sans-serif';
 `;
@@ -52,21 +52,27 @@ export const Price = styled.span`
 `;
 
 export const Outer = styled.a`
-  color: #fff;
   position: relative;
   background: ${colors.grey};
   height: 100%;
   display: flex;
   padding: 0 50px;
+
+  &:hover {
+    text-decoration: none;
+  }
+
   button {
     margin: 0 auto;
   }
+
   ${responsive.xs} {
     flex-direction: column-reverse;
     text-align: center;
     margin-bottom: 15px;
     padding: 50px;
   }
+
   ${responsive.mdPlus} {
     /* Each grid type size generates a class "cell-COLUMNxROW" */
     &.cell-1x1 {

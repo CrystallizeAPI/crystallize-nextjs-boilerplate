@@ -47,7 +47,7 @@ export const H2 = styled(H)`
   display: block;
   font-size: 1rem;
   text-transform: uppercase;
-  color: ${colors.frostbite};
+  color: ${colors.black};
   ${responsive.xs} {
     text-align: center;
   }
