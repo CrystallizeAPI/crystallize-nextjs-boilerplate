@@ -9,7 +9,8 @@ export default class MyDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -20,7 +21,7 @@ export default class MyDocument extends Document {
             {initialProps.styles}
             {sheet.getStyleElement()}
           </>
-        )
+        ),
       };
     } finally {
       sheet.seal();
@@ -44,7 +45,7 @@ export default class MyDocument extends Document {
           />
           <link
             rel="apple-touch-icon"
-            sizes="180x180"
+            sizes="144x144"
             href="/static/favicons/apple-touch-icon.png"
           />
           <link
@@ -59,17 +60,17 @@ export default class MyDocument extends Document {
             sizes="16x16"
             href="/static/favicons/favicon-16x16.png"
           />
-          <link rel="manifest" href="/static/favicons/site.webmanifest" />
+          <link rel="manifest" href="/static/site.webmanifest" />
           <link
             rel="mask-icon"
             href="/static/favicons/safari-pinned-tab.svg"
-            color="#8fdecb"
+            color="#5bbad5"
           />
           <link rel="shortcut icon" href="/static/favicons/favicon.ico" />
-          <meta name="msapplication-TileColor" content="#00aba9" />
+          <meta name="msapplication-TileColor" content="#da532c" />
           <meta
             name="msapplication-config"
-            content="/static/favicons/browserconfig.xml"
+            content="/static/browserconfig.xml"
           />
           <meta name="theme-color" content="#ffffff" />
 

@@ -13,22 +13,31 @@ export async function getData() {
   try {
     const { data } = await simplyFetchFromGraph({
       query: `
-        query FRONTPAGE($gridId: ID!, $language: String!) {
-          grid(language: $language, id: $gridId) {
-            id
-            name
-            rows {
-              columns {
-                layout {
-                  rowspan
-                  colspan
-                }
-                itemType
-                itemId
-                item {
-                  ... on Item {
-                    ...item
-                    ...product
+        query FRONTPAGE($language: String!) {
+          catalogue(path: "/frontpage", language: $language) {
+            components {
+              name
+              type
+              content {
+                ... on GridRelationsContent {
+                  grids {
+                    name
+                    rows {
+                      columns {
+                        layout {
+                          rowspan
+                          colspan
+                        }
+                        itemType
+                        itemId
+                        item {
+                          ... on Item {
+                            ...item
+                            ...product
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -39,7 +48,7 @@ export async function getData() {
         ${itemFragment}
         ${productFragment}
       `,
-      variables: { gridId: '5ea19e7aba5038001c0180b6', language: 'en' },
+      variables: { language: 'en' },
     });
     return data;
   } catch (error) {
@@ -48,7 +57,11 @@ export async function getData() {
   }
 }
 
-export default function FrontPage({ grid }) {
+export default function FrontPage({ catalogue }) {
+  const [grid] =
+    catalogue?.components?.find((c) => c.type === 'gridRelations')?.content
+      ?.grids || [];
+
   return (
     <Layout title="Home">
       <Outer>

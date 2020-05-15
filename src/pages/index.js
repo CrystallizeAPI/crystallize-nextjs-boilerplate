@@ -5,8 +5,9 @@ export async function getStaticProps() {
 
   return {
     props: {
-      ...data
-    }
+      ...data,
+    },
+    unstable_revalidate: 1,
   };
 }
 

@@ -52,7 +52,7 @@ export default async (req, res) => {
         terms: `${host}/checkout`,
         checkout: `${host}/checkout`,
         confirmation: `${host}/confirmation/klarna/{checkout.order.id}`,
-        push: `${host}/api/klarna/order-persistence/{checkout.order.id}`,
+        push: `${host}/api/klarna/order-persistence?id={checkout.order.id}`,
       },
     });
 

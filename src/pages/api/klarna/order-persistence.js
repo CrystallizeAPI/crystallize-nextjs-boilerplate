@@ -4,7 +4,7 @@ import { emailOrderConfirmation } from 'lib-api/emails';
 
 export default async (req, res) => {
   try {
-    const klarnaOrderId = req.query.klarna_order_id;
+    const klarnaOrderId = req.query.id;
 
     const validCrystallizeOrder = await orderNormalizer({
       klarnaOrderId,
