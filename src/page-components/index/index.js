@@ -1,11 +1,10 @@
 import React from 'react';
-import Grid from '@crystallize/grid-renderer';
 
 import Layout from 'components/layout';
-import GridItem from 'components/grid-item';
+import Grid, { GridItem } from 'components/grid';
 import { simplyFetchFromGraph } from 'lib/graph';
-import itemFragment from 'lib/graph/fragments/item';
-import productFragment from 'lib/graph/fragments/product';
+import fragments from 'lib/graph/fragments';
+import { getLanguage } from 'lib/language';
 
 import { Outer } from './styles';
 
@@ -15,40 +14,14 @@ export async function getData() {
       query: `
         query FRONTPAGE($language: String!) {
           catalogue(path: "/frontpage", language: $language) {
-            components {
-              name
-              type
-              content {
-                ... on GridRelationsContent {
-                  grids {
-                    name
-                    rows {
-                      columns {
-                        layout {
-                          rowspan
-                          colspan
-                        }
-                        itemType
-                        itemId
-                        item {
-                          ... on Item {
-                            ...item
-                            ...product
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            ...item
+            ...product
           }
         }
       
-        ${itemFragment}
-        ${productFragment}
+        ${fragments}
       `,
-      variables: { language: 'en' },
+      variables: { language: getLanguage() },
     });
     return data;
   } catch (error) {

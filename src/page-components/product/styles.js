@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, responsive, H1, Body } from 'ui';
+import { colors, responsive, H1 } from 'ui';
 
 export const Outer = styled.div`
   max-width: 1600px;
@@ -52,7 +52,7 @@ export const Specs = styled.div`
     padding: 20px 0;
   }
 `;
-export const Description = styled(Body)`
+export const Description = styled.div`
   color: ${colors.darkText};
   flex: 0 1 100%;
   background: ${colors.grey};

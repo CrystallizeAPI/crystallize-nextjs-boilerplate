@@ -1,0 +1,197 @@
+export default `
+  fragment product on Product {
+    id
+    vatType {
+      name
+      percent
+    }
+    isVirtual
+    isSubscriptionOnly
+    variants {
+      id
+      name
+      sku
+      price
+      stock
+      isDefault
+      attributes {
+        attribute
+        value
+      }
+      image {
+        url
+        altText
+        variants {
+          url
+          width
+        }
+      }
+      subscriptionPlans {
+        id
+        name
+        initialPeriod
+        initialPrice
+        recurringPeriod
+        recurringPrice
+      }
+    }
+  }
+
+  fragment item on Item {
+    id
+    name
+    type
+    path
+    
+    components {
+      name
+      type
+      meta {
+        key
+        value
+      }
+      content {
+        ...singleLine
+        ...richText
+        ...imageContent
+        ...videoContent
+        ...paragraphCollection
+        ...itemRelations
+        ...gridRelations
+        ...propertiesTableContent
+      }
+    }
+  }
+
+  fragment singleLine on SingleLineContent {
+    text
+  }
+
+  fragment richText on RichTextContent {
+    json
+  }
+
+  fragment image on Image {
+    url
+    altText
+    variants {
+      url
+      width
+    }
+  }
+
+  fragment video on Video {
+    title
+    playlists
+    thumbnails {
+      key
+      url
+      variants {
+        url
+        width
+      }
+    }
+  }
+
+  fragment imageContent on ImageContent {
+    images {
+      ...image
+    }
+  }
+
+  fragment videoContent on VideoContent {
+    videos {
+      ...video
+    }
+  }
+
+  fragment paragraphCollection on ParagraphCollectionContent {
+    paragraphs {
+      title {
+        ...singleLine
+      }
+      body {
+        ...richText
+      }
+      images {
+        ...image
+      }
+    }
+  }
+
+  fragment itemRelations on ItemRelationsContent {
+    items {
+      id
+      name
+      path
+      ... on Product {
+        variants {
+          price
+          isDefault
+          name
+          image {
+            ...image
+          }
+        }
+      }
+      components {
+        name
+        type
+        content {
+          ...imageContent
+          ...videoContent
+        }
+      }
+    }
+  }
+
+  fragment gridRelations on GridRelationsContent {
+    grids {
+      name
+      rows {
+        columns {
+          layout {
+            rowspan
+            colspan
+          }
+          itemType
+          itemId
+          item {
+            id
+            name
+            path
+            type
+            ... on Product {
+              defaultVariant {
+                price
+                isDefault
+                name
+                image {
+                  ...image
+                }
+              }
+            }
+            components {
+              name
+              type
+              content {
+                ...imageContent
+                ...videoContent
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  fragment propertiesTableContent on PropertiesTableContent {
+    sections {
+      title
+      properties {
+        key
+        value
+      }
+    }
+  }
+`;

@@ -3,16 +3,16 @@ import Link from 'next/link';
 
 import DocumentItem from 'components/items/document-item';
 import { CurrencyValue } from 'components/currency-value';
-
 import { screen, Button } from 'ui';
+
 import { Outer, Text, ImageWrapper, Img, Price, Title } from './styles';
 
-export default function CatalogueItem({ data, gridCell }) {
+export default function GridItem({ data, gridCell }) {
   if (!data) {
     return null;
   }
 
-  const { name, path, type, variants } = data;
+  const { name, path, type, variants, defaultVariant = {} } = data;
   const imageMdWidth = 100 / (gridCell?.layout?.colspan ?? 1);
   const cellSize = `cell-${gridCell?.layout?.rowspan}x${gridCell?.layout?.colspan}`;
   let image;
@@ -25,7 +25,7 @@ export default function CatalogueItem({ data, gridCell }) {
   } else {
     const { price, image: i } = variants
       ? variants.find((variant) => variant.isDefault)
-      : {};
+      : defaultVariant;
 
     image = i;
     text = (

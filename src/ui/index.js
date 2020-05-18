@@ -5,4 +5,3 @@ export * from './headings';
 export * from './buttons';
 export * from './spinner';
 export * from './common';
-export * from './body';

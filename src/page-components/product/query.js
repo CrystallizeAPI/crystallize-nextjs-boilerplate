@@ -1,5 +1,4 @@
-import itemFragment from 'lib/graph/fragments/item';
-import productFragment from 'lib/graph/fragments/product';
+import fragments from 'lib/graph/fragments';
 
 export default `
   query PRODUCT_PAGE($language: String!, $path: String) {
@@ -22,6 +21,5 @@ export default `
     }
   }
 
-  ${itemFragment}
-  ${productFragment}
+  ${fragments}
 `;
