@@ -75,8 +75,8 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  function handleItem({ path, children }) {
-    if (path !== '/index') {
+  function handleItem({ path, name, children }) {
+    if (path !== '/index' && !name.startsWith('_')) {
       paths.push(path);
     }
 
@@ -91,18 +91,25 @@ export async function getStaticPaths() {
         query GET_ALL_CATALOGUE_ITEMS($language: String!) {
           catalogue(language: $language, path: "/") {
             path
+            name
             children {
               path
+              name
               children {
                 path
+                name
                 children {
                   path
+                  name
                   children {
                     path
+                    name
                     children {
                       path
+                      name
                       children {
                         path
+                        name
                       }
                     }
                   }
