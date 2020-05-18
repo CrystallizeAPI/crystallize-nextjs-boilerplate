@@ -103,12 +103,13 @@ const ShapeComponents = ({ components, overrides }) => {
 
           if (type === 'gridRelations') {
             Component = Component || GridRelations;
-            console.log(component.content);
+
             return <Component key={key} grids={component.content.grids} />;
           }
 
-          // eslint-disable-next-line no-console
-          console.log(`Render for ${type} not implemented`);
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(`Render for ${type} not implemented`);
+          }
 
           return <span key={key} />;
         })}

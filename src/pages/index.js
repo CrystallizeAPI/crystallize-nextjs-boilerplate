@@ -1,13 +1,12 @@
 import Cmp, { getData } from 'page-components/index';
 
-export async function getStaticProps() {
-  const data = await getData();
+export async function getServerSideProps() {
+  const data = await getData({ asPath: '/' });
 
   return {
     props: {
       ...data,
     },
-    unstable_revalidate: 1,
   };
 }
 
