@@ -2,8 +2,8 @@ import { createCrystallizeOrder } from 'lib-api/crystallize/order';
 import { emailOrderConfirmation } from 'lib-api/emails';
 import { orderNormalizer } from 'lib-api/payment-providers/stripe';
 
-// TODO: Remove body parsing once zeit has updated error handling
-// @RemoveWhenZeitErrorHandledComplete
+// TODO: Remove body parsing once Vercel has updated error handling
+// @RemoveWhenVercelErrorHandledComplete
 const bodyParser = (request) => {
   return new Promise((resolve) => {
     let data = '';
@@ -50,7 +50,7 @@ export default async (req, res) => {
   }
 };
 
-// @RemoveWhenZeitErrorHandledComplete
+// @RemoveWhenVercelErrorHandledComplete
 export const config = {
   api: {
     bodyParser: false,

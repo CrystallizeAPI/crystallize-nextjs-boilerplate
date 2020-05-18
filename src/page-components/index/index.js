@@ -18,7 +18,7 @@ export async function getData() {
             ...product
           }
         }
-      
+
         ${fragments}
       `,
       variables: { language: getLanguage() },

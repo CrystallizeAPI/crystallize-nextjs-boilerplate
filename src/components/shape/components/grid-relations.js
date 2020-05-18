@@ -4,7 +4,7 @@ export default function GridRelations({ grids }) {
   if (!grids) {
     return null;
   }
-  console.log(grids);
+
   return null;
 
   return grids.map((grid, index) => (
