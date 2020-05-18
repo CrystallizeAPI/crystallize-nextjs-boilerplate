@@ -13,7 +13,7 @@ export async function getData() {
     const { data } = await simplyFetchFromGraph({
       query: `
         query FRONTPAGE($language: String!) {
-          catalogue(path: "/frontpage", language: $language) {
+          catalogue(path: "/web-frontpage", language: $language) {
             ...item
             ...product
           }
