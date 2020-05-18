@@ -76,7 +76,9 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   function handleItem({ path, children }) {
-    paths.push(path);
+    if (path !== '/index') {
+      paths.push(path);
+    }
 
     children?.forEach(handleItem);
   }
