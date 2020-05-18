@@ -22,32 +22,29 @@ export async function getData({ asPath, language }) {
 export default function FolderPage({ folder }) {
   const { children } = folder;
 
-  const gridRelations = folder.components.filter(
-    (c) => c.type === 'gridRelations'
-  );
+  const gridRelations = folder.components
+    .filter((c) => c.type === 'gridRelations')
+    ?.reduce((acc, g) => [...acc, ...(g?.content?.grids || [])], []);
   const rest = folder.components.filter((c) => c.type !== 'gridRelations');
 
   return (
     <Layout title={folder.name}>
-      {gridRelations?.map((relations, index) => (
-        <div key={index}>
-          {relations?.content?.grids?.map((grid, gridIndex) => (
-            <Grid
-              key={`${index}-${gridIndex}`}
-              model={grid}
-              cellComponent={({ cell }) => (
-                <GridItem data={cell.item} gridCell={cell} />
-              )}
-            />
-          ))}
-        </div>
-      ))}
       <Outer>
         <Header centerContent>
           <H1>{folder.name}</H1>
           <ShapeComponents components={rest} />
         </Header>
-        {children && <List>{children.map((item) => items(item))}</List>}
+        {gridRelations.length > 0
+          ? gridRelations?.map((grid, index) => (
+              <Grid
+                key={index}
+                model={grid}
+                cellComponent={({ cell }) => (
+                  <GridItem data={cell.item} gridCell={cell} />
+                )}
+              />
+            ))
+          : children && <List>{children.map((item) => items(item))}</List>}
       </Outer>
     </Layout>
   );
