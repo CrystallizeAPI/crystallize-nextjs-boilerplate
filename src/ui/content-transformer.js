@@ -15,13 +15,36 @@ const commonTransfomerOverrides = {
   },
 };
 
+const maxWidth = '600px';
+
 const ContentTransformerOuter = styled.div`
+  p,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 auto;
+    text-align: left;
+    max-width: ${maxWidth};
+  }
+  h3 {
+    font-size: 2rem;
+  }
+  p,
+  li {
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+  }
+
   p {
     margin: 0 0 0.5em;
     line-height: 1.8;
   }
 
   ul {
+    max-width: ${maxWidth};
+    margin: 0 auto;
     display: block;
     list-style: none;
     margin: 1em 0 1em 30px;

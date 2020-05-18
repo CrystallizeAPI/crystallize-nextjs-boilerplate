@@ -39,12 +39,14 @@ export default function PropertiesTable({ sections }) {
           <H3>{section.title}</H3>
           <PropertiesOuter>
             <Properties>
-              {section.properties.map((property, i) => (
-                <tr key={i}>
-                  <td>{property.key}</td>
-                  <td>{property.value}</td>
-                </tr>
-              ))}
+              <tbody>
+                {section.properties.map((property, i) => (
+                  <tr key={i}>
+                    <td>{property.key}</td>
+                    <td>{property.value}</td>
+                  </tr>
+                ))}
+              </tbody>
             </Properties>
           </PropertiesOuter>
         </Section>

@@ -14,7 +14,7 @@ import {
   Description,
 } from './styles';
 
-export default function CatalogueItem({ data, colSpan = '4' }) {
+export default function DocumentItem({ data, colSpan = '4' }) {
   if (!data) {
     return null;
   }
@@ -22,10 +22,10 @@ export default function CatalogueItem({ data, colSpan = '4' }) {
   const { name, path } = data;
 
   let image;
-  const images = data.components.find((c) => c.type === 'images');
+  const images = data.components?.find((c) => c.type === 'images');
   image = images?.content?.images?.[0];
-  const description = data.components.find((c) => c.name === 'Intro');
-  const video = data.components.find((c) => c.name === 'Video');
+  const description = data.components?.find((c) => c.name === 'Intro');
+  const video = data.components?.find((c) => c.name === 'Video');
 
   let media;
 
@@ -47,7 +47,18 @@ export default function CatalogueItem({ data, colSpan = '4' }) {
       />
     );
   } else {
-    media = <div>No Media Found</div>;
+    return (
+      <Link as={path} href="/[...catalogue]" passHref>
+        <Outer span={colSpan}>
+          <Text>
+            <H3>{name}</H3>
+            <Description>
+              <ContentTransformer {...description?.content?.json} />
+            </Description>
+          </Text>
+        </Outer>
+      </Link>
+    );
   }
 
   return (

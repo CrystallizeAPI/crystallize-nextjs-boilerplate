@@ -30,7 +30,9 @@ export default function Footer() {
       </NavList>
       <Powered>
         <p>eCommerce by</p>
-        <IconLogo size={10} />
+        <a href="https://crystallize.com" aria-label="crystallize.com">
+          <IconLogo size={10} />
+        </a>
       </Powered>
     </Outer>
   );

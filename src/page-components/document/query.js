@@ -1,11 +1,12 @@
-import itemFragment from 'lib/graph/fragments/item';
+import fragments from 'lib/graph/fragments';
 
 export default `
   query FOLDER_PAGE($language: String!, $path: String) {
     document: catalogue(language: $language, path: $path) {
       ...item
+      ...product
     }
   }
 
-  ${itemFragment}
+  ${fragments}
 `;
