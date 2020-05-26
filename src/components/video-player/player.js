@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import videojs from 'video.js';
 import styled from 'styled-components';
+import videojs from 'video.js';
+import 'dashjs';
+import 'videojs-contrib-dash';
 
 import playerCss from './player-css';
 
@@ -45,7 +47,6 @@ const Outer = styled.div`
 
 const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.1);
-  pointer-events: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -82,14 +83,13 @@ export default function VideoPlayer({
   ...rest
 }) {
   const ref = useRef();
+  const playerRef = useRef();
 
   const sources =
-    playlists
-      ?.map((playlist) => ({
-        type: getVideoType(playlist),
-        src: playlist,
-      }))
-      .sort((s) => (HLS_EXTENSION.test(s.src) ? -1 : 1)) || [];
+    playlists?.map((playlist) => ({
+      type: getVideoType(playlist),
+      src: playlist,
+    })) || [];
 
   useEffect(() => {
     if (ref.current) {
@@ -98,7 +98,7 @@ export default function VideoPlayer({
       videoElement.classList.add('video-js');
       ref.current.insertBefore(videoElement, ref.current.children[0]);
 
-      const player = videojs(videoElement, {
+      playerRef.current = videojs(videoElement, {
         sources,
         autoplay,
         loop,
@@ -108,10 +108,10 @@ export default function VideoPlayer({
 
       // Video.js does not always autplay for some reason
       if (autoplay) {
-        setTimeout(() => player.play(), 0);
+        setTimeout(() => playerRef.current.play(), 0);
       }
 
-      return () => player.dispose();
+      return () => playerRef.current.dispose();
     }
   }, [sources, autoplay, controls, loop, fluid]);
 
@@ -121,7 +121,7 @@ export default function VideoPlayer({
 
   return (
     <Outer {...rest} ref={ref}>
-      {controls && <Overlay />}
+      {controls && <Overlay onClick={() => playerRef.current?.play()} />}
     </Outer>
   );
 }
