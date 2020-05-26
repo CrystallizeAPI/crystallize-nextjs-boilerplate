@@ -43,7 +43,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mjml": "^4.4.1",
-    "next": "^9.4.1",
+    "next": "^9.4.2",
     "polished": "^3.6.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
