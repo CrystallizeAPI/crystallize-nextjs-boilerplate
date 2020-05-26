@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { responsive, colors } from 'ui';
+import { responsive } from 'ui';
 
 export const Outer = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ export const LoginStyle = styled.div`
   text-align: center;
 
   form {
-    background: ${colors.grey};
+    background: var(--color-grey);
     padding: 50px;
     margin: 100px auto 0;
     max-width: 700px;

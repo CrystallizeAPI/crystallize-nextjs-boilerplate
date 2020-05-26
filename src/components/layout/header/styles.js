@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import is from 'styled-is';
 
-import { colors, responsive } from 'ui';
+import { responsive } from 'ui';
 
 export const Outer = styled.header`
   text-align: center;
@@ -110,7 +110,7 @@ export const Basket = styled.button`
     width: 40px;
   }
   svg path {
-    stroke: ${colors.darkText};
+    stroke: var(--color-darktext);
   }
 
   &:hover,
@@ -138,13 +138,13 @@ export const NavActions = styled.div`
     padding: 5px 10px;
     font-size: 14px;
     font-weight: 500;
-    border: 1.4px solid ${colors.black};
-    color: ${colors.black};
+    border: 1.4px solid var(--color-black);
+    color: var(--color-black);
 
     cursor: pointer;
 
     &:hover {
-      background: ${colors.black};
+      background: var(--color-black);
       color: #fff;
       text-decoration: none;
     }

@@ -5,8 +5,6 @@ export default function GridRelations({ grids }) {
     return null;
   }
 
-  return null;
-
   return grids.map((grid, index) => (
     <Grid
       key={index}

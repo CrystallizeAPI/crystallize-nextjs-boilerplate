@@ -1,9 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
-import { colors } from './colors';
 
 export default createGlobalStyle`
   :root {
     --content-padding: 50px;
+    --color-price: #d79b59;
+    --color-grey: #efefef;
+    --color-black: #000;
+    --color-darktext: #4c505b;
+    --color-frost: '#f3f4f6';
+    --color-error: '#EF4836';
+    --color-light: '#dfdfdf';
   }
   
   html {
@@ -16,7 +22,7 @@ export default createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     background: #fff;
-    color: ${colors.darkText};
+    color: var(--color-darktext);
   }
   * {
     box-sizing: border-box;

@@ -2,13 +2,12 @@ import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 
-import { colors } from 'ui';
 import { Spinner } from 'ui/spinner';
 import WidescreenRatio from 'ui/widescreen-ratio';
 import { useIntersectionObserver } from 'lib/intersection-observer';
 
 const Outer = styled.div`
-  background: ${colors.frost};
+  background: var(--color-frost);
 `;
 
 const Loader = styled.div`

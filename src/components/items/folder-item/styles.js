@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Image from '@crystallize/react-image';
 
-import { colors, responsive } from 'ui';
+import { responsive } from 'ui';
 
 export const Outer = styled.a`
   display: block;
@@ -9,7 +9,7 @@ export const Outer = styled.a`
   color: #fff;
   position: relative;
   padding: 1em;
-  background: ${colors.grey};
+  background: var(--color-grey);
   grid-column-end: span 4;
   ${responsive.xs} {
     margin-bottom: 15px;

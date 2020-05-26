@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { responsive, colors } from 'ui';
+import { responsive } from 'ui';
 
 const Outer = styled.button.attrs(() => ({
   type: 'button',
@@ -26,7 +26,7 @@ const Outer = styled.button.attrs(() => ({
 const Lines = styled.div`
   width: 100%;
   position: absolute;
-  background: ${(p) => (p.open ? 'transparent' : colors.black)};
+  background: ${(p) => (p.open ? 'transparent' : 'var(--color-black)')};
   height: 4px;
   top: 50%;
   margin-top: -2px;
@@ -37,7 +37,7 @@ const Lines = styled.div`
   &:after {
     width: 100%;
     top: -14px;
-    background: ${colors.black};
+    background: var(--color-black);
     height: 4px;
     content: '';
     position: absolute;

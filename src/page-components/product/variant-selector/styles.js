@@ -1,8 +1,6 @@
 import styled, { css } from 'styled-components';
-import { darken } from 'polished';
-import is from 'styled-is';
 
-import { colors } from 'ui';
+import is from 'styled-is';
 
 export const Outer = styled.div`
   margin: 30px 0;
@@ -17,7 +15,7 @@ export const Values = styled.div``;
 export const Button = styled.button.attrs(() => ({
   type: 'button',
 }))`
-  color: ${colors.darkText};
+  color: var(--color-darktext);
   width: 100%;
   font-weight: bold;
   appearance: none;
