@@ -30,7 +30,7 @@ export const Title = styled(H3)`
   text-transform: uppercase;
   color: ${colors.black};
   font-weight: 900;
-  font-family: 'Roboto', 'sans-serif';
+  font-family: 'Roboto', sans-serif;
 `;
 
 export const Text = styled.div`

@@ -65,7 +65,7 @@ export const Text = styled.div`
     font-size: 1.5rem;
     text-transform: uppercase;
     color: inherit;
-    font-family: 'Roboto', 'sans-serif';
+    font-family: 'Roboto', sans-serif;
     margin: 0;
   }
 `;

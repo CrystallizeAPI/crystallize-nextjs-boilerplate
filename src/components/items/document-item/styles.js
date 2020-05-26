@@ -52,13 +52,13 @@ export const Text = styled.div`
   h3 {
     font-size: 1.6em;
     color: inherit;
-    font-family: 'Roboto Slab', 'Roboto', 'sans-serif';
+    font-family: 'Roboto Slab', 'Roboto', sans-serif;
     margin: 0;
   }
 `;
 
 export const Description = styled.div`
-  font-family: 'Roboto', 'sans-serif';
+  font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   margin-top: 10px;
   line-height: 1.2rem;
