@@ -89,7 +89,8 @@ and [Platform.sh][23]
 ### Deploying with Vercel
 
 - Register a Vercel account
-- Run `yarn vercel` or `npm run vercel`
+- Install vercel `yarn global add vercel` or `npm i -g vercel`
+- Run `vercel`
 
 [0]: https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square
 [1]: https://github.com/facebook/react
