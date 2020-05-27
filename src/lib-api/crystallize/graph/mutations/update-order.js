@@ -1,6 +1,4 @@
-// const order = require('./fragments/order');
-
-module.exports = `
+export default `
   mutation updateOrder(
     $id: ID!
     $customer: CustomerInput!
