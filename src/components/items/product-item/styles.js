@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import Image from '@crystallize/react-image';
 
-import { colors, responsive } from 'ui';
+import { responsive } from 'ui';
 
 export const Outer = styled.a`
   display: flex;
   height: 100%;
-  color: #fff;
+  color: var(--color-main-background);
   position: relative;
   padding: 20px;
-  background: ${colors.grey};
+  background: var(--color-box-background);
   transition: all 0.1s ease-in-out;
   grid-column-end: span 3;
   ${responsive.xs} {
@@ -59,7 +59,7 @@ export const Text = styled.div`
   left: 0;
   width: 100%;
   padding: 1em;
-  color: ${colors.black};
+  color: var(--color-text-main);
 
   h3 {
     font-size: 1.5rem;
@@ -71,7 +71,7 @@ export const Text = styled.div`
 `;
 
 export const Price = styled.span`
-  color: ${colors.price};
+  color: var(--color-price);
   font-weight: bold;
   padding-bottom: 5px;
 `;

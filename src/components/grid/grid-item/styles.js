@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Image from '@crystallize/react-image';
-import { colors, H3, responsive } from 'ui';
+
+import { H3, responsive } from 'ui';
 
 export const ImageWrapper = styled.div`
   position: relative;
@@ -28,7 +29,7 @@ export const Img = styled(Image)`
 export const Title = styled(H3)`
   font-size: 2.5rem;
   text-transform: uppercase;
-  color: ${colors.black};
+  color: var(--color-text-main);
   font-weight: 900;
   font-family: 'Roboto', sans-serif;
 `;
@@ -47,13 +48,13 @@ export const Text = styled.div`
 export const Price = styled.span`
   color: inherit;
   font-size: 1.5rem;
-  color: ${colors.price};
+  color: var(--color-price);
   font-weight: bold;
 `;
 
 export const Outer = styled.a`
   position: relative;
-  background: ${colors.grey};
+  background: var(--color-box-background);
   height: 100%;
   display: flex;
   padding: 0 50px;

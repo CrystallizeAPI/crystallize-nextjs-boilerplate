@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from './colors';
+
 import { responsive } from './responsive';
 
 export const Outer = styled.div`
@@ -20,8 +20,8 @@ export const Header = styled.div`
   margin-bottom: 50px;
   padding: 100px 50px 50px;
   max-width: 800px;
-  text-align: ${p => (p.centerContent ? 'center' : 'left')};
-  margin: ${p => (p.centerContent ? '0 auto' : '0 0 50px 0')};
+  text-align: ${(p) => (p.centerContent ? 'center' : 'left')};
+  margin: ${(p) => (p.centerContent ? '0 auto' : '0 0 50px 0')};
   ${responsive.xs} {
     padding: 100px 0 50px;
   }
@@ -33,10 +33,10 @@ export const Header = styled.div`
   }
 
   p {
-    text-align: ${p => (p.centerContent ? 'center !important' : 'left')};
+    text-align: ${(p) => (p.centerContent ? 'center !important' : 'left')};
     font-size: 18px;
     line-height: 1.8rem;
-    color: ${colors.darkText};
+    color: var(--color-text-sub);
     margin: 0;
   }
 `;

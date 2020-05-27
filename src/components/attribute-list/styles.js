@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { colors } from 'ui';
 
 export const Attributes = styled.div`
   display: flex;
@@ -8,8 +7,8 @@ export const Attributes = styled.div`
 `;
 
 export const Attribute = styled.div`
-  background: ${colors.black};
-  color: #fff;
+  background: var(--color-text-main);
+  color: var(--color-main-background);
   font-size: 0.8rem;
   border: 0;
   text-transform: capitalize;

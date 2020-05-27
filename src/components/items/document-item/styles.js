@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Image from '@crystallize/react-image';
 
-import { colors, responsive } from 'ui';
+import { responsive } from 'ui';
 import WidescreenRatio from 'ui/widescreen-ratio';
 
 export const Outer = styled.a`
@@ -41,8 +41,8 @@ export const Img = styled(Image)`
 
 export const Text = styled.div`
   flex: 1 1 auto;
-  color: ${colors.black};
-  background: ${colors.grey};
+  color: var(--color-text-main);
+  background: var(--color-box-background);
   width: 100%;
   display: flex;
   flex-direction: column;

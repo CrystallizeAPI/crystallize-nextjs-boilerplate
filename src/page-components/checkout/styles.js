@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, responsive, H3 } from 'ui';
+import { responsive, H3 } from 'ui';
 
 export const Inner = styled.div`
   display: grid;
@@ -29,17 +29,18 @@ export const InputGroup = styled.div`
   width: 100%;
   padding-right: 15px;
 `;
+
 export const Input = styled.input`
-  background: #fff;
+  background: var(--color-main-background);
   width: 100%;
-  color: ${colors.darkText};
+  color: var(--color-text-sub);
   font-size: 16px;
   font-weight: 500;
   padding: 15px 15px;
   margin-bottom: 0.5rem;
   border: none;
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  border-bottom: 1px solid ${colors.frost};
+  border-bottom: 1px solid var(--color-box-background);
   transition: border 0.2s ease-in-out;
   &::placeholder {
     font-size: 12px;
@@ -47,21 +48,21 @@ export const Input = styled.input`
     padding-left: 10px;
   }
   &:valid {
-    border-bottom: 1px solid ${colors.iceberg};
+    border-bottom: 1px solid #b7e2e4;
   }
 
   &:invalid {
-    border-bottom: 1px solid ${colors.error};
+    border-bottom: 1px solid var(--color-error);
   }
 
   &[value=''] {
-    border-bottom: 1px solid ${colors.frost};
+    border-bottom: 1px solid var(--color-box-background);
   }
 `;
 
 export const ErrorMessage = styled.p`
   font-size: 16px;
-  color: ${colors.error};
+  color: var(--color-error);
   margin-top: 1rem;
 `;
 
@@ -77,16 +78,15 @@ export const PaymentMethods = styled.div`
 `;
 
 export const PaymentButton = styled.button`
-  /* ${props => `background: ${props.active ? colors.light : 'white'}`}; */
-  background:${p => p.color};
+  background: ${(p) => p.color};
   font-size: 18px;
   padding: 0.5rem;
   width: 32%;
-  margin-right:1%;
+  margin-right: 1%;
   height: 80px;
   border-radius: 10px;
   img {
-    max-width:100px;
+    max-width: 100px;
   }
   &:last-child {
     border-bottom: none;
@@ -113,7 +113,7 @@ export const SectionHeader = styled(H3)`
 export const Container = styled.div`
   width: 100%;
   padding: 0 75px 50px 75px;
-  background: ${colors.grey};
+  background: var(--color-box-background);
   ${responsive.smAndLess} {
     margin-bottom: 25px;
     padding: 0 40px 40px 40px;

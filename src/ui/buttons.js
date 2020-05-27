@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { isNot } from 'styled-is';
 
 import { Spinner } from './spinner';
-import { colors } from './colors';
 
 const STATES = {
   LOADING: 'loading',
@@ -11,8 +10,8 @@ const STATES = {
 
 const Inner = styled.span`
   flex: 1 1 auto;
-  background: ${colors.grey};
-  color: ${colors.black};
+  background: var(--color-box-background);
+  color: var(--color-text-main);
   font-weight: 600;
   text-decoration: none;
   text-align: center;
@@ -27,15 +26,15 @@ const Outer = styled.button.attrs((p) => ({
   display: inline-flex;
   border-radius: 0;
   border: none;
-  border: 2px solid ${colors.black};
+  border: 2px solid var(--color-text-main);
   padding: 0;
   appearance: none;
   cursor: pointer;
   text-decoration: none;
 
   &:hover ${Inner} {
-    background: ${colors.black};
-    color: #fff;
+    background: var(--color-text-main);
+    color: var(--color-main-background);
   }
 
   &[disabled] {

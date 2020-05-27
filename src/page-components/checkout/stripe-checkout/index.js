@@ -2,7 +2,7 @@ import React from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import styled from 'styled-components';
 
-import { Button, colors } from 'ui';
+import { Button } from 'ui';
 
 import { CardElementWrapper, ErrorMessage } from './styles';
 
@@ -95,9 +95,9 @@ class StripeCheckout extends React.Component {
   }
 
   handleCardChange(event) {
-    let borderColor = colors.frost;
-    if (event.complete) borderColor = '#000';
-    else if (event.error) borderColor = colors.error;
+    let borderColor = 'var(--color-box-background)';
+    if (event.complete) borderColor = 'var(--color-text-main)';
+    else if (event.error) borderColor = 'var(--color-error)';
 
     return this.setState({
       cardElementStyle: {

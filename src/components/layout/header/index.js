@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useAuth } from 'components/auth-context';
 import { useSettings } from 'components/settings-context';
 
+import LogoShop from 'ui/icons/logo-shop';
+
 import BurgerButton from './burger-button';
 import BasketButton from './basket-button';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
@@ -19,13 +21,13 @@ export default function Header({ simple }) {
       <Link href="/">
         <a>
           <Logo>
-            <img src="/static/frntr-logo.svg" alt="Logo" />
+            <LogoShop />
           </Logo>
         </a>
       </Link>
       <Nav open={navOpen}>
         <NavList>
-          {mainNavigation.map(category => (
+          {mainNavigation.map((category) => (
             <NavListItem key={category.path}>
               <Link as={category.path} href="/[...catalogue]">
                 <a onClick={() => setNavOpen(false)}>{category.name}</a>

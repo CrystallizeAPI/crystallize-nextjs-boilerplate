@@ -14,7 +14,7 @@ export const Basket = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  background: #fff;
+  background: var(--color-main-background);
   z-index: 15;
 `;
 

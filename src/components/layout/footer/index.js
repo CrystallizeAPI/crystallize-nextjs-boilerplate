@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 
-import IconLogo from 'ui/icons/logo';
+import LogoShop from 'ui/icons/logo-shop';
+import LogoCrystallize from 'ui/icons/logo-crystallize';
+
 import { useSettings } from 'components/settings-context';
 
 import { Outer, Logo, NavList, Powered } from './styles';
@@ -14,7 +16,7 @@ export default function Footer() {
       <Link href="/">
         <a>
           <Logo>
-            <img src="/static/frntr-logo.svg" alt="logo" />
+            <LogoShop />
           </Logo>
         </a>
       </Link>
@@ -31,7 +33,7 @@ export default function Footer() {
       <Powered>
         <p>eCommerce by</p>
         <a href="https://crystallize.com" aria-label="crystallize.com">
-          <IconLogo size={10} />
+          <LogoCrystallize size={10} />
         </a>
       </Powered>
     </Outer>

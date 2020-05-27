@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Image from '@crystallize/react-image';
 
-import { H2 as H, colors, responsive } from 'ui';
+import { H2 as H, responsive } from 'ui';
 
 export const HeroImage = styled.div`
   display: grid;
@@ -47,7 +47,7 @@ export const H2 = styled(H)`
   display: block;
   font-size: 1rem;
   text-transform: uppercase;
-  color: ${colors.black};
+  color: var(--color-text-main);
   ${responsive.xs} {
     text-align: center;
   }

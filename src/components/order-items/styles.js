@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Image from '@crystallize/react-image';
-import { colors, responsive } from 'ui';
+
+import { responsive } from 'ui';
 
 export const Items = styled.div`
   display: block;
@@ -13,7 +14,7 @@ export const Items = styled.div`
 `;
 
 export const Item = styled.div`
-  color: ${colors.darkText};
+  color: var(--color-text-sub);
   margin-bottom: 1rem;
   padding: 15px;
   display: flex;
@@ -27,7 +28,7 @@ export const ItemAmount = styled.div`
 `;
 
 export const ItemImage = styled(Image).attrs(() => ({
-  sizes: '80px'
+  sizes: '80px',
 }))`
   display: flex;
   flex: 0 0 auto;
