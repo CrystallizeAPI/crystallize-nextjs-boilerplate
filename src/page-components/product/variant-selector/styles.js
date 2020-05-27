@@ -49,25 +49,20 @@ export const AttributeName = styled.h4`
 
 export const AttributeSelector = styled.div`
   display: flex;
-  /* border: 1px solid #dfdfdf; */
   margin-bottom: 0.5rem;
 `;
 
 export const AttributeButton = styled.button`
   flex-grow: 1;
-  /* border-right: 1px solid black; */
   flex-basis: 0;
   text-transform: capitalize;
   font-weight: bold;
   padding: 0.8rem;
 
-  ${(props) =>
-    props.selected &&
-    css`
-      /* border: 1px solid black; */
-      background: black;
-      color: white;
-    `}
+  ${is('selected')`
+    background: var(--color-text-main);
+    color: var(--color-main-background);
+  `};
 
   &:first-child {
     border-top-left-radius: 0.2rem;

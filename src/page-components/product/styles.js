@@ -142,7 +142,8 @@ export const Price = styled.div`
   text-align: center;
   color: var(--color-text-sub);
   font-size: 30px;
-  margin-right: 20px;
+  margin: 20px;
+  margin-left: 0;
 
   strong {
     display: inline-block;

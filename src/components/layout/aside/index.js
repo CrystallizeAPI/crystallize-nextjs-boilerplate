@@ -17,9 +17,15 @@ const CheckoutBtn = styled(Button)`
   font-weight: 600;
   text-align: center;
 
-  &:hover {
+  &:not([disabled]):hover {
     background: var(--color-text-main);
     color: var(--color-main-background);
+    text-decoration: none;
+  }
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.5;
     text-decoration: none;
   }
 `;
