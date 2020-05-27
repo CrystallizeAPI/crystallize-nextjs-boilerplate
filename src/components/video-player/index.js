@@ -7,7 +7,7 @@ import WidescreenRatio from 'ui/widescreen-ratio';
 import { useIntersectionObserver } from 'lib/intersection-observer';
 
 const Outer = styled.div`
-  background: var(--color-frost);
+  background: var(--color-box-background);
 `;
 
 const Loader = styled.div`

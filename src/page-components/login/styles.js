@@ -13,7 +13,7 @@ export const LoginStyle = styled.div`
   text-align: center;
 
   form {
-    background: var(--color-grey);
+    background: var(--color-box-background);
     padding: 50px;
     margin: 100px auto 0;
     max-width: 700px;

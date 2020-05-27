@@ -6,10 +6,10 @@ import { responsive } from 'ui';
 export const Outer = styled.a`
   display: block;
   height: 100%;
-  color: #fff;
+  color: var(--color-main-background);
   position: relative;
   padding: 1em;
-  background: var(--color-grey);
+  background: var(--color-box-background);
   grid-column-end: span 4;
   ${responsive.xs} {
     margin-bottom: 15px;

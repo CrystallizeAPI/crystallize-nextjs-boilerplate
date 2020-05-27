@@ -15,7 +15,7 @@ export const Values = styled.div``;
 export const Button = styled.button.attrs(() => ({
   type: 'button',
 }))`
-  color: var(--color-darktext);
+  color: var(--color-text-sub);
   width: 100%;
   font-weight: bold;
   appearance: none;

@@ -7,8 +7,8 @@ export const Attributes = styled.div`
 `;
 
 export const Attribute = styled.div`
-  background: var(--color-black);
-  color: #fff;
+  background: var(--color-text-main);
+  color: var(--color-main-background);
   font-size: 0.8rem;
   border: 0;
   text-transform: capitalize;

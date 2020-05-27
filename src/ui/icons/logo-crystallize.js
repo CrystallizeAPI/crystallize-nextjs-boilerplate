@@ -1,15 +1,6 @@
-export default function IconLogo() {
+export default function LogoCrystallize() {
   return (
     <svg version="1.1" viewBox="0 0 317.1 143.5">
-      {/* <style type="text/css">
-	.st0{fill:#FFFFFF;}
-	.st1{fill:#1D1D1B;}
-	.st2{fill:#A5D9DC;}
-	.st3{fill:#D2ECED;}
-	.st4{fill:#BBE2E5;}
-	.st5{fill:#8ECFD3;}
-	.st6{fill:#717070;}
-</style> */}
       <g>
         <g>
           <path

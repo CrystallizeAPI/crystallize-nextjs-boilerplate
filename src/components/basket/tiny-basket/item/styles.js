@@ -106,7 +106,7 @@ export const PriceWrapper = styled.div`
   font-size: 16px;
   padding: 5px 10px 0 0;
   margin: 4px 0;
-  color: var(--color-black);
+  color: var(--color-text-main);
 `;
 export const PriceWrap = styled.div`
   display: flex;

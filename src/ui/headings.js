@@ -6,7 +6,7 @@ export const H1 = styled.h1`
   margin: 0 0 15px;
   font-size: 3rem;
   font-family: 'Roboto Slab', sans-serif;
-  color: var(--color-black);
+  color: var(--color-text-main);
 
   ${responsive.smAndLess} {
     font-size: 2.5rem;
@@ -14,7 +14,7 @@ export const H1 = styled.h1`
 `;
 
 export const H2 = styled.h2`
-  color: var(--color-black);
+  color: var(--color-text-main);
   font-size: 2rem;
   margin: 1rem 0;
 
@@ -24,7 +24,7 @@ export const H2 = styled.h2`
 `;
 
 export const H3 = styled.h3`
-  color: var(--color-black);
+  color: var(--color-text-main);
   font-size: 1.4rem;
   margin: 1rem 0;
 

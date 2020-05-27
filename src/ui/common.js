@@ -36,7 +36,7 @@ export const Header = styled.div`
     text-align: ${(p) => (p.centerContent ? 'center !important' : 'left')};
     font-size: 18px;
     line-height: 1.8rem;
-    color: var(--color-darktext);
+    color: var(--color-text-sub);
     margin: 0;
   }
 `;

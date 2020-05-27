@@ -110,7 +110,7 @@ export const Basket = styled.button`
     width: 40px;
   }
   svg path {
-    stroke: var(--color-darktext);
+    stroke: var(--color-text-sub);
   }
 
   &:hover,
@@ -138,14 +138,14 @@ export const NavActions = styled.div`
     padding: 5px 10px;
     font-size: 14px;
     font-weight: 500;
-    border: 1.4px solid var(--color-black);
-    color: var(--color-black);
+    border: 1.4px solid var(--color-text-main);
+    color: var(--color-text-main);
 
     cursor: pointer;
 
     &:hover {
-      background: var(--color-black);
-      color: #fff;
+      background: var(--color-text-main);
+      color: var(--color-main-background);
       text-decoration: none;
     }
   }

@@ -47,7 +47,7 @@ export const H2 = styled(H)`
   display: block;
   font-size: 1rem;
   text-transform: uppercase;
-  color: var(--color-black);
+  color: var(--color-text-main);
   ${responsive.xs} {
     text-align: center;
   }

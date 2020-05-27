@@ -5,7 +5,7 @@ export const Outer = styled.footer`
   grid-template-columns: repeat(2, 1fr);
   max-width: 1600px;
   margin: 50px auto;
-  border-top: 2px solid var(--color-grey);
+  border-top: 2px solid var(--color-box-background);
   padding: 50px 50px;
   justify-content: space-between;
 `;

@@ -16,7 +16,7 @@ const CustomHeader = styled(Header)`
 const Line = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid var(--color-light);
+  border-bottom: 1px solid var(--color-main-background);
 `;
 
 export default function Confirmation({ order: orderData }) {

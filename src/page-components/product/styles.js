@@ -21,7 +21,7 @@ export const Loader = styled.div`
 export const Sections = styled.div`
   display: flex;
   align-items: center;
-  background: var(--color-grey);
+  background: var(--color-box-background);
   padding: 50px;
   flex-direction: row-reverse;
   justify-content: center;
@@ -43,8 +43,8 @@ export const Content = styled.div`
 `;
 export const Specs = styled.div`
   flex: 0 0 500px;
-  border-left: 15px solid #fff;
-  background: var(--color-grey);
+  border-left: 15px solid var(--color-main-background);
+  background: var(--color-box-background);
   ${responsive.xs} {
     border-left: 0;
     display: block;
@@ -52,10 +52,11 @@ export const Specs = styled.div`
     padding: 20px 0;
   }
 `;
+
 export const Description = styled.div`
-  color: var(--color-darktext);
+  color: var(--color-text-sub);
   flex: 0 1 100%;
-  background: var(--color-grey);
+  background: var(--color-box-background);
   padding: 5rem 0;
   h2:empty {
     display: none;
@@ -115,7 +116,7 @@ export const Name = styled(H1)`
 `;
 
 export const Summary = styled.div`
-  color: var(--color-darktext);
+  color: var(--color-text-sub);
   font-size: 18px;
   line-height: 1.4;
   margin-bottom: 15px;
@@ -139,7 +140,7 @@ export const ProductFooter = styled.div`
 
 export const Price = styled.div`
   text-align: center;
-  color: var(--color-darktext);
+  color: var(--color-text-sub);
   font-size: 30px;
   margin-right: 20px;
 

@@ -3,32 +3,46 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
   :root {
     --content-padding: 50px;
+    
+    --color-main-background: #fff;
+    --color-text-main: #000;
+    --color-text-sub: #4c505b;
+    --color-box-background: #efefef;
+
     --color-price: #d79b59;
-    --color-grey: #efefef;
-    --color-black: #000;
-    --color-darktext: #4c505b;
-    --color-frost: '#f3f4f6';
     --color-error: '#EF4836';
-    --color-light: '#dfdfdf';
   }
+
+  /* Uncomment this to enable dark mode */
+  /* @media (prefers-color-scheme: dark) {
+    :root {
+      --color-main-background: #020210;
+      --color-text-main: #fff;
+      --color-text-sub: #ddd;
+      --color-box-background: #555;
+
+      --color-price: #d79b59;
+      --color-error: '#EF4836';
+    }
+  } */
   
   html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
   }
+
   body {
     margin: 0;
     font: 16px/1 roboto, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    background: #fff;
-    color: var(--color-darktext);
+    background: var(--color-main-background);
+    color: var(--color-text-sub);
   }
+
   * {
     box-sizing: border-box;
   }
-
-  
 
   h1,
   h2,
@@ -88,6 +102,12 @@ export default createGlobalStyle`
   ::-moz-focus-inner {
     padding: 0;
     border: 0;
+  }
+  ::-webkit-input-placeholder { /* Edge */
+    color: var(--color-text-sub);
+  }
+  ::placeholder {
+    color: var(--color-text-sub);
   }
   img {
     max-width: 100%;

@@ -14,7 +14,7 @@ export const Items = styled.div`
 `;
 
 export const Item = styled.div`
-  color: var(--color-darktext);
+  color: var(--color-text-sub);
   margin-bottom: 1rem;
   padding: 15px;
   display: flex;

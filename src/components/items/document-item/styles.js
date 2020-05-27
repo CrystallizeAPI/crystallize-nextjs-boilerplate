@@ -41,8 +41,8 @@ export const Img = styled(Image)`
 
 export const Text = styled.div`
   flex: 1 1 auto;
-  color: var(--color-black);
-  background: var(--color-grey);
+  color: var(--color-text-main);
+  background: var(--color-box-background);
   width: 100%;
   display: flex;
   flex-direction: column;

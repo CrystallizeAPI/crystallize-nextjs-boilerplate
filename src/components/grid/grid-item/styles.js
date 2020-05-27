@@ -29,7 +29,7 @@ export const Img = styled(Image)`
 export const Title = styled(H3)`
   font-size: 2.5rem;
   text-transform: uppercase;
-  color: var(--color-black);
+  color: var(--color-text-main);
   font-weight: 900;
   font-family: 'Roboto', sans-serif;
 `;
@@ -54,7 +54,7 @@ export const Price = styled.span`
 
 export const Outer = styled.a`
   position: relative;
-  background: var(--color-grey);
+  background: var(--color-box-background);
   height: 100%;
   display: flex;
   padding: 0 50px;
