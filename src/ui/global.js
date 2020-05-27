@@ -14,14 +14,14 @@ export default createGlobalStyle`
   }
 
   /* Uncomment this to enable dark mode */
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     :root {
       --color-main-background: #020210;
       --color-text-main: #fff;
       --color-text-sub: #ddd;
       --color-box-background: #555;
     }
-  }
+  } */
   
   html {
     -ms-text-size-adjust: 100%;
