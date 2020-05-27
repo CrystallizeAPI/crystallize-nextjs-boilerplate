@@ -12,31 +12,31 @@ export function safePathQuery({ variables, ...rest }) {
     return {
       variables: {
         ...variables,
-        path: safePath,
+        path: safePath
       },
-      ...rest,
+      ...rest
     };
   }
 
   return {
     variables,
-    ...rest,
+    ...rest
   };
 }
 
 export async function simplyFetchFromGraph({
-  uri = `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID}/catalogue`,
+  uri = `https://api-dev.crystallize.digital/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID}/catalogue`,
   query,
-  variables,
+  variables
 }) {
   const body = JSON.stringify(safePathQuery({ query, variables }));
 
   const response = await fetch(uri, {
     method: 'post',
     headers: {
-      'content-type': 'application/json',
+      'content-type': 'application/json'
     },
-    body,
+    body
   });
 
   if (!response.ok) {

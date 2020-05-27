@@ -27,7 +27,7 @@ const generateVippsProperties = vippsData => {
   return propertiesArray;
 };
 
-module.exports = ({ vippsOrderId }, vippsData) => {
+module.exports = ({ vippsOrderId, vippsData }) => {
   // if !vippsOrderId we set to create an order in Crystallize
   const {
     lineItems,
