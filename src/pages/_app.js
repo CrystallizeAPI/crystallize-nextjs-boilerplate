@@ -1,5 +1,3 @@
-import { IntlProvider } from 'react-intl';
-
 import { AuthProvider } from 'components/auth-context';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
@@ -15,16 +13,14 @@ function MyApp({ Component, pageProps, commonData }) {
       currency={tenant.defaults.currency}
       mainNavigation={mainNavigation}
     >
-      <IntlProvider locale={language}>
-        <AuthProvider>
-          <BasketProvider
-            shippingCost={199}
-            freeShippingMinimumPurchaseAmount={800}
-          >
-            <Component {...pageProps} />
-          </BasketProvider>
-        </AuthProvider>
-      </IntlProvider>
+      <AuthProvider>
+        <BasketProvider
+          shippingCost={199}
+          freeShippingMinimumPurchaseAmount={800}
+        >
+          <Component {...pageProps} />
+        </BasketProvider>
+      </AuthProvider>
     </SettingsProvider>
   );
 }

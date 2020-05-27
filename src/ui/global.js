@@ -10,21 +10,18 @@ export default createGlobalStyle`
     --color-box-background: #efefef;
 
     --color-price: #d79b59;
-    --color-error: '#EF4836';
+    --color-error: #EF4836;
   }
 
   /* Uncomment this to enable dark mode */
-  /* @media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: dark) {
     :root {
       --color-main-background: #020210;
       --color-text-main: #fff;
       --color-text-sub: #ddd;
       --color-box-background: #555;
-
-      --color-price: #d79b59;
-      --color-error: '#EF4836';
     }
-  } */
+  }
   
   html {
     -ms-text-size-adjust: 100%;
