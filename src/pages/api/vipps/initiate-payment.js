@@ -48,7 +48,7 @@ const orderToVippsBody = (
         },
       ],
     },
-    customerInfo: { mobileNumber: 91234567 },
+    customerInfo: { mobileNumber: 41546760 },
     transaction: {
       orderId: crystallizeOrderId,
       amount: totalCartAmount,
@@ -81,17 +81,9 @@ export default async (req, res) => {
         host
       ),
     });
-    console.log(
-      vippsResponse,
-      orderToVippsBody(
-        req.body,
-        lineItems,
-        personalDetails,
-        createCrystallizeOrderResponse.data.orders.create.id,
-        host
-      )
-    );
-    return res.send(vippsResponse);
+
+    console.log(vippsResponse);
+    return res.send(vippsResponse.url);
   } catch (error) {
     console.log(error);
     return res.status(503).send({
