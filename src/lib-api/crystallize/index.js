@@ -2,8 +2,8 @@ function callApi(apiName) {
   return async ({ query, variables, operationName }) => {
     const response = await fetch(
       apiName === 'orders'
-        ? `https://api-dev.crystallize.digital/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID}/${apiName}`
-        : 'https://pim-dev.crystallize.digital/graph/core',
+        ? `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID}/${apiName}`
+        : 'https://pim.crystallize.com/graph/core',
       {
         method: 'POST',
         headers: {
