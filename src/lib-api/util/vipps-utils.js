@@ -40,6 +40,7 @@ export async function vippsApiCall({
 }) {
   try {
     const { access_token } = await vippsAccessToken();
+
     const options = {
       headers: {
         'Content-Type': 'application/json',
