@@ -11,7 +11,7 @@
   "build": {
     "env": {
       "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
-      "NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID": "furniture"
+      "NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID": "ornforlag"
     }
   }
 }

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import StripeCheckout from './stripe';
 import KlarnaCheckout from './klarna';
+import VippsCheckout from './vipps';
 
 import {
   Form,
@@ -110,6 +111,14 @@ export default class PaymentGateway extends React.Component {
               >
                 <img src="/static/klarna-logo.png" alt="Klarna logo" />
               </PaymentButton>
+              <PaymentButton
+                color="#FFFFFF"
+                type="button"
+                active={paymentMethod === 'vipps'}
+                onClick={() => this.setState({ paymentMethod: 'vipps' })}
+              >
+                <img src="/static/vipps-logo.png" alt="Vipps logo" />
+              </PaymentButton>
             </PaymentSelector>
             {paymentMethod === 'stripe' && (
               <PaymentMethod>
@@ -130,6 +139,16 @@ export default class PaymentGateway extends React.Component {
             {paymentMethod === 'klarna' && (
               <PaymentMethod>
                 <KlarnaCheckout
+                  personalDetails={personalDetails}
+                  items={items}
+                  currency={currency}
+                />
+              </PaymentMethod>
+            )}
+
+            {paymentMethod === 'vipps' && (
+              <PaymentMethod>
+                <VippsCheckout
                   personalDetails={personalDetails}
                   items={items}
                   currency={currency}
