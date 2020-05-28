@@ -1,15 +1,23 @@
 {
-  "extends": ["prettier", "eslint:recommended", "plugin:react/recommended"],
-  "plugins": ["prettier"],
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "plugins": ["prettier", "jsx-a11y"],
   "parser": "babel-eslint",
-  "globals": {
-    "__crystallizeConfig": true
-  },
   "env": { "es6": true, "browser": true, "node": true },
   "rules": {
-    "no-async-promise-executor": 1,
     "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
     "react/react-in-jsx-scope": 0,
     "react/prop-types": 0
+  },
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": "detect"
+    }
   }
 }

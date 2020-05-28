@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "env": {
+    "JWT_SECRET": "come-up-with-a-good-secret-here",
+    "CRYSTALLIZE_SECRET_TOKEN_ID": "@crystallize-access-token-id",
+    "CRYSTALLIZE_SECRET_TOKEN": "@crystallize-access-token-secret",
+    "STRIPE_SECRET_KEY": "@stripe-secret-key",
+    "KLARNA_USERNAME": "@klarna-username",
+    "KLARNA_PASSWORD": "@klarna-password"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
+      "NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID": "furniture"
+    }
+  }
+}
