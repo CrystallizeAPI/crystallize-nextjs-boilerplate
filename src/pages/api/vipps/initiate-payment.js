@@ -33,7 +33,7 @@ const orderToVippsBody = (
       merchantSerialNumber: VIPPS_MERCHANT_SERIAL,
       callbackPrefix: `${host}/api/vipps/order-persistence`,
       shippingDetailsPrefix: host,
-      fallBack: `${host}/api/confirmation/vipps`,
+      fallBack: `${host}/api/confirmation/vipps/${crystallizeOrderId}`,
       consentRemovalPrefix: `${host}/consent`,
       paymentType: 'eComm Express Payment',
       fallBack: host,
@@ -82,8 +82,7 @@ export default async (req, res) => {
       ),
     });
 
-    console.log(vippsResponse);
-    return res.send(vippsResponse.url);
+    return res.send(vippsResponse);
   } catch (error) {
     console.log(error);
     return res.status(503).send({

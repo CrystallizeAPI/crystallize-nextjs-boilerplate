@@ -1,20 +1,20 @@
 import React from 'react';
 
-class StripeWrapper extends React.Component {
+class VippsWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
-      loading: false
+      loading: false,
     };
   }
 
   async componentDidMount() {
     this.setState({ loading: true });
 
-    const { personalDetails, items, currency } = this.props;
+    const { personalDetails, items, currency, onSuccess } = this.props;
 
-    const lineItems = items.map(item => ({
+    const lineItems = items.map((item) => ({
       name: item.name,
       sku: item.sku,
       net: item.price,
@@ -25,7 +25,7 @@ class StripeWrapper extends React.Component {
       image_url: item.image.url,
       subscription: item.subscription,
       tax_group: item.taxGroup,
-      product_tax_amount: item.vatAmount
+      product_tax_amount: item.vatAmount,
     }));
 
     const response = await fetch('/api/vipps/initiate-payment', {
@@ -34,18 +34,18 @@ class StripeWrapper extends React.Component {
       body: JSON.stringify({
         personalDetails,
         currency,
-        lineItems
-      })
-    }).then(res => res.json());
-
-    this.setState({ loading: false });
+        lineItems,
+      }),
+    }).then((res) => res.json());
 
     // handle response
-    console.log(response);
+
+    return onSuccess(response.url);
   }
 
   render() {
-    const { loading, error } = this.state;
+    const { personalDetails, items, onSuccess } = this.props;
+    const { loading, error, url } = this.state;
 
     if (loading) {
       return <p>Loading...</p>;
@@ -55,8 +55,8 @@ class StripeWrapper extends React.Component {
       return <p>Unable to initialise Vipps payment!</p>;
     }
 
-    return <div id="vipps-checkout-container" />;
+    return url ? null : <div id="vipps-checkout-container" />;
   }
 }
 
-export default StripeWrapper;
+export default VippsWrapper;
