@@ -15,7 +15,7 @@ import {
   PaymentMethods,
   PaymentButton,
   PaymentMethod,
-  SectionHeader
+  SectionHeader,
 } from './styles';
 
 const Row = styled.div`
@@ -38,7 +38,7 @@ export default class PaymentGateway extends React.Component {
     paymentMethod: null,
     firstName: '',
     lastName: '',
-    email: ''
+    email: '',
   };
 
   render() {
@@ -48,7 +48,7 @@ export default class PaymentGateway extends React.Component {
     const personalDetails = {
       firstName,
       lastName,
-      email
+      email,
     };
 
     return (
@@ -62,7 +62,7 @@ export default class PaymentGateway extends React.Component {
                 type="text"
                 placeholder="First name"
                 value={firstName}
-                onChange={e => this.setState({ firstName: e.target.value })}
+                onChange={(e) => this.setState({ firstName: e.target.value })}
                 required
               />
             </InputGroup>
@@ -73,7 +73,7 @@ export default class PaymentGateway extends React.Component {
                 type="text"
                 placeholder="Last name"
                 value={lastName}
-                onChange={e => this.setState({ lastName: e.target.value })}
+                onChange={(e) => this.setState({ lastName: e.target.value })}
                 required
               />
             </InputGroup>
@@ -86,7 +86,7 @@ export default class PaymentGateway extends React.Component {
                 type="email"
                 placeholder="Email address"
                 value={email}
-                onChange={e => this.setState({ email: e.target.value })}
+                onChange={(e) => this.setState({ email: e.target.value })}
                 required
               />
             </InputGroup>
@@ -126,7 +126,7 @@ export default class PaymentGateway extends React.Component {
                   personalDetails={personalDetails}
                   items={items}
                   currency={currency}
-                  onSuccess={orderId =>
+                  onSuccess={(orderId) =>
                     Router.push(
                       '/confirmation/stripe/[orderId]',
                       `/confirmation/stripe/${orderId}`
@@ -152,6 +152,9 @@ export default class PaymentGateway extends React.Component {
                   personalDetails={personalDetails}
                   items={items}
                   currency={currency}
+                  onSuccess={(url) => {
+                    if (url) window.location = url;
+                  }}
                 />
               </PaymentMethod>
             )}
