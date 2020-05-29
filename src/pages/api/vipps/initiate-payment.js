@@ -33,10 +33,9 @@ const orderToVippsBody = (
       merchantSerialNumber: VIPPS_MERCHANT_SERIAL,
       callbackPrefix: `${host}/api/vipps/order-persistence`,
       shippingDetailsPrefix: host,
-      fallBack: `${host}/api/confirmation/vipps/${crystallizeOrderId}`,
+      fallBack: `${host}/confirmation/vipps/${crystallizeOrderId}`,
       consentRemovalPrefix: `${host}/consent`,
       paymentType: 'eComm Express Payment',
-      fallBack: host,
       isApp: false,
       staticShippingDetails: [
         {
@@ -48,10 +47,10 @@ const orderToVippsBody = (
         },
       ],
     },
-    customerInfo: { mobileNumber: 41546760 },
+    customerInfo: {},
     transaction: {
       orderId: crystallizeOrderId,
-      amount: totalCartAmount,
+      amount: totalCartAmount * 100, //Vipps stores int for transaction amount (2 decimals)
       transactionText: 'Crystallize Boilerplate Test Transaction',
     },
   };
