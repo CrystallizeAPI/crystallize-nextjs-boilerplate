@@ -4,7 +4,7 @@
 // eslint-disable-next-line no-unused-vars
 export function getLanguage({ asPath } = {}) {
   /**
-   * Optionally use the Use the current asPath (/my-products/tedddy-bear)
+   * Optionally use the Use the current asPath (/my-products/teddy-bear)
    * to determine the language
    */
 

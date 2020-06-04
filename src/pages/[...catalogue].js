@@ -127,7 +127,7 @@ export async function getStaticPaths() {
 
     allCatalogueItems.data.catalogue.children.forEach(handleItem);
   } catch (error) {
-    console.error('Could not getch all catalogue items!');
+    console.error('Could not get all catalogue items!');
     console.log(error);
   }
 

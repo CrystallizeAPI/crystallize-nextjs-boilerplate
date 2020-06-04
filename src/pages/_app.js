@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps, commonData }) {
 /**
  * Get shared data for all pages
  * - Tenant settings
- * - Main naviation
+ * - Main navigation
  */
 MyApp.getInitialProps = async function ({ router: { asPath } }) {
   const language = getLanguage({ asPath });
@@ -46,7 +46,7 @@ MyApp.getInitialProps = async function ({ router: { asPath } }) {
               path
             }
           }
-        
+
           tenant(language: $language) {
             name
             defaults {
