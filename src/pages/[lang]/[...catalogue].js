@@ -34,7 +34,7 @@ const typesMap = {
 export async function getStaticProps({ params }) {
   const { catalogue } = params;
   const asPath = `/${catalogue.join('/')}`;
-  const language = getLanguage({ asPath });
+  const language = getLanguage(asPath);
 
   try {
     // Get the item type
@@ -43,6 +43,7 @@ export async function getStaticProps({ params }) {
         query ITEM_TYPE($language: String!, $path: String!) {
           catalogue(language: $language, path: $path) {
             type
+            language
           }
         }
       `,
@@ -76,15 +77,15 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  function handleItem({ path, name, children }) {
+  const paths = [];
+
+  function handleItem({ path, name, children, language }) {
     if (path !== '/index' && !name.startsWith('_')) {
-      paths.push(path);
+      paths.push(`/${language}${path}`);
     }
 
     children?.forEach(handleItem);
   }
-
-  const paths = [];
 
   try {
     const allCatalogueItems = await simplyFetchFromGraph({
@@ -93,24 +94,31 @@ export async function getStaticPaths() {
           catalogue(language: $language, path: "/") {
             path
             name
+            language
             children {
               path
               name
+              language
               children {
                 path
                 name
+                language
                 children {
                   path
                   name
+                  language
                   children {
                     path
                     name
+                    language
                     children {
                       path
                       name
+                      language
                       children {
                         path
                         name
+                        language
                       }
                     }
                   }

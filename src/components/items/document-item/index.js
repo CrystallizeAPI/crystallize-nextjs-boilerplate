@@ -19,7 +19,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
     return null;
   }
 
-  const { name, path } = data;
+  const { name, path, language } = data;
 
   let image;
   const images = data.components?.find((c) => c.type === 'images');
@@ -48,7 +48,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
     );
   } else {
     return (
-      <Link as={path} href="/[...catalogue]" passHref>
+      <Link as={`/${language}${path}`} href="/[lang]/[...catalogue]" passHref>
         <Outer span={colSpan}>
           <Text>
             <H3>{name}</H3>
@@ -62,7 +62,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
   }
 
   return (
-    <Link as={path} href="/[...catalogue]" passHref>
+    <Link as={`/${language}${path}`} href="/[lang]/[...catalogue]" passHref>
       <Outer span={colSpan}>
         <MediaWrapper>
           <MediaInner>{media && media}</MediaInner>

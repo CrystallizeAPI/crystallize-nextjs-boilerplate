@@ -10,7 +10,7 @@ export default function FolderItem({ data, gridCell }) {
     return null;
   }
 
-  const { name, path } = data;
+  const { name, path, language } = data;
   const imageMdWidth = 100 / (gridCell?.layout?.colspan ?? 1);
 
   let image;
@@ -19,7 +19,7 @@ export default function FolderItem({ data, gridCell }) {
   image = images?.content?.images?.[0];
 
   return (
-    <Link as={path} href="/[...catalogue]" passHref>
+    <Link as={`/${language}${path}`} href="/[lang]/[...catalogue]" passHref>
       <Outer>
         <ImageWrapper>
           {image && (

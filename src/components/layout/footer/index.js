@@ -9,11 +9,11 @@ import { useSettings } from 'components/settings-context';
 import { Outer, Logo, NavList, Powered } from './styles';
 
 export default function Footer() {
-  const { mainNavigation } = useSettings();
+  const { mainNavigation, language } = useSettings();
 
   return (
     <Outer>
-      <Link href="/">
+      <Link href={`/${language}`}>
         <a>
           <Logo>
             <LogoShop />
@@ -24,7 +24,10 @@ export default function Footer() {
         <h5>Menu</h5>
         {mainNavigation.map((category) => (
           <li key={category.path}>
-            <Link as={category.path} href="/[...catalogue]">
+            <Link
+              as={`/${category.language}${category.path}`}
+              href="/[lang]/[...catalogue]"
+            >
               <a>{category.name}</a>
             </Link>
           </li>

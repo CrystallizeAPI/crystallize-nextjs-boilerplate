@@ -1,6 +1,7 @@
 export default `
   fragment product on Product {
     id
+    language
     vatType {
       name
       percent
@@ -42,7 +43,8 @@ export default `
     name
     type
     path
-    
+    language
+
     components {
       name
       type
@@ -161,6 +163,7 @@ export default `
             name
             path
             type
+            language
             ... on Product {
               defaultVariant {
                 price

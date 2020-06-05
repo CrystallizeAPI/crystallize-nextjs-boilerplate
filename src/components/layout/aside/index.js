@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { useBasket, TinyBasket } from 'components/basket';
 import { Button } from 'ui';
+import { useSettings } from 'components/settings-context';
 
 import { Basket, Header, Footer } from './styles';
 
@@ -33,6 +34,7 @@ const CheckoutBtn = styled(Button)`
 export default function Aside() {
   const basket = useBasket();
   const [going, setGoing] = useState(false);
+  const { language } = useSettings();
 
   const onCheckoutClick = (evt) => {
     if (!basket.state.items.length) {
@@ -51,7 +53,7 @@ export default function Aside() {
       <Header>Basket</Header>
       <TinyBasket />
       <Footer>
-        <Link href="/checkout" passHref>
+        <Link href={`/${language}/checkout`} passHref>
           <CheckoutBtn
             as="a"
             state={going ? 'loading' : null}

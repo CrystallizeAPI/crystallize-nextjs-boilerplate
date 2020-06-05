@@ -2,7 +2,7 @@ import { AuthProvider } from 'components/auth-context';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
 import { simplyFetchFromGraph } from 'lib/graph';
-import { getLanguage } from 'lib/language';
+import { configureLanguage } from 'lib/language';
 
 function MyApp({ Component, pageProps, commonData }) {
   const { language, tenant, mainNavigation } = commonData;
@@ -27,8 +27,8 @@ function MyApp({ Component, pageProps, commonData }) {
  * - Tenant settings
  * - Main navigation
  */
-MyApp.getInitialProps = async function ({ router: { asPath } }) {
-  const language = getLanguage({ asPath });
+MyApp.getInitialProps = async function ({ ctx }) {
+  const language = configureLanguage(ctx);
 
   try {
     const {
@@ -44,6 +44,7 @@ MyApp.getInitialProps = async function ({ router: { asPath } }) {
               type
               name
               path
+              language
             }
           }
 

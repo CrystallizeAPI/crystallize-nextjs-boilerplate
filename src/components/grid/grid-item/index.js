@@ -12,7 +12,7 @@ export default function GridItem({ data, gridCell }) {
     return null;
   }
 
-  const { name, path, type, variants, defaultVariant = {} } = data;
+  const { name, path, type, variants, defaultVariant = {}, language } = data;
   const imageMdWidth = 100 / (gridCell?.layout?.colspan ?? 1);
   const cellSize = `cell-${gridCell?.layout?.rowspan}x${gridCell?.layout?.colspan}`;
   let image;
@@ -44,7 +44,7 @@ export default function GridItem({ data, gridCell }) {
   }
 
   return (
-    <Link as={path} href="/[...catalogue]" passHref>
+    <Link as={`/${language}${path}`} href="/[lang]/[...catalogue]" passHref>
       <Outer className={cellSize} type={type}>
         <Text>{text}</Text>
         <ImageWrapper>
