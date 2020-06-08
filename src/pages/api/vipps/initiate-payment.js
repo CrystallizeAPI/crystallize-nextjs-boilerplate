@@ -2,7 +2,7 @@
 import { orderNormalizer } from 'lib-api/payment-providers/vipps';
 import { createCrystallizeOrder } from 'lib-api/crystallize/order';
 import getHost from 'lib-api/util/get-host';
-import { vippsApiCall, vippsAccessToken } from 'lib-api/util/vipps-utils';
+import { getClient } from 'lib-api/payment-providers/vipps';
 
 const { VIPPS_MERCHANT_SERIAL } = process.env;
 
@@ -10,12 +10,12 @@ const orderToVippsCart = (lineItems) => {
   let totalCartAmount = 0;
 
   for (const item of lineItems) {
-    totalCartAmount += item.net;
+    totalCartAmount += item.net * item.quantity;
   }
 
   return {
     cart: lineItems,
-    totalCartAmount: totalCartAmount,
+    totalCartAmount: totalCartAmount
   };
 };
 
@@ -27,7 +27,7 @@ const orderToVippsBody = (
   host
 ) => {
   const { totalCartAmount } = orderToVippsCart(lineItems);
-
+  const shippingCost = 0;
   return {
     merchantInfo: {
       merchantSerialNumber: VIPPS_MERCHANT_SERIAL,
@@ -41,18 +41,18 @@ const orderToVippsBody = (
         {
           isDefault: 'Y',
           priority: 0,
-          shippingCost: 10.0,
+          shippingCost: shippingCost,
           shippingMethod: 'Posten Servicepakke',
-          shippingMethodId: 'posten-servicepakke',
-        },
-      ],
+          shippingMethodId: 'posten-servicepakke'
+        }
+      ]
     },
     customerInfo: {},
     transaction: {
       orderId: crystallizeOrderId,
       amount: totalCartAmount * 100, //Vipps stores int for transaction amount (2 decimals)
-      transactionText: 'Crystallize Boilerplate Test Transaction',
-    },
+      transactionText: 'Crystallize Boilerplate Test Transaction'
+    }
   };
 };
 
@@ -63,22 +63,21 @@ export default async (req, res) => {
     const host = getHost(req);
 
     const validCrystallizeOrder = orderNormalizer({
-      vippsData: { lineItems, currency, personalDetails },
+      vippsData: { lineItems, currency, personalDetails }
     });
 
     const createCrystallizeOrderResponse = await createCrystallizeOrder(
       validCrystallizeOrder
     );
 
-    const vippsResponse = await vippsApiCall({
-      uri: '/ecomm/v2/payments',
-      body: orderToVippsBody(
+    const vippsResponse = await getClient().initiatePayment({
+      order: orderToVippsBody(
         req.body,
         lineItems,
         personalDetails,
         createCrystallizeOrderResponse.data.orders.create.id,
         host
-      ),
+      )
     });
 
     return res.send(vippsResponse);
@@ -86,7 +85,7 @@ export default async (req, res) => {
     console.log(error);
     return res.status(503).send({
       success: false,
-      error: error.stack,
+      error: error.stack
     });
   }
 };
