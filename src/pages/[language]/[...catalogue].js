@@ -10,7 +10,7 @@
 import React from 'react';
 
 import { simplyFetchFromGraph } from 'lib/graph';
-import { getLanguage } from 'lib/language';
+import { getLanguage, fallbackLanguage } from 'lib/language';
 
 import DocPage, { getData as getDataDoc } from 'page-components/document';
 import FolderPage, { getData as getDataFolder } from 'page-components/folder';
@@ -78,8 +78,10 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const paths = [];
+  // TODO: get all languages from API
+  const language = fallbackLanguage;
 
-  function handleItem({ path, name, children, language }) {
+  function handleItem({ path, name, children }) {
     if (path !== '/index' && !name.startsWith('_')) {
       paths.push(`/${language}${path}`);
     }
@@ -94,31 +96,24 @@ export async function getStaticPaths() {
           catalogue(language: $language, path: "/") {
             path
             name
-            language
             children {
               path
               name
-              language
               children {
                 path
                 name
-                language
                 children {
                   path
                   name
-                  language
                   children {
                     path
                     name
-                    language
                     children {
                       path
                       name
-                      language
                       children {
                         path
                         name
-                        language
                       }
                     }
                   }

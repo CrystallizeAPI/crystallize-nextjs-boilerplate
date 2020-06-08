@@ -20,7 +20,7 @@ export default function ProductItem({ data }) {
   image = i;
 
   return (
-    <Link as={`/${language}${path}`} href="/[lang]/[...catalogue]" passHref>
+    <Link as={`/${language}${path}`} href="/[language]/[...catalogue]" passHref>
       <Outer type={type}>
         <Inner>
           <ImageWrapper>

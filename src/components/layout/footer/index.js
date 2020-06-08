@@ -26,7 +26,7 @@ export default function Footer() {
           <li key={category.path}>
             <Link
               as={`/${category.language}${category.path}`}
-              href="/[lang]/[...catalogue]"
+              href="/[language]/[...catalogue]"
             >
               <a>{category.name}</a>
             </Link>

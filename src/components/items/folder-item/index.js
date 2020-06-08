@@ -19,7 +19,7 @@ export default function FolderItem({ data, gridCell }) {
   image = images?.content?.images?.[0];
 
   return (
-    <Link as={`/${language}${path}`} href="/[lang]/[...catalogue]" passHref>
+    <Link as={`/${language}${path}`} href="/[language]/[...catalogue]" passHref>
       <Outer>
         <ImageWrapper>
           {image && (

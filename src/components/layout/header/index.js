@@ -31,7 +31,7 @@ export default function Header({ simple }) {
             <NavListItem key={category.path}>
               <Link
                 as={`/${category.language}${category.path}`}
-                href="/[lang]/[...catalogue]"
+                href="/[language]/[...catalogue]"
               >
                 <a onClick={() => setNavOpen(false)}>{category.name}</a>
               </Link>

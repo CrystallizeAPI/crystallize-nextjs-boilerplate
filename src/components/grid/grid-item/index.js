@@ -44,7 +44,7 @@ export default function GridItem({ data, gridCell }) {
   }
 
   return (
-    <Link as={`/${language}${path}`} href="/[lang]/[...catalogue]" passHref>
+    <Link as={`/${language}${path}`} href="/[language]/[...catalogue]" passHref>
       <Outer className={cellSize} type={type}>
         <Text>{text}</Text>
         <ImageWrapper>
