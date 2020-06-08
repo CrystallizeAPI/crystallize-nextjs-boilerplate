@@ -15,5 +15,6 @@
     "env": {
       "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key"
     }
-  }
+  },
+  "redirects": [{ "source": "/", "destination": "/en" }]
 }
