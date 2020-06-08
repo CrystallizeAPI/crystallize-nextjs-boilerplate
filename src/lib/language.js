@@ -1,53 +1,28 @@
-import Router from 'next/router';
-
 /**
  * Specify which language to use
  */
-
-const fallbackLanguage = 'en';
+export const fallbackLanguage = 'en';
 const languages = ['en'];
 
 function validateLanguage(lang) {
   return languages.includes(lang) ? lang : fallbackLanguage;
 }
 
-export function getLanguage(lang) {
+export function getLanguage({ asPath, res } = {}) {
   /**
-   * Optionally use the Use the current asPath (/my-products/teddy-bear)
+   * Optionally use the current asPath (/en/my-products/teddy-bear)
    * to determine the language
    */
-  let language;
+  const languageFromUrl = asPath?.split('/').filter(Boolean)[0];
+  const language = validateLanguage(languageFromUrl);
 
-  if (lang) {
-    language = lang.match(/[a-zA-Z-]{2,10}/g)[0] || fallbackLanguage;
-    language = language.split('-')[0];
+  // redirect the user from / to /[language]
+  if (asPath === '/' && res) {
+    res.setHeader('Location', `/${language}`);
+    res.writeHead(302);
+
+    return res.end('ok');
   }
 
-  return validateLanguage(language);
-}
-
-export function configureLanguage(ctx) {
-  const { req, res, asPath } = ctx;
-
-  const language = req
-    ? req.headers['accept-language']
-    : window.navigator.language;
-
-  let lang = getLanguage(language);
-
-  if (asPath === '/') {
-    redirectToLanguage(lang, res);
-  }
-
-  return lang;
-}
-
-export function redirectToLanguage(language = fallbackLanguage, res) {
-  if (res) {
-    res.writeHead(302, { Location: `/${language}/` });
-
-    return res.end();
-  }
-
-  Router.push(`/${language}/`);
+  return language;
 }
