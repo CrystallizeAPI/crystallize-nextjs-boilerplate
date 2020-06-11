@@ -61,8 +61,8 @@ export async function getStaticProps({ params }) {
       props: {
         ...data,
         type,
-        unstable_revalidate: 1,
       },
+      unstable_revalidate: 1,
     };
   } catch (error) {
     console.error(error);
