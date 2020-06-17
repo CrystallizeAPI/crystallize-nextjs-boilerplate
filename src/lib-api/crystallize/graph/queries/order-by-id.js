@@ -12,6 +12,13 @@ export default `
           ... on StripePayment {
             paymentMethod
           }
+          ... on CustomPayment {
+            provider
+            properties {
+              property
+              value
+            }
+          }
         }
         cart {
           sku

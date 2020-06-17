@@ -1,17 +1,20 @@
 {
   "version": 2,
   "env": {
-    "JWT_SECRET": "come-up-with-a-good-secret-here",
+    "JWT_SECRET": "@jwt-secret",
     "CRYSTALLIZE_SECRET_TOKEN_ID": "@crystallize-access-token-id",
     "CRYSTALLIZE_SECRET_TOKEN": "@crystallize-access-token-secret",
     "STRIPE_SECRET_KEY": "@stripe-secret-key",
     "KLARNA_USERNAME": "@klarna-username",
-    "KLARNA_PASSWORD": "@klarna-password"
+    "KLARNA_PASSWORD": "@klarna-password",
+    "VIPPS_MERCHANT_SERIAL": "@vipps-merchant-serial",
+    "VIPPS_CLIENT_ID": "@vipps-client-id",
+    "VIPPS_CLIENT_SECRET": "@vipps-client-secret",
+    "VIPPS_SUB_KEY": "@vipps-sub-key"
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
-      "NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID": "furniture"
+      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key"
     }
   }
 }
