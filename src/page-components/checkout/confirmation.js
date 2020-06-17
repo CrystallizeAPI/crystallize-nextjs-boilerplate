@@ -43,8 +43,6 @@ export default function Confirmation({ order: orderData }) {
     price: item.price.net
   }));
 
-  console.log(order);
-
   return (
     <Layout title="Order Summary">
       <Outer>
