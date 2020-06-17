@@ -24,7 +24,7 @@ const Inner = styled.div`
 `;
 
 const BillingDetails = ({ order }) => {
-  const { email } = order.customer.addresses[0];
+  const { email } = order.customer.addresses?.[0] || {};
   return (
     <Outer>
       <Inner>

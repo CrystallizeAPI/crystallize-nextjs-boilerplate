@@ -1,4 +1,4 @@
-const generateVippsProperties = vippsData => {
+function generateVippsProperties(vippsData) {
   const propertiesArray = [
     {
       property: 'vipps_bankIdVerified',
@@ -17,17 +17,14 @@ const generateVippsProperties = vippsData => {
   for (const key in vippsData.transactionInfo) {
     propertiesArray.push({
       property: `vipps_${key}`,
-      value:
-        typeof vippsData.transactionInfo[key] === 'string'
-          ? vippsData.transactionInfo[key]
-          : vippsData.transactionInfo[key].toString()
+      value: vippsData.transactionInfo[key]?.toString()
     });
   }
 
   return propertiesArray;
-};
+}
 
-module.exports = ({ vippsOrderId, vippsData }) => {
+export default function VippsOrderNormalizer({ vippsOrderId, vippsData }) {
   // if !vippsOrderId we set to create an order in Crystallize
   const {
     lineItems,
@@ -75,7 +72,7 @@ module.exports = ({ vippsOrderId, vippsData }) => {
       })
     };
   } else {
-    const orderItemsArray = lineItems.map(lineItem => {
+    const orderItemsArray = lineItems.map((lineItem) => {
       totalGrossCartAmount += lineItem.gross;
       totalNetCartAmount += lineItem.net;
       return {
@@ -127,4 +124,4 @@ module.exports = ({ vippsOrderId, vippsData }) => {
       additionalInformation: JSON.stringify({ status: 'initiated' })
     };
   }
-};
+}

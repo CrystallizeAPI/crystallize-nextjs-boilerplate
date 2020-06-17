@@ -4,44 +4,32 @@ import { createCrystallizeOrder } from 'lib-api/crystallize/order';
 import getHost from 'lib-api/util/get-host';
 import { getClient } from 'lib-api/payment-providers/vipps';
 
-const { VIPPS_MERCHANT_SERIAL } = process.env;
+function getTotalAmount(acc, lineItem) {
+  return acc + lineItem.net * lineItem.quantity * 100;
+}
 
-const orderToVippsCart = (lineItems) => {
-  let totalCartAmount = 0;
-
-  for (const item of lineItems) {
-    totalCartAmount += item.net * item.quantity;
-  }
-
-  return {
-    cart: lineItems,
-    totalCartAmount: totalCartAmount
-  };
-};
-
-const orderToVippsBody = (
-  orderDetails,
-  lineItems,
-  personalDetails,
-  crystallizeOrderId,
-  host
-) => {
-  const { totalCartAmount } = orderToVippsCart(lineItems);
+function orderToVippsBody({ basket, orderId, host }) {
+  const totalCartAmount = basket.lineItems.reduce(getTotalAmount, 0);
   const shippingCost = 0;
+
+  // A unique reference to the user
+  const userId = 'user@somedomain.com';
+
   return {
     merchantInfo: {
-      merchantSerialNumber: VIPPS_MERCHANT_SERIAL,
-      callbackPrefix: `${host}/api/vipps/order-persistence`,
+      merchantSerialNumber: process.env.VIPPS_MERCHANT_SERIAL,
+      callbackPrefix: `${host}/api/vipps/order-update`,
       shippingDetailsPrefix: host,
-      fallBack: `${host}/confirmation/vipps/${crystallizeOrderId}`,
-      consentRemovalPrefix: `${host}/consent`,
+      fallBack: `${host}/api/vipps/fallback/${orderId}`,
+      consentRemovalPrefix: `${host}/api/vipps/constent-removal/${userId}`,
       paymentType: 'eComm Express Payment',
       isApp: false,
       staticShippingDetails: [
+        // Provide a default shipping method
         {
           isDefault: 'Y',
           priority: 0,
-          shippingCost: shippingCost,
+          shippingCost,
           shippingMethod: 'Posten Servicepakke',
           shippingMethodId: 'posten-servicepakke'
         }
@@ -49,17 +37,16 @@ const orderToVippsBody = (
     },
     customerInfo: {},
     transaction: {
-      orderId: crystallizeOrderId,
-      amount: totalCartAmount * 100, //Vipps stores int for transaction amount (2 decimals)
+      orderId,
+      amount: totalCartAmount,
       transactionText: 'Crystallize Boilerplate Test Transaction'
     }
   };
-};
+}
 
 export default async (req, res) => {
   try {
     const { personalDetails, lineItems, currency } = req.body;
-    const { metadata } = req.body;
     const host = getHost(req);
 
     const validCrystallizeOrder = orderNormalizer({
@@ -71,13 +58,12 @@ export default async (req, res) => {
     );
 
     const vippsResponse = await getClient().initiatePayment({
-      order: orderToVippsBody(
-        req.body,
-        lineItems,
+      order: orderToVippsBody({
+        basket: req.body,
         personalDetails,
-        createCrystallizeOrderResponse.data.orders.create.id,
+        orderId: createCrystallizeOrderResponse.data.orders.create.id,
         host
-      )
+      })
     });
 
     return res.send(vippsResponse);

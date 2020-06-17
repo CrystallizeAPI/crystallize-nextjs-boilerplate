@@ -2,12 +2,6 @@ import VippsClient from '@crystallize/node-vipps';
 
 export { default as orderNormalizer } from './order-normalizer';
 
-const {
-  VIPPS_CLIENT_ID,
-  VIPPS_CLIENT_SECRET,
-  VIPPS_SUB_KEY,
-  ENV
-} = process.env;
 let client;
 
 export const getClient = () => {
@@ -16,10 +10,10 @@ export const getClient = () => {
   }
 
   client = new VippsClient({
-    id: VIPPS_CLIENT_ID,
-    secret: VIPPS_CLIENT_SECRET,
-    subscriptionId: VIPPS_SUB_KEY,
-    testDrive: ENV === 'DEV' || false
+    id: process.env.VIPPS_CLIENT_ID,
+    secret: process.env.VIPPS_CLIENT_SECRET,
+    subscriptionId: process.env.VIPPS_SUB_KEY,
+    testDrive: process.env.NODE_ENV !== 'production'
   });
 
   return client;

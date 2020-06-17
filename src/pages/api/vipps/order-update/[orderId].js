@@ -5,8 +5,8 @@ import { orderNormalizer } from 'lib-api/payment-providers/vipps';
 export default async (req, res) => {
   try {
     const validCrystallizeOrder = await orderNormalizer({
-      vippsOrderId: req.query.path[req.query.path.length - 1],
-      vippsData: req.body,
+      vippsOrderId: req.query.orderId,
+      vippsData: req.body
     });
 
     const updateCrystallizeOrderResponse = await updateCrystallizeOrder(
@@ -19,13 +19,13 @@ export default async (req, res) => {
 
     return res.status(200).send({
       success: true,
-      ...updateCrystallizeOrderResponse,
+      ...updateCrystallizeOrderResponse
     });
   } catch (error) {
     console.log(error);
     return res.status(503).send({
       success: false,
-      error: error.stack,
+      error: error.stack
     });
   }
 };

@@ -5,7 +5,7 @@ class VippsWrapper extends React.Component {
     super(props);
     this.state = {
       error: null,
-      loading: false,
+      loading: false
     };
   }
 
@@ -25,7 +25,7 @@ class VippsWrapper extends React.Component {
       image_url: item.image.url,
       subscription: item.subscription,
       tax_group: item.taxGroup,
-      product_tax_amount: item.vatAmount,
+      product_tax_amount: item.vatAmount
     }));
 
     const response = await fetch('/api/vipps/initiate-payment', {
@@ -34,28 +34,25 @@ class VippsWrapper extends React.Component {
       body: JSON.stringify({
         personalDetails,
         currency,
-        lineItems,
-      }),
+        lineItems
+      })
     }).then((res) => res.json());
-
-    // handle response
 
     return onSuccess(response.url);
   }
 
   render() {
-    const { personalDetails, items, onSuccess } = this.props;
-    const { loading, error, url } = this.state;
+    const { loading, error } = this.state;
 
     if (loading) {
-      return <p>Loading...</p>;
+      return <p>Hold on...</p>;
     }
 
     if (error) {
-      return <p>Unable to initialise Vipps payment!</p>;
+      return <p>Unable to initialise Vipps payment</p>;
     }
 
-    return url ? null : <div id="vipps-checkout-container" />;
+    return null;
   }
 }
 
