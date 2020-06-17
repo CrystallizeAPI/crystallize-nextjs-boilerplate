@@ -7,6 +7,6 @@
  * there might be on the ecommerce end
  */
 export default async (req, res) => {
-  console.log('Remove data for user', req.query.userId);
+  console.log('Remove data for user', req.query);
   res.status(200).send('hello');
 };

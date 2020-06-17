@@ -5,7 +5,7 @@ export default class KlarnaCheckout extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      error: null,
+      error: null
     };
   }
 
@@ -13,13 +13,14 @@ export default class KlarnaCheckout extends React.Component {
     const { items, currency } = this.props;
 
     this.setState({ loading: true });
+
     // Create order within Crystallize
     try {
       const response = await fetch('/api/klarna/render-checkout', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           currency,
@@ -34,9 +35,9 @@ export default class KlarnaCheckout extends React.Component {
             image_url: item.image.url,
             subscription: item.subscription,
             tax_group: item.taxGroup,
-            product_tax_amount: item.vatAmount,
-          })),
-        }),
+            product_tax_amount: item.vatAmount
+          }))
+        })
       });
 
       this.setState({ loading: false });
@@ -46,7 +47,7 @@ export default class KlarnaCheckout extends React.Component {
       if (!klarnaResponse.success) {
         this.setState({
           loading: false,
-          error: 'Could not load Klarna checkout',
+          error: 'Could not load Klarna checkout'
         });
         return;
       }
