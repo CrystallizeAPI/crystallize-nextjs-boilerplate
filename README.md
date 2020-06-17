@@ -47,39 +47,39 @@ This will start up the server on http://localhost:3000 for development.
 
 ## App Structure
 
-### `pages/`
+### `src/pages/`
 
 Put all your entry pages here. These are interpreted as separate routes by
 Next.js.
 
-### `pages/api/`
+### `src/pages/api/`
 
 All your Vercel [serverless functions][18].
 
-### `page-components/`
+### `src/page-components/`
 
 We use the `page-components/` directory to hold the actual component content
 related to entries in the `pages/` directory.
 
-### `components/`
+### `src/components/`
 
 All your shared React components.
 
-### `public/`
-
-Public static resources used by the web server.
-
-### `ui/`
+### `src/ui/`
 
 UI related components live here. Color variables and simple shared components
 
-### `lib/`
+### `src/lib/`
 
 Enable GraphQL and REST API communication and more for the browser client
 
-### `lib-api/`
+### `src/lib-api/`
 
 Serverless API functions related code
+
+### `public/static/`
+
+Public resources hosted as static files
 
 ## Deploying Your Project
 
