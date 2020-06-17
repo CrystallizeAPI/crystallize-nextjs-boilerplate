@@ -2,7 +2,7 @@ import React from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import styled from 'styled-components';
 
-import { Button, colors } from 'ui';
+import { Button } from 'ui';
 
 import { CardElementWrapper, ErrorMessage } from './styles';
 
@@ -21,13 +21,7 @@ class StripeCheckout extends React.Component {
     processing: false
   };
 
-  constructor(props) {
-    super(props);
-    this.submit = this.submit.bind(this);
-    this.handleCardChange = this.handleCardChange.bind(this);
-  }
-
-  async submit() {
+  submit = async function () {
     this.setState({ processing: true });
 
     const { address, postCode } = this.state;
@@ -70,7 +64,7 @@ class StripeCheckout extends React.Component {
         },
         body: JSON.stringify({
           paymentIntentId: paymentIntent.id,
-          lineItems: items.map(item => ({
+          lineItems: items.map((item) => ({
             name: item.name,
             sku: item.sku,
             net: item.price,
@@ -92,19 +86,19 @@ class StripeCheckout extends React.Component {
     } catch (err) {
       return this.setState({ processing: false, error: err.message });
     }
-  }
+  };
 
-  handleCardChange(event) {
-    let borderColor = colors.frost;
-    if (event.complete) borderColor = '#000';
-    else if (event.error) borderColor = colors.error;
+  handleCardChange = (event) => {
+    let borderColor = 'var(--color-box-background)';
+    if (event.complete) borderColor = 'var(--color-text-main)';
+    else if (event.error) borderColor = 'var(--color-error)';
 
     return this.setState({
       cardElementStyle: {
         borderBottom: `1px solid ${borderColor}`
       }
     });
-  }
+  };
 
   render() {
     const {
@@ -125,7 +119,7 @@ class StripeCheckout extends React.Component {
               type="text"
               placeholder="Street address"
               value={address}
-              onChange={e => this.setState({ address: e.target.value })}
+              onChange={(e) => this.setState({ address: e.target.value })}
               required
             />
           </InputGroup>
@@ -136,7 +130,7 @@ class StripeCheckout extends React.Component {
               type="text"
               placeholder="Postal code"
               value={postCode}
-              onChange={e => this.setState({ postCode: e.target.value })}
+              onChange={(e) => this.setState({ postCode: e.target.value })}
               required
             />
           </InputGroup>
@@ -145,12 +139,9 @@ class StripeCheckout extends React.Component {
           <CardElement
             style={{
               base: {
-                color: colors.darkText,
                 fontSize: '16px'
               },
-              invalid: {
-                color: colors.error
-              }
+              invalid: {}
             }}
             onChange={this.handleCardChange}
           />

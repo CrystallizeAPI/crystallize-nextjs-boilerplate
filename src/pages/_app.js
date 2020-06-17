@@ -14,10 +14,7 @@ function MyApp({ Component, pageProps, commonData }) {
       mainNavigation={mainNavigation}
     >
       <AuthProvider>
-        <BasketProvider
-          shippingCost={199}
-          freeShippingMinimumPurchaseAmount={800}
-        >
+        <BasketProvider>
           <Component {...pageProps} />
         </BasketProvider>
       </AuthProvider>
@@ -37,8 +34,8 @@ MyApp.getInitialProps = async function ({ router: { asPath } }) {
     const {
       data: {
         tenant,
-        mainNavigation: { children: mainNavigation },
-      },
+        mainNavigation: { children: mainNavigation }
+      }
     } = await simplyFetchFromGraph({
       query: `
         query COMMON_DATA($language: String!) {
@@ -60,16 +57,16 @@ MyApp.getInitialProps = async function ({ router: { asPath } }) {
         }
       `,
       variables: {
-        language,
-      },
+        language
+      }
     });
 
     return {
       commonData: {
         language,
         tenant,
-        mainNavigation: mainNavigation.filter((i) => !i.name.startsWith('_')),
-      },
+        mainNavigation: mainNavigation.filter((i) => !i.name.startsWith('_'))
+      }
     };
   } catch (error) {
     console.error(error);
@@ -83,10 +80,10 @@ MyApp.getInitialProps = async function ({ router: { asPath } }) {
         tenant: {
           defaults: {
             language: 'en',
-            currency: 'usd',
-          },
-        },
-      },
+            currency: 'usd'
+          }
+        }
+      }
     };
   }
 };
