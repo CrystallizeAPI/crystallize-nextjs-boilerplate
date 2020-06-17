@@ -23,18 +23,18 @@ function orderToKlarnaCart(lineItems) {
       merchant_data: JSON.stringify({
         productId: item.product_id,
         productVariantId: item.product_variant_id,
-        taxGroup: item.tax_group,
+        taxGroup: item.tax_group
       }),
       image_url: item.image_url,
       total_amount: amount,
-      total_tax_amount: item.product_tax_amount * 100,
+      total_tax_amount: item.product_tax_amount * 100
     };
   });
 
   return {
     order_lines,
     order_tax_amount,
-    order_amount,
+    order_amount
   };
 }
 
@@ -42,6 +42,8 @@ export default async (req, res) => {
   try {
     const { lineItems, currency } = req.body;
     const host = getHost(req);
+
+    console.log('Klarna host', host);
 
     const { success, order, error } = await getClient().createOrder({
       ...orderToKlarnaCart(lineItems),
@@ -52,25 +54,25 @@ export default async (req, res) => {
         terms: `${host}/checkout`,
         checkout: `${host}/checkout`,
         confirmation: `${host}/confirmation/klarna/{checkout.order.id}`,
-        push: `${host}/api/klarna/order-persistence?id={checkout.order.id}`,
-      },
+        push: `${host}/api/klarna/order-persistence?id={checkout.order.id}`
+      }
     });
 
     if (success) {
       return res.json({
         success: true,
-        html: order.html_snippet,
+        html: order.html_snippet
       });
     }
 
     return res.json({
       success: false,
-      error,
+      error
     });
   } catch (error) {
     return res.json({
       success: false,
-      error: error.stack,
+      error: error.stack
     });
   }
 };

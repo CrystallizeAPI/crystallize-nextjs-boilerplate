@@ -27,17 +27,19 @@ export async function validateItems(lineItems) {
   try {
     const data = await Promise.all(requests);
 
-    return lineItems.map((item) => {
-      return data
-        .map(({ data: { catalogue } }) => {
-          const variant = catalogue.variants.find((v) => v.id === item.id);
-          if (!variant) return false;
+    return lineItems
+      .map((item) => {
+        return data
+          .map(({ data: { catalogue } }) => {
+            const variant = catalogue.variants.find((v) => v.id === item.id);
+            if (!variant) return false;
 
-          variant.quantity = item.quantity;
-          return variant;
-        })
-        .filter((variant) => variant)[0];
-    });
+            variant.quantity = item.quantity;
+            return variant;
+          })
+          .filter((variant) => variant)[0];
+      })
+      .filter((i) => !!i);
   } catch (error) {
     console.error(error);
   }

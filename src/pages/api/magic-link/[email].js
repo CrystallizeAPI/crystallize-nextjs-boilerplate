@@ -5,7 +5,6 @@ import sgMail from '@sendgrid/mail';
 import getHost from 'lib-api/util/get-host';
 
 const secret = process.env.JWT_SECRET;
-const tenantName = process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_ID;
 const sendGridApiKey = process.env.SENDGRID_API_KEY;
 
 function getEmailHtml(loginLink) {
@@ -15,7 +14,7 @@ function getEmailHtml(loginLink) {
     <mj-body>
       <mj-section>
         <mj-column>
-          <mj-text>Welcome to ${tenantName}! Simply follow the link below to login.</mj-text>
+          <mj-text>Welcome! Simply follow the link below to login.</mj-text>
           <mj-button href="${loginLink}" align="center">Click here to login</mj-button>
           <mj-text>${loginLink}</mj-text>
         </mj-column>
@@ -37,7 +36,7 @@ export default async (req, res) => {
   }
 
   const token = jwt.sign({ email }, secret, {
-    expiresIn: '36000s',
+    expiresIn: '36000s'
   });
 
   const magicLink = `${getHost(req)}/api/verify?token=${token}`;
@@ -61,16 +60,16 @@ export default async (req, res) => {
       to: email,
       from: 'example@crystallize.com',
       subject: 'Magic Link',
-      html,
+      html
     });
   } else {
     return res.json({
       message: 'Email sent! The verification link will expire in 1 hour',
-      magicLink,
+      magicLink
     });
   }
 
   return res.json({
-    message: 'Email sent! The verification link will expire in 1 hour',
+    message: 'Email sent! The verification link will expire in 1 hour'
   });
 };

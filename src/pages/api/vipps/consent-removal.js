@@ -8,5 +8,5 @@
  */
 export default async (req, res) => {
   console.log('Remove data for user', req.query);
-  res.status(200).send('hello');
+  res.status(200).send('Remove any user related data');
 };
