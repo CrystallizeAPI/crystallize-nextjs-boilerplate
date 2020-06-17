@@ -12,16 +12,13 @@ function orderToVippsBody({ basket, orderId, host }) {
   const totalCartAmount = basket.lineItems.reduce(getTotalAmount, 0);
   const shippingCost = 0;
 
-  // A unique reference to the user
-  const userId = 'user@somedomain.com';
-
   return {
     merchantInfo: {
       merchantSerialNumber: process.env.VIPPS_MERCHANT_SERIAL,
       callbackPrefix: `${host}/api/vipps/order-update`,
       shippingDetailsPrefix: host,
       fallBack: `${host}/api/vipps/fallback/${orderId}`,
-      consentRemovalPrefix: `${host}/api/vipps/constent-removal/${userId}`,
+      consentRemovalPrefix: `${host}/api/vipps/constent-removal`,
       paymentType: 'eComm Express Payment',
       isApp: false,
       staticShippingDetails: [
@@ -39,7 +36,7 @@ function orderToVippsBody({ basket, orderId, host }) {
     transaction: {
       orderId,
       amount: totalCartAmount,
-      transactionText: 'Crystallize Boilerplate Test Transaction'
+      transactionText: 'Crystallize NextJS boilerplate test transaction'
     }
   };
 }
