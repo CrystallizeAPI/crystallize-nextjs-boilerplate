@@ -18,16 +18,10 @@ class StripeCheckout extends React.Component {
     postCode: '',
     cardElementStyle: null,
     error: null,
-    processing: false,
+    processing: false
   };
 
-  constructor(props) {
-    super(props);
-    this.submit = this.submit.bind(this);
-    this.handleCardChange = this.handleCardChange.bind(this);
-  }
-
-  async submit() {
+  submit = async function () {
     this.setState({ processing: true });
 
     const { address, postCode } = this.state;
@@ -37,7 +31,7 @@ class StripeCheckout extends React.Component {
       items,
       onSuccess,
       personalDetails,
-      stripe,
+      stripe
     } = this.props;
     const { firstName, lastName, email } = personalDetails;
     const { paymentIntent, error } = await stripe.handleCardPayment(
@@ -48,11 +42,11 @@ class StripeCheckout extends React.Component {
             name: `${firstName} ${lastName}`,
             address: {
               line1: address,
-              postal_code: postCode,
-            },
-          },
+              postal_code: postCode
+            }
+          }
         },
-        receipt_email: email,
+        receipt_email: email
       }
     );
 
@@ -66,7 +60,7 @@ class StripeCheckout extends React.Component {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           paymentIntentId: paymentIntent.id,
@@ -82,9 +76,9 @@ class StripeCheckout extends React.Component {
             subscription: item.subscription,
             tax_rate: item.taxGroup.percent,
             tax_group: item.taxGroup,
-            product_tax_amount: item.vatAmount,
-          })),
-        }),
+            product_tax_amount: item.vatAmount
+          }))
+        })
       });
 
       const { data } = await response.json();
@@ -92,19 +86,19 @@ class StripeCheckout extends React.Component {
     } catch (err) {
       return this.setState({ processing: false, error: err.message });
     }
-  }
+  };
 
-  handleCardChange(event) {
+  handleCardChange = (event) => {
     let borderColor = 'var(--color-box-background)';
     if (event.complete) borderColor = 'var(--color-text-main)';
     else if (event.error) borderColor = 'var(--color-error)';
 
     return this.setState({
       cardElementStyle: {
-        borderBottom: `1px solid ${borderColor}`,
-      },
+        borderBottom: `1px solid ${borderColor}`
+      }
     });
-  }
+  };
 
   render() {
     const {
@@ -112,7 +106,7 @@ class StripeCheckout extends React.Component {
       cardElementStyle,
       error,
       postCode,
-      processing,
+      processing
     } = this.state;
 
     return (
@@ -145,12 +139,9 @@ class StripeCheckout extends React.Component {
           <CardElement
             style={{
               base: {
-                color: colors.darkText,
-                fontSize: '16px',
+                fontSize: '16px'
               },
-              invalid: {
-                color: colors.error,
-              },
+              invalid: {}
             }}
             onChange={this.handleCardChange}
           />

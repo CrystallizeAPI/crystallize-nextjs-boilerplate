@@ -32,15 +32,18 @@ export default function Confirmation({ order: orderData }) {
   }, [emptied, basket.actions]);
 
   const order = orderData.data.orders.get;
-  const { email } = order.customer.addresses[0];
+
+  const { email } = order.customer.addresses?.[0] || {};
 
   const items = order.cart.map((item) => ({
     ...item,
     image: {
-      url: item.imageUrl,
+      url: item.imageUrl
     },
-    price: item.price.net,
+    price: item.price.net
   }));
+
+  console.log(order);
 
   return (
     <Layout title="Order Summary">
@@ -48,8 +51,12 @@ export default function Confirmation({ order: orderData }) {
         <CustomHeader>
           <H1>Order Summary</H1>
           <p>
-            Your order has been confirmed. A copy of your order has been sent to{' '}
-            <strong>{email}</strong>.
+            Your order has been confirmed.{' '}
+            {email && (
+              <>
+                A copy of your order has been sent to <strong>{email}</strong>.
+              </>
+            )}
           </p>
           <Line />
           <BillingDetails order={order} />
