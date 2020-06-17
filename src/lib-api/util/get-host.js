@@ -9,7 +9,7 @@ export default function getHost(req = {}) {
   }
 
   if (process.env.VERCEL_URL) {
-    return process.env.VERCEL_URL;
+    return `https://${process.env.VERCEL_URL}`;
   }
 
   const { headers } = req;
