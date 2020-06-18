@@ -43,8 +43,6 @@ export default async (req, res) => {
     const { lineItems, currency } = req.body;
     const host = getHost(req);
 
-    console.log('Klarna host', host);
-
     const { success, order, error } = await getClient().createOrder({
       ...orderToKlarnaCart(lineItems),
       purchase_country: 'NO',

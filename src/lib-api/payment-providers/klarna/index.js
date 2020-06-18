@@ -10,7 +10,7 @@ export const getClient = () => {
   }
 
   client = new KlarnaClient({
-    testDrive: process.env.NODE_ENV !== 'production',
+    testDrive: true,
     username: process.env.KLARNA_USERNAME,
     password: process.env.KLARNA_PASSWORD
   });
