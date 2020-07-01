@@ -1,80 +1,74 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 
 import StripeCheckout from './stripe-checkout';
 
-class StripeWrapper extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      clientSecret: null,
-      loading: false,
-    };
-  }
+export default function StripeWrapper({
+  items,
+  currency,
+  personalDetails,
+  onSuccess
+}) {
+  const [state, setState] = useState('loading');
+  const [clientSecret, setClientSecret] = useState(null);
+  const [stripe, setStripe] = useState(null);
 
-  async componentDidMount() {
-    this.setState({ loading: true });
+  useEffect(() => {
+    async function load() {
+      setState('loading');
 
-    const { items, currency } = this.props;
+      const lineItems = items.map((item) => ({
+        id: item.variant_id,
+        path: item.path,
+        quantity: item.quantity
+      }));
 
-    const lineItems = items.map((item) => ({
-      id: item.variant_id,
-      path: item.path,
-      quantity: item.quantity,
-    }));
+      const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 
-    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+      const { client_secret } = await fetch(
+        '/api/stripe/create-payment-intent',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            currency,
+            lineItems
+          })
+        }
+      ).then((res) => res.json());
 
-    const { client_secret } = await fetch('/api/stripe/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        currency,
-        lineItems,
-      }),
-    }).then((res) => res.json());
+      function init() {
+        setState('loaded');
+        setClientSecret(client_secret);
+        setStripe(window.Stripe(publishableKey));
+      }
 
-    if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe(publishableKey),
-        clientSecret: client_secret,
-        loading: false,
-      });
-    } else {
-      document.querySelector('#stripe-js').addEventListener('load', () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe(publishableKey),
-          clientSecret: client_secret,
-          loading: false,
-        });
-      });
+      if (window.Stripe) {
+        init();
+      } else {
+        document.querySelector('#stripe-js').addEventListener('load', init);
+      }
     }
-  }
 
-  render() {
-    const { personalDetails, items, onSuccess } = this.props;
-    const { loading, cardElementStyle, clientSecret, stripe } = this.state;
+    load();
+  }, [currency, items]);
 
-    if (loading || !clientSecret) return <p>Loading...</p>;
+  if (state === 'loading' || !clientSecret) return <p>Loading...</p>;
 
-    return stripe ? (
-      <StripeProvider stripe={stripe}>
-        <Elements>
-          <StripeCheckout
-            cardElementStyle={cardElementStyle}
-            clientSecret={clientSecret}
-            handleCardChange={this.handleCardChange}
-            onSuccess={onSuccess}
-            items={items}
-            personalDetails={personalDetails}
-          />
-        </Elements>
-      </StripeProvider>
-    ) : (
-      <p>Initialising payment gateway...</p>
-    );
-  }
+  return stripe ? (
+    <StripeProvider stripe={stripe}>
+      <Elements>
+        <StripeCheckout
+          clientSecret={clientSecret}
+          handleCardChange={this.handleCardChange}
+          onSuccess={onSuccess}
+          items={items}
+          personalDetails={personalDetails}
+        />
+      </Elements>
+    </StripeProvider>
+  ) : (
+    <p>Initialising payment gateway...</p>
+  );
 }
-
-export default StripeWrapper;

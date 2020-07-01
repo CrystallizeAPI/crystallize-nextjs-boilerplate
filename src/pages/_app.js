@@ -5,11 +5,10 @@ import { simplyFetchFromGraph } from 'lib/graph';
 import { getLanguage } from 'lib/language';
 
 function MyApp({ Component, pageProps, commonData }) {
-  const { language, tenant, mainNavigation } = commonData;
+  const { tenant, mainNavigation } = commonData;
 
   return (
     <SettingsProvider
-      language={language}
       currency={tenant.defaults.currency}
       mainNavigation={mainNavigation}
     >
@@ -28,9 +27,6 @@ function MyApp({ Component, pageProps, commonData }) {
  * - Main navigation
  */
 MyApp.getInitialProps = async function ({ ctx }) {
-  const { asPath, res } = ctx;
-  const language = getLanguage({ asPath, res });
-
   try {
     const {
       data: {
@@ -45,7 +41,6 @@ MyApp.getInitialProps = async function ({ ctx }) {
               type
               name
               path
-              language
             }
           }
 
@@ -53,19 +48,17 @@ MyApp.getInitialProps = async function ({ ctx }) {
             name
             defaults {
               currency
-              language
             }
           }
         }
       `,
       variables: {
-        language
+        language: getLanguage({ asPath: ctx.asPath })
       }
     });
 
     return {
       commonData: {
-        language,
         tenant,
         mainNavigation: mainNavigation.filter((i) => !i.name.startsWith('_'))
       }
@@ -77,11 +70,9 @@ MyApp.getInitialProps = async function ({ ctx }) {
     // Fallback values
     return {
       commonData: {
-        language,
         mainNavigation: [],
         tenant: {
           defaults: {
-            language: 'en',
             currency: 'usd'
           }
         }

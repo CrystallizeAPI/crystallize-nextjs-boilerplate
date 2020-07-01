@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 
+import Link from 'components/link';
 import LogoShop from 'ui/icons/logo-shop';
 import LogoCrystallize from 'ui/icons/logo-crystallize';
 
@@ -9,11 +9,11 @@ import { useSettings } from 'components/settings-context';
 import { Outer, Logo, NavList, Powered } from './styles';
 
 export default function Footer() {
-  const { mainNavigation, language } = useSettings();
+  const { mainNavigation } = useSettings();
 
   return (
     <Outer>
-      <Link href={`/${language}`}>
+      <Link href="/">
         <a>
           <Logo>
             <LogoShop />
@@ -24,10 +24,7 @@ export default function Footer() {
         <h5>Menu</h5>
         {mainNavigation.map((category) => (
           <li key={category.path}>
-            <Link
-              as={`/${category.language}${category.path}`}
-              href="/[language]/[...catalogue]"
-            >
+            <Link as={category.path} href="/[...catalogue]">
               <a>{category.name}</a>
             </Link>
           </li>

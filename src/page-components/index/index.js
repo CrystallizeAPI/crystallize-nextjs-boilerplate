@@ -4,11 +4,10 @@ import Layout from 'components/layout';
 import Grid, { GridItem } from 'components/grid';
 import { simplyFetchFromGraph } from 'lib/graph';
 import fragments from 'lib/graph/fragments';
-import { getLanguage } from 'lib/language';
 
 import { Outer } from './styles';
 
-export async function getData() {
+export async function getData({ language }) {
   try {
     const { data } = await simplyFetchFromGraph({
       query: `
@@ -21,7 +20,7 @@ export async function getData() {
 
         ${fragments}
       `,
-      variables: { language: getLanguage() },
+      variables: { language }
     });
     return data;
   } catch (error) {

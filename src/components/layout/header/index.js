@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 
 import { useAuth } from 'components/auth-context';
 import { useSettings } from 'components/settings-context';
+import Link from 'components/link';
 
 import LogoShop from 'ui/icons/logo-shop';
 
@@ -11,14 +11,14 @@ import BasketButton from './basket-button';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
 
 export default function Header({ simple }) {
-  const { mainNavigation, language } = useSettings();
+  const { mainNavigation } = useSettings();
   const auth = useAuth();
 
   const [navOpen, setNavOpen] = useState(false);
 
   return (
     <Outer simple={simple}>
-      <Link href={`/${language}`}>
+      <Link href="/">
         <a>
           <Logo>
             <LogoShop />
@@ -29,10 +29,7 @@ export default function Header({ simple }) {
         <NavList>
           {mainNavigation.map((category) => (
             <NavListItem key={category.path}>
-              <Link
-                as={`/${category.language}${category.path}`}
-                href="/[language]/[...catalogue]"
-              >
+              <Link as={category.path} href="/[...catalogue]">
                 <a onClick={() => setNavOpen(false)}>{category.name}</a>
               </Link>
             </NavListItem>
@@ -45,7 +42,7 @@ export default function Header({ simple }) {
             Logout
           </button>
         ) : (
-          <Link href={`/${language}/login`}>
+          <Link href="/login">
             <a>Login</a>
           </Link>
         )}

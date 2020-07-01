@@ -1,28 +1,30 @@
 /**
- * Specify which language to use
+ * Specify which languages to fetch from Crystallize
  */
-export const fallbackLanguage = 'en';
-const languages = ['en'];
+const languages = (process.env.NEXT_PUBLIC_CRYSTALLIZE_LANGUAGES || 'en').split(
+  ','
+);
 
-function validateLanguage(lang) {
-  return languages.includes(lang) ? lang : fallbackLanguage;
+export const isMultilingual = ['true', '1', 1, 'yes'].includes(
+  process.env.NEXT_PUBLIC_CRYSTALLIZE_IS_MULTILINGUAL
+);
+
+export function getLanguages() {
+  return languages;
 }
 
-export function getLanguage({ asPath, res } = {}) {
+export const defaultLanguage = languages[0];
+
+function validLanguage(lang) {
+  return languages.includes(lang) ? lang : defaultLanguage;
+}
+
+export function getLanguage({ asPath } = {}) {
   /**
    * Optionally use the current asPath (/en/my-products/teddy-bear)
    * to determine the language
    */
   const languageFromUrl = asPath?.split('/').filter(Boolean)[0];
-  const language = validateLanguage(languageFromUrl);
 
-  // redirect the user from / to /[language]
-  if (asPath === '/' && res) {
-    res.setHeader('Location', `/${language}`);
-    res.writeHead(302);
-
-    return res.end('ok');
-  }
-
-  return language;
+  return validLanguage(languageFromUrl);
 }

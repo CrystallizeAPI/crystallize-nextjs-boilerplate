@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 
+import Link from 'components/link';
 import DocumentItem from 'components/items/document-item';
 import { CurrencyValue } from 'components/currency-value';
 import { screen, Button } from 'ui';
@@ -12,7 +12,7 @@ export default function GridItem({ data, gridCell }) {
     return null;
   }
 
-  const { name, path, type, variants, defaultVariant = {}, language } = data;
+  const { name, path, type, variants, defaultVariant = {} } = data;
   const imageMdWidth = 100 / (gridCell?.layout?.colspan ?? 1);
   const cellSize = `cell-${gridCell?.layout?.rowspan}x${gridCell?.layout?.colspan}`;
   let image;
@@ -44,7 +44,7 @@ export default function GridItem({ data, gridCell }) {
   }
 
   return (
-    <Link as={`/${language}${path}`} href="/[language]/[...catalogue]" passHref>
+    <Link as={path} href="/[...catalogue]" passHref>
       <Outer className={cellSize} type={type}>
         <Text>{text}</Text>
         <ImageWrapper>

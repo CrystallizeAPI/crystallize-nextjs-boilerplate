@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 
+import Link from 'components/link';
 import { screen, H3 } from 'ui';
 
 import { Outer, Text, ImageWrapper, Img } from './styles';
@@ -10,7 +10,7 @@ export default function FolderItem({ data, gridCell }) {
     return null;
   }
 
-  const { name, path, language } = data;
+  const { name, path } = data;
   const imageMdWidth = 100 / (gridCell?.layout?.colspan ?? 1);
 
   let image;
@@ -19,7 +19,7 @@ export default function FolderItem({ data, gridCell }) {
   image = images?.content?.images?.[0];
 
   return (
-    <Link as={`/${language}${path}`} href="/[language]/[...catalogue]" passHref>
+    <Link as={path} href="/[...catalogue]" passHref>
       <Outer>
         <ImageWrapper>
           {image && (

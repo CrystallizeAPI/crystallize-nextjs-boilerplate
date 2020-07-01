@@ -1,8 +1,8 @@
 import React from 'react';
-import Link from 'next/link';
-import ContentTransformer from 'ui/content-transformer';
 
 import { screen, H3 } from 'ui';
+import ContentTransformer from 'ui/content-transformer';
+import Link from 'components/link';
 import VideoPlayer from 'components/video-player';
 
 import {
@@ -11,7 +11,7 @@ import {
   MediaWrapper,
   MediaInner,
   Img,
-  Description,
+  Description
 } from './styles';
 
 export default function DocumentItem({ data, colSpan = '4' }) {
@@ -19,7 +19,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
     return null;
   }
 
-  const { name, path, language } = data;
+  const { name, path } = data;
 
   let image;
   const images = data.components?.find((c) => c.type === 'images');
@@ -48,11 +48,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
     );
   } else {
     return (
-      <Link
-        as={`/${language}${path}`}
-        href="/[language]/[...catalogue]"
-        passHref
-      >
+      <Link as={path} href="/[...catalogue]" passHref>
         <Outer span={colSpan}>
           <Text>
             <H3>{name}</H3>
@@ -66,7 +62,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
   }
 
   return (
-    <Link as={`/${language}${path}`} href="/[language]/[...catalogue]" passHref>
+    <Link as={path} href="/[...catalogue]" passHref>
       <Outer span={colSpan}>
         <MediaWrapper>
           <MediaInner>{media && media}</MediaInner>

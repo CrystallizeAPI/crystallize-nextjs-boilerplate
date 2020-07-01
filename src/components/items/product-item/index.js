@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 
+import Link from 'components/link';
 import { CurrencyValue } from 'components/currency-value';
 import { H3 } from 'ui';
 
@@ -12,7 +12,7 @@ export default function ProductItem({ data }) {
   }
   let image;
 
-  const { name, path, type, variants, language } = data;
+  const { name, path, type, variants } = data;
   const { price, image: i } = variants
     ? variants.find((variant) => variant.isDefault)
     : {};
@@ -20,7 +20,7 @@ export default function ProductItem({ data }) {
   image = i;
 
   return (
-    <Link as={`/${language}${path}`} href="/[language]/[...catalogue]" passHref>
+    <Link as={path} href="/[...catalogue]" passHref>
       <Outer type={type}>
         <Inner>
           <ImageWrapper>
