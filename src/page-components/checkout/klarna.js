@@ -18,7 +18,7 @@ export default function KlarnaCheckout({ items, currency }) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            shopLanguagePrefix: language ? `/${language}` : '',
+            multilingualUrlPrefix: language ? `/${language}` : '',
             currency,
             lineItems: items.map((item) => ({
               name: item.name,

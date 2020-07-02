@@ -33,7 +33,7 @@ export default function VippsWrapper({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          shopLanguagePrefix: language ? `/${language}` : '',
+          multilingualUrlPrefix: language ? `/${language}` : '',
           personalDetails,
           currency,
           lineItems
@@ -44,7 +44,7 @@ export default function VippsWrapper({
     }
 
     load();
-  }, [items, personalDetails, currency, onSuccess]);
+  }, [language, items, personalDetails, currency, onSuccess]);
 
   if (state === 'error') {
     return <p>Oh no. Unable to initialise Vipps</p>;

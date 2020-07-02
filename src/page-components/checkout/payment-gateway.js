@@ -33,7 +33,7 @@ const Inner = styled.div`
   border-radius: 0.2rem;
 `;
 
-export function PaymentGateway({ items, currency }) {
+export default function PaymentGateway({ items, currency }) {
   const router = useRouter();
   const [state, setState] = useState({
     paymentMethod: null,

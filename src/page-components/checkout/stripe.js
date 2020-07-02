@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 
 import StripeCheckout from './stripe-checkout';
@@ -61,7 +60,6 @@ export default function StripeWrapper({
       <Elements>
         <StripeCheckout
           clientSecret={clientSecret}
-          handleCardChange={this.handleCardChange}
           onSuccess={onSuccess}
           items={items}
           personalDetails={personalDetails}
