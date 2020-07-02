@@ -130,8 +130,9 @@ export const BasketQuantity = styled.div`
 
 export const NavActions = styled.div`
   margin: 8px 10px 0;
-  display: block;
+  display: flex;
   text-transform: uppercase;
+  align-items: center;
 
   button,
   a {
@@ -162,7 +163,8 @@ export const NavActions = styled.div`
     font-size: 1.5rem;
 
     ${is('open')`
-      display: block;
+      display: flex;
+      justify-content: center;
     `};
   }
 `;
