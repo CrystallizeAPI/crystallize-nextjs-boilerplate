@@ -53,7 +53,7 @@ MyApp.getInitialProps = async function ({ ctx }) {
         }
       `,
       variables: {
-        language: getLanguage({ asPath: ctx.asPath })
+        language: getLanguage(ctx)
       }
     });
 

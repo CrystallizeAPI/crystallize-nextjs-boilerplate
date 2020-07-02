@@ -20,6 +20,7 @@ const SelectAsText = styled.div`
     height: 100%;
     font-size: 1rem;
     opacity: 0;
+    cursor: pointer;
   }
 `;
 

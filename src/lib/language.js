@@ -19,7 +19,11 @@ function validLanguage(lang) {
   return languages.includes(lang) ? lang : defaultLanguage;
 }
 
-export function getLanguage({ asPath } = {}) {
+export function getLanguage({ asPath, query } = {}) {
+  if (query?.language) {
+    return query.language;
+  }
+
   /**
    * Optionally use the current asPath (/en/my-products/teddy-bear)
    * to determine the language
