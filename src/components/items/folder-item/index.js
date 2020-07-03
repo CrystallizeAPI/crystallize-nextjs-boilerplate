@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 
+import Link from 'components/link';
 import { screen, H3 } from 'ui';
 
 import { Outer, Text, ImageWrapper, Img } from './styles';

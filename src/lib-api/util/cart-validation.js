@@ -1,7 +1,6 @@
 import { simplyFetchFromGraph } from 'lib/graph';
-import { getLanguage } from 'lib/language';
 
-export async function validateItems(lineItems) {
+export async function validateItems({ lineItems, language }) {
   const uniqueLineItems = lineItems.reduce(
     (unique, val) =>
       unique.find((v) => val.path === v.path) ? unique : [...unique, val],
@@ -11,7 +10,7 @@ export async function validateItems(lineItems) {
   const queries = uniqueLineItems.map(
     (item, i) => `
       query PRODUCT_${i} {
-        catalogue (language: "${getLanguage()}", path: "${item.path}") {
+        catalogue (language: "${language}", path: "${item.path}") {
           ... on Product {
             variants {
               id

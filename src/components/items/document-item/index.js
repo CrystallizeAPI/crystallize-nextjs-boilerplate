@@ -1,8 +1,8 @@
 import React from 'react';
-import Link from 'next/link';
-import ContentTransformer from 'ui/content-transformer';
 
 import { screen, H3 } from 'ui';
+import ContentTransformer from 'ui/content-transformer';
+import Link from 'components/link';
 import VideoPlayer from 'components/video-player';
 
 import {
@@ -11,7 +11,7 @@ import {
   MediaWrapper,
   MediaInner,
   Img,
-  Description,
+  Description
 } from './styles';
 
 export default function DocumentItem({ data, colSpan = '4' }) {

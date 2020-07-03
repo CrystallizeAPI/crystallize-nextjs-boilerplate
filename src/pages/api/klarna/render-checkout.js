@@ -40,7 +40,7 @@ function orderToKlarnaCart(lineItems) {
 
 export default async (req, res) => {
   try {
-    const { lineItems, currency } = req.body;
+    const { lineItems, currency, multilingualUrlPrefix } = req.body;
     const host = getHost(req);
 
     const { success, order, error } = await getClient().createOrder({
@@ -49,9 +49,9 @@ export default async (req, res) => {
       purchase_currency: currency || 'NOK',
       locale: 'no-nb',
       merchant_urls: {
-        terms: `${host}/checkout`,
-        checkout: `${host}/checkout`,
-        confirmation: `${host}/confirmation/klarna/{checkout.order.id}`,
+        terms: `${host}${multilingualUrlPrefix}/checkout`,
+        checkout: `${host}${multilingualUrlPrefix}/checkout`,
+        confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
         push: `${host}/api/klarna/order-persistence?id={checkout.order.id}`
       }
     });

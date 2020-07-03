@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 
 import { useAuth } from 'components/auth-context';
 import { useSettings } from 'components/settings-context';
+import Link from 'components/link';
 
 import LogoShop from 'ui/icons/logo-shop';
 
 import BurgerButton from './burger-button';
 import BasketButton from './basket-button';
+import LanguageSwitcher from './language-switcher';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
 
 export default function Header({ simple }) {
@@ -37,6 +38,7 @@ export default function Header({ simple }) {
         </NavList>
       </Nav>
       <NavActions open={navOpen}>
+        <LanguageSwitcher />
         {auth.isLoggedIn ? (
           <button type="button" onClick={auth.logout}>
             Logout

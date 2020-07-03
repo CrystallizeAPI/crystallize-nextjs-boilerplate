@@ -5,11 +5,10 @@ import { simplyFetchFromGraph } from 'lib/graph';
 import { getLanguage } from 'lib/language';
 
 function MyApp({ Component, pageProps, commonData }) {
-  const { language, tenant, mainNavigation } = commonData;
+  const { tenant, mainNavigation } = commonData;
 
   return (
     <SettingsProvider
-      language={language}
       currency={tenant.defaults.currency}
       mainNavigation={mainNavigation}
     >
@@ -25,11 +24,9 @@ function MyApp({ Component, pageProps, commonData }) {
 /**
  * Get shared data for all pages
  * - Tenant settings
- * - Main naviation
+ * - Main navigation
  */
-MyApp.getInitialProps = async function ({ router: { asPath } }) {
-  const language = getLanguage({ asPath });
-
+MyApp.getInitialProps = async function ({ ctx }) {
   try {
     const {
       data: {
@@ -46,24 +43,22 @@ MyApp.getInitialProps = async function ({ router: { asPath } }) {
               path
             }
           }
-        
+
           tenant(language: $language) {
             name
             defaults {
               currency
-              language
             }
           }
         }
       `,
       variables: {
-        language
+        language: getLanguage(ctx)
       }
     });
 
     return {
       commonData: {
-        language,
         tenant,
         mainNavigation: mainNavigation.filter((i) => !i.name.startsWith('_'))
       }
@@ -75,11 +70,9 @@ MyApp.getInitialProps = async function ({ router: { asPath } }) {
     // Fallback values
     return {
       commonData: {
-        language,
         mainNavigation: [],
         tenant: {
           defaults: {
-            language: 'en',
             currency: 'usd'
           }
         }

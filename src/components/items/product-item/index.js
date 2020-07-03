@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 
+import Link from 'components/link';
 import { CurrencyValue } from 'components/currency-value';
 import { H3 } from 'ui';
 

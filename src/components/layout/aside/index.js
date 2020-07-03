@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import styled from 'styled-components';
 
+import Link from 'components/link';
 import { useBasket, TinyBasket } from 'components/basket';
 import { Button } from 'ui';
 

@@ -8,7 +8,7 @@ function getTotalAmount(acc, lineItem) {
   return acc + lineItem.net * lineItem.quantity * 100;
 }
 
-function orderToVippsBody({ basket, orderId, host }) {
+function orderToVippsBody({ basket, orderId, host, multilingualUrlPrefix }) {
   const totalCartAmount = basket.lineItems.reduce(getTotalAmount, 0);
   const shippingCost = 0;
 
@@ -17,7 +17,7 @@ function orderToVippsBody({ basket, orderId, host }) {
       merchantSerialNumber: process.env.VIPPS_MERCHANT_SERIAL,
       callbackPrefix: `${host}/api/vipps/order-update`,
       shippingDetailsPrefix: host,
-      fallBack: `${host}/api/vipps/fallback/${orderId}`,
+      fallBack: `${host}/api/vipps/fallback/${orderId}?multilingualUrlPrefix=${multilingualUrlPrefix}`,
       consentRemovalPrefix: `${host}/api/vipps/constent-removal`,
       paymentType: 'eComm Express Payment',
       isApp: false,
@@ -43,7 +43,12 @@ function orderToVippsBody({ basket, orderId, host }) {
 
 export default async (req, res) => {
   try {
-    const { personalDetails, lineItems, currency } = req.body;
+    const {
+      personalDetails,
+      lineItems,
+      currency,
+      multilingualUrlPrefix
+    } = req.body;
     const host = getHost(req);
 
     const validCrystallizeOrder = orderNormalizer({
@@ -59,7 +64,8 @@ export default async (req, res) => {
         basket: req.body,
         personalDetails,
         orderId: createCrystallizeOrderResponse.data.orders.create.id,
-        host
+        host,
+        multilingualUrlPrefix
       })
     });
 

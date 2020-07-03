@@ -10,7 +10,7 @@
 import React from 'react';
 
 import { simplyFetchFromGraph } from 'lib/graph';
-import { getLanguage } from 'lib/language';
+import { getLanguages, isMultilingual, defaultLanguage } from 'lib/language';
 
 import DocPage, { getData as getDataDoc } from 'page-components/document';
 import FolderPage, { getData as getDataFolder } from 'page-components/folder';
@@ -19,22 +19,21 @@ import ProdPage, { getData as getDataProd } from 'page-components/product';
 const typesMap = {
   document: {
     component: DocPage,
-    getData: getDataDoc,
+    getData: getDataDoc
   },
   folder: {
     component: FolderPage,
-    getData: getDataFolder,
+    getData: getDataFolder
   },
   product: {
     component: ProdPage,
-    getData: getDataProd,
-  },
+    getData: getDataProd
+  }
 };
 
 export async function getStaticProps({ params }) {
-  const { catalogue } = params;
+  const { catalogue, language = defaultLanguage } = params;
   const asPath = `/${catalogue.join('/')}`;
-  const language = getLanguage({ asPath });
 
   try {
     // Get the item type
@@ -43,13 +42,14 @@ export async function getStaticProps({ params }) {
         query ITEM_TYPE($language: String!, $path: String!) {
           catalogue(language: $language, path: $path) {
             type
+            language
           }
         }
       `,
       variables: {
         language,
-        path: asPath,
-      },
+        path: asPath
+      }
     });
     const { type } = getItemType.data.catalogue;
 
@@ -60,9 +60,9 @@ export async function getStaticProps({ params }) {
     return {
       props: {
         ...data,
-        type,
+        type
       },
-      unstable_revalidate: 1,
+      unstable_revalidate: 1
     };
   } catch (error) {
     console.error(error);
@@ -71,29 +71,37 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {},
-    unstable_revalidate: 1,
+    unstable_revalidate: 1
   };
 }
 
 export async function getStaticPaths() {
-  function handleItem({ path, name, children }) {
-    if (path !== '/index' && !name.startsWith('_')) {
-      paths.push(path);
-    }
-
-    children?.forEach(handleItem);
-  }
-
   const paths = [];
 
-  try {
-    const allCatalogueItems = await simplyFetchFromGraph({
-      query: `
-        query GET_ALL_CATALOGUE_ITEMS($language: String!) {
-          catalogue(language: $language, path: "/") {
-            path
-            name
-            children {
+  if (isMultilingual) {
+    await Promise.all(getLanguages().map(handleLanguage));
+  } else {
+    await handleLanguage(defaultLanguage);
+  }
+
+  async function handleLanguage(language) {
+    function handleItem({ path, name, children }) {
+      if (path !== '/index' && !name?.startsWith('_')) {
+        if (isMultilingual) {
+          paths.push(`/${language}${path}`);
+        } else {
+          paths.push(path);
+        }
+      }
+
+      children?.forEach(handleItem);
+    }
+
+    try {
+      const allCatalogueItems = await simplyFetchFromGraph({
+        query: `
+          query GET_ALL_CATALOGUE_ITEMS($language: String!) {
+            catalogue(language: $language, path: "/") {
               path
               name
               children {
@@ -111,6 +119,10 @@ export async function getStaticPaths() {
                       children {
                         path
                         name
+                        children {
+                          path
+                          name
+                        }
                       }
                     }
                   }
@@ -118,22 +130,22 @@ export async function getStaticPaths() {
               }
             }
           }
+        `,
+        variables: {
+          language
         }
-      `,
-      variables: {
-        language: getLanguage(),
-      },
-    });
+      });
 
-    allCatalogueItems.data.catalogue.children.forEach(handleItem);
-  } catch (error) {
-    console.error('Could not getch all catalogue items!');
-    console.log(error);
+      allCatalogueItems.data.catalogue.children.forEach(handleItem);
+    } catch (error) {
+      console.error('Could not get all catalogue items for ', language);
+      console.log(error);
+    }
   }
 
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 }
 

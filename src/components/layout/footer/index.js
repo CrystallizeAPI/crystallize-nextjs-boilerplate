@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 
+import Link from 'components/link';
 import LogoShop from 'ui/icons/logo-shop';
 import LogoCrystallize from 'ui/icons/logo-crystallize';
 

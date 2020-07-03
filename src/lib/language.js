@@ -1,12 +1,34 @@
 /**
- * Specify which language to use
+ * Specify which languages to fetch from Crystallize
  */
-// eslint-disable-next-line no-unused-vars
-export function getLanguage({ asPath } = {}) {
+const languages = (process.env.NEXT_PUBLIC_CRYSTALLIZE_LANGUAGES || 'en').split(
+  ','
+);
+
+export const isMultilingual = ['true', '1', 1, 'yes'].includes(
+  process.env.NEXT_PUBLIC_CRYSTALLIZE_IS_MULTILINGUAL
+);
+
+export function getLanguages() {
+  return languages;
+}
+
+export const defaultLanguage = languages[0];
+
+function validLanguage(lang) {
+  return languages.includes(lang) ? lang : defaultLanguage;
+}
+
+export function getLanguage({ asPath, query } = {}) {
+  if (query?.language) {
+    return query.language;
+  }
+
   /**
-   * Optionally use the Use the current asPath (/my-products/tedddy-bear)
+   * Optionally use the current asPath (/en/my-products/teddy-bear)
    * to determine the language
    */
+  const languageFromUrl = asPath?.split('/').filter(Boolean)[0];
 
-  return 'en';
+  return validLanguage(languageFromUrl);
 }
