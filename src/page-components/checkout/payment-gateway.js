@@ -140,6 +140,7 @@ export default function PaymentGateway({ items, currency }) {
                       `/confirmation/stripe/${orderId}`
                     );
                   }
+                  scrollTo(0, 0);
                 }}
               />
             </PaymentMethod>

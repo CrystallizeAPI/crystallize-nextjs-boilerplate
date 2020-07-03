@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
+import { useRouter } from 'next/router';
 
 import StripeCheckout from './stripe-checkout';
 
@@ -12,6 +13,10 @@ export default function StripeWrapper({
   const [state, setState] = useState('loading');
   const [clientSecret, setClientSecret] = useState(null);
   const [stripe, setStripe] = useState(null);
+  const router = useRouter();
+  const {
+    query: { language }
+  } = router;
 
   useEffect(() => {
     async function load() {
@@ -32,7 +37,8 @@ export default function StripeWrapper({
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             currency,
-            lineItems
+            lineItems,
+            language
           })
         }
       ).then((res) => res.json());

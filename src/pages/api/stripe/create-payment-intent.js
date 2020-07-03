@@ -3,22 +3,22 @@ import { getClient } from 'lib-api/payment-providers/stripe';
 
 export default async (req, res) => {
   try {
-    const { lineItems, currency } = req.body;
-    const validatedItems = await validateItems(lineItems);
+    const { lineItems, currency, language } = req.body;
+    const validatedItems = await validateItems({ lineItems, language });
     const amount = validatedItems.reduce((acc, val) => {
       return acc + val.price * val.quantity;
     }, 0);
 
     const paymentIntent = await getClient().paymentIntents.create({
       amount: amount * 100,
-      currency,
+      currency
     });
 
     return res.json(paymentIntent);
   } catch (error) {
     return res.status(503).send({
       success: false,
-      error: error.stack,
+      error: error.stack
     });
   }
 };
