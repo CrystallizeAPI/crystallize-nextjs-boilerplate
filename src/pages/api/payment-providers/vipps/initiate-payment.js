@@ -15,10 +15,10 @@ function orderToVippsBody({ basket, orderId, host, multilingualUrlPrefix }) {
   return {
     merchantInfo: {
       merchantSerialNumber: process.env.VIPPS_MERCHANT_SERIAL,
-      callbackPrefix: `${host}/api/vipps/order-update`,
+      callbackPrefix: `${host}/api/payment-providers/vipps/order-update`,
       shippingDetailsPrefix: host,
-      fallBack: `${host}/api/vipps/fallback/${orderId}?multilingualUrlPrefix=${multilingualUrlPrefix}`,
-      consentRemovalPrefix: `${host}/api/vipps/constent-removal`,
+      fallBack: `${host}/api/payment-providers/vipps/fallback/${orderId}?multilingualUrlPrefix=${multilingualUrlPrefix}`,
+      consentRemovalPrefix: `${host}/api/payment-providers/vipps/constent-removal`,
       paymentType: 'eComm Express Payment',
       isApp: false,
       staticShippingDetails: [

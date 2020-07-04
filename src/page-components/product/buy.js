@@ -7,7 +7,7 @@ import { useBasket, getVariantVATprops } from 'components/basket';
 
 import { ProductFooter, Price } from './styles';
 
-const BuyButton = ({ product, selectedVariant }) => {
+export default function BuyButton({ product, selectedVariant }) {
   const basket = useBasket();
 
   const layout = useContext(LayoutContext);
@@ -40,8 +40,4 @@ const BuyButton = ({ product, selectedVariant }) => {
       </Button>
     </ProductFooter>
   );
-};
-
-BuyButton.displayName = 'BuyButton';
-
-export default BuyButton;
+}

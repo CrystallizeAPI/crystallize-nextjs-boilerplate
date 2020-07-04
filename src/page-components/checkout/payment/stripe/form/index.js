@@ -6,7 +6,7 @@ import { Button } from 'ui';
 
 import { CardElementWrapper, ErrorMessage } from './styles';
 
-import { Input, InputGroup, Label } from '../styles';
+import { Input, InputGroup, Label } from '../../../styles';
 
 const ShippingDetails = styled.div`
   display: flex;
@@ -56,30 +56,33 @@ class StripeCheckout extends React.Component {
 
     // Create order within Crystallize
     try {
-      const response = await fetch('/api/stripe/order-persistence', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          paymentIntentId: paymentIntent.id,
-          lineItems: items.map((item) => ({
-            name: item.name,
-            sku: item.sku,
-            net: item.price,
-            gross: item.priceWithoutVat,
-            quantity: item.quantity,
-            product_id: item.productId,
-            product_variant_id: item.productVariantId,
-            image_url: item.image ? item.image.url : null,
-            subscription: item.subscription,
-            tax_rate: item.taxGroup.percent,
-            tax_group: item.taxGroup,
-            product_tax_amount: item.vatAmount
-          }))
-        })
-      });
+      const response = await fetch(
+        '/api/payment-providers/stripe/order-persistence',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            paymentIntentId: paymentIntent.id,
+            lineItems: items.map((item) => ({
+              name: item.name,
+              sku: item.sku,
+              net: item.price,
+              gross: item.priceWithoutVat,
+              quantity: item.quantity,
+              product_id: item.productId,
+              product_variant_id: item.productVariantId,
+              image_url: item.image ? item.image.url : null,
+              subscription: item.subscription,
+              tax_rate: item.taxGroup.percent,
+              tax_group: item.taxGroup,
+              product_tax_amount: item.vatAmount
+            }))
+          })
+        }
+      );
 
       const { data } = await response.json();
       return onSuccess(data.orders.create.id);

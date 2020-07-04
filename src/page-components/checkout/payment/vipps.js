@@ -29,16 +29,19 @@ export default function VippsWrapper({
         product_tax_amount: item.vatAmount
       }));
 
-      const response = await fetch('/api/vipps/initiate-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          multilingualUrlPrefix: language ? `/${language}` : '',
-          personalDetails,
-          currency,
-          lineItems
-        })
-      }).then((res) => res.json());
+      const response = await fetch(
+        '/api/payment-providers/vipps/initiate-payment',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            multilingualUrlPrefix: language ? `/${language}` : '',
+            personalDetails,
+            currency,
+            lineItems
+          })
+        }
+      ).then((res) => res.json());
 
       return onSuccess(response.url);
     }

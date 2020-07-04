@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import { useRouter } from 'next/router';
 
-import StripeCheckout from './stripe-checkout';
+import { defaultLanguage } from 'lib/language';
+
+import Form from './form';
 
 export default function StripeWrapper({
   items,
@@ -15,7 +17,7 @@ export default function StripeWrapper({
   const [stripe, setStripe] = useState(null);
   const router = useRouter();
   const {
-    query: { language }
+    query: { language = defaultLanguage }
   } = router;
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function StripeWrapper({
       const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 
       const { client_secret } = await fetch(
-        '/api/stripe/create-payment-intent',
+        '/api/payment-providers/stripe/create-payment-intent',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -57,14 +59,14 @@ export default function StripeWrapper({
     }
 
     load();
-  }, [currency, items]);
+  }, [currency, items, language]);
 
   if (state === 'loading' || !clientSecret) return <p>Loading...</p>;
 
   return stripe ? (
     <StripeProvider stripe={stripe}>
       <Elements>
-        <StripeCheckout
+        <Form
           clientSecret={clientSecret}
           onSuccess={onSuccess}
           items={items}

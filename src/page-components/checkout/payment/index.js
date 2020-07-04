@@ -16,7 +16,7 @@ import {
   PaymentButton,
   PaymentMethod,
   SectionHeader
-} from './styles';
+} from '../styles';
 
 const Row = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ const Inner = styled.div`
   border-radius: 0.2rem;
 `;
 
-export default function PaymentGateway({ items, currency }) {
+export default function Payment({ items, currency }) {
   const router = useRouter();
   const [state, setState] = useState({
     paymentMethod: null,

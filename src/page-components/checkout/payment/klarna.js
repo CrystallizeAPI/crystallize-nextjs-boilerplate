@@ -11,30 +11,33 @@ export default function KlarnaCheckout({ items, currency }) {
       setState('loading');
 
       try {
-        const response = await fetch('/api/klarna/render-checkout', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            multilingualUrlPrefix: language ? `/${language}` : '',
-            currency,
-            lineItems: items.map((item) => ({
-              name: item.name,
-              sku: item.sku,
-              net: item.price,
-              gross: item.priceWithoutVat,
-              quantity: item.quantity,
-              product_id: item.id,
-              product_variant_id: item.variant_id,
-              image_url: item.image.url,
-              subscription: item.subscription,
-              tax_group: item.taxGroup,
-              product_tax_amount: item.vatAmount
-            }))
-          })
-        });
+        const response = await fetch(
+          '/api/payment-providers/klarna/render-checkout',
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              multilingualUrlPrefix: language ? `/${language}` : '',
+              currency,
+              lineItems: items.map((item) => ({
+                name: item.name,
+                sku: item.sku,
+                net: item.price,
+                gross: item.priceWithoutVat,
+                quantity: item.quantity,
+                product_id: item.id,
+                product_variant_id: item.variant_id,
+                image_url: item.image.url,
+                subscription: item.subscription,
+                tax_group: item.taxGroup,
+                product_tax_amount: item.vatAmount
+              }))
+            })
+          }
+        );
 
         setState('loaded');
 
