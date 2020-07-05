@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 
-import StripeCheckout from './stripe';
-import KlarnaCheckout from './klarna';
-import VippsCheckout from './vipps';
+const StripeCheckout = dynamic(() => import('./stripe'));
+const KlarnaCheckout = dynamic(() => import('./klarna'));
+const VippsCheckout = dynamic(() => import('./vipps'));
 
 import {
   Form,
@@ -33,16 +34,41 @@ const Inner = styled.div`
   border-radius: 0.2rem;
 `;
 
+const paymentMethodsFromConfig = (
+  process.env.NEXT_PUBLIC_PAYMENT_METHODS || 'stripe,vipps,klarna'
+).split(',');
+
+const paymentMethods = [
+  {
+    name: 'stripe',
+    color: '#6773E6',
+    logo: '/static/stripe-logo.png'
+  },
+  {
+    name: 'klarna',
+    color: '#F8AEC2',
+    logo: '/static/klarna-logo.png'
+  },
+  {
+    name: 'vipps',
+    color: '#fff',
+    logo: '/static/vipps-logo.png'
+  }
+].map((paymentMethod) => ({
+  ...paymentMethod,
+  active: paymentMethodsFromConfig.includes(paymentMethod.name)
+}));
+
 export default function Payment({ items, currency }) {
   const router = useRouter();
+  const [paymentMethod, setPaymentMethod] = useState(null);
   const [state, setState] = useState({
-    paymentMethod: null,
     firstName: '',
     lastName: '',
     email: ''
   });
 
-  const { paymentMethod, firstName, lastName, email } = state;
+  const { firstName, lastName, email } = state;
 
   const personalDetails = {
     firstName,
@@ -55,7 +81,7 @@ export default function Payment({ items, currency }) {
       <Form noValidate>
         <Row>
           <InputGroup>
-            <Label htmlFor="firstname"> First Name</Label>
+            <Label htmlFor="firstname">First Name</Label>
             <Input
               name="firstname"
               type="text"
@@ -68,7 +94,7 @@ export default function Payment({ items, currency }) {
             />
           </InputGroup>
           <InputGroup>
-            <Label htmlFor="lastname"> Last Name</Label>
+            <Label htmlFor="lastname">Last Name</Label>
             <Input
               name="lastname"
               type="text"
@@ -96,30 +122,22 @@ export default function Payment({ items, currency }) {
         <SectionHeader>Choose payment method</SectionHeader>
         <PaymentMethods>
           <PaymentSelector>
-            <PaymentButton
-              color="#6773E6"
-              type="button"
-              active={paymentMethod === 'stripe'}
-              onClick={() => setState({ ...state, paymentMethod: 'stripe' })}
-            >
-              <img src="/static/stripe-logo.png" alt="stripe logo" />
-            </PaymentButton>
-            <PaymentButton
-              color="#F8AEC2"
-              type="button"
-              active={paymentMethod === 'klarna'}
-              onClick={() => setState({ ...state, paymentMethod: 'klarna' })}
-            >
-              <img src="/static/klarna-logo.png" alt="Klarna logo" />
-            </PaymentButton>
-            <PaymentButton
-              color="#FFFFFF"
-              type="button"
-              active={paymentMethod === 'vipps'}
-              onClick={() => setState({ ...state, paymentMethod: 'vipps' })}
-            >
-              <img src="/static/vipps-logo.png" alt="Vipps logo" />
-            </PaymentButton>
+            {paymentMethods
+              .filter((p) => p.active)
+              .map((paymentMethod) => (
+                <PaymentButton
+                  key={paymentMethod.name}
+                  color={paymentMethod.color}
+                  type="button"
+                  active={paymentMethod === paymentMethod.name}
+                  onClick={() => setPaymentMethod(paymentMethod.name)}
+                >
+                  <img
+                    src={paymentMethod.logo}
+                    alt={`Logo for ${paymentMethod.name}`}
+                  />
+                </PaymentButton>
+              ))}
           </PaymentSelector>
           {paymentMethod === 'stripe' && (
             <PaymentMethod>

@@ -1,6 +1,14 @@
 import styled from 'styled-components';
+import is from 'styled-is';
 
-import { responsive, H3 } from 'ui';
+import { responsive, H3, Outer as GlobalOuter } from 'ui';
+
+export const Outer = styled(GlobalOuter)`
+  ${is('center')`
+    padding-top: 20vh;
+    text-align: center;
+  `};
+`;
 
 export const Inner = styled.div`
   display: grid;

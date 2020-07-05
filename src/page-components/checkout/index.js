@@ -5,24 +5,23 @@ import { useSettings } from 'components/settings-context';
 import { useBasket } from 'components/basket';
 import Layout from 'components/layout';
 import OrderItems from 'components/order-items';
-import { Outer } from 'ui';
 
 import Payment from './payment';
-import { Inner, SectionHeader, Container } from './styles';
+import { Outer, Inner, SectionHeader, Container } from './styles';
 
 const Checkout = () => {
   const basket = useBasket();
   const settings = useSettings();
 
   if (!basket.state.ready) {
-    return 'Getting basket...';
+    return <Outer center>Hold on. Retrieving your basket...</Outer>;
   }
 
   const { items } = basket.state;
   const { currency } = settings;
 
   if (!items.length) {
-    return <Outer>Basket is empty</Outer>;
+    return <Outer center>Basket is empty</Outer>;
   }
 
   return (
