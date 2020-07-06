@@ -1,6 +1,8 @@
 {
   "paymentMethods": [
-    "stripe"
+    "stripe",
+    "vipps",
+    "klarna"
   ],
   "locales": [
     {

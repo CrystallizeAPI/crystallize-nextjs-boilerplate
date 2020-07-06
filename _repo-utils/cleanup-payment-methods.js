@@ -17,7 +17,8 @@ const handlebars = require('handlebars');
     const entries = fs.readdirSync(dirPath);
 
     entries.forEach(function handleEntry(entry) {
-      if (entry !== 'index.js' && !config.paymentMethods.includes(entry)) {
+      const onlyName = entry.replace(/\.js$/, '');
+      if (onlyName !== 'index' && !config.paymentMethods.includes(onlyName)) {
         fs.removeSync(`${dirPath}/${entry}`);
         console.log('Removed', `${dirPath}/${entry}`);
       }
