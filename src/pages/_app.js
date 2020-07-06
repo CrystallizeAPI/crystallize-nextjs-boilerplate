@@ -2,7 +2,7 @@ import { AuthProvider } from 'components/auth-context';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
 import { simplyFetchFromGraph } from 'lib/graph';
-import { getLanguage } from 'lib/language';
+import { getLocaleFromContext } from 'lib/app-config';
 
 function MyApp({ Component, pageProps, commonData }) {
   const { tenant, mainNavigation } = commonData;
@@ -53,7 +53,7 @@ MyApp.getInitialProps = async function ({ ctx }) {
         }
       `,
       variables: {
-        language: getLanguage(ctx)
+        language: getLocaleFromContext(ctx).crystallizeCatalogueLanguage
       }
     });
 

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
-import { getLanguages, isMultilingual } from 'lib/language';
+import appConfig, { useLocale, isMultilingual } from 'lib/app-config';
 
 const Outer = styled.div`
   display: inline-flex;
@@ -24,12 +24,9 @@ const SelectAsText = styled.div`
   }
 `;
 
-export default function LanguageSwitcher() {
+export default function LocaleSwitcher() {
   const router = useRouter();
-  const languages = getLanguages();
-  const {
-    query: { language: currentLanguage }
-  } = router;
+  const locale = useLocale();
 
   function onChange(e) {
     router.push(`/${e.target.value}`);
@@ -42,11 +39,11 @@ export default function LanguageSwitcher() {
   return (
     <Outer>
       <SelectAsText>
-        <span>Lang: {currentLanguage}</span>
-        <select onChange={onChange} defaultValue={currentLanguage}>
-          {languages.map((l) => (
-            <option value={l} key={l}>
-              {l}
+        <span>{locale.displayName}</span>
+        <select onChange={onChange} defaultValue={locale.urlPrefix}>
+          {appConfig.locales.map((l) => (
+            <option value={l.urlPrefix} key={l.urlPrefix}>
+              {l.displayName}
             </option>
           ))}
         </select>

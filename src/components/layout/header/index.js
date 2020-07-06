@@ -8,7 +8,7 @@ import LogoShop from 'ui/icons/logo-shop';
 
 import BurgerButton from './burger-button';
 import BasketButton from './basket-button';
-import LanguageSwitcher from './language-switcher';
+import LocaleSwitcher from './locale-switcher';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
 
 export default function Header({ simple }) {
@@ -38,7 +38,7 @@ export default function Header({ simple }) {
         </NavList>
       </Nav>
       <NavActions open={navOpen}>
-        <LanguageSwitcher />
+        <LocaleSwitcher />
         {auth.isLoggedIn ? (
           <button type="button" onClick={auth.logout}>
             Logout

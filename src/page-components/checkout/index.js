@@ -1,5 +1,4 @@
 import React from 'react';
-import Head from 'next/head';
 
 import { useSettings } from 'components/settings-context';
 import { useBasket } from 'components/basket';
@@ -9,7 +8,7 @@ import OrderItems from 'components/order-items';
 import Payment from './payment';
 import { Outer, Inner, SectionHeader, Container } from './styles';
 
-const Checkout = () => {
+function Checkout() {
   const basket = useBasket();
   const settings = useSettings();
 
@@ -38,14 +37,11 @@ const Checkout = () => {
       </Inner>
     </Outer>
   );
-};
+}
 
-export default function CheckoutLoader(props) {
+export default function CheckoutWithLayout(props) {
   return (
     <Layout title="Checkout" simple>
-      <Head>
-        <script id="stripe-js" src="https://js.stripe.com/v3/" async />
-      </Head>
       <Checkout {...props} />
     </Layout>
   );

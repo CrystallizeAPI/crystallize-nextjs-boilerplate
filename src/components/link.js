@@ -1,15 +1,15 @@
 /**
- * Language aware link
+ * Locale aware link
  */
 
 import { default as NextLink } from 'next/link';
-import { useRouter } from 'next/router';
+
+import { useLocale } from 'lib/app-config';
 
 export default function Link({ children, ...props }) {
-  const router = useRouter();
-  const { language } = router.query;
+  const locale = useLocale();
 
-  if (!language) {
+  if (!locale.urlPrefix) {
     return <NextLink {...props}>{children}</NextLink>;
   }
 
@@ -17,8 +17,8 @@ export default function Link({ children, ...props }) {
 
   return (
     <NextLink
-      href={`/[language]${href === '/' ? '' : href}`}
-      as={`/${language}${as || href}`}
+      href={`/[locale]${href === '/' ? '' : href}`}
+      as={`/${locale.urlPrefix}/${as || href}`.replace(/\/{2,}/g, '/')}
       {...restProps}
     >
       {children}

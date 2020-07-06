@@ -1,11 +1,22 @@
+/* eslint-disable react/display-name */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import styled from 'styled-components';
 
-const StripeCheckout = dynamic(() => import('./stripe'));
-const KlarnaCheckout = dynamic(() => import('./klarna'));
-const VippsCheckout = dynamic(() => import('./vipps'));
+import appConfig, { useLocale } from 'lib/app-config';
+
+// {{#if payment-method-stripe}}
+import StripeCheckout from './stripe';
+// {{/if}}
+
+// {{#if payment-method-klarna}}
+import KlarnaCheckout from './klarna';
+// {{/if}}
+
+// {{#if payment-method-vipps}}
+import VippsCheckout from './vipps';
+// {{/if}}
 
 import {
   Form,
@@ -34,32 +45,8 @@ const Inner = styled.div`
   border-radius: 0.2rem;
 `;
 
-const paymentMethodsFromConfig = (
-  process.env.NEXT_PUBLIC_PAYMENT_METHODS || 'stripe,vipps,klarna'
-).split(',');
-
-const paymentMethods = [
-  {
-    name: 'stripe',
-    color: '#6773E6',
-    logo: '/static/stripe-logo.png'
-  },
-  {
-    name: 'klarna',
-    color: '#F8AEC2',
-    logo: '/static/klarna-logo.png'
-  },
-  {
-    name: 'vipps',
-    color: '#fff',
-    logo: '/static/vipps-logo.png'
-  }
-].map((paymentMethod) => ({
-  ...paymentMethod,
-  active: paymentMethodsFromConfig.includes(paymentMethod.name)
-}));
-
 export default function Payment({ items, currency }) {
+  const locale = useLocale();
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [state, setState] = useState({
@@ -75,6 +62,77 @@ export default function Payment({ items, currency }) {
     lastName,
     email
   };
+
+  const paymentMethods = [
+    // {{#if payment-method-stripe}}
+    {
+      name: 'stripe',
+      color: '#6773E6',
+      logo: '/static/stripe-logo.png',
+      render: () => (
+        <PaymentMethod>
+          <Head>
+            <script key="stripe-js" src="https://js.stripe.com/v3/" async />
+          </Head>
+          <StripeCheckout
+            personalDetails={personalDetails}
+            items={items}
+            currency={currency}
+            onSuccess={(orderId) => {
+              if (locale.urlPrefix) {
+                router.push(
+                  '/[locale]/confirmation/stripe/[orderId]',
+                  `/${locale.urlPrefix}/confirmation/stripe/${orderId}`
+                );
+              } else {
+                router.push(
+                  '/confirmation/stripe/[orderId]',
+                  `/confirmation/stripe/${orderId}`
+                );
+              }
+              scrollTo(0, 0);
+            }}
+          />
+        </PaymentMethod>
+      )
+    },
+    // {{/if}}
+    // {{#if payment-method-klarna}}
+    {
+      name: 'klarna',
+      color: '#F8AEC2',
+      logo: '/static/klarna-logo.png',
+      render: () => (
+        <PaymentMethod>
+          <KlarnaCheckout
+            personalDetails={personalDetails}
+            items={items}
+            currency={currency}
+          />
+        </PaymentMethod>
+      )
+    },
+    // {{/if}}
+    // {{#if payment-method-vipps}}
+    {
+      name: 'vipps',
+      color: '#fff',
+      logo: '/static/vipps-logo.png',
+      render: () => (
+        <PaymentMethod>
+          <VippsCheckout
+            personalDetails={personalDetails}
+            items={items}
+            currency={currency}
+            onSuccess={(url) => {
+              if (url) window.location = url;
+            }}
+          />
+        </PaymentMethod>
+      )
+    }
+    // {{/if}}
+  ];
 
   return (
     <Inner>
@@ -122,9 +180,21 @@ export default function Payment({ items, currency }) {
         <SectionHeader>Choose payment method</SectionHeader>
         <PaymentMethods>
           <PaymentSelector>
-            {paymentMethods
-              .filter((p) => p.active)
-              .map((paymentMethod) => (
+            {appConfig.paymentMethods.map((paymentMethodFromConfig) => {
+              const paymentMethod = paymentMethods.find(
+                (p) => p.name === paymentMethodFromConfig
+              );
+              if (!paymentMethod) {
+                return (
+                  <small>
+                    Payment method
+                    {paymentMethodFromConfig}
+                    is not configured
+                  </small>
+                );
+              }
+
+              return (
                 <PaymentButton
                   key={paymentMethod.name}
                   color={paymentMethod.color}
@@ -137,55 +207,11 @@ export default function Payment({ items, currency }) {
                     alt={`Logo for ${paymentMethod.name}`}
                   />
                 </PaymentButton>
-              ))}
+              );
+            })}
           </PaymentSelector>
-          {paymentMethod === 'stripe' && (
-            <PaymentMethod>
-              <StripeCheckout
-                personalDetails={personalDetails}
-                items={items}
-                currency={currency}
-                onSuccess={(orderId) => {
-                  const { language } = router.query;
-                  if (language) {
-                    router.push(
-                      '/[language]/confirmation/stripe/[orderId]',
-                      `/${language}/confirmation/stripe/${orderId}`
-                    );
-                  } else {
-                    router.push(
-                      '/confirmation/stripe/[orderId]',
-                      `/confirmation/stripe/${orderId}`
-                    );
-                  }
-                  scrollTo(0, 0);
-                }}
-              />
-            </PaymentMethod>
-          )}
 
-          {paymentMethod === 'klarna' && (
-            <PaymentMethod>
-              <KlarnaCheckout
-                personalDetails={personalDetails}
-                items={items}
-                currency={currency}
-              />
-            </PaymentMethod>
-          )}
-
-          {paymentMethod === 'vipps' && (
-            <PaymentMethod>
-              <VippsCheckout
-                personalDetails={personalDetails}
-                items={items}
-                currency={currency}
-                onSuccess={(url) => {
-                  if (url) window.location = url;
-                }}
-              />
-            </PaymentMethod>
-          )}
+          {paymentMethods.find((p) => p.name === paymentMethod)?.render()}
         </PaymentMethods>
       </Form>
     </Inner>

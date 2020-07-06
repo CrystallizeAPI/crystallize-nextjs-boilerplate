@@ -5,11 +5,15 @@
 
 import Head from 'next/head';
 
-import { defaultLanguage } from 'lib/language';
+import { defaultLocale } from 'lib/app-config';
+
+export function getStaticProps() {
+  return { props: {} };
+}
 
 /**
  * Redirect all requests from root (/) to your default
- * language root, e.g.: /en
+ * locale root, e.g.: /en
  */
 export default function MultilingualRedirect() {
   /**
@@ -20,7 +24,10 @@ export default function MultilingualRedirect() {
    */
   return (
     <Head>
-      <meta httpEquiv="refresh" content={`0; URL=/${defaultLanguage}`} />
+      <meta
+        httpEquiv="refresh"
+        content={`0; URL=/${defaultLocale.urlPrefix}`}
+      />
     </Head>
   );
 }

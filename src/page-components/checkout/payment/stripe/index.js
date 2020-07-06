@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
-import { useRouter } from 'next/router';
 
-import { defaultLanguage } from 'lib/language';
+import { useLocale } from 'lib/app-config';
 
 import Form from './form';
 
@@ -15,10 +14,7 @@ export default function StripeWrapper({
   const [state, setState] = useState('loading');
   const [clientSecret, setClientSecret] = useState(null);
   const [stripe, setStripe] = useState(null);
-  const router = useRouter();
-  const {
-    query: { language = defaultLanguage }
-  } = router;
+  const locale = useLocale();
 
   useEffect(() => {
     async function load() {
@@ -40,7 +36,7 @@ export default function StripeWrapper({
           body: JSON.stringify({
             currency,
             lineItems,
-            language
+            language: locale.crystallizeCatalogueLanguage
           })
         }
       ).then((res) => res.json());
@@ -59,7 +55,7 @@ export default function StripeWrapper({
     }
 
     load();
-  }, [currency, items, language]);
+  }, [currency, items, locale]);
 
   if (state === 'loading' || !clientSecret) return <p>Loading...</p>;
 
