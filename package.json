@@ -17,7 +17,8 @@
     "start-platformsh": "NODE_ENV=production next start -p $PORT",
     "prod": "npm run build && npm run start",
     "lint": "eslint .",
-    "validate": "lint-staged"
+    "validate": "lint-staged",
+    "repo:cleanup-payment-providers": "node ./_repo-utils/cleanup-payment-methods.js"
   },
   "husky": {
     "hooks": {
@@ -66,6 +67,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.0.1",
+    "fs-extra": "^9.0.1",
+    "handlebars": "^4.7.6",
     "husky": "^4.2.1",
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5"
