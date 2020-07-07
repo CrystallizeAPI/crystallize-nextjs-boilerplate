@@ -20,6 +20,10 @@ growth marketing][16].
 
 Check it out, the boilerplate is Open Source and MIT licensed.
 
+## Get a quick preview
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/CrystallizeAPI/crystallize-nextjs-boilerplate&env=CRYSTALLIZE_TENANT_IDENTIFIER&envDescription=Enter%20your%20own%20tenant%20identifier%20,%20or%20use%20the%20default:%20furniture)
+
 ## Getting Started
 
 You can use [Crystallize CLI][17] to bootstrap a project with this

@@ -187,9 +187,7 @@ export default function Payment({ items, currency }) {
               if (!paymentProvider) {
                 return (
                   <small>
-                    Payment method
-                    {paymentProviderFromConfig}
-                    is not configured
+                    Payment method {paymentProviderFromConfig} is not configured
                   </small>
                 );
               }
