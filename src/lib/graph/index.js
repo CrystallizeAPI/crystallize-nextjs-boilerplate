@@ -25,7 +25,7 @@ export function safePathQuery({ variables, ...rest }) {
 }
 
 export async function simplyFetchFromGraph({
-  uri = process.env.NEXT_PUBLIC_CRYSTALLIZE_CATALOGUE_URL,
+  uri = `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}/catalogue`,
   query,
   variables
 }) {

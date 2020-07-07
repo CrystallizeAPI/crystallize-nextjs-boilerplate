@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+
+import { useLocale } from 'lib/app-config';
 
 export default function VippsWrapper({
   personalDetails,
@@ -8,8 +9,7 @@ export default function VippsWrapper({
   onSuccess
 }) {
   const [state, setState] = useState('loading');
-  const router = useRouter();
-  const { language } = router.query;
+  const locale = useLocale();
 
   useEffect(() => {
     async function load() {
@@ -35,7 +35,9 @@ export default function VippsWrapper({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            multilingualUrlPrefix: language ? `/${language}` : '',
+            multilingualUrlPrefix: locale.urlPrefix
+              ? `/${locale.urlPrefix}`
+              : '',
             personalDetails,
             currency,
             lineItems
@@ -47,7 +49,7 @@ export default function VippsWrapper({
     }
 
     load();
-  }, [language, items, personalDetails, currency, onSuccess]);
+  }, [locale, items, personalDetails, currency, onSuccess]);
 
   if (state === 'error') {
     return <p>Oh no. Unable to initialise Vipps</p>;

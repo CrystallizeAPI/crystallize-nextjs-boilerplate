@@ -1,11 +1,11 @@
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import { getLanguage } from 'lib/language';
+import { getLocaleFromContext } from 'lib/app-config';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const language = getLanguage(ctx);
+    const locale = getLocaleFromContext(ctx);
 
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
@@ -20,7 +20,7 @@ export default class MyDocument extends Document {
       const initialProps = await Document.getInitialProps(ctx);
       return {
         ...initialProps,
-        language,
+        locale,
         styles: (
           <>
             {initialProps.styles}
@@ -35,7 +35,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <html lang={this.props.language}>
+      <html lang={this.props.locale.appLanguage}>
         <Head>
           <meta
             name="viewport"

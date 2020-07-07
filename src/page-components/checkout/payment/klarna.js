@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+
+import { useLocale } from 'lib/app-config';
 
 export default function KlarnaCheckout({ items, currency }) {
   const [state, setState] = useState('loading');
-  const router = useRouter();
-  const { language } = router.query;
+  const locale = useLocale();
 
   useEffect(() => {
     async function loadCheckout() {
@@ -20,7 +20,9 @@ export default function KlarnaCheckout({ items, currency }) {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              multilingualUrlPrefix: language ? `/${language}` : '',
+              multilingualUrlPrefix: locale.urlPrefix
+                ? `/${locale.urlPrefix}`
+                : '',
               currency,
               lineItems: items.map((item) => ({
                 name: item.name,
@@ -70,7 +72,7 @@ export default function KlarnaCheckout({ items, currency }) {
     }
 
     loadCheckout();
-  }, [currency, items, language]);
+  }, [currency, items, locale]);
 
   if (state === 'loading') {
     return <p>Loading...</p>;

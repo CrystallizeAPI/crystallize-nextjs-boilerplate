@@ -79,7 +79,7 @@ export const StripeWrapper = styled.div`
   padding-bottom: 1rem;
 `;
 
-export const PaymentMethods = styled.div`
+export const PaymentProviders = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -93,22 +93,29 @@ export const PaymentButton = styled.button`
   margin-right: 1%;
   height: 80px;
   border-radius: 10px;
+
   img {
     max-width: 100px;
+    max-height: 25px;
+    display: block;
+    margin: 0 auto;
   }
+
   &:last-child {
     border-bottom: none;
   }
 `;
 
-export const PaymentMethod = styled.div`
+export const PaymentProvider = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2rem 0;
 `;
+
 export const PaymentSelector = styled.div`
   display: flex;
 `;
+
 export const SectionHeader = styled(H3)`
   font-size: 16px;
   font-weight: 600;
@@ -118,10 +125,12 @@ export const SectionHeader = styled(H3)`
   padding-bottom: 20px;
   border-bottom: 1px solid #dfdfdf;
 `;
+
 export const Container = styled.div`
   width: 100%;
   padding: 0 75px 50px 75px;
   background: var(--color-box-background);
+
   ${responsive.smAndLess} {
     margin-bottom: 25px;
     padding: 0 40px 40px 40px;

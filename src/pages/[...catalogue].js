@@ -10,7 +10,11 @@
 import React from 'react';
 
 import { simplyFetchFromGraph } from 'lib/graph';
-import { getLanguages, isMultilingual, defaultLanguage } from 'lib/language';
+import appConfig, {
+  getLocaleFromContext,
+  isMultilingual,
+  defaultLocale
+} from 'lib/app-config';
 
 import DocPage, { getData as getDataDoc } from 'page-components/document';
 import FolderPage, { getData as getDataFolder } from 'page-components/folder';
@@ -32,7 +36,8 @@ const typesMap = {
 };
 
 export async function getStaticProps({ params }) {
-  const { catalogue, language = defaultLanguage } = params;
+  const { catalogue } = params;
+  const locale = getLocaleFromContext(params);
   const asPath = `/${catalogue.join('/')}`;
 
   try {
@@ -47,7 +52,7 @@ export async function getStaticProps({ params }) {
         }
       `,
       variables: {
-        language,
+        language: locale.crystallizeCatalogueLanguage,
         path: asPath
       }
     });
@@ -55,7 +60,10 @@ export async function getStaticProps({ params }) {
 
     const renderer = typesMap[type] || typesMap.folder;
 
-    const data = await renderer.getData({ asPath, language });
+    const data = await renderer.getData({
+      asPath,
+      language: locale.crystallizeCatalogueLanguage
+    });
 
     return {
       props: {
@@ -79,16 +87,16 @@ export async function getStaticPaths() {
   const paths = [];
 
   if (isMultilingual) {
-    await Promise.all(getLanguages().map(handleLanguage));
+    await Promise.all(appConfig.locales.map(handleLocale));
   } else {
-    await handleLanguage(defaultLanguage);
+    await handleLocale(defaultLocale);
   }
 
-  async function handleLanguage(language) {
+  async function handleLocale(locale) {
     function handleItem({ path, name, children }) {
       if (path !== '/index' && !name?.startsWith('_')) {
         if (isMultilingual) {
-          paths.push(`/${language}${path}`);
+          paths.push(`/${locale.urlPrefix}${path}`);
         } else {
           paths.push(path);
         }
@@ -132,13 +140,16 @@ export async function getStaticPaths() {
           }
         `,
         variables: {
-          language
+          language: locale.crystallizeCatalogueLanguage
         }
       });
 
       allCatalogueItems.data.catalogue.children.forEach(handleItem);
     } catch (error) {
-      console.error('Could not get all catalogue items for ', language);
+      console.error(
+        'Could not get all catalogue items for ',
+        JSON.stringify(locale, null, 3)
+      );
       console.log(error);
     }
   }

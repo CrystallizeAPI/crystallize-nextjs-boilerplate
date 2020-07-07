@@ -1,10 +1,16 @@
 import Cmp, { getData } from 'page-components/index';
-import * as lang from 'lib/language';
+import appConfig, {
+  getLocaleFromContext,
+  isMultilingual
+} from 'lib/app-config';
 
-export async function getStaticProps({
-  params: { language = lang.defaultLanguage } = {}
-}) {
-  const data = await getData({ asPath: '/', language });
+export async function getStaticProps({ params = {} }) {
+  const locale = getLocaleFromContext(params);
+
+  const data = await getData({
+    asPath: '/',
+    language: locale.crystallizeCatalogueLanguage
+  });
 
   return {
     props: {
@@ -14,13 +20,11 @@ export async function getStaticProps({
   };
 }
 
-export const getStaticPaths = !lang.isMultilingual
+export const getStaticPaths = !isMultilingual
   ? undefined
   : async () => {
-      const languages = lang.getLanguages();
-
       return {
-        paths: languages.map((l) => `/${l}`),
+        paths: appConfig.locales.map((l) => `/${l.urlPrefix}`),
         fallback: false
       };
     };
