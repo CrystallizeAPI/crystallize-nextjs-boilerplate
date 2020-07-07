@@ -18,12 +18,12 @@ if (process.env.CRYSTALLIZE_TENANT_IDENTIFIER) {
   fs.writeFileSync('../.env', env);
 
   /**
-   * Reduce payment providers to 1, since that will get
-   * the lambda count to below 12, which will make
-   * this project available with the Vercel hobby plan
+   * Reduce payment providers to 0, since we want people to
+   * go through the @crystallize/cli when setting up payment
+   * providers
    */
   let appConfig = JSON.parse(fs.readFileSync('../app.config.json', 'utf-8'));
-  appConfig.paymentProviders.length = 1;
+  appConfig.paymentProviders.length = 0;
   fs.writeFileSync('../app.config.json', JSON.stringify(appConfig, null, 3));
 
   // Execute cleanup

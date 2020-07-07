@@ -178,39 +178,44 @@ export default function Payment({ items, currency }) {
         </Row>
 
         <SectionHeader>Choose payment method</SectionHeader>
-        <PaymentProviders>
-          <PaymentSelector>
-            {appConfig.paymentProviders.map((paymentProviderFromConfig) => {
-              const paymentProvider = paymentProviders.find(
-                (p) => p.name === paymentProviderFromConfig
-              );
-              if (!paymentProvider) {
-                return (
-                  <small>
-                    Payment method {paymentProviderFromConfig} is not configured
-                  </small>
+        {appConfig.paymentProviders.length === 0 ? (
+          <i>No payment providers have been configured</i>
+        ) : (
+          <PaymentProviders>
+            <PaymentSelector>
+              {appConfig.paymentProviders.map((paymentProviderFromConfig) => {
+                const paymentProvider = paymentProviders.find(
+                  (p) => p.name === paymentProviderFromConfig
                 );
-              }
+                if (!paymentProvider) {
+                  return (
+                    <small>
+                      Payment method {paymentProviderFromConfig} is not
+                      configured
+                    </small>
+                  );
+                }
 
-              return (
-                <PaymentButton
-                  key={paymentProvider.name}
-                  color={paymentProvider.color}
-                  type="button"
-                  active={paymentProvider === paymentProvider.name}
-                  onClick={() => setPaymentProvider(paymentProvider.name)}
-                >
-                  <img
-                    src={paymentProvider.logo}
-                    alt={`Logo for ${paymentProvider.name}`}
-                  />
-                </PaymentButton>
-              );
-            })}
-          </PaymentSelector>
+                return (
+                  <PaymentButton
+                    key={paymentProvider.name}
+                    color={paymentProvider.color}
+                    type="button"
+                    active={paymentProvider === paymentProvider.name}
+                    onClick={() => setPaymentProvider(paymentProvider.name)}
+                  >
+                    <img
+                      src={paymentProvider.logo}
+                      alt={`Logo for ${paymentProvider.name}`}
+                    />
+                  </PaymentButton>
+                );
+              })}
+            </PaymentSelector>
 
-          {paymentProviders.find((p) => p.name === paymentProvider)?.render()}
-        </PaymentProviders>
+            {paymentProviders.find((p) => p.name === paymentProvider)?.render()}
+          </PaymentProviders>
+        )}
       </Form>
     </Inner>
   );
