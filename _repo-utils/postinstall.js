@@ -4,6 +4,7 @@ const fs = require('fs-extra');
  * If this project is installed using Vercel import,
  * the env CRYSTALLIZE_TENANT_IDENTIFIER will be set.
  */
+console.log('CRYSTALLIZE POSTINSTALL');
 if (process.env.CRYSTALLIZE_TENANT_IDENTIFIER) {
   process.chdir(__dirname);
 
