@@ -79,7 +79,7 @@ export const StripeWrapper = styled.div`
   padding-bottom: 1rem;
 `;
 
-export const PaymentMethods = styled.div`
+export const PaymentProviders = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -106,7 +106,7 @@ export const PaymentButton = styled.button`
   }
 `;
 
-export const PaymentMethod = styled.div`
+export const PaymentProvider = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2rem 0;

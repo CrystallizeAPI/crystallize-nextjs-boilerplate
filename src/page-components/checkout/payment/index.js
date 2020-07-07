@@ -24,9 +24,9 @@ import {
   InputGroup,
   Label,
   PaymentSelector,
-  PaymentMethods,
+  PaymentProviders,
   PaymentButton,
-  PaymentMethod,
+  PaymentProvider,
   SectionHeader
 } from '../styles';
 
@@ -48,7 +48,7 @@ const Inner = styled.div`
 export default function Payment({ items, currency }) {
   const locale = useLocale();
   const router = useRouter();
-  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [paymentProvider, setPaymentProvider] = useState(null);
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
@@ -63,14 +63,14 @@ export default function Payment({ items, currency }) {
     email
   };
 
-  const paymentMethods = [
+  const paymentProviders = [
     // {{#if payment-method-stripe}}
     {
       name: 'stripe',
       color: '#6773E6',
       logo: '/static/stripe-logo.png',
       render: () => (
-        <PaymentMethod>
+        <PaymentProvider>
           <Head>
             <script key="stripe-js" src="https://js.stripe.com/v3/" async />
           </Head>
@@ -93,7 +93,7 @@ export default function Payment({ items, currency }) {
               scrollTo(0, 0);
             }}
           />
-        </PaymentMethod>
+        </PaymentProvider>
       )
     },
     // {{/if}}
@@ -103,13 +103,13 @@ export default function Payment({ items, currency }) {
       color: '#F8AEC2',
       logo: '/static/klarna-logo.png',
       render: () => (
-        <PaymentMethod>
+        <PaymentProvider>
           <KlarnaCheckout
             personalDetails={personalDetails}
             items={items}
             currency={currency}
           />
-        </PaymentMethod>
+        </PaymentProvider>
       )
     },
     // {{/if}}
@@ -119,7 +119,7 @@ export default function Payment({ items, currency }) {
       color: '#fff',
       logo: '/static/vipps-logo.png',
       render: () => (
-        <PaymentMethod>
+        <PaymentProvider>
           <VippsCheckout
             personalDetails={personalDetails}
             items={items}
@@ -128,7 +128,7 @@ export default function Payment({ items, currency }) {
               if (url) window.location = url;
             }}
           />
-        </PaymentMethod>
+        </PaymentProvider>
       )
     }
     // {{/if}}
@@ -178,17 +178,17 @@ export default function Payment({ items, currency }) {
         </Row>
 
         <SectionHeader>Choose payment method</SectionHeader>
-        <PaymentMethods>
+        <PaymentProviders>
           <PaymentSelector>
-            {appConfig.paymentMethods.map((paymentMethodFromConfig) => {
-              const paymentMethod = paymentMethods.find(
-                (p) => p.name === paymentMethodFromConfig
+            {appConfig.paymentProviders.map((paymentProviderFromConfig) => {
+              const paymentProvider = paymentProviders.find(
+                (p) => p.name === paymentProviderFromConfig
               );
-              if (!paymentMethod) {
+              if (!paymentProvider) {
                 return (
                   <small>
                     Payment method
-                    {paymentMethodFromConfig}
+                    {paymentProviderFromConfig}
                     is not configured
                   </small>
                 );
@@ -196,23 +196,23 @@ export default function Payment({ items, currency }) {
 
               return (
                 <PaymentButton
-                  key={paymentMethod.name}
-                  color={paymentMethod.color}
+                  key={paymentProvider.name}
+                  color={paymentProvider.color}
                   type="button"
-                  active={paymentMethod === paymentMethod.name}
-                  onClick={() => setPaymentMethod(paymentMethod.name)}
+                  active={paymentProvider === paymentProvider.name}
+                  onClick={() => setPaymentProvider(paymentProvider.name)}
                 >
                   <img
-                    src={paymentMethod.logo}
-                    alt={`Logo for ${paymentMethod.name}`}
+                    src={paymentProvider.logo}
+                    alt={`Logo for ${paymentProvider.name}`}
                   />
                 </PaymentButton>
               );
             })}
           </PaymentSelector>
 
-          {paymentMethods.find((p) => p.name === paymentMethod)?.render()}
-        </PaymentMethods>
+          {paymentProviders.find((p) => p.name === paymentProvider)?.render()}
+        </PaymentProviders>
       </Form>
     </Inner>
   );

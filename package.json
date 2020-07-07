@@ -18,7 +18,8 @@
     "prod": "npm run build && npm run start",
     "lint": "eslint .",
     "validate": "lint-staged",
-    "repo:cleanup-payment-providers": "node ./_repo-utils/cleanup-payment-methods.js"
+    "repo:cleanup-payment-providers": "node ./_repo-utils/cleanup-payment-providers.js",
+    "postinstall": "node ./_repo-utils/postinstall.js"
   },
   "husky": {
     "hooks": {
