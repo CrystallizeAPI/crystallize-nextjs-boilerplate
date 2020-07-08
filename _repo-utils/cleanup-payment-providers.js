@@ -20,15 +20,22 @@ const handlebars = require('handlebars');
     '../src/pages/[locale]/confirmation',
     '../src/pages/api/payment-providers'
   ].forEach(function cleanupDir(dirPath) {
-    const entries = fs.readdirSync(dirPath);
+    try {
+      const entries = fs.readdirSync(dirPath);
 
-    entries.forEach(function handleEntry(entry) {
-      const onlyName = entry.replace(/\.js$/, '');
-      if (onlyName !== 'index' && !config.paymentProviders.includes(onlyName)) {
-        fs.removeSync(`${dirPath}/${entry}`);
-        console.log('Removed', `${dirPath}/${entry}`);
-      }
-    });
+      entries.forEach(function handleEntry(entry) {
+        const onlyName = entry.replace(/\.js$/, '');
+        if (
+          onlyName !== 'index' &&
+          !config.paymentProviders.includes(onlyName)
+        ) {
+          fs.removeSync(`${dirPath}/${entry}`);
+          console.log('Removed', `${dirPath}/${entry}`);
+        }
+      });
+    } catch (e) {
+      console.log('Skipping', dirPath);
+    }
   });
 
   // Remove unused content of files
