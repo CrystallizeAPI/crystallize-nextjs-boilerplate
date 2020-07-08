@@ -17,6 +17,7 @@ const handlebars = require('handlebars');
     '../src/lib-api/payment-providers',
     '../src/page-components/checkout/payment',
     '../src/pages/confirmation',
+    '../src/pages/[locale]/confirmation',
     '../src/pages/api/payment-providers'
   ].forEach(function cleanupDir(dirPath) {
     const entries = fs.readdirSync(dirPath);

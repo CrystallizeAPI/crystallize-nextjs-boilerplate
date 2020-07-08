@@ -11,8 +11,7 @@
       "urlPrefix": "en",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
-      "defaultCurrency": "USD",
-      "stripeLocale": "en"
+      "defaultCurrency": "USD"
     }
   ]
 }

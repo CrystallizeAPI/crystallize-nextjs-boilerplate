@@ -1,23 +1,12 @@
 /* eslint-disable react/display-name */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import styled from 'styled-components';
 
 import appConfig, { useLocale } from 'lib/app-config';
 import { useT } from 'lib/i18n';
-
-// {{#if payment-provider-stripe}}
-import StripeCheckout from './stripe';
-// {{/if}}
-
-// {{#if payment-provider-klarna}}
-import KlarnaCheckout from './klarna';
-// {{/if}}
-
-// {{#if payment-provider-vipps}}
-import VippsCheckout from './vipps';
-// {{/if}}
 
 import {
   Form,
@@ -30,6 +19,16 @@ import {
   PaymentProvider,
   SectionHeader
 } from '../styles';
+
+// {{#if payment-provider-stripe}}
+const StripeCheckout = dynamic(() => import('./stripe'));
+// {{/if}}
+// {{#if payment-provider-klarna}}
+const KlarnaCheckout = dynamic(() => import('./klarna'));
+// {{/if}}
+// {{#if payment-provider-vipps}}
+const VippsCheckout = dynamic(() => import('./vipps'));
+// {{/if}}
 
 const Row = styled.div`
   display: flex;

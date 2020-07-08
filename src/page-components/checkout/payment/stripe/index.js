@@ -67,7 +67,7 @@ export default function StripeWrapper({
 
   return stripe ? (
     <StripeProvider stripe={stripe}>
-      <Elements locale={locale.stripeLocale}>
+      <Elements locale="en">
         <Form
           clientSecret={clientSecret}
           onSuccess={onSuccess}
