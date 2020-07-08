@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 
 import { useLocale } from 'lib/app-config';
+import { useT } from 'lib/i18n';
 
 import Form from './form';
 
@@ -15,6 +16,7 @@ export default function StripeWrapper({
   const [clientSecret, setClientSecret] = useState(null);
   const [stripe, setStripe] = useState(null);
   const locale = useLocale();
+  const t = useT();
 
   useEffect(() => {
     async function load() {
@@ -57,11 +59,15 @@ export default function StripeWrapper({
     load();
   }, [currency, items, locale]);
 
-  if (state === 'loading' || !clientSecret) return <p>Loading...</p>;
+  if (state === 'loading') return <p>{t('checkout.loadingPaymentGateway')}</p>;
+
+  if (!clientSecret) {
+    return <p>DEV: no client secret retrieved</p>;
+  }
 
   return stripe ? (
     <StripeProvider stripe={stripe}>
-      <Elements>
+      <Elements locale={locale.stripeLocale}>
         <Form
           clientSecret={clientSecret}
           onSuccess={onSuccess}
@@ -71,6 +77,6 @@ export default function StripeWrapper({
       </Elements>
     </StripeProvider>
   ) : (
-    <p>Initialising payment gateway...</p>
+    <p>{t('checkout.loadingPaymentGateway')}</p>
   );
 }

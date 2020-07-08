@@ -23,7 +23,7 @@ import {
   Summary,
   Content,
   Specs,
-  Description,
+  Description
 } from './styles';
 
 const attributesToObject = (attributesArray) =>
@@ -35,7 +35,7 @@ const attributesToObject = (attributesArray) =>
 export async function getData({ asPath, language }) {
   const { data } = await simplyFetchFromGraph({
     query,
-    variables: { path: asPath, language },
+    variables: { path: asPath, language }
   });
   return data;
 }

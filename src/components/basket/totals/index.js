@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { CurrencyValue } from 'components/currency-value';
+import { useT } from 'lib/i18n';
+
 import { useBasket } from '../context';
 
 import { Outer, Row, StrikeThrough, Rows } from './styles';
 
 export const Totals = () => {
+  const t = useT();
   const { state } = useBasket();
 
   const {
@@ -22,56 +24,48 @@ export const Totals = () => {
     <Outer>
       <Rows>
         <Row modifier="total-price">
-          <span>Total price:</span>
-          <span>
-            <CurrencyValue value={totalPrice} />
-          </span>
+          <span>{t('basket.totalPrice')}:</span>
+          <span>{t('common.price', { value: totalPrice })}</span>
         </Row>
         {discount && (
           <>
             <Row modifier="discount">
-              <span>Discount:</span>
-              <span>
-                <CurrencyValue value={discount} />
-              </span>
+              <span>{t('basket.discount')}:</span>
+              <span>{t('common.price', { value: discount })}</span>
             </Row>
             <Row modifier="total-after-discount">
-              <span>Total after discount:</span>
+              <span>{t('common.totalPriceAfterDiscount')}:</span>
               <span>
-                <CurrencyValue value={totalPriceMinusDiscount} />
+                {t('common.price', { value: totalPriceMinusDiscount })}
               </span>
             </Row>
           </>
         )}
         <Row modifier="shipping">
-          <span>Shipping:</span>
+          <span>{t('basket.shippingPrice')}:</span>
           {freeShipping ? (
             <span>
               {shipping && shipping.unit_price > 0 && (
                 <StrikeThrough>
-                  <CurrencyValue value={shipping.unit_price} />
+                  {t('common.price', { value: shipping.unit_price })}
                 </StrikeThrough>
               )}{' '}
-              <CurrencyValue value="0" />
+              {t('common.price', { value: 0 })}
             </span>
           ) : (
             <span>
-              <CurrencyValue value={shipping ? shipping.unit_price : 0} />
+              {t('common.price', { value: shipping ? shipping.unit_price : 0 })}
             </span>
           )}
         </Row>
 
         <Row modifier="total-vat">
-          <span>TAX amount:</span>
-          <span>
-            <CurrencyValue value={totalVatAmount} />
-          </span>
+          <span>{t('basket.vat')}:</span>
+          <span>{t('common.price', { value: totalVatAmount })}</span>
         </Row>
         <Row modifier="to-pay">
-          <span>To pay:</span>
-          <span>
-            <CurrencyValue value={totalToPay} />
-          </span>
+          <span>{t('basket.totalToPay')}:</span>
+          <span>{t('common.price', { value: totalToPay })}</span>
         </Row>
       </Rows>
     </Outer>

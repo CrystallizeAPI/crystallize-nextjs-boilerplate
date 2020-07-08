@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 import { useLocale } from 'lib/app-config';
+import { useT } from 'lib/i18n';
 
 export default function KlarnaCheckout({ items, currency }) {
   const [state, setState] = useState('loading');
   const locale = useLocale();
+  const t = useT();
 
   useEffect(() => {
     async function loadCheckout() {
@@ -75,11 +77,13 @@ export default function KlarnaCheckout({ items, currency }) {
   }, [currency, items, locale]);
 
   if (state === 'loading') {
-    return <p>Loading...</p>;
+    return <p>{t('checkout.loadingPaymentGateway')}</p>;
   }
 
   if (state === 'error') {
-    return <p>Unable to initialise Klarna payment!</p>;
+    return (
+      <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
+    );
   }
 
   return <div id="klarna-checkout-container" />;

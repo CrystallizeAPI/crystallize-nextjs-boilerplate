@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { Spinner } from 'ui/spinner';
 import WidescreenRatio from 'ui/widescreen-ratio';
 import { useIntersectionObserver } from 'lib/intersection-observer';
+import { useT } from 'lib/i18n';
 
 const Outer = styled.div`
   background: var(--color-box-background);
@@ -32,6 +33,7 @@ export default function Video({
   fluid,
   ...rest
 }) {
+  const t = useT();
   const ref = useRef();
   const [load, setLoad] = useState(false);
   const isIntersecting = useIntersectionObserver({ ref });
@@ -56,7 +58,7 @@ export default function Video({
           />
         ) : (
           <Loader>
-            <Spinner style={{ margin: 10 }} /> Loading video
+            <Spinner style={{ margin: 10 }} /> {t('layout.loadingVideo')}
           </Loader>
         )}
       </Outer>

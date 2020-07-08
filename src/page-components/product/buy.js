@@ -4,11 +4,13 @@ import { LayoutContext } from '@crystallize/react-layout';
 import { Button } from 'ui';
 import { CurrencyValue } from 'components/currency-value';
 import { useBasket, getVariantVATprops } from 'components/basket';
+import { useT } from 'lib/i18n';
 
 import { ProductFooter, Price } from './styles';
 
 export default function BuyButton({ product, selectedVariant }) {
   const basket = useBasket();
+  const t = useT();
 
   const layout = useContext(LayoutContext);
 
@@ -36,7 +38,7 @@ export default function BuyButton({ product, selectedVariant }) {
         </strong>
       </Price>
       <Button width="200px" onClick={buy}>
-        Add to Basket
+        {t('product.addToBasket')}
       </Button>
     </ProductFooter>
   );

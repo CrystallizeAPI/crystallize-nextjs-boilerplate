@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useAuth } from 'components/auth-context';
 import { useSettings } from 'components/settings-context';
 import Link from 'components/link';
+import { useT } from 'lib/i18n';
 
 import LogoShop from 'ui/icons/logo-shop';
 
@@ -12,6 +13,7 @@ import LocaleSwitcher from './locale-switcher';
 import { Outer, Nav, Logo, NavActions, NavList, NavListItem } from './styles';
 
 export default function Header({ simple }) {
+  const t = useT();
   const { mainNavigation } = useSettings();
   const auth = useAuth();
 
@@ -45,11 +47,11 @@ export default function Header({ simple }) {
           </button>
         ) : (
           <Link href="/login">
-            <a>Login</a>
+            <a>{t('customer.login.title')}</a>
           </Link>
         )}
       </NavActions>
-      <BasketButton />
+      {!simple && <BasketButton />}
       <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
     </Outer>
   );

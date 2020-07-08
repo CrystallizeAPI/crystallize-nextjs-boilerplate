@@ -8,9 +8,11 @@
     {
       "isDefault": true,
       "displayName": "English - US",
-      "urlPrefix": "",
+      "urlPrefix": "en",
       "appLanguage": "en-US",
-      "crystallizeCatalogueLanguage": "en"
+      "crystallizeCatalogueLanguage": "en",
+      "defaultCurrency": "USD",
+      "stripeLocale": "en"
     }
   ]
 }

@@ -141,6 +141,7 @@ export const NavActions = styled.div`
     font-weight: 500;
     border: 1.4px solid var(--color-text-main);
     color: var(--color-text-main);
+    white-space: nowrap;
 
     cursor: pointer;
 

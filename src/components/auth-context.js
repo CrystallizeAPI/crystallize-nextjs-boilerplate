@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useRouter } from 'next/router';
 
 import { authenticate } from 'lib/rest-api';
 import { logout } from 'lib/auth';
@@ -10,7 +9,6 @@ export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     async function checkIfLoggedIn() {
@@ -28,7 +26,6 @@ export function AuthProvider({ children }) {
   }, []);
 
   function doLogout() {
-    // logout({ redirect:  });
     logout();
     setIsLoggedIn(false);
   }

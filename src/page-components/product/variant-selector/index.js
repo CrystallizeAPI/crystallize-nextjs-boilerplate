@@ -8,7 +8,7 @@ import {
   Button
 } from './styles';
 
-const reduceAttributes = variants =>
+const reduceAttributes = (variants) =>
   variants.reduce((acc, variant) => {
     const attrs = acc;
 
@@ -19,7 +19,7 @@ const reduceAttributes = variants =>
         return;
       }
 
-      const valueExists = currentAttribute.find(str => str === value);
+      const valueExists = currentAttribute.find((str) => str === value);
       if (!valueExists) {
         attrs[attribute].push(value);
       }
@@ -28,18 +28,18 @@ const reduceAttributes = variants =>
     return attrs;
   }, {});
 
-const VariantSelector = ({
+export default function VariantSelector({
   variants,
   selectedVariant,
   onVariantChange,
   onAttributeChange
-}) => {
+}) {
   const attributes = reduceAttributes(variants);
 
   if (!Object.keys(attributes).length) {
     return (
       <Outer>
-        {variants.map(variant => (
+        {variants.map((variant) => (
           <Variant key={variant.id}>
             <Values>
               <Button
@@ -58,10 +58,10 @@ const VariantSelector = ({
 
   return (
     <Outer>
-      {Object.keys(attributes).map(name => {
+      {Object.keys(attributes).map((name) => {
         const attr = attributes[name];
         const selectedAttr = selectedVariant.attributes.find(
-          a => a.attribute === name
+          (a) => a.attribute === name
         );
 
         if (!selectedAttr) {
@@ -72,7 +72,7 @@ const VariantSelector = ({
           <div key={name}>
             {/* <AttributeName>{name}</AttributeName> */}
             <AttributeSelector>
-              {attr.map(value => (
+              {attr.map((value) => (
                 <AttributeButton
                   key={value}
                   onClick={() =>
@@ -93,8 +93,4 @@ const VariantSelector = ({
       })}
     </Outer>
   );
-};
-
-VariantSelector.displayName = 'VariantSelector';
-
-export default VariantSelector;
+}

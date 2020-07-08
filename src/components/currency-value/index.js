@@ -1,8 +1,7 @@
-import { formatCurrency } from 'lib/currency';
-import { useSettings } from 'components/settings-context';
+import { useT } from 'lib/i18n';
 
 export const CurrencyValue = ({ value }) => {
-  const { currency } = useSettings();
+  const t = useT();
 
-  return formatCurrency({ amount: value, currency });
+  return t('common.price', { value });
 };

@@ -7,7 +7,7 @@ import * as cache from './cache';
 export const {
   calculateTotals,
   getSupportedOptionsFromProps,
-  getVariantVATprops,
+  getVariantVATprops
 } = helpers;
 
 const BasketContext = createContext();
@@ -23,9 +23,9 @@ export class BasketProvider extends React.Component {
     return {
       options: {
         ...prevState.options,
-        ...getSupportedOptionsFromProps(nextProps),
+        ...getSupportedOptionsFromProps(nextProps)
       },
-      ...calculateTotals(prevState),
+      ...calculateTotals(prevState)
     };
   }
 
@@ -35,7 +35,7 @@ export class BasketProvider extends React.Component {
     options: {},
     discount: null,
     shipping: null,
-    metadata: {},
+    metadata: {}
   };
 
   onReadyQueue = [];
@@ -78,14 +78,14 @@ export class BasketProvider extends React.Component {
     return {
       basketId: newBasketId,
       quantity: 1,
-      ...item,
+      ...item
     };
   };
 
   getCachedBasket = async () => {
     const id = createId();
     const basket = await cache.retrieveBasketFromCache({
-      parseBasketItem: this.parseBasketItem,
+      parseBasketItem: this.parseBasketItem
     });
 
     if (basket) {
@@ -94,7 +94,7 @@ export class BasketProvider extends React.Component {
       this.setState({
         id,
         ...rest,
-        items: items.map(this.parseBasketItem),
+        items: items.map(this.parseBasketItem)
       });
     } else {
       this.setState({ id });
@@ -128,7 +128,7 @@ export class BasketProvider extends React.Component {
 
       // Update the item
       this.setState({
-        items: [...items],
+        items: [...items]
       });
 
       // Run any callbacks
@@ -138,8 +138,8 @@ export class BasketProvider extends React.Component {
           options.onAddToBasket([
             {
               ...item,
-              quantity: quantityChange,
-            },
+              quantity: quantityChange
+            }
           ]);
         }
       } else if (quantityChange < 0) {
@@ -147,8 +147,8 @@ export class BasketProvider extends React.Component {
           options.onRemoveFromBasket([
             {
               ...item,
-              quantity: Math.abs(quantityChange),
-            },
+              quantity: Math.abs(quantityChange)
+            }
           ]);
         }
       }
@@ -175,7 +175,7 @@ export class BasketProvider extends React.Component {
       // Try to increment by one. If not, add new product to basket
       if (!this.changeItemQuantity({ item, num: 1 })) {
         this.setState((s) => ({
-          items: [...s.items, item],
+          items: [...s.items, item]
         }));
 
         // Run any callbacks
@@ -206,11 +206,11 @@ export class BasketProvider extends React.Component {
                 if (item.basketId === stateItem.basketId) {
                   return {
                     ...item,
-                    animate,
+                    animate
                   };
                 }
                 return item;
-              }),
+              })
             }),
             resolve
           );
@@ -237,7 +237,7 @@ export class BasketProvider extends React.Component {
         timeout: setTimeout(async () => {
           await removeQueuedAnimation(parsedItem);
           mainResolve();
-        }, helpers.animationSpeedMs),
+        }, helpers.animationSpeedMs)
       });
     });
   };
@@ -249,7 +249,7 @@ export class BasketProvider extends React.Component {
     this.onReady(() => {
       const { items, options } = this.state;
       this.setState({
-        items: [],
+        items: []
       });
 
       // Run any callbacks
@@ -263,7 +263,7 @@ export class BasketProvider extends React.Component {
       id: createId(),
       items: [],
       metadata: null,
-      discount: null,
+      discount: null
     });
 
   setItems = (items) => this.ss({ items });
@@ -274,7 +274,7 @@ export class BasketProvider extends React.Component {
 
   setShipping = (shipping) =>
     this.ss({
-      shipping,
+      shipping
     });
 
   render() {
@@ -298,8 +298,8 @@ export class BasketProvider extends React.Component {
             parseBasketItem: this.parseBasketItem,
             setDiscount: this.setDiscount,
             setMetadata: this.setMetadata,
-            onReady: this.onReady,
-          },
+            onReady: this.onReady
+          }
         }}
       >
         {children}

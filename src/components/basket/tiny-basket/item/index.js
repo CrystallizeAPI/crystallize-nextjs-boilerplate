@@ -2,6 +2,7 @@ import React from 'react';
 
 import AttributeList from 'components/attribute-list';
 import { CurrencyValue } from 'components/currency-value';
+import { useT } from 'lib/i18n';
 
 import {
   Item,
@@ -20,7 +21,9 @@ import {
   SubInfoLine
 } from './styles';
 
-const TinyBasketItem = ({ actions, item }) => {
+export default function TinyBasketItem({ actions, item }) {
+  const t = useT();
+
   const increment = () => {
     actions.incrementQuantityItem(item);
   };
@@ -42,7 +45,7 @@ const TinyBasketItem = ({ actions, item }) => {
       <ItemImage
         {...item.image}
         sizes="200px"
-        onError={e => {
+        onError={(e) => {
           e.target.onerror = null;
           e.target.src = item.placeholder_image;
         }}
@@ -72,9 +75,7 @@ const TinyBasketItem = ({ actions, item }) => {
           )}
 
           <PriceVat>
-            <span>
-              VAT <CurrencyValue value={item.vatAmount} />
-            </span>
+            <span>{t('common.vat', { value: item.vatAmount })}</span>
           </PriceVat>
         </PriceWrapper>
       </ItemInfo>
@@ -94,9 +95,7 @@ const TinyBasketItem = ({ actions, item }) => {
           </button>
         </ItemQuantityChanger>
       </div>
-      <ItemDelete onClick={remove}>Remove {item.name} from basket</ItemDelete>
+      <ItemDelete onClick={remove}>{t('basket.removeItem', item)}</ItemDelete>
     </Item>
   );
-};
-
-export default TinyBasketItem;
+}

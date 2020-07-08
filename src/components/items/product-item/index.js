@@ -1,12 +1,14 @@
 import React from 'react';
 
 import Link from 'components/link';
-import { CurrencyValue } from 'components/currency-value';
+import { useT } from 'lib/i18n';
 import { H3 } from 'ui';
 
 import { Outer, Text, ImageWrapper, Img, Price, Inner } from './styles';
 
 export default function ProductItem({ data }) {
+  const t = useT();
+
   if (!data) {
     return null;
   }
@@ -28,9 +30,7 @@ export default function ProductItem({ data }) {
           </ImageWrapper>
 
           <Text>
-            <Price>
-              <CurrencyValue value={price} />
-            </Price>
+            <Price>{t('common.price', { value: price })}</Price>
             <H3>{name}</H3>
           </Text>
         </Inner>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useLocale } from 'lib/app-config';
+import { useT } from 'lib/i18n';
 
 export default function VippsWrapper({
   personalDetails,
@@ -8,6 +9,7 @@ export default function VippsWrapper({
   currency,
   onSuccess
 }) {
+  const t = useT();
   const [state, setState] = useState('loading');
   const locale = useLocale();
 
@@ -52,8 +54,10 @@ export default function VippsWrapper({
   }, [locale, items, personalDetails, currency, onSuccess]);
 
   if (state === 'error') {
-    return <p>Oh no. Unable to initialise Vipps</p>;
+    return (
+      <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Vipps' })}</p>
+    );
   }
 
-  return <p>Hold on...</p>;
+  return <p>{t('checkout.loadingPaymentGateway')}</p>;
 }

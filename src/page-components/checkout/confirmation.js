@@ -5,6 +5,7 @@ import Layout from 'components/layout';
 import { useBasket } from 'components/basket';
 import OrderItems from 'components/order-items';
 import { H1, H3, Outer, Header } from 'ui';
+import { useT } from 'lib/i18n';
 
 import BillingDetails from './billing-details';
 
@@ -21,6 +22,7 @@ const Line = styled.div`
 
 export default function Confirmation({ order: orderData }) {
   const basket = useBasket();
+  const t = useT();
 
   const [emptied, setEmptied] = useState(false);
 
@@ -32,9 +34,6 @@ export default function Confirmation({ order: orderData }) {
   }, [emptied, basket.actions]);
 
   const order = orderData.data.orders.get;
-
-  const { email } = order.customer.addresses?.[0] || {};
-
   const items = order.cart.map((item) => ({
     ...item,
     image: {
@@ -42,24 +41,23 @@ export default function Confirmation({ order: orderData }) {
     },
     price: item.price.net
   }));
+  const email = order.customer.addresses?.[0]?.email;
 
   return (
-    <Layout title="Order Summary">
+    <Layout title={t('checkout.confirmation.title')}>
       <Outer>
         <CustomHeader>
-          <H1>Order Summary</H1>
+          <H1>{t('checkout.confirmation.title')}</H1>
           <p>
-            Your order has been confirmed.{' '}
-            {email && (
-              <>
-                A copy of your order has been sent to <strong>{email}</strong>.
-              </>
-            )}
+            {t('checkout.confirmation.shortStatus', {
+              context: email ? 'withEmail' : null,
+              email
+            })}
           </p>
           <Line />
           <BillingDetails order={order} />
           <Line />
-          <H3>Order Items</H3>
+          <H3>{t('order.item', { count: items.length })}</H3>
           <OrderItems items={items} />
         </CustomHeader>
       </Outer>

@@ -5,6 +5,7 @@ import Head from 'next/head';
 import styled from 'styled-components';
 
 import appConfig, { useLocale } from 'lib/app-config';
+import { useT } from 'lib/i18n';
 
 // {{#if payment-provider-stripe}}
 import StripeCheckout from './stripe';
@@ -46,6 +47,7 @@ const Inner = styled.div`
 `;
 
 export default function Payment({ items, currency }) {
+  const t = useT();
   const locale = useLocale();
   const router = useRouter();
   const [paymentProvider, setPaymentProvider] = useState(null);
@@ -139,11 +141,10 @@ export default function Payment({ items, currency }) {
       <Form noValidate>
         <Row>
           <InputGroup>
-            <Label htmlFor="firstname">First Name</Label>
+            <Label htmlFor="firstname">{t('customer.firstName')}</Label>
             <Input
               name="firstname"
               type="text"
-              placeholder="First name"
               value={firstName}
               onChange={(e) =>
                 setState({ ...state, firstName: e.target.value })
@@ -152,11 +153,10 @@ export default function Payment({ items, currency }) {
             />
           </InputGroup>
           <InputGroup>
-            <Label htmlFor="lastname">Last Name</Label>
+            <Label htmlFor="lastname">{t('customer.lastName')}</Label>
             <Input
               name="lastname"
               type="text"
-              placeholder="Last name"
               value={lastName}
               onChange={(e) => setState({ ...state, lastName: e.target.value })}
               required
@@ -165,11 +165,10 @@ export default function Payment({ items, currency }) {
         </Row>
         <Row>
           <InputGroup>
-            <Label htmlFor="email"> Email</Label>
+            <Label htmlFor="email">{t('customer.email')}</Label>
             <Input
               name="email"
               type="email"
-              placeholder="Email address"
               value={email}
               onChange={(e) => setState({ ...state, email: e.target.value })}
               required
@@ -177,9 +176,9 @@ export default function Payment({ items, currency }) {
           </InputGroup>
         </Row>
 
-        <SectionHeader>Choose payment method</SectionHeader>
+        <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
         {appConfig.paymentProviders.length === 0 ? (
-          <i>No payment providers have been configured</i>
+          <i>{t('checkout.noPaymentProvidersConfigured')}</i>
         ) : (
           <PaymentProviders>
             <PaymentSelector>
@@ -190,8 +189,9 @@ export default function Payment({ items, currency }) {
                 if (!paymentProvider) {
                   return (
                     <small>
-                      Payment method {paymentProviderFromConfig} is not
-                      configured
+                      {t('checkout.paymentProviderNotConfigured', {
+                        name: paymentProviderFromConfig
+                      })}
                     </small>
                   );
                 }
@@ -206,7 +206,9 @@ export default function Payment({ items, currency }) {
                   >
                     <img
                       src={paymentProvider.logo}
-                      alt={`Logo for ${paymentProvider.name}`}
+                      alt={t('checkout.paymentProviderLogoAlt', {
+                        name: paymentProvider.name
+                      })}
                     />
                   </PaymentButton>
                 );

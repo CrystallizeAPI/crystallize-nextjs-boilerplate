@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Link from 'components/link';
 import { useBasket, TinyBasket } from 'components/basket';
 import { Button } from 'ui';
+import { useT } from 'lib/i18n';
 
 import { Basket, Header, Footer } from './styles';
 
@@ -31,6 +32,7 @@ const CheckoutBtn = styled(Button)`
 `;
 
 export default function Aside() {
+  const t = useT();
   const basket = useBasket();
   const [going, setGoing] = useState(false);
 
@@ -43,12 +45,12 @@ export default function Aside() {
   };
 
   if (!basket.state || !basket.state.ready) {
-    return '...';
+    return t('basket.loading');
   }
 
   return (
     <Basket>
-      <Header>Basket</Header>
+      <Header>{t('basket.title')}</Header>
       <TinyBasket />
       <Footer>
         <Link href="/checkout" passHref>
@@ -58,7 +60,7 @@ export default function Aside() {
             disabled={!basket.state.items.length}
             onClick={onCheckoutClick}
           >
-            Go to Checkout
+            {t('basket.goToCheckout')}
           </CheckoutBtn>
         </Link>
       </Footer>

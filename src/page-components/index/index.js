@@ -4,6 +4,7 @@ import Layout from 'components/layout';
 import Grid, { GridItem } from 'components/grid';
 import { simplyFetchFromGraph } from 'lib/graph';
 import fragments from 'lib/graph/fragments';
+import { useT } from 'lib/i18n';
 
 import { Outer } from './styles';
 
@@ -30,12 +31,13 @@ export async function getData({ language }) {
 }
 
 export default function FrontPage({ catalogue }) {
+  const t = useT();
   const [grid] =
     catalogue?.components?.find((c) => c.type === 'gridRelations')?.content
       ?.grids || [];
 
   return (
-    <Layout title="Home">
+    <Layout title={t('frontpage.title')}>
       <Outer>
         {grid && (
           <Grid

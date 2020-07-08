@@ -2,12 +2,14 @@ import React from 'react';
 
 import Link from 'components/link';
 import DocumentItem from 'components/items/document-item';
-import { CurrencyValue } from 'components/currency-value';
 import { screen, Button } from 'ui';
+import { useT } from 'lib/i18n';
 
 import { Outer, Text, ImageWrapper, Img, Price, Title } from './styles';
 
 export default function GridItem({ data, gridCell }) {
+  const t = useT();
+
   if (!data) {
     return null;
   }
@@ -30,11 +32,9 @@ export default function GridItem({ data, gridCell }) {
     image = i;
     text = (
       <div>
-        <Price>
-          <CurrencyValue value={price} />
-        </Price>
+        <Price>{t('common.price', { value: price })}</Price>
         <Title>{name}</Title>
-        <Button>BUY</Button>
+        <Button>{t('product.buy')}</Button>
       </div>
     );
   }

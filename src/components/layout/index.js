@@ -45,11 +45,19 @@ export default function Layout({
       </Head>
       <GlobalStyle />
 
-      <CrystallizeLayout right={simple ? null : Aside}>
-        <Header simple={simple} />
-        <Main>{loading ? <Loader /> : children}</Main>
-        <Footer />
-      </CrystallizeLayout>
+      {simple ? (
+        <>
+          <Header simple={simple} />
+          <Main>{loading ? <Loader /> : children}</Main>
+          <Footer />
+        </>
+      ) : (
+        <CrystallizeLayout right={Aside}>
+          <Header simple={simple} />
+          <Main>{loading ? <Loader /> : children}</Main>
+          <Footer />
+        </CrystallizeLayout>
+      )}
     </>
   );
 }

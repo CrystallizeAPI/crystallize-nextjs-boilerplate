@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { CurrencyValue } from 'components/currency-value';
+import { useT } from 'lib/i18n';
+
 import { useBasket } from '../context';
 import { Totals } from '../totals';
-
 import TinyBasketItem from './item';
 
 import {
@@ -19,6 +19,7 @@ export const TinyBasket = ({
   hideRemainingUntilFreeShipping = false,
   itemImageSizes
 }) => {
+  const t = useT();
   const { state, actions } = useBasket();
 
   if (!state || !state.ready) {
@@ -30,7 +31,7 @@ export const TinyBasket = ({
   if (!items.length) {
     return (
       <Outer>
-        <BasketIsEmpty>Your basket is empty.</BasketIsEmpty>
+        <BasketIsEmpty>{t('basket.empty')}</BasketIsEmpty>
       </Outer>
     );
   }
@@ -38,7 +39,7 @@ export const TinyBasket = ({
   return (
     <Outer>
       <Items>
-        {items.map(item => (
+        {items.map((item) => (
           <ItemOuter key={item.basketId} item={item}>
             <TinyBasketItem
               actions={actions}
@@ -55,9 +56,9 @@ export const TinyBasket = ({
           !freeShipping &&
           remainingUntilFreeShippingApplies > 0 && (
             <RemainingUntilFreeShipping>
-              Add another{' '}
-              <CurrencyValue value={remainingUntilFreeShippingApplies} /> to
-              your order for free shipping.
+              {t('remainingUntilFreeShipping', {
+                amount: remainingUntilFreeShippingApplies
+              })}
             </RemainingUntilFreeShipping>
           )}
       </div>

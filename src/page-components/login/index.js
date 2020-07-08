@@ -4,16 +4,18 @@ import Layout from 'components/layout';
 import { H1, Button } from 'ui';
 import { sendMagicLink } from 'lib/rest-api';
 import { useAuth } from 'components/auth-context';
+import { useT } from 'lib/i18n';
 
 import { LoginStyle, Outer, Fields } from './styles';
 
 export default function Login() {
+  const t = useT();
   const auth = useAuth();
   const [userData, setUserData] = useState({
     loading: false,
     email: '',
     message: '',
-    error: '',
+    error: ''
   });
 
   async function handleSubmit(event) {
@@ -33,7 +35,7 @@ export default function Login() {
       setUserData(
         Object.assign({}, userData, {
           loading: false,
-          message: message,
+          message: message
         })
       );
     } catch (error) {
@@ -46,38 +48,35 @@ export default function Login() {
       setUserData(
         Object.assign({}, userData, {
           loading: false,
-          error: response ? response.statusText : error.message,
+          error: response ? response.statusText : error.message
         })
       );
     }
   }
 
   return (
-    <Layout title="Login">
+    <Layout title={t('customer.login.title')}>
       <Outer>
         {auth.isLoggedIn ? (
           <div>
-            <H1>You are logged in!</H1>
+            <H1>{t('customer.login.loggedIn')}</H1>
           </div>
         ) : (
           <LoginStyle>
-            <H1>Login</H1>
+            <H1>{t('customer.login.title')}</H1>
 
             <form onSubmit={handleSubmit} action="/api/loging" method="post">
-              <h4>
-                Enter your email address and we’ll send a magic login link to
-                your inbox.
-              </h4>
+              <h4>{t('customer.login.instructions')}</h4>
               <Fields>
                 <input
                   type="email"
                   name="email"
-                  placeholder="you@your.crib"
+                  placeholder={t('customer.email')}
                   required
                   onChange={(event) =>
                     setUserData(
                       Object.assign({}, userData, {
-                        email: event.target.value,
+                        email: event.target.value
                       })
                     )
                   }
@@ -87,12 +86,16 @@ export default function Login() {
                   type="submit"
                   value="Submit"
                 >
-                  Send me a magic link
+                  {t('customer.login.sendMagicLink')}
                 </Button>
               </Fields>
             </form>
             {userData.message ? <p>{userData.message}</p> : ''}
-            {userData.error ? <p>Please enter a valid email address</p> : ''}
+            {userData.error ? (
+              <p>{t('customer.login.emailAddressInvalid')}</p>
+            ) : (
+              ''
+            )}
           </LoginStyle>
         )}
       </Outer>

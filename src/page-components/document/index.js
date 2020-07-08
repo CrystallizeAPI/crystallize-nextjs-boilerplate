@@ -6,6 +6,7 @@ import Layout from 'components/layout';
 import { simplyFetchFromGraph } from 'lib/graph';
 import ShapeComponents from 'components/shape/components';
 import items from 'components/items';
+import { useT } from 'lib/i18n';
 
 import query from './query';
 import { HeroImage, Img, List, H2, Related } from './styles';
@@ -13,12 +14,13 @@ import { HeroImage, Img, List, H2, Related } from './styles';
 export async function getData({ asPath, language }) {
   const { data } = await simplyFetchFromGraph({
     query,
-    variables: { path: asPath, language },
+    variables: { path: asPath, language }
   });
   return data;
 }
 
 export default function DocumentPage({ document }) {
+  const t = useT();
   const title = document?.components.find((c) => c.name === 'Title');
   const description = document?.components.find((c) => c.name === 'Intro');
   const images = document?.components.find((c) => c.name === 'Image');
@@ -51,7 +53,11 @@ export default function DocumentPage({ document }) {
       </Outer>
       {relatedProducts?.content?.items?.length && (
         <Related>
-          <H2>Related products</H2>
+          <H2>
+            {t('product.relatedProduct', {
+              count: relatedProducts.content.items.length
+            })}
+          </H2>
           <List>
             {relatedProducts.content.items.map((item) => items(item))}
           </List>
