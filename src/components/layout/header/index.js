@@ -5,8 +5,6 @@ import { useSettings } from 'components/settings-context';
 import Link from 'components/link';
 import { useT } from 'lib/i18n';
 
-import LogoShop from 'ui/icons/logo-shop';
-
 import BurgerButton from './burger-button';
 import BasketButton from './basket-button';
 import LocaleSwitcher from './locale-switcher';
@@ -24,7 +22,7 @@ export default function Header({ simple }) {
       <Link href="/">
         <a>
           <Logo>
-            <LogoShop />
+            <img src="/static/shop-logo.svg" alt="" />
           </Logo>
         </a>
       </Link>

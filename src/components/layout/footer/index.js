@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Link from 'components/link';
-import LogoShop from 'ui/icons/logo-shop';
 import LogoCrystallize from 'ui/icons/logo-crystallize';
 import { useT } from 'lib/i18n';
 
@@ -18,7 +17,7 @@ export default function Footer() {
       <Link href="/">
         <a>
           <Logo>
-            <LogoShop />
+            <img src="/static/shop-logo.svg" alt="" />
           </Logo>
         </a>
       </Link>
