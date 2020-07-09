@@ -2,7 +2,7 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      vat: 'VAT: {{value, currency}}'
+      vat: 'ΦΠΑ: {{value, currency}}'
     },
     frontpage: {
       title: 'Κεντρική'
