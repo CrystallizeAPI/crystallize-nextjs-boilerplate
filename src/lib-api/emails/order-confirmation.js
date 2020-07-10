@@ -1,20 +1,21 @@
 import mjml2html from '@nerdenough/mjml-ncc-bundle';
-import sgMail from '@sendgrid/mail';
 
 import { callOrdersApi } from 'lib-api/crystallize';
 import QUERY_ORDER_BY_ID from 'lib-api/crystallize/graph/queries/order-by-id';
 import { formatCurrency } from 'lib/currency';
+
+import { sendEmail } from './utils';
 
 export default async function sendOrderConfirmation(orderId) {
   try {
     const response = await callOrdersApi({
       query: QUERY_ORDER_BY_ID,
       variables: {
-        id: orderId,
+        id: orderId
       },
-      operationName: 'getOrder',
+      operationName: 'getOrder'
     });
-    const order = response.orders.get;
+    const order = response.data.orders.get;
     const { email } = order.customer.addresses[0];
 
     if (!email) {
@@ -41,7 +42,7 @@ export default async function sendOrderConfirmation(orderId) {
               <p>
                 Total: <strong>${formatCurrency({
                   amount: order.total.net,
-                  currency: order.total.currency,
+                  currency: order.total.currency
                 })}</strong>
               </p>
             </mj-text>
@@ -59,7 +60,7 @@ export default async function sendOrderConfirmation(orderId) {
                   <td style="padding: 0 15px;">${item.quantity}</td>
                   <td style="padding: 0 0 0 15px;">${formatCurrency({
                     amount: item.price.net * item.quantity,
-                    currency: item.price.currency,
+                    currency: item.price.currency
                   })}</td>
                 </tr>`
               )}
@@ -70,16 +71,12 @@ export default async function sendOrderConfirmation(orderId) {
       </mjml>
     `);
 
-    const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-    if (SENDGRID_API_KEY) {
-      sgMail.setApiKey(SENDGRID_API_KEY);
-      await sgMail.send({
-        to: email,
-        from: 'example@crystallize.com',
-        subject: 'Order Summary',
-        html,
-      });
-    }
+    await sendEmail({
+      to: email,
+      from: 'example@crystallize.com',
+      subject: 'Order Summary',
+      html
+    });
   } catch (error) {
     Promise.resolve(error.stack);
   }

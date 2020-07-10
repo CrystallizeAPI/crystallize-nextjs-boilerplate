@@ -38,11 +38,13 @@ export default async (req, res) => {
           mobileNumber: phone
         } = {},
         shippingDetails: {
-          addressLine1: street,
-          addressLine2: street2,
-          postCode: postalCode,
-          city,
-          country
+          address: {
+            addressLine1: street,
+            addressLine2: street2,
+            postCode: postalCode,
+            city,
+            country
+          } = {}
         } = {}
       } = order;
 

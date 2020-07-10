@@ -8,7 +8,7 @@
     {
       "isDefault": true,
       "displayName": "English - US",
-      "urlPrefix": "en",
+      "urlPrefix": "",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
       "defaultCurrency": "USD"
