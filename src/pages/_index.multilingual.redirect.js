@@ -4,30 +4,28 @@
  */
 
 import Head from 'next/head';
+import acceptLanguage from 'accept-language';
 
-import { defaultLocale } from 'lib/app-config';
+import { locales, defaultLocale } from 'lib/app-config';
 
-export function getStaticProps() {
+// Predefine the supported languages
+acceptLanguage.languages(locales.map((l) => l.appLanguage));
+
+/**
+ * Redirect the user to the correct locale
+ * depending on the language setting in the
+ * 'accept-language' HTTP header
+ */
+export function getServerSideProps({ req, res }) {
+  const preferredLanguage = acceptLanguage.get(req.headers['accept-language']);
+  const locale =
+    locales.find((l) => l.appLanguage === preferredLanguage) || defaultLocale;
+
+  res.writeHead(301, { Location: '/' + locale.urlPrefix });
+  res.end();
   return { props: {} };
 }
 
-/**
- * Redirect all requests from root (/) to your default
- * locale root, e.g.: /en
- */
 export default function MultilingualRedirect() {
-  /**
-   * We use a HTML redirect here, instead of a server-side 301.
-   * This ensures that it does not require a server, hence being
-   * SSG and super fast. Googlebot will treat this as a 301 and
-   * you should not expect any SEO penalties
-   */
-  return (
-    <Head>
-      <meta
-        httpEquiv="refresh"
-        content={`0; URL=/${defaultLocale.urlPrefix}`}
-      />
-    </Head>
-  );
+  return '...';
 }
