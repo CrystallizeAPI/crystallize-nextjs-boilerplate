@@ -28,7 +28,13 @@ export default {
       relatedProduct: 'Σχετικό προϊόν',
       relatedProduct_plural: 'Σχετικά προϊόντα',
       addToBasket: 'Προσθήκη στο καλάθι',
-      buy: 'ΑΓΟΡΑ'
+      buy: 'ΑΓΟΡΑ',
+      attributes: {
+        color: 'Color',
+        green: 'Green',
+        blue: 'Blue',
+        black: 'Black'
+      }
     },
     basket: {
       title: 'Καλάθι',
@@ -50,7 +56,8 @@ export default {
       title: 'Oλοκλήρωση παραγγελίας',
       payNow: 'Εξόφληση τώρα',
       choosePaymentMethod: 'Επίλεξτε τρόπο πληρωμής',
-      noPaymentProvidersConfigured: 'Κανένας τρόπος πληρωμής δεν έχει διαμορφωθεί',
+      noPaymentProvidersConfigured:
+        'Κανένας τρόπος πληρωμής δεν έχει διαμορφωθεί',
       paymentProviderNotConfigured:
         'Ο πάροχος πληρωμών {{name}} δεν έχει διαμορφωθεί',
       paymentProviderLogoAlt: 'Λογότυπο για {{name}}',

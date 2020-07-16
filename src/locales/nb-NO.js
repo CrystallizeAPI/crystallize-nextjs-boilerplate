@@ -28,7 +28,13 @@ export default {
       relatedProduct: 'Relatert produkt',
       relatedProduct_plural: 'Relaterte produkter',
       addToBasket: 'Legg i handlekurv',
-      buy: 'KJØP'
+      buy: 'KJØP',
+      attributes: {
+        color: 'Color',
+        green: 'Green',
+        blue: 'Blue',
+        black: 'Black'
+      }
     },
     basket: {
       title: 'Handlekurv',

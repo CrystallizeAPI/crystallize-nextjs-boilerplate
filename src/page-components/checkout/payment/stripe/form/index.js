@@ -17,7 +17,8 @@ function StripeCheckout({
   items,
   onSuccess,
   personalDetails,
-  stripe
+  stripe,
+  elements
 }) {
   const t = useT();
   const [state, setState] = useState({
@@ -29,6 +30,7 @@ function StripeCheckout({
   });
 
   async function submit() {
+    console.log('element', elements.getElement('card'));
     setState({ ...state, processing: true });
 
     const { address, postCode } = state;
