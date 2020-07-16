@@ -30,10 +30,10 @@ export default {
       addToBasket: 'Προσθήκη στο καλάθι',
       buy: 'ΑΓΟΡΑ',
       attributes: {
-        color: 'Color',
-        green: 'Green',
-        blue: 'Blue',
-        black: 'Black'
+        color: 'Χρώμα',
+        green: 'Πράσινο',
+        blue: 'Μπλε',
+        black: 'Μαύρο'
       }
     },
     basket: {
