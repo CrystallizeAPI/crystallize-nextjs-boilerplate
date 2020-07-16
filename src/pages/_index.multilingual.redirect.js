@@ -3,7 +3,6 @@
  * pages/index.js
  */
 
-import Head from 'next/head';
 import acceptLanguage from 'accept-language';
 
 import { locales, defaultLocale } from 'lib/app-config';
