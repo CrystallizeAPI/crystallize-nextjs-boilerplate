@@ -49,7 +49,7 @@ export default function Payment({ items, currency }) {
   const t = useT();
   const locale = useLocale();
   const router = useRouter();
-  const [paymentProvider, setPaymentProvider] = useState(null);
+  const [paymentProvider, setPaymentProvider] = useState('stripe');
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
