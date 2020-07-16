@@ -18,6 +18,8 @@ const appConfig = {
   }))
 };
 
+export const locales = appConfig.locales;
+
 export const defaultLocale = appConfig.locales.find((l) => l.isDefault);
 
 // Get the current locale
