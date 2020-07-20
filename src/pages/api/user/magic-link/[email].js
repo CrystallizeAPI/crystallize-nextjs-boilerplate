@@ -39,7 +39,7 @@ export default async (req, res) => {
     expiresIn: '36000s'
   });
 
-  const magicLink = `${getHost(req)}/api/verify?token=${token}`;
+  const magicLink = `${getHost(req)}/api/user/verify?token=${token}`;
 
   // Here we would want to check whether a user already exists with the email
   // provided. This boilerplate does not have a datastore connected to it yet

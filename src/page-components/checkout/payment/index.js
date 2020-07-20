@@ -9,7 +9,6 @@ import appConfig, { useLocale } from 'lib/app-config';
 import { useT } from 'lib/i18n';
 
 import {
-  Form,
   Input,
   InputGroup,
   Label,
@@ -35,15 +34,7 @@ const Row = styled.div`
   margin-bottom: 10px;
 `;
 
-const Inner = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  border-radius: 0.2rem;
-`;
+const Inner = styled.div``;
 
 export default function Payment({ items, currency }) {
   const t = useT();
@@ -137,7 +128,7 @@ export default function Payment({ items, currency }) {
 
   return (
     <Inner>
-      <Form noValidate>
+      <form noValidate>
         <Row>
           <InputGroup>
             <Label htmlFor="firstname">{t('customer.firstName')}</Label>
@@ -174,7 +165,9 @@ export default function Payment({ items, currency }) {
             />
           </InputGroup>
         </Row>
+      </form>
 
+      <div>
         <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
         {appConfig.paymentProviders.length === 0 ? (
           <i>{t('checkout.noPaymentProvidersConfigured')}</i>
@@ -217,7 +210,7 @@ export default function Payment({ items, currency }) {
             {paymentProviders.find((p) => p.name === paymentProvider)?.render()}
           </PaymentProviders>
         )}
-      </Form>
+      </div>
     </Inner>
   );
 }

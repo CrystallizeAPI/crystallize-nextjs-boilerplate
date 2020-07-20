@@ -61,6 +61,7 @@ export default {
       paymentProviderNotConfigured:
         'Ο πάροχος πληρωμών {{name}} δεν έχει διαμορφωθεί',
       paymentProviderLogoAlt: 'Λογότυπο για {{name}}',
+      confirmingCardPayment: 'Please wait your card details are confirmed...',
       loadingPaymentGateway: 'Αρχικοποίηση τρόπου πληρωμής...',
       loadingPaymentGatewayFailed:
         'Ωχ, φαίνεται πως δεν μπορούσαμε να αρχικοποιήσουμε τον τρόπο πληρωμής: {{name}}',

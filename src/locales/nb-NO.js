@@ -60,6 +60,7 @@ export default {
       paymentProviderNotConfigured:
         'Betalingstjenesten {{name}} er ikke konfigurert',
       paymentProviderLogoAlt: 'Logo for {{name}}',
+      confirmingCardPayment: 'Please wait your card details are confirmed...',
       loadingPaymentGateway: 'Laster betalingstjenesten...',
       loadingPaymentGatewayFailed:
         'Oisann. Betalingstjenesten {{name}} kan ikke lastes akkurat nå',
