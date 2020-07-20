@@ -20,11 +20,6 @@ export const Inner = styled.div`
   }
 `;
 
-export const Form = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
 export const Label = styled.div`
   font-size: 0.7rem;
   /* padding-left: 15px; */

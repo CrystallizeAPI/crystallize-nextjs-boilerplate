@@ -60,6 +60,7 @@ export default {
       paymentProviderNotConfigured:
         'Payment provider {{name}} is not configured',
       paymentProviderLogoAlt: 'Logo for {{name}}',
+      confirmingCardPayment: 'Please wait your card details are confirmed...',
       loadingPaymentGateway: 'Initialising payment gateway...',
       loadingPaymentGatewayFailed:
         'Oh now. Could not load the {{name}} payment gateway',
