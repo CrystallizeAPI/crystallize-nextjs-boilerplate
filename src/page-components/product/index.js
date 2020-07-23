@@ -32,15 +32,19 @@ const attributesToObject = (attributesArray) =>
     ...attributesArray.map(({ attribute, value }) => ({ [attribute]: value }))
   );
 
-export async function getData({ asPath, language }) {
+export async function getData({ asPath, language, preview = null }) {
   const { data } = await simplyFetchFromGraph({
     query,
-    variables: { path: asPath, language }
+    variables: {
+      path: asPath,
+      language,
+      version: preview ? 'draft' : 'published'
+    }
   });
-  return data;
+  return { ...data, preview };
 }
 
-export default function ProductPage({ product }) {
+export default function ProductPage({ product, preview }) {
   // Set the selected variant to the default
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants.find((v) => v.isDefault)
@@ -65,12 +69,12 @@ export default function ProductPage({ product }) {
     (c) => c.name === 'Description'
   );
   const specs = product.components.find((c) => c.name === 'Specs');
-  const componentsRest = product.components.filter(
+  const componentsRest = product.components?.filter(
     (c) => !['Summary', 'Description', 'Specs'].includes(c.name)
   );
 
   return (
-    <Layout title={product.name}>
+    <Layout title={product.name} preview={preview}>
       <Outer>
         <Sections>
           <Media>
@@ -90,7 +94,7 @@ export default function ProductPage({ product }) {
               </Summary>
             )}
 
-            {product.variants.length > 1 && (
+            {product.variants?.length > 1 && (
               <VariantSelector
                 variants={product.variants}
                 selectedVariant={selectedVariant}

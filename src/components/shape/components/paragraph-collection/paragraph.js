@@ -10,7 +10,7 @@ const Paragraph = ({
   title,
   images,
   videos,
-  headingComponent: HeadingComponent = H3,
+  headingComponent: HeadingComponent = H3
 }) => {
   return (
     <Outer>
@@ -20,7 +20,7 @@ const Paragraph = ({
             <HeadingComponent>{title.text}</HeadingComponent>
           </Title>
         )}
-        {!!body && body.json && body.json.length > 0 && (
+        {body?.json?.length > 0 && (
           <Body>
             <ContentTransformer {...body.json} />
           </Body>

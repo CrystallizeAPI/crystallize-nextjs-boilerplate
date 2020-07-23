@@ -8,6 +8,9 @@
  */
 
 import React from 'react';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import DefaultErrorPage from 'next/error';
 
 import { simplyFetchFromGraph } from 'lib/graph';
 import appConfig, {
@@ -15,6 +18,7 @@ import appConfig, {
   isMultilingual,
   defaultLocale
 } from 'lib/app-config';
+import Layout from 'components/layout';
 
 import DocPage, { getData as getDataDoc } from 'page-components/document';
 import FolderPage, { getData as getDataFolder } from 'page-components/folder';
@@ -35,7 +39,7 @@ const typesMap = {
   }
 };
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, preview }) {
   const { catalogue } = params;
   const locale = getLocaleFromContext(params);
   const asPath = `/${catalogue.join('/')}`;
@@ -62,7 +66,8 @@ export async function getStaticProps({ params }) {
 
     const data = await renderer.getData({
       asPath,
-      language: locale.crystallizeCatalogueLanguage
+      language: locale.crystallizeCatalogueLanguage,
+      preview
     });
 
     return {
@@ -73,7 +78,6 @@ export async function getStaticProps({ params }) {
       unstable_revalidate: 1
     };
   } catch (error) {
-    console.error(error);
     console.warn(`Could not get data for ${asPath}`);
   }
 
@@ -156,13 +160,30 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false
+    fallback: true
   };
 }
 
 export default function GenericCatalogueItem({ type, ...rest }) {
+  const router = useRouter();
   const renderer = typesMap[type] || typesMap.folder;
   const Component = renderer.component;
+
+  if (router.isFallback) {
+    return <Layout loading />;
+  }
+
+  // No data was found for route. It's a 404
+  if (Object.keys(rest).length === 0) {
+    return (
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <DefaultErrorPage statusCode={404} />
+      </>
+    );
+  }
 
   return <Component {...rest} />;
 }

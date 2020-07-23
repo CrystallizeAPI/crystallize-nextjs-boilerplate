@@ -10,31 +10,35 @@ import items from 'components/items';
 import { List } from './styles';
 import query from './query';
 
-export async function getData({ asPath, language }) {
+export async function getData({ asPath, language, preview = null }) {
   const { data } = await simplyFetchFromGraph({
     query,
-    variables: { path: asPath, language },
+    variables: {
+      path: asPath,
+      language,
+      version: preview ? 'draft' : 'published'
+    }
   });
 
-  return data;
+  return { ...data, preview };
 }
 
-export default function FolderPage({ folder }) {
+export default function FolderPage({ folder, preview }) {
   const { children } = folder;
 
   const gridRelations = folder.components
-    .filter((c) => c.type === 'gridRelations')
+    ?.filter((c) => c.type === 'gridRelations')
     ?.reduce((acc, g) => [...acc, ...(g?.content?.grids || [])], []);
-  const rest = folder.components.filter((c) => c.type !== 'gridRelations');
+  const rest = folder.components?.filter((c) => c.type !== 'gridRelations');
 
   return (
-    <Layout title={folder.name}>
+    <Layout title={folder.name} preview={preview}>
       <Outer>
         <Header centerContent>
           <H1>{folder.name}</H1>
           <ShapeComponents components={rest} />
         </Header>
-        {gridRelations.length > 0
+        {gridRelations?.length > 0
           ? gridRelations?.map((grid, index) => (
               <Grid
                 key={index}

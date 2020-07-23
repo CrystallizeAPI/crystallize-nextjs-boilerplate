@@ -169,3 +169,10 @@ export const NavActions = styled.div`
     `};
   }
 `;
+
+export const PreviewBar = styled.div`
+  background: #000;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+`;

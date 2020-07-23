@@ -8,12 +8,12 @@ import { useT } from 'lib/i18n';
 
 import { Outer } from './styles';
 
-export async function getData({ language }) {
+export async function getData({ language, preview = null }) {
   try {
     const { data } = await simplyFetchFromGraph({
       query: `
-        query FRONTPAGE($language: String!) {
-          catalogue(path: "/web-frontpage", language: $language) {
+        query FRONTPAGE($language: String!, $path: String!,  $version: VersionLabel!) {
+          catalogue(path: $path, language: $language, version: $version) {
             ...item
             ...product
           }
@@ -21,23 +21,27 @@ export async function getData({ language }) {
 
         ${fragments}
       `,
-      variables: { language }
+      variables: {
+        language,
+        path: '/web-frontpage',
+        version: preview ? 'draft' : 'published'
+      }
     });
-    return data;
+    return { ...data, preview };
   } catch (error) {
     console.log(error);
     return null;
   }
 }
 
-export default function FrontPage({ catalogue }) {
+export default function FrontPage({ catalogue, preview }) {
   const t = useT();
   const [grid] =
     catalogue?.components?.find((c) => c.type === 'gridRelations')?.content
       ?.grids || [];
 
   return (
-    <Layout title={t('frontpage.title')}>
+    <Layout title={t('frontpage.title')} preview={preview}>
       <Outer>
         {grid && (
           <Grid

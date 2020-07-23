@@ -4,12 +4,13 @@ import appConfig, {
   isMultilingual
 } from 'lib/app-config';
 
-export async function getStaticProps({ params = {} }) {
+export async function getStaticProps({ params = {}, preview }) {
   const locale = getLocaleFromContext(params);
 
   const data = await getData({
     asPath: '/',
-    language: locale.crystallizeCatalogueLanguage
+    language: locale.crystallizeCatalogueLanguage,
+    preview
   });
 
   return {

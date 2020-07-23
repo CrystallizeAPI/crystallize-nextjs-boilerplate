@@ -11,29 +11,29 @@ import { useT } from 'lib/i18n';
 import query from './query';
 import { HeroImage, Img, List, H2, Related } from './styles';
 
-export async function getData({ asPath, language }) {
+export async function getData({ asPath, language, preview = null }) {
   const { data } = await simplyFetchFromGraph({
     query,
     variables: { path: asPath, language }
   });
-  return data;
+  return { ...data, preview };
 }
 
-export default function DocumentPage({ document }) {
+export default function DocumentPage({ document, preview }) {
   const t = useT();
   const title = document?.components.find((c) => c.name === 'Title');
   const description = document?.components.find((c) => c.name === 'Intro');
   const images = document?.components.find((c) => c.name === 'Image');
-  const relatedProducts = document?.components.find(
+  const relatedProducts = document?.components?.find(
     (c) => c.name === 'Products'
   );
 
-  const componentsRest = document?.components.filter(
+  const componentsRest = document?.components?.filter(
     (c) => !['Intro', 'Title', 'Image', 'Products'].includes(c.name)
   );
 
   return (
-    <Layout title={title.content.text || document.name}>
+    <Layout title={title.content.text || document.name} preview={preview}>
       <Outer>
         <Header centerContent>
           <H1>{title.content.text}</H1>

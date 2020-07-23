@@ -68,7 +68,7 @@ MyApp.getInitialProps = async function ({ ctx }) {
         localeResource: localeResource.default,
         locale,
         tenant,
-        mainNavigation: mainNavigation.filter((i) => !i.name.startsWith('_'))
+        mainNavigation: mainNavigation?.filter((i) => !i.name.startsWith('_'))
       }
     };
   } catch (error) {

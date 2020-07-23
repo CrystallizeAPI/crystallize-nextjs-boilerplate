@@ -21,7 +21,7 @@ function Checkout() {
   const { items } = basket.state;
   const { currency } = settings;
 
-  if (!items.length) {
+  if (!items?.length) {
     return <Outer center>{t('basket.empty', { context: 'inCheckout' })}</Outer>;
   }
 

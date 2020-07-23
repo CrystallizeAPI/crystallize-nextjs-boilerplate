@@ -28,7 +28,7 @@ const ShapeComponents = ({ components, overrides }) => {
   return (
     <div>
       {components
-        .filter((component) => component.content != null)
+        ?.filter((component) => component.content != null)
         .map(({ type, ...component }, index) => {
           const key = index;
           let Component;
@@ -119,7 +119,7 @@ const ShapeComponents = ({ components, overrides }) => {
 
 ShapeComponents.propTypes = {
   components: PropTypes.array.isRequired,
-  overrides: PropTypes.object,
+  overrides: PropTypes.object
 };
 
 export default ShapeComponents;

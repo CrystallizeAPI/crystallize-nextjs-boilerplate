@@ -28,7 +28,7 @@ export const TinyBasket = ({
 
   const { items, freeShipping, remainingUntilFreeShippingApplies } = state;
 
-  if (!items.length) {
+  if (!items?.length) {
     return (
       <Outer>
         <BasketIsEmpty>{t('basket.empty')}</BasketIsEmpty>

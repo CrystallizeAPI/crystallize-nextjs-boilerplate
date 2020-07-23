@@ -55,9 +55,7 @@ export default function TinyBasketItem({ actions, item }) {
           <ItemName>
             {isSubscription ? item.subscriptionName : item.name}
           </ItemName>
-          {attributes && attributes.length > 0 && (
-            <AttributeList attributes={attributes} />
-          )}
+          {attributes?.length > 0 && <AttributeList attributes={attributes} />}
         </Row>
 
         <PriceWrapper>
