@@ -6,7 +6,7 @@ function orderToKlarnaCart(lineItems) {
   let order_amount = 0;
 
   const order_lines = lineItems.map((item) => {
-    order_tax_amount += item.product_tax_amount * 100;
+    order_tax_amount += item.product_tax_amount * 100 * item.quantity;
 
     // Klarna represents numbers as number * 100
     // Ex: 11.59 becomes 1159. 9 becomes 900
@@ -27,7 +27,7 @@ function orderToKlarnaCart(lineItems) {
       }),
       image_url: item.image_url,
       total_amount: amount,
-      total_tax_amount: item.product_tax_amount * 100,
+      total_tax_amount: item.product_tax_amount * 100 * item.quantity,
     };
   });
 
@@ -62,7 +62,6 @@ export default async (req, res) => {
         html: order.html_snippet,
       });
     }
-
     return res.json({
       success: false,
       error,

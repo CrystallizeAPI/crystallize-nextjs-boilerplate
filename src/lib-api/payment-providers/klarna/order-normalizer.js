@@ -13,6 +13,7 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
     const productMetaData = lineItem.merchant_data
       ? JSON.parse(lineItem.merchant_data)
       : {};
+
     return {
       name: lineItem.name,
       sku: lineItem.reference,
@@ -45,11 +46,11 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
   );
 
   // TODO: review what happens to the General Order Vat Group on multiple tax groups on order (mult. items having diff vatTypes, is it a thing?)
-  const vatGroup = orderItemsArray[0].price;
+  const { tax } = orderItemsArray[0].price;
 
   return {
     customer: {
-      identifier: '',
+      identifier: order.billing_address.receipt_email,
       firstName: customerName[0],
       middleName: customerName.slice(1, customerName.length - 1).join(),
       lastName: customerName[customerName.length - 1],
@@ -112,8 +113,8 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
         },
       ],
       tax: {
-        name: vatGroup.name,
-        percent: vatGroup.percent,
+        name: tax.name,
+        percent: tax.percent,
       },
     },
     additionalInformation: order.merchant_data,
