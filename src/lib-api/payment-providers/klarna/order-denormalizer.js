@@ -19,6 +19,8 @@ export default function klarnaOrderDenormalizer(orderData) {
     data: {
       orders: {
         get: {
+          status: orderData.status,
+          // html_snippet: orderData.html_snippet,
           total: {
             net: orderData.order_amount / 100,
             gross: orderData.order_amount / 100,

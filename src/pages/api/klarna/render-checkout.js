@@ -18,8 +18,8 @@ function orderToKlarnaCart(lineItems) {
       reference: item.sku,
       quantity: item.quantity,
       tax_rate: item.tax_group.percent * 100 || 0,
-      discount_rate: item.discount_rate * 100 || 0,
       unit_price: item.net * 100,
+      type: 'physical',
       merchant_data: JSON.stringify({
         productId: item.product_id,
         productVariantId: item.product_variant_id,
