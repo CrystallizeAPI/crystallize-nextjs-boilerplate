@@ -75,7 +75,7 @@ export async function getStaticProps({ params, preview }) {
         ...data,
         type
       },
-      unstable_revalidate: 1
+      revalidate: 1
     };
   } catch (error) {
     console.warn(`Could not get data for ${asPath}`);
@@ -83,7 +83,7 @@ export async function getStaticProps({ params, preview }) {
 
   return {
     props: {},
-    unstable_revalidate: 1
+    revalidate: 1
   };
 }
 
