@@ -29,6 +29,7 @@ const KlarnaCheckout = dynamic(() => import('./klarna'));
 // {{#if payment-provider-vipps}}
 const VippsCheckout = dynamic(() => import('./vipps'));
 // {{/if}}
+const MollieCheckout = dynamic(() => import('./mollie'));
 
 const Row = styled.div`
   display: flex;
@@ -122,6 +123,23 @@ export default function Payment() {
         <PaymentProvider>
           <VippsCheckout
             paymentModel={paymentModel}
+            onSuccess={(url) => {
+              if (url) window.location = url;
+            }}
+          />
+        </PaymentProvider>
+      )
+    },
+    {
+      name: 'mollie',
+      color: '#fff',
+      logo: '/static/mollie-vector-logo.png',
+      render: () => (
+        <PaymentProvider>
+          <MollieCheckout
+            personalDetails={personalDetails}
+            items={items}
+            currency={currency}
             onSuccess={(url) => {
               if (url) window.location = url;
             }}

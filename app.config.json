@@ -1,9 +1,5 @@
 {
-  "paymentProviders": [
-    "stripe",
-    "vipps",
-    "klarna"
-  ],
+  "paymentProviders": ["stripe", "vipps", "klarna", "mollie"],
   "locales": [
     {
       "isDefault": true,
