@@ -1,28 +1,32 @@
-import { getClient, orderNormalizer } from 'lib-api/payment-providers/mollie'
-import { createCrystallizeOrder } from 'lib-api/crystallize/order'
+import { getClient, orderNormalizer } from 'lib-api/payment-providers/mollie';
+import { createCrystallizeOrder } from 'lib-api/crystallize/order';
 
 export default async (req, res) => {
   const {
     body: { id }
-  } = req
+  } = req;
   try {
-    const molliePayment = await getClient().payments.get(id)
-    const customerData = await getClient().customers.get(
-      molliePayment.customerId
-    )
+    const { customerId, subscriptionId } = await getClient().payments.get(id);
+
+    const mollieSubscription = await getClient().customers_subscriptions.get(
+      subscriptionId,
+      { customerId: customerId }
+    );
+
+    const customerData = await getClient().customers.get(customerId);
 
     const validCrystallizeOrder = orderNormalizer({
-      orderData: molliePayment,
+      orderData: mollieSubscription,
       customerData
-    })
+    });
 
     const createCrystallizeOrderResponse = await createCrystallizeOrder(
       validCrystallizeOrder
-    )
+    );
 
-    res.status(200).send(createCrystallizeOrderResponse)
+    res.status(200).send(createCrystallizeOrderResponse);
   } catch (err) {
-    console.log(err)
-    res.status(503).send(err)
+    console.log(err);
+    res.status(503).send(err);
   }
-}
+};
