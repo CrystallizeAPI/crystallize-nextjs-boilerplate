@@ -1,3 +1,4 @@
+import MetaTags from 'components/head/meta-tags';
 import { AuthProvider } from 'components/auth-context';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
@@ -8,18 +9,21 @@ import { I18nextProvider } from 'lib/i18n';
 function MyApp({ Component, pageProps, commonData }) {
   const { tenant, mainNavigation, locale, localeResource } = commonData;
   return (
-    <I18nextProvider locale={locale} localeResource={localeResource}>
-      <SettingsProvider
-        currency={tenant.defaults.currency}
-        mainNavigation={mainNavigation}
-      >
-        <AuthProvider>
-          <BasketProvider>
-            <Component {...pageProps} />
-          </BasketProvider>
-        </AuthProvider>
-      </SettingsProvider>
-    </I18nextProvider>
+    <>
+      <MetaTags />
+      <I18nextProvider locale={locale} localeResource={localeResource}>
+        <SettingsProvider
+          currency={tenant.defaults.currency}
+          mainNavigation={mainNavigation}
+        >
+          <AuthProvider>
+            <BasketProvider>
+              <Component {...pageProps} />
+            </BasketProvider>
+          </AuthProvider>
+        </SettingsProvider>
+      </I18nextProvider>
+    </>
   );
 }
 
