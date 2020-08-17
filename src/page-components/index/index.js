@@ -12,8 +12,8 @@ export async function getData({ language, preview = null }) {
   try {
     const { data } = await simplyFetchFromGraph({
       query: `
-        query FRONTPAGE($language: String!, $path: String!,  $version: VersionLabel!) {
-          catalogue(path: $path, language: $language, version: $version) {
+        query FRONTPAGE($language: String!, $path: String!) {
+          catalogue(path: $path, language: $language) {
             ...item
             ...product
           }
@@ -23,8 +23,7 @@ export async function getData({ language, preview = null }) {
       `,
       variables: {
         language,
-        path: '/web-frontpage',
-        version: preview ? 'draft' : 'published'
+        path: '/web-frontpage'
       }
     });
     return { ...data, preview };

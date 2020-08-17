@@ -1,8 +1,8 @@
 import fragments from 'lib/graph/fragments';
 
 export default `
-  query PRODUCT_PAGE($language: String!, $path: String, $version: VersionLabel!) {
-    product: catalogue(language: $language, path: $path, version: $version) {
+  query PRODUCT_PAGE($language: String!, $path: String) {
+    product: catalogue(language: $language, path: $path) {
       ...item
       ...product
 

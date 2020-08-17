@@ -88,7 +88,7 @@ export default function VideoPlayer({
   const sources =
     playlists?.map((playlist) => ({
       type: getVideoType(playlist),
-      src: playlist
+      src: playlist,
     })) || [];
 
   useEffect(() => {
@@ -103,21 +103,15 @@ export default function VideoPlayer({
         autoplay,
         loop,
         controls,
-        fluid
+        fluid,
       });
 
-      // Video.js does not always autoplay for some reason
+      // Video.js does not always autplay for some reason
       if (autoplay) {
-        setTimeout(() => playerRef.current?.play(), 0);
+        setTimeout(() => playerRef.current.play(), 0);
       }
 
-      return () => {
-        try {
-          playerRef.current?.dispose();
-        } catch (e) {
-          console.log(e);
-        }
-      };
+      return () => playerRef.current.dispose();
     }
   }, [sources, autoplay, controls, loop, fluid]);
 

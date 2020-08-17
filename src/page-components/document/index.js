@@ -14,11 +14,7 @@ import { HeroImage, Img, List, H2, Related } from './styles';
 export async function getData({ asPath, language, preview = null }) {
   const { data } = await simplyFetchFromGraph({
     query,
-    variables: {
-      path: asPath,
-      language,
-      version: preview ? 'draft' : 'published'
-    }
+    variables: { path: asPath, language }
   });
   return { ...data, preview };
 }
