@@ -56,12 +56,18 @@ export default async (req, res) => {
   // login link. If not, the link will be logged to console.
   if (sendGridApiKey) {
     sgMail.setApiKey(sendGridApiKey);
-    await sgMail.send({
-      to: email,
-      from: 'example@crystallize.com',
-      subject: 'Magic Link',
-      html
-    });
+    try {
+      await sgMail.send({
+        to: email,
+        from: 'example@crystallize.com',
+        subject: 'Magic Link',
+        html
+      });
+    } catch (e) {
+      return res.json({
+        message: 'Email NOT sent'
+      });
+    }
   } else {
     return res.json({
       message: 'Email sent! The verification link will expire in 1 hour',
