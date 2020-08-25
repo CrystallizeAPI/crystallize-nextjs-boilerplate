@@ -3,6 +3,7 @@ import { getClient } from './index';
 export default async function stripeOrderNormalizer({
   lineItems,
   paymentIntentId,
+  personalDetails
 }) {
   const paymentIntent = await getClient().paymentIntents.retrieve(
     paymentIntentId
@@ -30,14 +31,14 @@ export default async function stripeOrderNormalizer({
         currency: 'nok',
         discounts: [
           {
-            percent: 0,
-          },
+            percent: 0
+          }
         ],
         tax: {
           name: lineItem.tax_group.name,
-          percent: lineItem.tax_group.percent,
-        },
-      },
+          percent: lineItem.tax_group.percent
+        }
+      }
     };
   });
 
@@ -66,7 +67,7 @@ export default async function stripeOrderNormalizer({
           state: charge.billing_details.address.state,
           country: charge.billing_details.address.country,
           phone: charge.billing_details.phone,
-          email: charge.receipt_email,
+          email: charge.receipt_email || personalDetails.email
         },
         {
           type: 'delivery',
@@ -80,9 +81,9 @@ export default async function stripeOrderNormalizer({
           state: charge.billing_details.address.state,
           country: charge.billing_details.address.country,
           phone: charge.billing_details.phone,
-          email: charge.receipt_email,
-        },
-      ],
+          email: charge.receipt_email || personalDetails.email
+        }
+      ]
     },
     cart: orderItemsArray,
     payment: [
@@ -96,9 +97,9 @@ export default async function stripeOrderNormalizer({
           paymentMethodId: charge.payment_method,
           paymentIntentId: charge.payment_intent,
           subscriptionId: charge.subscription,
-          metadata: '',
-        },
-      },
+          metadata: ''
+        }
+      }
     ],
     total: {
       gross: charge.amount / 100,
@@ -106,14 +107,14 @@ export default async function stripeOrderNormalizer({
       currency: charge.currency,
       discounts: [
         {
-          percent: 0,
-        },
+          percent: 0
+        }
       ],
       tax: {
         name: vatGroup.name,
-        percent: vatGroup.percent,
-      },
+        percent: vatGroup.percent
+      }
     },
-    additionalInformation: paymentIntent.merchant_data,
+    additionalInformation: paymentIntent.merchant_data
   };
 }

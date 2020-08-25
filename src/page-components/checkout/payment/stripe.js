@@ -16,7 +16,7 @@ const stripePromise = loadStripe(
 );
 
 // Persist by create order in Crystallize
-async function persistOrder({ paymentIntent, items }) {
+async function persistOrder({ paymentIntent, items, personalDetails }) {
   const response = await fetch(
     '/api/payment-providers/stripe/order-persistence',
     {
@@ -27,6 +27,7 @@ async function persistOrder({ paymentIntent, items }) {
       },
       body: JSON.stringify({
         paymentIntentId: paymentIntent.id,
+        personalDetails,
         lineItems: items.map((item) => ({
           name: item.name,
           sku: item.sku,
@@ -90,7 +91,11 @@ function Form({ clientSecret, personalDetails, items, onSuccess }) {
           // payment_intent.succeeded event that handles any business critical
           // post-payment actions.
 
-          const orderId = await persistOrder({ paymentIntent, items });
+          const orderId = await persistOrder({
+            paymentIntent,
+            items,
+            personalDetails
+          });
           if (orderId) {
             onSuccess(orderId);
           }

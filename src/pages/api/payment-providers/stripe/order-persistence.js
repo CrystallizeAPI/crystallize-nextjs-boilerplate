@@ -23,11 +23,14 @@ const bodyParser = (request) => {
 
 export default async (req, res) => {
   try {
-    const { paymentIntentId, lineItems } = await bodyParser(req);
+    const { paymentIntentId, lineItems, personalDetails } = await bodyParser(
+      req
+    );
 
     const validCrystallizeOrder = await orderNormalizer({
       paymentIntentId,
       lineItems,
+      personalDetails
     });
 
     const createCrystallizeOrderResponse = await createCrystallizeOrder(
@@ -40,12 +43,12 @@ export default async (req, res) => {
 
     return res.status(200).send({
       success: true,
-      ...createCrystallizeOrderResponse,
+      ...createCrystallizeOrderResponse
     });
   } catch (error) {
     return res.status(503).send({
       success: false,
-      error: error.stack,
+      error: error.stack
     });
   }
 };
@@ -53,6 +56,6 @@ export default async (req, res) => {
 // @RemoveWhenVercelErrorHandledComplete
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 };
