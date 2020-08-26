@@ -11,7 +11,7 @@ function orderToKlarnaCart(lineItems) {
 
     // Klarna represents numbers as number * 100
     // Ex: 11.59 becomes 1159. 9 becomes 900
-    const amount = item.net * 100 * item.quantity;
+    const amount = item.gross * 100 * item.quantity;
     order_amount += amount;
 
     return {
@@ -20,7 +20,7 @@ function orderToKlarnaCart(lineItems) {
       quantity: item.quantity,
       tax_rate: item.tax_group.percent * 100 || 0,
       discount_rate: item.discount_rate * 100 || 0,
-      unit_price: item.net * 100,
+      unit_price: item.gross * 100,
       merchant_data: JSON.stringify({
         productId: item.product_id,
         productVariantId: item.product_variant_id,

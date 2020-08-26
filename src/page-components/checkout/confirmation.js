@@ -6,6 +6,7 @@ import { useBasket } from 'components/basket';
 import OrderItems from 'components/order-items';
 import { H1, H3, Outer, Header } from 'ui';
 import { useT } from 'lib/i18n';
+import { CurrencyValue } from 'components/currency-value';
 
 import BillingDetails from './billing-details';
 
@@ -15,9 +16,16 @@ const CustomHeader = styled(Header)`
 `;
 
 const Line = styled.div`
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0;
   border-bottom: 1px solid var(--color-main-background);
+`;
+
+const Totals = styled.div`
+  margin: 20px 0;
+`;
+
+const TotalLine = styled.div`
+  text-align: right;
 `;
 
 export default function Confirmation({ order: orderData }) {
@@ -33,15 +41,29 @@ export default function Confirmation({ order: orderData }) {
     }
   }, [emptied, basket.actions]);
 
-  const order = orderData.data.orders.get;
+  const order = orderData.data.orders?.get;
+
+  useEffect(() => {
+    if (!order) {
+      const t = setTimeout(() => window.location.reload(), 5000);
+
+      return () => clearTimeout(t);
+    }
+  }, [order]);
+
+  if (!order) {
+    return <Layout loading />;
+  }
+
   const items = order.cart.map((item) => ({
     ...item,
     image: {
       url: item.imageUrl
     },
-    price: item.price.net
+    price: item.price.gross
   }));
   const email = order.customer.addresses?.[0]?.email;
+  const { total } = order;
 
   return (
     <Layout title={t('checkout.confirmation.title')}>
@@ -59,6 +81,18 @@ export default function Confirmation({ order: orderData }) {
           <Line />
           <H3>{t('order.item', { count: items.length })}</H3>
           <OrderItems items={items} />
+          <Totals>
+            <TotalLine>
+              {t('order.total')}: <CurrencyValue value={total.gross} />
+            </TotalLine>
+            <TotalLine>
+              {t('common.vat', {
+                value:
+                  total.gross -
+                  (total.gross / (100 + (total.tax.percent || 0))) * 100
+              })}
+            </TotalLine>
+          </Totals>
         </CustomHeader>
       </Outer>
     </Layout>

@@ -31,8 +31,9 @@ async function persistOrder({ paymentIntent, items, personalDetails }) {
         lineItems: items.map((item) => ({
           name: item.name,
           sku: item.sku,
-          net: item.price,
-          gross: item.priceWithoutVat,
+          gross: item.price,
+          net: item.priceWithoutVat,
+          currency: item.currency,
           quantity: item.quantity,
           product_id: item.productId,
           product_variant_id: item.productVariantId,

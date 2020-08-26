@@ -28,7 +28,7 @@ export default async function stripeOrderNormalizer({
       price: {
         gross: lineItem.gross,
         net: lineItem.net,
-        currency: 'nok',
+        currency: lineItem.currency,
         discounts: [
           {
             percent: 0
@@ -103,7 +103,9 @@ export default async function stripeOrderNormalizer({
     ],
     total: {
       gross: charge.amount / 100,
-      net: charge.amount / 100,
+      net:
+        charge.amount / 100 -
+        (charge.amount / 100 / (100 + (vatGroup.percent || 0))) * 100,
       currency: charge.currency,
       discounts: [
         {

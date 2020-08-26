@@ -5,7 +5,7 @@ import getHost from 'lib-api/util/get-host';
 import { getClient } from 'lib-api/payment-providers/vipps';
 
 function getTotalAmount(acc, lineItem) {
-  return acc + lineItem.net * lineItem.quantity * 100;
+  return acc + lineItem.gross * lineItem.quantity * 100;
 }
 
 function orderToVippsBody({ basket, orderId, host, multilingualUrlPrefix }) {

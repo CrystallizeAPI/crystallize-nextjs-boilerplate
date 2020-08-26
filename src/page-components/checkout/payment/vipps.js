@@ -20,8 +20,8 @@ export default function VippsWrapper({
       const lineItems = items.map((item) => ({
         name: item.name,
         sku: item.sku,
-        net: item.price,
-        gross: item.priceWithoutVat,
+        net: item.priceWithoutVat,
+        gross: item.price,
         quantity: item.quantity,
         product_id: item.id,
         product_variant_id: item.variant_id,

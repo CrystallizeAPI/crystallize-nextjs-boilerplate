@@ -44,7 +44,7 @@ const BillingDetails = ({ order }) => {
         <p>
           {t('order.total')}:{' '}
           <strong>
-            <CurrencyValue value={order.total.net} />
+            <CurrencyValue value={order.total.gross} />
           </strong>
         </p>
       </Inner>

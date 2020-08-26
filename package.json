@@ -1,6 +1,6 @@
 {
   "name": "crystallize-nextjs-boilerplate",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "license": "MIT",
   "engines": {
     "node": ">=10.10"
@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:vercel": "vercel dev",
+    "dev:inspect": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "NODE_ENV=production next start",
     "start-platformsh": "NODE_ENV=production next start -p $PORT",

@@ -7,6 +7,10 @@ export default `
           net
           gross
           currency
+          tax {
+            name
+            percent
+          }
         }
         payment {
           ... on StripePayment {

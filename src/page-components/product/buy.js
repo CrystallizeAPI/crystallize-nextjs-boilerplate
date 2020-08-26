@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { LayoutContext } from '@crystallize/react-layout';
 
+import { useLocale } from 'lib/app-config';
 import { Button } from 'ui';
 import { CurrencyValue } from 'components/currency-value';
 import { useBasket, getVariantVATprops } from 'components/basket';
@@ -9,6 +10,7 @@ import { useT } from 'lib/i18n';
 import { ProductFooter, Price } from './styles';
 
 export default function BuyButton({ product, selectedVariant }) {
+  const locale = useLocale();
   const basket = useBasket();
   const t = useT();
 
@@ -22,7 +24,8 @@ export default function BuyButton({ product, selectedVariant }) {
       id: product.id,
       variant_id: selectedVariant.id,
       name: product.name,
-      path: product.path
+      path: product.path,
+      currency: locale.defaultCurrency
     };
 
     basket.actions.addItem(basketItemToAdd);

@@ -41,7 +41,7 @@ export default async function sendOrderConfirmation(orderId) {
               </p>
               <p>
                 Total: <strong>${formatCurrency({
-                  amount: order.total.net,
+                  amount: order.total.gross,
                   currency: order.total.currency
                 })}</strong>
               </p>
@@ -59,7 +59,7 @@ export default async function sendOrderConfirmation(orderId) {
                 })</td>
                   <td style="padding: 0 15px;">${item.quantity}</td>
                   <td style="padding: 0 0 0 15px;">${formatCurrency({
-                    amount: item.price.net * item.quantity,
+                    amount: item.price.gross * item.quantity,
                     currency: item.price.currency
                   })}</td>
                 </tr>`
