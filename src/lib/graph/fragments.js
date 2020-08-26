@@ -61,6 +61,7 @@ export default `
         ...itemRelations
         ...gridRelations
         ...propertiesTableContent
+        ...dateTimeContent
       }
     }
   }
@@ -196,5 +197,9 @@ export default `
         value
       }
     }
+  }
+
+  fragment dateTimeContent on DatetimeContent {
+    datetime
   }
 `;
