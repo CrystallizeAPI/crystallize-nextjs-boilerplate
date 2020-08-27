@@ -9,10 +9,22 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
 
   const lineItems = order.order_lines;
 
+  const total = {
+    net: 0,
+    gross: 0
+  };
+
   const orderItemsArray = lineItems.map((lineItem) => {
     const productMetaData = lineItem.merchant_data
       ? JSON.parse(lineItem.merchant_data)
       : {};
+
+    const gross = lineItem.unit_price / 100;
+    const net = (gross / (100 + productMetaData.taxGroup.percent || 0)) * 100;
+
+    total.net += lineItem.net * lineItem.quantity;
+    total.gross += lineItem.gross * lineItem.quantity;
+
     return {
       name: lineItem.name,
       sku: lineItem.reference,
@@ -21,19 +33,19 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
       productVariantId: productMetaData.productVariantId,
       imageUrl: lineItem.image_url,
       price: {
-        gross: lineItem.unit_price / 100,
-        net: lineItem.unit_price / 100,
+        gross,
+        net,
         currency: order.purchase_currency,
         discounts: [
           {
-            percent: 0,
-          },
+            percent: 0
+          }
         ],
         tax: {
           name: productMetaData.taxGroup.name,
-          percent: productMetaData.taxGroup.percent,
-        },
-      },
+          percent: productMetaData.taxGroup.percent
+        }
+      }
     };
   });
 
@@ -67,7 +79,7 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
           state: order.billing_address.region,
           country: order.billing_address.country,
           phone: order.billing_address.phone,
-          email: order.billing_address.receipt_email,
+          email: order.billing_address.receipt_email
         },
         {
           type: 'delivery',
@@ -83,9 +95,9 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
           state: order.shipping_address.region,
           country: order.shipping_address.country,
           phone: order.shipping_address.phone,
-          email: order.shipping_address.receipt_email,
-        },
-      ],
+          email: order.shipping_address.receipt_email
+        }
+      ]
     },
     cart: orderItemsArray,
     payment: [
@@ -97,25 +109,25 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
           recurringToken: order.recurring_token,
           metadata: JSON.stringify({
             status: order.status,
-            tax_amount: order.order_tax_amount,
-          }),
-        },
-      },
+            tax_amount: order.order_tax_amount
+          })
+        }
+      }
     ],
     total: {
-      gross: order.order_amount / 100,
-      net: order.order_amount / 100,
+      gross: total.gross,
+      net: total.net,
       currency: order.purchase_currency,
       discounts: [
         {
-          percent: 0,
-        },
+          percent: 0
+        }
       ],
       tax: {
         name: vatGroup.name,
-        percent: vatGroup.percent,
-      },
+        percent: vatGroup.percent
+      }
     },
-    additionalInformation: order.merchant_data,
+    additionalInformation: order.merchant_data
   };
 }

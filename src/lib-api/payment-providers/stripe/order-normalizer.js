@@ -12,10 +12,18 @@ export default async function stripeOrderNormalizer({
   const { data } = paymentIntent.charges;
   const charge = data[0];
 
+  const total = {
+    net: 0,
+    gross: 0
+  };
+
   const orderItemsArray = lineItems.map((lineItem) => {
     const productMetaData = lineItem.merchant_data
       ? JSON.parse(lineItem.merchant_data)
       : {};
+
+    total.net += lineItem.net * lineItem.quantity;
+    total.gross += lineItem.gross * lineItem.quantity;
 
     return {
       name: lineItem.name,
@@ -102,10 +110,8 @@ export default async function stripeOrderNormalizer({
       }
     ],
     total: {
-      gross: charge.amount / 100,
-      net:
-        charge.amount / 100 -
-        (charge.amount / 100 / (100 + (vatGroup.percent || 0))) * 100,
+      gross: total.gross,
+      net: total.net,
       currency: charge.currency,
       discounts: [
         {

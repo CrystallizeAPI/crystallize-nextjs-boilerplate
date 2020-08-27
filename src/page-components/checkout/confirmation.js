@@ -89,7 +89,7 @@ export default function Confirmation({ order: orderData }) {
               {t('common.vat', {
                 value:
                   total.gross -
-                  (total.gross / (100 + (total.tax.percent || 0))) * 100
+                  (total.gross / (100 + (total.tax?.percent || 0))) * 100
               })}
             </TotalLine>
           </Totals>
