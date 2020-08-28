@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Img from '@crystallize/react-image';
 import ContentTransformer from 'ui/content-transformer';
-import isEqual from 'lodash/isEqual';
 
 import { simplyFetchFromGraph } from 'lib/graph';
 import { screen } from 'ui';
@@ -26,12 +25,6 @@ import {
   Description
 } from './styles';
 
-const attributesToObject = (attributesArray) =>
-  Object.assign(
-    {},
-    ...attributesArray.map(({ attribute, value }) => ({ [attribute]: value }))
-  );
-
 export async function getData({ asPath, language, preview = null }) {
   const { data } = await simplyFetchFromGraph({
     query,
@@ -49,19 +42,9 @@ export default function ProductPage({ product, preview }) {
     product.variants.find((v) => v.isDefault)
   );
 
-  const onAttributeChange = (attributes, newAttribute) => {
-    const newAttributes = attributesToObject(attributes);
-    newAttributes[newAttribute.attribute] = newAttribute.value;
-
-    const newSelectedVariant = product.variants.find((variant) => {
-      const variantAttributes = attributesToObject(variant.attributes);
-      return isEqual(variantAttributes, newAttributes);
-    });
-
-    setSelectedVariant(newSelectedVariant);
-  };
-
-  const onVariantChange = (variant) => setSelectedVariant(variant);
+  function onVariantChange(variant) {
+    setSelectedVariant(variant);
+  }
 
   const summaryComponent = product.components.find((c) => c.name === 'Summary');
   const descriptionComponent = product.components.find(
@@ -98,7 +81,6 @@ export default function ProductPage({ product, preview }) {
                 variants={product.variants}
                 selectedVariant={selectedVariant}
                 onVariantChange={onVariantChange}
-                onAttributeChange={onAttributeChange}
               />
             )}
 

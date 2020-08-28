@@ -1,6 +1,6 @@
 {
   "name": "crystallize-nextjs-boilerplate",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "license": "MIT",
   "engines": {
     "node": ">=10.10"
@@ -50,7 +50,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mjml": "^4.4.1",
-    "next": "^9.5.1",
+    "next": "^9.5.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
