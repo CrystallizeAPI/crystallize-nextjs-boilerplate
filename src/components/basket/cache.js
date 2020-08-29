@@ -1,33 +1,21 @@
-const localCacheKey = 'crystallize-bskt';
+const cacheKey = 'crystallize-app-basket';
 
-export async function retrieveBasketFromCache({ parseBasketItem }) {
+export async function retrieveFromCache() {
   try {
-    const basket = await localStorage.getItem(localCacheKey);
-    if (basket) {
-      const parsed = JSON.parse(basket);
-      parsed.items.forEach(parseBasketItem);
-      return parsed;
+    const cache = await localStorage.getItem(cacheKey);
+    if (cache) {
+      return JSON.parse(cache);
     }
   } catch (error) {
-    console.warn('The basket was not retrieved', error); // eslint-disable-line
+    // We might not have access to localStorage
   }
-  return null;
+  return { cart: [] };
 }
 
-export async function persistBasketToCache({
-  id,
-  items,
-  shipping,
-  metadata,
-  coupon,
-  discount
-}) {
+export function persistToCache(data) {
   try {
-    await localStorage.setItem(
-      localCacheKey,
-      JSON.stringify({ id, items, shipping, metadata, coupon, discount })
-    );
+    return localStorage.setItem(cacheKey, JSON.stringify(data));
   } catch (error) {
-    console.warn('The basket was not persisted', error); // eslint-disable-line
+    // We might not have access to localStorage
   }
 }

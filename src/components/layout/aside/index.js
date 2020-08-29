@@ -37,14 +37,14 @@ export default function Aside() {
   const [going, setGoing] = useState(false);
 
   const onCheckoutClick = (evt) => {
-    if (!basket.state.items.length) {
+    if (!basket.cart.length) {
       evt.preventDefault();
       return;
     }
     setGoing(true);
   };
 
-  if (!basket.state || !basket.state.ready) {
+  if (basket.status !== 'ready') {
     return t('basket.loading');
   }
 
@@ -57,7 +57,7 @@ export default function Aside() {
           <CheckoutBtn
             as="a"
             state={going ? 'loading' : null}
-            disabled={!basket.state.items.length}
+            disabled={!basket.cart.length}
             onClick={onCheckoutClick}
           >
             {t('basket.goToCheckout')}

@@ -1,6 +1,8 @@
 import styled, { keyframes, css } from 'styled-components';
 import CrystallizeImage from '@crystallize/react-image';
 
+import { animationSpeedMs } from '../../helpers';
+
 const animationItemHighlight = keyframes`
     0% {
       transform: scale(1);
@@ -48,7 +50,7 @@ export const Item = styled.div`
   ${(p) =>
     p.animate &&
     css`
-      animation: ${animationItemHighlight} }ms 1;
+      animation: ${animationItemHighlight} ${animationSpeedMs}ms 1;
     `};
   &:hover {
     ${ItemDelete} {
@@ -67,7 +69,7 @@ export const ItemInfo = styled.span`
 export const ItemInfoText = styled.div``;
 
 export const ItemImage = styled(CrystallizeImage).attrs(() => ({
-  sizes: '50px'
+  sizes: '50px',
 }))`
   width: 50px;
   img {

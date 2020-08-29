@@ -16,43 +16,64 @@ import {
   ItemDelete,
   PriceWrap,
   Price,
-  PriceVat
+  PriceVat,
+  SubInfoOuter,
+  SubInfoLine
 } from './styles';
 
 export default function TinyBasketItem({ actions, item }) {
   const t = useT();
+
   const increment = () => {
-    actions.incrementItem(item);
+    actions.incrementQuantityItem(item);
   };
 
   const decrement = () => {
-    actions.decrementItem(item);
+    actions.decrementQuantityItem(item);
   };
 
   const remove = () => {
     actions.removeItem(item);
   };
 
-  const { attributes } = item;
+  const { attributes, subscription } = item;
+
+  const isSubscription = !!subscription;
 
   return (
-    <Item animate={item.animate}>
-      <ItemImage {...item.images?.[0]} />
+    <Item animate={item.animate} isSubscription={isSubscription}>
+      <ItemImage
+        {...item.image}
+        sizes="200px"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = item.placeholder_image;
+        }}
+      />
       <ItemInfo>
         <Row>
-          <ItemName>{item.name}</ItemName>
+          <ItemName>
+            {isSubscription ? item.subscriptionName : item.name}
+          </ItemName>
           {attributes?.length > 0 && <AttributeList attributes={attributes} />}
         </Row>
 
         <PriceWrapper>
-          <PriceWrap>
-            <Price>
-              <CurrencyValue value={item.price.gross} />
-            </Price>
-          </PriceWrap>
+          {isSubscription ? (
+            <SubInfoOuter>
+              <SubInfoLine>{item.subscriptionInitialInfo}</SubInfoLine>
+              <SubInfoLine>{item.subscriptionRenewalInfo}</SubInfoLine>
+            </SubInfoOuter>
+          ) : (
+            <PriceWrap>
+              <Price>
+                <CurrencyValue value={item.price} />
+              </Price>
+            </PriceWrap>
+          )}
 
           <PriceVat>
-            <span>{t('common.vat', { value: item.price.vat })}</span>
+            <span>{t('common.vat', { value: item.vatAmount })}</span>
           </PriceVat>
         </PriceWrapper>
       </ItemInfo>
@@ -63,7 +84,8 @@ export default function TinyBasketItem({ actions, item }) {
             type="button"
             disabled={item.quantity === 1}
           >
-            -
+            {' '}
+            -{' '}
           </button>
           <ItemQuantity>{item.quantity}</ItemQuantity>
           <button onClick={increment} type="button">

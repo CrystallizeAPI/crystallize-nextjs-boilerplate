@@ -7,14 +7,14 @@ import IconBasket from 'ui/icons/basket';
 import { Basket, BasketQuantity } from './styles';
 
 const BasketButton = () => {
-  const { state } = useBasket();
+  const { status, total } = useBasket();
   const layout = React.useContext(LayoutContext);
 
-  if (state.ready) {
+  if (status === 'ready') {
     return (
       <Basket onClick={layout.actions.showRight} type="button">
         <IconBasket />
-        <BasketQuantity>{state.totalQuantity || 0}</BasketQuantity>
+        <BasketQuantity>{total.quantity}</BasketQuantity>
       </Basket>
     );
   }
