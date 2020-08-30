@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import is from 'styled-is';
 
 import Layout from 'components/layout';
 import { useBasket } from 'components/basket';
@@ -21,11 +22,17 @@ const Line = styled.div`
 `;
 
 const Totals = styled.div`
-  margin: 20px 0;
+  margin: 10px 15px;
 `;
 
 const TotalLine = styled.div`
   text-align: right;
+  margin-top: 5px;
+
+  ${is('bold')`
+    font-size: 1.2rem;
+    font-weight: 600;
+  `};
 `;
 
 export default function Confirmation({ order: orderData }) {
@@ -55,12 +62,11 @@ export default function Confirmation({ order: orderData }) {
     return <Layout loading />;
   }
 
-  const items = order.cart.map((item) => ({
+  const cart = order.cart.map((item) => ({
     ...item,
     image: {
       url: item.imageUrl
-    },
-    price: item.price.gross
+    }
   }));
   const email = order.customer.addresses?.[0]?.email;
   const { total } = order;
@@ -79,17 +85,15 @@ export default function Confirmation({ order: orderData }) {
           <Line />
           <BillingDetails order={order} />
           <Line />
-          <H3>{t('order.item', { count: items.length })}</H3>
-          <OrderItems items={items} />
+          <H3>{t('order.item', { count: cart.length })}</H3>
+          <OrderItems cart={cart} />
           <Totals>
-            <TotalLine>
+            <TotalLine bold>
               {t('order.total')}: <CurrencyValue value={total.gross} />
             </TotalLine>
             <TotalLine>
               {t('common.vat', {
-                value:
-                  total.gross -
-                  (total.gross / (100 + (total.tax?.percent || 0))) * 100
+                value: total.gross - total.net
               })}
             </TotalLine>
           </Totals>

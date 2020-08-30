@@ -8,6 +8,11 @@ export default produce(function reducer(draft, { action, ...rest }) {
       break;
     }
 
+    case 'empty': {
+      draft.cart = [];
+      break;
+    }
+
     case 'add-item':
     case 'remove-item':
     case 'increment-item':
@@ -48,6 +53,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
       draft.status = 'ready';
       break;
     }
+
     default: {
       throw new Error(`Action ${action} not supported`);
     }

@@ -19,6 +19,7 @@ async function getProducts({ paths, locale }) {
               percent
             }
             variants {
+              id
               sku
               name
               stock
@@ -50,7 +51,6 @@ export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
 
   useEffect(() => {
     (async function getExtendedProductVariants() {
-      console.log(JSON.stringify(productsVariantsToExtend, null, 3));
       // Determine which products we need to fetch from the API
       const productsToFetch = productsVariantsToExtend.filter(
         (p) => !extendedProductData.some((e) => e.sku === p.sku)
@@ -80,7 +80,6 @@ export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
                 const vat = gross - net;
 
                 return {
-                  sku: cartItem.sku,
                   vatType,
                   price: {
                     gross,

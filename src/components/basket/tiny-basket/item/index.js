@@ -47,12 +47,12 @@ export default function TinyBasketItem({ actions, item }) {
         <PriceWrapper>
           <PriceWrap>
             <Price>
-              <CurrencyValue value={item.price.gross} />
+              <CurrencyValue value={item.price?.gross} />
             </Price>
           </PriceWrap>
 
           <PriceVat>
-            <span>{t('common.vat', { value: item.price.vat })}</span>
+            <span>{t('common.vat', { value: item.price?.vat })}</span>
           </PriceVat>
         </PriceWrapper>
       </ItemInfo>

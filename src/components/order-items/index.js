@@ -13,12 +13,12 @@ import {
   ItemPrice
 } from './styles';
 
-const OrderItems = ({ items }) => (
+const OrderItems = ({ cart }) => (
   <Items>
-    {items.map(item => (
+    {cart.map((item) => (
       <Item key={item.sku}>
-        {item.image && (
-          <ItemImage {...item.image} alt={item.name} sizes="50vw" />
+        {item.images && (
+          <ItemImage {...item.images[0]} alt={item.name} sizes="50vw" />
         )}
         <ItemInfo>
           <ItemName>{item.name}</ItemName>
@@ -30,10 +30,10 @@ const OrderItems = ({ items }) => (
         </ItemInfo>
         <ItemAmount>
           <ItemQuantity>
-            {item.quantity} x <CurrencyValue value={item.price} />
+            {item.quantity} x <CurrencyValue value={item.price.gross} />
           </ItemQuantity>
           <ItemPrice>
-            <CurrencyValue value={item.price * item.quantity} />
+            <CurrencyValue value={item.price.gross * item.quantity} />
           </ItemPrice>
         </ItemAmount>
       </Item>

@@ -1,5 +1,6 @@
 import { getClient } from 'lib-api/payment-providers/klarna';
 import getHost from 'lib-api/util/get-host';
+import { validatePaymentModel } from 'lib-api/util/checkout';
 
 function orderToKlarnaCart(lineItems) {
   let order_tax_amount = 0;
@@ -41,7 +42,9 @@ function orderToKlarnaCart(lineItems) {
 
 export default async (req, res) => {
   try {
-    const { lineItems, currency, multilingualUrlPrefix } = req.body;
+    const { paymentModel } = req.body;
+    const validPaymentModel = await validatePaymentModel({ paymentModel });
+
     const host = getHost(req);
 
     const { success, order, error } = await getClient().createOrder({

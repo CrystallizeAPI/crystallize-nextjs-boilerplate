@@ -99,6 +99,11 @@ export const PaymentButton = styled.button`
   &:last-child {
     border-bottom: none;
   }
+
+  opacity: 0.5;
+  ${is('selected')`
+    opacity: 1;
+  `};
 `;
 
 export const PaymentProvider = styled.div`

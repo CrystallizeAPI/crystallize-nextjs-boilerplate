@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { LayoutContext } from '@crystallize/react-layout';
 
-import { useLocale } from 'lib/app-config';
 import { Button } from 'ui';
 import { CurrencyValue } from 'components/currency-value';
 import { useBasket } from 'components/basket';

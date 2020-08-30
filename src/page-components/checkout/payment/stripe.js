@@ -7,51 +7,30 @@ import {
   useElements
 } from '@stripe/react-stripe-js';
 
+import { doPost } from 'lib/rest-api/helpers';
 import { Button } from 'ui';
 import { useT } from 'lib/i18n';
-import { useLocale } from 'lib/app-config';
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
 // Persist by create order in Crystallize
-async function persistOrder({ paymentIntent, items, personalDetails }) {
-  const response = await fetch(
+async function persistOrder({ paymentIntent, paymentModel }) {
+  const { data } = await doPost(
     '/api/payment-providers/stripe/order-persistence',
     {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify({
         paymentIntentId: paymentIntent.id,
-        personalDetails,
-        lineItems: items.map((item) => ({
-          name: item.name,
-          sku: item.sku,
-          gross: item.price,
-          net: item.priceWithoutVat,
-          currency: item.currency,
-          quantity: item.quantity,
-          product_id: item.productId,
-          product_variant_id: item.productVariantId,
-          image_url: item.image?.url,
-          subscription: item.subscription,
-          tax_rate: item.taxGroup.percent,
-          tax_group: item.taxGroup,
-          product_tax_amount: item.vatAmount
-        }))
+        paymentModel
       })
     }
   );
 
-  const { data } = await response.json();
   return data.orders.create.id;
 }
 
-function Form({ clientSecret, personalDetails, items, onSuccess }) {
+function Form({ clientSecret, paymentModel, onSuccess }) {
   const t = useT();
   const stripe = useStripe();
   const elements = useElements();
@@ -69,6 +48,8 @@ function Form({ clientSecret, personalDetails, items, onSuccess }) {
         setTimeout(go, 100);
         return;
       }
+
+      const { personalDetails } = paymentModel;
 
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         clientSecret,
@@ -91,11 +72,9 @@ function Form({ clientSecret, personalDetails, items, onSuccess }) {
           // execution. Set up a webhook or plugin to listen for the
           // payment_intent.succeeded event that handles any business critical
           // post-payment actions.
-
           const orderId = await persistOrder({
             paymentIntent,
-            items,
-            personalDetails
+            paymentModel
           });
           if (orderId) {
             onSuccess(orderId);
@@ -121,40 +100,33 @@ function Form({ clientSecret, personalDetails, items, onSuccess }) {
   );
 }
 
-export default function StripeWrapper({ currency, items, ...props }) {
+export default function StripeWrapper({ paymentModel, ...props }) {
   const [clientSecret, setClientSecret] = useState(null);
-  const locale = useLocale();
 
   useEffect(() => {
     async function getClientSecret() {
-      const lineItems = items.map((item) => ({
-        id: item.variant_id,
-        path: item.path,
-        quantity: item.quantity
-      }));
-
-      const { client_secret } = await fetch(
+      const { client_secret } = await doPost(
         '/api/payment-providers/stripe/create-payment-intent',
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            currency,
-            lineItems,
-            language: locale.crystallizeCatalogueLanguage
+            paymentModel
           })
         }
-      ).then((res) => res.json());
+      );
 
       setClientSecret(client_secret);
     }
 
     getClientSecret();
-  }, [currency, items, locale]);
+  }, [paymentModel]);
 
   return (
     <Elements locale="en" stripe={stripePromise}>
-      <Form {...props} items={items} clientSecret={clientSecret} />
+      <Form
+        {...props}
+        paymentModel={paymentModel}
+        clientSecret={clientSecret}
+      />
     </Elements>
   );
 }
