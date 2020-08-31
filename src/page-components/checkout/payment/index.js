@@ -43,7 +43,7 @@ export default function Payment() {
   const router = useRouter();
   const { cart } = useBasket();
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(
-    appConfig.paymentProviders[1]
+    appConfig.paymentProviders[2]
   );
   const [state, setState] = useState({
     firstName: '',
