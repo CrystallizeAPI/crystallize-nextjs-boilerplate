@@ -3,6 +3,7 @@ import React from 'react';
 import { useBasket } from 'components/basket';
 import Layout from 'components/layout';
 import OrderItems from 'components/order-items';
+import { Totals } from 'components/basket/totals';
 import { useT } from 'lib/i18n';
 
 import Payment from './payment';
@@ -32,6 +33,9 @@ function Checkout() {
         <Container>
           <SectionHeader>{t('basket.title')}</SectionHeader>
           <OrderItems cart={cart} />
+          <div style={{ padding: '0 15px' }}>
+            <Totals />
+          </div>
         </Container>
       </Inner>
     </Outer>

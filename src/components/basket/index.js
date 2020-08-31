@@ -32,10 +32,8 @@ export function BasketProvider({ children }) {
   // Retrieve cached cart
   useEffect(() => {
     (async function init() {
-      if (status === 'not-hydrated') {
-        const { cart } = await retrieveFromCache();
-        dispatch({ action: 'hydrate', cart });
-      }
+      const { cart } = await retrieveFromCache();
+      dispatch({ action: 'hydrate', cart });
     })();
   }, [status]);
 

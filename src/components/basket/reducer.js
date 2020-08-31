@@ -3,13 +3,16 @@ import produce from 'immer';
 export default produce(function reducer(draft, { action, ...rest }) {
   switch (action) {
     case 'hydrate': {
-      draft.cart = rest.cart;
-      draft.status = 'hydrated';
+      if (draft.status === 'not-hydrated') {
+        draft.cart = rest.cart;
+        draft.status = 'hydrated';
+      }
       break;
     }
 
     case 'empty': {
       draft.cart = [];
+      draft.status = 'hydrated';
       break;
     }
 
@@ -50,7 +53,6 @@ export default produce(function reducer(draft, { action, ...rest }) {
 
     case 'extended-product-variants': {
       draft.extendedProductVariants = rest.extendedProductVariants;
-      draft.status = 'ready';
       break;
     }
 
@@ -100,4 +102,11 @@ export default produce(function reducer(draft, { action, ...rest }) {
     sku,
     path
   }));
+
+  if (
+    draft.status === 'hydrated' &&
+    (draft.cart.length === 0 || draft.extendedProductVariants.length > 0)
+  ) {
+    draft.status = 'ready';
+  }
 });

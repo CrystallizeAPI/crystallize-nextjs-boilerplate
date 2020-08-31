@@ -42,9 +42,7 @@ export default function Payment() {
   const locale = useLocale();
   const router = useRouter();
   const { cart } = useBasket();
-  const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(
-    appConfig.paymentProviders[2]
-  );
+  const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
