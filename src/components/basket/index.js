@@ -17,17 +17,9 @@ const initialState = {
 
 export function BasketProvider({ children }) {
   const [
-    { cart, total, status, productsVariantsToExtend },
+    { cart, total, status, productsVariantsToExtend, metadata },
     dispatch
   ] = useReducer(reducer, initialState);
-
-  // Get extended product data from the Catalogue API
-  const extendedProductVariants = useExtendedProductVariants({
-    productsVariantsToExtend
-  });
-  useEffect(() => {
-    dispatch({ action: 'extended-product-variants', extendedProductVariants });
-  }, [extendedProductVariants]);
 
   // Retrieve cached cart
   useEffect(() => {
@@ -37,12 +29,23 @@ export function BasketProvider({ children }) {
     })();
   }, [status]);
 
+  // Get extended product data from the Catalogue API
+  const extendedProductVariants = useExtendedProductVariants({
+    productsVariantsToExtend
+  });
+  useEffect(() => {
+    dispatch({ action: 'extended-product-variants', extendedProductVariants });
+  }, [extendedProductVariants]);
+
   // Store cart on change
   useEffect(() => {
     if (status !== 'not-hydrated') {
-      persistToCache({ cart: cart.map(({ extended, ...rest }) => rest) });
+      persistToCache({
+        cart: cart.map(({ extended, ...rest }) => rest),
+        metadata
+      });
     }
-  }, [status, cart]);
+  }, [status, cart, metadata]);
 
   function dispatchCartItemAction(action) {
     return (data) => dispatch({ action, ...data });
@@ -59,6 +62,8 @@ export function BasketProvider({ children }) {
         total,
         actions: {
           empty: () => dispatch({ action: 'empty' }),
+          setMetadata: ({ metadata }) =>
+            dispatch({ action: 'set-metadata', metadata }),
           addItem: dispatchCartItemAction('add-item'),
           removeItem: dispatchCartItemAction('remove-item'),
           incrementItem: dispatchCartItemAction('increment-item'),

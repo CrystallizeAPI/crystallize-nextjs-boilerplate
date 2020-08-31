@@ -1,5 +1,12 @@
 import produce from 'immer';
 
+export const initialState = {
+  status: 'not-hydrated',
+  cart: [],
+  total: {},
+  metadata: null
+};
+
 export default produce(function reducer(draft, { action, ...rest }) {
   switch (action) {
     case 'hydrate': {
@@ -13,6 +20,11 @@ export default produce(function reducer(draft, { action, ...rest }) {
     case 'empty': {
       draft.cart = [];
       draft.status = 'hydrated';
+      break;
+    }
+
+    case 'set-metadata': {
+      draft.metadata = rest.metadata;
       break;
     }
 
