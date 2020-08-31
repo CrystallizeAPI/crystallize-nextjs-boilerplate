@@ -105,7 +105,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
 
   if (
     draft.status === 'hydrated' &&
-    (draft.cart.length === 0 || draft.extendedProductVariants.length > 0)
+    (draft.cart.length === 0 || draft.extendedProductVariants?.length > 0)
   ) {
     draft.status = 'ready';
   }
