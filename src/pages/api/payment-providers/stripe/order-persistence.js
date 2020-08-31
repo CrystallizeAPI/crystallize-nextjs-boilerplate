@@ -17,8 +17,6 @@ export default async (req, res) => {
       validCrystallizeOrder
     );
 
-    console.log(JSON.stringify(createCrystallizeOrderResponse, null, 3));
-
     await emailOrderConfirmation(
       createCrystallizeOrderResponse.data.orders.create.id
     );

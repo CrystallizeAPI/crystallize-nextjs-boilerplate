@@ -47,8 +47,6 @@ export default async (req, res) => {
       })
     );
 
-    console.log(JSON.stringify(createCrystallizeOrderResponse, null, 3));
-
     const vippsResponse = await getClient().initiatePayment({
       order: orderToVippsBody({
         paymentModel: validPaymentModel,

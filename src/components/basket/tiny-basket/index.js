@@ -33,7 +33,7 @@ export function TinyBasket() {
           </ItemOuter>
         ))}
       </Items>
-
+      <div style={{ height: 15 }} />
       <Totals />
     </Outer>
   );

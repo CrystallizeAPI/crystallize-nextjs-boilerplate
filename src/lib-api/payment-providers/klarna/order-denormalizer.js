@@ -23,8 +23,6 @@ export default function klarnaOrderDenormalizer(orderData) {
     }
   );
 
-  console.log(JSON.stringify(orderData, null, 3));
-
   return {
     data: {
       orders: {
