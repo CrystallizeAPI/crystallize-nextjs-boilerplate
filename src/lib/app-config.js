@@ -34,7 +34,8 @@ export function useLocale() {
  * /en/my-product
  * /de/mein-produkt
  */
-export const isMultilingual = appConfig.locales.length > 1;
+export const isMultilingual =
+  appConfig.locales.length > 1 || appConfig.locales[0]?.urlPrefix.length > 0;
 
 export function getLocaleFromContext({ locale, query, asPath } = {}) {
   function validLocale(urlPrefix) {
