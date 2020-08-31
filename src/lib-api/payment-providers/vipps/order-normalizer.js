@@ -24,23 +24,16 @@ function generateVippsProperties(vippsData) {
   return propertiesArray;
 }
 
-export default function VippsOrderNormalizer({ vippsOrderId, vippsData }) {
-  // if !vippsOrderId we set to create an order in Crystallize
-  const {
-    lineItems,
-    currency,
-    personalDetails,
-    shippingDetails,
-    userDetails
-  } = vippsData;
-
-  const total = {
-    net: 0,
-    gross: 0
-  };
-
+export default function VippsOrderNormalizer({
+  vippsOrderId,
+  vippsData,
+  paymentModel
+}) {
+  // If we don't get a vippsOrderId we need to create an order in Crystallize
   if (vippsOrderId) {
+    const { shippingDetails, userDetails } = vippsData;
     return {
+      id: vippsOrderId,
       customer: {
         identifier: userDetails.ssn,
         firstName: userDetails.firstName,
@@ -69,62 +62,17 @@ export default function VippsOrderNormalizer({ vippsOrderId, vippsData }) {
           }
         }
       ],
-      id: vippsOrderId,
       additionalInformation: JSON.stringify({
         status: vippsData.transactionInfo.status
       })
     };
   } else {
-    const orderItemsArray = lineItems.map((lineItem) => {
-      total.gross += lineItem.gross * lineItem.quantity;
-      total.net += lineItem.net * lineItem.quantity;
-
-      return {
-        name: lineItem.name,
-        sku: lineItem.sku,
-        quantity: lineItem.quantity,
-        subscription: lineItem.subscription,
-        productId: lineItem.productId,
-        productVariantId: lineItem.productVariantId,
-        imageUrl: lineItem.image_url,
-        price: {
-          gross: lineItem.gross,
-          net: lineItem.net,
-          currency,
-          discounts: [
-            {
-              percent: 0
-            }
-          ],
-          tax: {
-            name: lineItem.tax_group.name,
-            percent: lineItem.tax_group.percent
-          }
-        }
-      };
-    });
+    const { cart, customer, total } = paymentModel;
 
     return {
-      customer: {
-        firstName: personalDetails.firstName,
-        lastName: personalDetails.lastName
-      },
-      cart: orderItemsArray,
-
-      total: {
-        gross: total.gross,
-        net: total.net,
-        currency,
-        discounts: [
-          {
-            percent: 0
-          }
-        ],
-        tax: {
-          name: lineItems[0].tax_group.name,
-          percent: lineItems[0].tax_group.percent
-        }
-      },
+      customer,
+      cart,
+      total,
       additionalInformation: JSON.stringify({ status: 'initiated' })
     };
   }

@@ -43,7 +43,7 @@ export default function Payment() {
   const router = useRouter();
   const { cart } = useBasket();
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(
-    appConfig.paymentProviders[0]
+    appConfig.paymentProviders[1]
   );
   const [state, setState] = useState({
     firstName: '',
@@ -52,14 +52,21 @@ export default function Payment() {
   });
 
   const { firstName, lastName, email } = state;
+
+  // Define the shared payment model for all payment providers
   const paymentModel = {
     multilingualUrlPrefix: locale.urlPrefix ? `/${locale.urlPrefix}` : '',
     locale,
     cart,
-    personalDetails: {
+    customer: {
       firstName,
       lastName,
-      email
+      addresses: [
+        {
+          type: 'billing',
+          email
+        }
+      ]
     }
   };
 

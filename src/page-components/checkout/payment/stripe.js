@@ -49,7 +49,7 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
         return;
       }
 
-      const { personalDetails } = paymentModel;
+      const { customer } = paymentModel;
 
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         clientSecret,
@@ -57,7 +57,7 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
           payment_method: {
             card: elements.getElement(CardElement),
             billing_details: {
-              name: `${personalDetails.firstName} ${personalDetails.lastName}`
+              name: `${customer.firstName} ${customer.lastName}`
             }
           }
         }

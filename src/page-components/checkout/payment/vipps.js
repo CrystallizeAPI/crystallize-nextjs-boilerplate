@@ -14,7 +14,7 @@ export default function VippsWrapper({ paymentModel, onSuccess }) {
       const { url } = await doPost(
         '/api/payment-providers/vipps/initiate-payment',
         {
-          body: JSON.stringify(paymentModel)
+          body: JSON.stringify({ paymentModel })
         }
       );
 

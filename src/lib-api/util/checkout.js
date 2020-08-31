@@ -1,7 +1,7 @@
 import { simplyFetchFromGraph } from 'lib/graph';
 
 export async function validatePaymentModel({ paymentModel }) {
-  const { cart, locale, personalDetails } = paymentModel;
+  const { cart, locale, customer, multilingualUrlPrefix } = paymentModel;
   const productVariantsToValidate = cart.map(({ sku, path }) => ({
     sku,
     path
@@ -63,8 +63,8 @@ export async function validatePaymentModel({ paymentModel }) {
 
         const gross = price;
         const net = (price / (100 + vatType.percent)) * 100;
-        const vat = gross - net;
 
+        // Get a small preview of the first image
         const image = images[0];
         const smallImages = image?.variants
           .filter((v) => !v.url.includes('.webp'))
@@ -77,7 +77,6 @@ export async function validatePaymentModel({ paymentModel }) {
           quantity: cartItem.quantity,
           name,
           sku,
-          image,
           imageUrl,
           price: {
             gross,
@@ -116,12 +115,8 @@ export async function validatePaymentModel({ paymentModel }) {
   return {
     locale,
     cart: validatedCart,
-    crystallizeOrderCart: validatedCart.map(({ image, ...item }) => {
-      return {
-        ...item
-      };
-    }),
     total,
-    personalDetails
+    customer,
+    multilingualUrlPrefix
   };
 }

@@ -14,7 +14,7 @@ export default async function stripeOrderNormalizer({
   const customerName = charge.billing_details.name.split(' ');
 
   return {
-    cart: paymentModel.crystallizeOrderCart,
+    cart: paymentModel.cart,
     total: paymentModel.total,
     additionalInformation: paymentIntent.merchant_data,
     customer: {
@@ -36,7 +36,8 @@ export default async function stripeOrderNormalizer({
           state: charge.billing_details.address.state,
           country: charge.billing_details.address.country,
           phone: charge.billing_details.phone,
-          email: charge.receipt_email || paymentModel.personalDetails.email
+          email:
+            charge.receipt_email || paymentModel.customer?.addresses?.[0]?.email
         },
         {
           type: 'delivery',
@@ -50,7 +51,8 @@ export default async function stripeOrderNormalizer({
           state: charge.billing_details.address.state,
           country: charge.billing_details.address.country,
           phone: charge.billing_details.phone,
-          email: charge.receipt_email || paymentModel.personalDetails.email
+          email:
+            charge.receipt_email || paymentModel.customer?.addresses?.[0]?.email
         }
       ]
     },

@@ -20,5 +20,5 @@ export const callOrdersApi = createApiCaller(
 );
 
 export const callCoreApi = createApiCaller(
-  'https://pim.crystallize.com/graph/core'
+  'https://pim.crystallize.com/graphql'
 );
