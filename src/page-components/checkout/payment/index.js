@@ -41,7 +41,7 @@ export default function Payment() {
   const t = useT();
   const locale = useLocale();
   const router = useRouter();
-  const { cart, metadata } = useBasket();
+  const { cart, actions, metadata } = useBasket();
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
   const [state, setState] = useState({
     firstName: '',
@@ -108,7 +108,7 @@ export default function Payment() {
       logo: '/static/klarna-logo.png',
       render: () => (
         <PaymentProvider>
-          <KlarnaCheckout paymentModel={paymentModel} />
+          <KlarnaCheckout paymentModel={paymentModel} basketActions={actions} />
         </PaymentProvider>
       )
     },

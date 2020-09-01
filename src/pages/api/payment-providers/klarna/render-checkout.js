@@ -34,6 +34,7 @@ function orderToKlarnaCart({ cart, total }) {
           quantity,
           total_amount,
           total_tax_amount,
+          type: 'physical',
           tax_rate: tax.percent * 100,
           discount_rate: 0,
           image_url: imageUrl,
@@ -54,25 +55,47 @@ export default async (req, res) => {
     const validPaymentModel = await validatePaymentModel({ paymentModel });
     const host = getHost(req);
 
-    const { multilingualUrlPrefix } = paymentModel;
+    const {
+      multilingualUrlPrefix,
+      metadata: { order_id }
+    } = paymentModel;
 
-    const { success, order, error } = await getClient().createOrder({
-      ...orderToKlarnaCart(validPaymentModel),
-      purchase_country: 'NO',
-      purchase_currency: validPaymentModel.total.currency || 'NOK',
-      locale: 'no-nb',
-      merchant_urls: {
-        terms: `${host}${multilingualUrlPrefix}/checkout`,
-        checkout: `${host}${multilingualUrlPrefix}/checkout`,
-        confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
-        push: `${host}/api/payment-providers/klarna/order-persistence?id={checkout.order.id}`
-      }
-    });
+    let response;
+
+    if (order_id) {
+      response = await getClient().updateOrder(order_id, {
+        ...orderToKlarnaCart(validPaymentModel),
+        purchase_country: 'NO',
+        purchase_currency: validPaymentModel.total.currency || 'NOK',
+        locale: 'no-nb',
+        merchant_urls: {
+          terms: `${host}${multilingualUrlPrefix}/checkout`,
+          checkout: `${host}${multilingualUrlPrefix}/checkout`,
+          confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
+          push: `${host}/api/payment-providers/klarna/order-persistence?id={checkout.order.id}`
+        }
+      });
+    } else {
+      response = await getClient().createOrder({
+        ...orderToKlarnaCart(validPaymentModel),
+        purchase_country: 'NO',
+        purchase_currency: validPaymentModel.total.currency || 'NOK',
+        locale: 'no-nb',
+        merchant_urls: {
+          terms: `${host}${multilingualUrlPrefix}/checkout`,
+          checkout: `${host}${multilingualUrlPrefix}/checkout`,
+          confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
+          push: `${host}/api/payment-providers/klarna/order-persistence?id={checkout.order.id}`
+        }
+      });
+    }
+    const { success, order, error } = response;
 
     if (success) {
       return res.json({
         success: true,
-        html: order.html_snippet
+        html: order.html_snippet,
+        order_id: order.order_id
       });
     }
 

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useT } from 'lib/i18n';
 import { doPost } from 'lib/rest-api/helpers';
 
-export default function KlarnaCheckout({ paymentModel }) {
+export default function KlarnaCheckout({ paymentModel, basketActions }) {
   const [state, setState] = useState('loading');
   const t = useT();
 
@@ -12,7 +12,7 @@ export default function KlarnaCheckout({ paymentModel }) {
       setState('loading');
 
       try {
-        const { success, html } = await doPost(
+        const { success, html, order_id } = await doPost(
           '/api/payment-providers/klarna/render-checkout',
           {
             body: JSON.stringify({ paymentModel })
@@ -24,6 +24,7 @@ export default function KlarnaCheckout({ paymentModel }) {
           setState('error');
           return;
         }
+        // basketActions.setMetadata({ metadata: { order_id } });
 
         setState('loaded');
 
