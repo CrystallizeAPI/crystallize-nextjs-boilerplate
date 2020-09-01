@@ -2,18 +2,12 @@ import React, { useEffect, useReducer } from 'react';
 
 import { retrieveFromCache, persistToCache } from './cache';
 export { TinyBasket } from './tiny-basket';
-import reducer from './reducer';
+import reducer, { initialState } from './reducer';
 import { useExtendedProductVariants } from './extend-product-variants';
 
 const BasketContext = React.createContext();
 
 export const useBasket = () => React.useContext(BasketContext);
-
-const initialState = {
-  status: 'not-hydrated',
-  cart: [],
-  total: {}
-};
 
 export function BasketProvider({ children }) {
   const [
@@ -60,6 +54,7 @@ export function BasketProvider({ children }) {
           ...rest
         })),
         total,
+        metadata,
         actions: {
           empty: () => dispatch({ action: 'empty' }),
           setMetadata: ({ metadata }) =>

@@ -4,7 +4,7 @@ export const initialState = {
   status: 'not-hydrated',
   cart: [],
   total: {},
-  metadata: null
+  metadata: {}
 };
 
 export default produce(function reducer(draft, { action, ...rest }) {

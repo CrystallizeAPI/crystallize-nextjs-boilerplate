@@ -41,7 +41,7 @@ export default function Payment() {
   const t = useT();
   const locale = useLocale();
   const router = useRouter();
-  const { cart } = useBasket();
+  const { cart, metadata } = useBasket();
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
   const [state, setState] = useState({
     firstName: '',
@@ -56,6 +56,7 @@ export default function Payment() {
     multilingualUrlPrefix: locale.urlPrefix ? `/${locale.urlPrefix}` : '',
     locale,
     cart,
+    metadata,
     customer: {
       firstName,
       lastName,

@@ -1,7 +1,13 @@
 import { simplyFetchFromGraph } from 'lib/graph';
 
 export async function validatePaymentModel({ paymentModel }) {
-  const { cart, locale, customer, multilingualUrlPrefix } = paymentModel;
+  const {
+    cart,
+    locale,
+    customer,
+    multilingualUrlPrefix,
+    metadata
+  } = paymentModel;
   const productVariantsToValidate = cart.map(({ sku, path }) => ({
     sku,
     path
@@ -117,6 +123,7 @@ export async function validatePaymentModel({ paymentModel }) {
     cart: validatedCart,
     total,
     customer,
+    metadata,
     multilingualUrlPrefix
   };
 }
