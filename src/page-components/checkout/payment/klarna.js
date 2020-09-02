@@ -9,7 +9,9 @@ export default function KlarnaCheckout({ paymentModel, basketActions }) {
 
   useEffect(() => {
     async function loadCheckout() {
-      setState('loading');
+      if (state !== 'loading') {
+        return;
+      }
 
       try {
         const { success, html, order_id } = await doPost(
@@ -24,9 +26,10 @@ export default function KlarnaCheckout({ paymentModel, basketActions }) {
           setState('error');
           return;
         }
-        // basketActions.setMetadata({ metadata: { order_id } });
 
         setState('loaded');
+
+        basketActions.setMetadata({ klarnaOrderId: order_id });
 
         const checkoutContainer = document.getElementById(
           'klarna-checkout-container'
@@ -51,17 +54,15 @@ export default function KlarnaCheckout({ paymentModel, basketActions }) {
     }
 
     loadCheckout();
-  }, [paymentModel]);
+  }, [basketActions, paymentModel, state]);
 
-  if (state === 'loading') {
-    return <p>{t('checkout.loadingPaymentGateway')}</p>;
-  }
-
-  if (state === 'error') {
-    return (
-      <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
-    );
-  }
-
-  return <div id="klarna-checkout-container" />;
+  return (
+    <>
+      {state === 'loading' && <p>{t('checkout.loadingPaymentGateway')}</p>}
+      {state === 'error' && (
+        <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
+      )}
+      <div id="klarna-checkout-container" />
+    </>
+  );
 }

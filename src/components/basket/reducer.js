@@ -12,6 +12,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
     case 'hydrate': {
       if (draft.status === 'not-hydrated') {
         draft.cart = rest.cart;
+        draft.metadata = rest.metadata;
         draft.status = 'hydrated';
       }
       break;

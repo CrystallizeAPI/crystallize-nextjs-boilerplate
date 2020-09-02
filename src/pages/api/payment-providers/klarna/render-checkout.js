@@ -57,7 +57,7 @@ export default async (req, res) => {
 
     const {
       multilingualUrlPrefix,
-      metadata: { order_id }
+      metadata: { klarnaOrderId: order_id }
     } = paymentModel;
 
     let response;
