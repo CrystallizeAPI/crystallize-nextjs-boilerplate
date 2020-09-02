@@ -30,7 +30,8 @@ export async function getData({ asPath, language, preview = null }) {
     query,
     variables: {
       path: asPath,
-      language
+      language,
+      version: preview ? 'draft' : 'published'
     }
   });
   return { ...data, preview };
