@@ -1,60 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-import { useLocale } from 'lib/app-config';
 import { useT } from 'lib/i18n';
+import { doPost } from 'lib/rest-api/helpers';
 
-export default function KlarnaCheckout({ items, currency }) {
+export default function KlarnaCheckout({ paymentModel, basketActions }) {
   const [state, setState] = useState('loading');
-  const locale = useLocale();
   const t = useT();
+  const paymentContainerRef = useRef();
 
   useEffect(() => {
     async function loadCheckout() {
-      setState('loading');
+      if (state !== 'loading') {
+        return;
+      }
 
       try {
-        const response = await fetch(
+        const { success, html, order_id } = await doPost(
           '/api/payment-providers/klarna/render-checkout',
           {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              multilingualUrlPrefix: locale.urlPrefix
-                ? `/${locale.urlPrefix}`
-                : '',
-              currency,
-              lineItems: items.map((item) => ({
-                name: item.name,
-                sku: item.sku,
-                net: item.priceWithoutVat,
-                gross: item.price,
-                quantity: item.quantity,
-                product_id: item.id,
-                product_variant_id: item.variant_id,
-                image_url: item.image.url,
-                subscription: item.subscription,
-                tax_group: item.taxGroup,
-                product_tax_amount: item.vatAmount
-              }))
-            })
+            body: JSON.stringify({ paymentModel })
           }
         );
 
-        setState('loaded');
-
         // https://developers.klarna.com/documentation/klarna-checkout/integration-guide/render-the-checkout/
-        const klarnaResponse = await response.json();
-        if (!klarnaResponse.success) {
+        if (!success) {
           setState('error');
           return;
         }
-        const checkoutContainer = document.getElementById(
-          'klarna-checkout-container'
-        );
-        checkoutContainer.innerHTML = klarnaResponse.html;
+
+        setState('loaded');
+
+        basketActions.setMetadata({ klarnaOrderId: order_id });
+
+        const checkoutContainer = paymentContainerRef.current;
+        
+        checkoutContainer.innerHTML = html;
 
         const scriptsTags = checkoutContainer.getElementsByTagName('script');
 
@@ -74,17 +54,15 @@ export default function KlarnaCheckout({ items, currency }) {
     }
 
     loadCheckout();
-  }, [currency, items, locale]);
+  }, [basketActions, paymentModel, state]);
 
-  if (state === 'loading') {
-    return <p>{t('checkout.loadingPaymentGateway')}</p>;
-  }
-
-  if (state === 'error') {
-    return (
-      <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
-    );
-  }
-
-  return <div id="klarna-checkout-container" />;
+  return (
+    <>
+      {state === 'loading' && <p>{t('checkout.loadingPaymentGateway')}</p>}
+      {state === 'error' && (
+        <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
+      )}
+      <div ref={paymentContainerRef} />
+    </>
+  );
 }

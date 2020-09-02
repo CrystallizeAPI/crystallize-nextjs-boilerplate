@@ -1,15 +1,16 @@
 import { createCrystallizeOrder } from 'lib-api/crystallize/order';
 import { emailOrderConfirmation } from 'lib-api/emails';
 import { orderNormalizer } from 'lib-api/payment-providers/stripe';
+import { validatePaymentModel } from 'lib-api/util/checkout';
 
 export default async (req, res) => {
   try {
-    const { paymentIntentId, lineItems, personalDetails } = req.body;
+    const { paymentIntentId, paymentModel } = req.body;
+    const validPaymentModel = await validatePaymentModel({ paymentModel });
 
     const validCrystallizeOrder = await orderNormalizer({
       paymentIntentId,
-      lineItems,
-      personalDetails
+      paymentModel: validPaymentModel
     });
 
     const createCrystallizeOrderResponse = await createCrystallizeOrder(

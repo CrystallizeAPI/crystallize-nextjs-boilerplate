@@ -6,7 +6,7 @@ export async function getServerSideProps({ query: { orderId } }) {
 
   return {
     props: {
-      order: order ? orderDenormalizer(order) : null,
-    },
+      order: order ? orderDenormalizer(order) : null
+    }
   };
 }

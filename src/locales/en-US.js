@@ -63,7 +63,7 @@ export default {
       confirmingCardPayment: 'Please wait your card details are confirmed...',
       loadingPaymentGateway: 'Initialising payment gateway...',
       loadingPaymentGatewayFailed:
-        'Oh now. Could not load the {{name}} payment gateway',
+        'Oh no. Could not load the {{name}} payment gateway',
       confirmation: {
         title: 'Order confirmation',
         shortStatus: `Your order has been confirmed.`,

@@ -1,17 +1,14 @@
-import { validateItems } from 'lib-api/util/cart-validation';
 import { getClient } from 'lib-api/payment-providers/stripe';
+import { validatePaymentModel } from 'lib-api/util/checkout';
 
 export default async (req, res) => {
   try {
-    const { lineItems, currency, language } = req.body;
-    const validatedItems = await validateItems({ lineItems, language });
-    const amount = validatedItems.reduce((acc, val) => {
-      return acc + val.price * val.quantity;
-    }, 0);
+    const { paymentModel } = req.body;
+    const validPaymentModel = await validatePaymentModel({ paymentModel });
 
     const paymentIntent = await getClient().paymentIntents.create({
-      amount: amount * 100,
-      currency
+      amount: validPaymentModel.total.gross * 100,
+      currency: validPaymentModel.locale.defaultCurrency
     });
 
     return res.json(paymentIntent);

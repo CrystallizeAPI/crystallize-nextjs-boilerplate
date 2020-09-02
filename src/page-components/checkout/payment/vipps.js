@@ -1,57 +1,28 @@
 import React, { useState, useEffect } from 'react';
 
-import { useLocale } from 'lib/app-config';
+import { doPost } from 'lib/rest-api/helpers';
 import { useT } from 'lib/i18n';
 
-export default function VippsWrapper({
-  personalDetails,
-  items,
-  currency,
-  onSuccess
-}) {
+export default function VippsWrapper({ paymentModel, onSuccess }) {
   const t = useT();
   const [state, setState] = useState('loading');
-  const locale = useLocale();
 
   useEffect(() => {
     async function load() {
       setState('loading');
 
-      const lineItems = items.map((item) => ({
-        name: item.name,
-        sku: item.sku,
-        net: item.priceWithoutVat,
-        gross: item.price,
-        quantity: item.quantity,
-        product_id: item.id,
-        product_variant_id: item.variant_id,
-        image_url: item.image.url,
-        subscription: item.subscription,
-        tax_group: item.taxGroup,
-        product_tax_amount: item.vatAmount
-      }));
-
-      const response = await fetch(
+      const { url } = await doPost(
         '/api/payment-providers/vipps/initiate-payment',
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            multilingualUrlPrefix: locale.urlPrefix
-              ? `/${locale.urlPrefix}`
-              : '',
-            personalDetails,
-            currency,
-            lineItems
-          })
+          body: JSON.stringify({ paymentModel })
         }
-      ).then((res) => res.json());
+      );
 
-      return onSuccess(response.url);
+      return onSuccess(url);
     }
 
     load();
-  }, [locale, items, personalDetails, currency, onSuccess]);
+  }, [paymentModel, onSuccess]);
 
   if (state === 'error') {
     return (

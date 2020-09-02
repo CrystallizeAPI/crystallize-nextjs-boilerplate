@@ -1,6 +1,6 @@
 {
   "name": "crystallize-nextjs-boilerplate",
-  "version": "5.1.1",
+  "version": "6.0.0",
   "license": "MIT",
   "engines": {
     "node": ">=10.10"
@@ -36,7 +36,7 @@
   "dependencies": {
     "@crystallize/content-transformer": "^5.2.1",
     "@crystallize/grid-renderer": "^2.0.1",
-    "@crystallize/node-klarna": "^3.0.2",
+    "@crystallize/node-klarna": "^3.2.0",
     "@crystallize/node-vipps": "^0.1.0",
     "@crystallize/react-image": "^3.1.1",
     "@crystallize/react-layout": "^3.2.0",
@@ -47,6 +47,7 @@
     "accept-language": "^3.0.18",
     "dashjs": "^3.1.1",
     "i18next": "^19.5.4",
+    "immer": "^7.0.8",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mjml": "^4.4.1",

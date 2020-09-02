@@ -22,8 +22,8 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
     const gross = lineItem.unit_price / 100;
     const net = (gross / (100 + productMetaData.taxGroup.percent || 0)) * 100;
 
-    total.net += lineItem.net * lineItem.quantity;
-    total.gross += lineItem.gross * lineItem.quantity;
+    total.net += net * lineItem.quantity;
+    total.gross += gross * lineItem.quantity;
 
     return {
       name: lineItem.name,
@@ -57,11 +57,11 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
   );
 
   // TODO: review what happens to the General Order Vat Group on multiple tax groups on order (mult. items having diff vatTypes, is it a thing?)
-  const vatGroup = orderItemsArray[0].price;
+  const { tax } = orderItemsArray[0].price;
 
   return {
     customer: {
-      identifier: '',
+      identifier: order.billing_address.email,
       firstName: customerName[0],
       middleName: customerName.slice(1, customerName.length - 1).join(),
       lastName: customerName[customerName.length - 1],
@@ -79,7 +79,7 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
           state: order.billing_address.region,
           country: order.billing_address.country,
           phone: order.billing_address.phone,
-          email: order.billing_address.receipt_email
+          email: order.billing_address.email
         },
         {
           type: 'delivery',
@@ -95,7 +95,7 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
           state: order.shipping_address.region,
           country: order.shipping_address.country,
           phone: order.shipping_address.phone,
-          email: order.shipping_address.receipt_email
+          email: order.shipping_address.email
         }
       ]
     },
@@ -109,7 +109,7 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
           recurringToken: order.recurring_token,
           metadata: JSON.stringify({
             status: order.status,
-            tax_amount: order.order_tax_amount
+            initial_payment_method: order.initial_payment_method
           })
         }
       }
@@ -124,8 +124,8 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
         }
       ],
       tax: {
-        name: vatGroup.name,
-        percent: vatGroup.percent
+        name: tax.name,
+        percent: tax.percent
       }
     },
     additionalInformation: order.merchant_data

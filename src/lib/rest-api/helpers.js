@@ -6,18 +6,25 @@ if (typeof window !== 'undefined') {
 
 export const doPost = async (url, options) => {
   try {
-    const response = await fetch(`${hostName}/${url}`, {
+    const opts = {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      ...options,
-    });
+      ...options
+    };
+
+    if (typeof opts.body !== 'string') {
+      opts.body = opts.body.toString();
+    }
+
+    const response = await fetch(`${hostName}${url}`, opts);
+
     return response.json();
   } catch (error) {
     return {
-      error,
+      error
     };
   }
 };
@@ -28,7 +35,7 @@ export const doGet = async (url, options) => {
     return response.json();
   } catch (error) {
     return {
-      error,
+      error
     };
   }
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AttributeList from 'components/attribute-list';
 import { CurrencyValue } from 'components/currency-value';
@@ -17,63 +17,56 @@ import {
   PriceWrap,
   Price,
   PriceVat,
-  SubInfoOuter,
-  SubInfoLine
+  drawAttentionDuration
 } from './styles';
 
 export default function TinyBasketItem({ actions, item }) {
   const t = useT();
+  const [drawAttention, setDrawAttention] = useState(false);
 
-  const increment = () => {
-    actions.incrementQuantityItem(item);
-  };
+  const { attributes, addItemTime } = item;
 
-  const decrement = () => {
-    actions.decrementQuantityItem(item);
-  };
+  // Draw users attention when the item is added to the basket
+  useEffect(() => {
+    setDrawAttention(true);
 
-  const remove = () => {
+    let timeout = setTimeout(
+      () => setDrawAttention(false),
+      drawAttentionDuration
+    );
+    return () => clearTimeout(timeout);
+  }, [addItemTime]);
+
+  function increment() {
+    actions.incrementItem(item);
+  }
+
+  function decrement() {
+    actions.decrementItem(item);
+  }
+
+  function remove() {
     actions.removeItem(item);
-  };
-
-  const { attributes, subscription } = item;
-
-  const isSubscription = !!subscription;
+  }
 
   return (
-    <Item animate={item.animate} isSubscription={isSubscription}>
-      <ItemImage
-        {...item.image}
-        sizes="200px"
-        onError={(e) => {
-          e.target.onerror = null;
-          e.target.src = item.placeholder_image;
-        }}
-      />
+    <Item animate={drawAttention}>
+      <ItemImage {...item.images?.[0]} />
       <ItemInfo>
         <Row>
-          <ItemName>
-            {isSubscription ? item.subscriptionName : item.name}
-          </ItemName>
+          <ItemName>{item.name}</ItemName>
           {attributes?.length > 0 && <AttributeList attributes={attributes} />}
         </Row>
 
         <PriceWrapper>
-          {isSubscription ? (
-            <SubInfoOuter>
-              <SubInfoLine>{item.subscriptionInitialInfo}</SubInfoLine>
-              <SubInfoLine>{item.subscriptionRenewalInfo}</SubInfoLine>
-            </SubInfoOuter>
-          ) : (
-            <PriceWrap>
-              <Price>
-                <CurrencyValue value={item.price} />
-              </Price>
-            </PriceWrap>
-          )}
+          <PriceWrap>
+            <Price>
+              <CurrencyValue value={item.price?.gross} />
+            </Price>
+          </PriceWrap>
 
           <PriceVat>
-            <span>{t('common.vat', { value: item.vatAmount })}</span>
+            <span>{t('common.vat', { value: item.price?.vat })}</span>
           </PriceVat>
         </PriceWrapper>
       </ItemInfo>
@@ -84,8 +77,7 @@ export default function TinyBasketItem({ actions, item }) {
             type="button"
             disabled={item.quantity === 1}
           >
-            {' '}
-            -{' '}
+            -
           </button>
           <ItemQuantity>{item.quantity}</ItemQuantity>
           <button onClick={increment} type="button">

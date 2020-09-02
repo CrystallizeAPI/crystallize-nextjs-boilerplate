@@ -1,33 +1,22 @@
 import React from 'react';
 
 import { useT } from 'lib/i18n';
+import { useBasket } from '../index';
 
-import { useBasket } from '../context';
-
-import { Outer, Row, StrikeThrough, Rows } from './styles';
+import { Outer, Row, Rows } from './styles';
 
 export const Totals = () => {
   const t = useT();
-  const { state } = useBasket();
-
-  const {
-    discount,
-    totalPrice,
-    totalPriceMinusDiscount,
-    totalToPay,
-    totalVatAmount,
-    shipping,
-    freeShipping
-  } = state;
+  const { total } = useBasket();
 
   return (
     <Outer>
       <Rows>
         <Row modifier="total-price">
           <span>{t('basket.totalPrice')}:</span>
-          <span>{t('common.price', { value: totalPrice })}</span>
+          <span>{t('common.price', { value: total.net })}</span>
         </Row>
-        {discount && (
+        {/* {discount && (
           <>
             <Row modifier="discount">
               <span>{t('basket.discount')}:</span>
@@ -40,32 +29,15 @@ export const Totals = () => {
               </span>
             </Row>
           </>
-        )}
-        <Row modifier="shipping">
-          <span>{t('basket.shippingPrice')}:</span>
-          {freeShipping ? (
-            <span>
-              {shipping && shipping.unit_price > 0 && (
-                <StrikeThrough>
-                  {t('common.price', { value: shipping.unit_price })}
-                </StrikeThrough>
-              )}{' '}
-              {t('common.price', { value: 0 })}
-            </span>
-          ) : (
-            <span>
-              {t('common.price', { value: shipping ? shipping.unit_price : 0 })}
-            </span>
-          )}
-        </Row>
+        )} */}
 
         <Row modifier="total-vat">
           <span>{t('basket.vat')}:</span>
-          <span>{t('common.price', { value: totalVatAmount })}</span>
+          <span>{t('common.price', { value: total.vat })}</span>
         </Row>
         <Row modifier="to-pay">
           <span>{t('basket.totalToPay')}:</span>
-          <span>{t('common.price', { value: totalToPay })}</span>
+          <span>{t('common.price', { value: total.gross })}</span>
         </Row>
       </Rows>
     </Outer>

@@ -2,33 +2,21 @@ import React from 'react';
 
 import { useT } from 'lib/i18n';
 
-import { useBasket } from '../context';
+import { useBasket } from '../index';
 import { Totals } from '../totals';
 import TinyBasketItem from './item';
 
-import {
-  Outer,
-  Items,
-  ItemOuter,
-  BasketIsEmpty,
-  RemainingUntilFreeShipping
-} from './styles';
+import { Outer, Items, ItemOuter, BasketIsEmpty } from './styles';
 
-export const TinyBasket = ({
-  hideTotals = false,
-  hideRemainingUntilFreeShipping = false,
-  itemImageSizes
-}) => {
+export function TinyBasket() {
   const t = useT();
-  const { state, actions } = useBasket();
+  const { status, cart, actions } = useBasket();
 
-  if (!state || !state.ready) {
+  if (status !== 'ready') {
     return null;
   }
 
-  const { items, freeShipping, remainingUntilFreeShippingApplies } = state;
-
-  if (!items?.length) {
+  if (!cart?.length) {
     return (
       <Outer>
         <BasketIsEmpty>{t('basket.empty')}</BasketIsEmpty>
@@ -39,29 +27,14 @@ export const TinyBasket = ({
   return (
     <Outer>
       <Items>
-        {items.map((item) => (
-          <ItemOuter key={item.basketId} item={item}>
-            <TinyBasketItem
-              actions={actions}
-              item={item}
-              itemImageSizes={itemImageSizes}
-            />
+        {cart.map((item) => (
+          <ItemOuter key={item.sku} item={item}>
+            <TinyBasketItem item={item} actions={actions} />
           </ItemOuter>
         ))}
       </Items>
-      <div>
-        {!hideTotals && <Totals />}
-
-        {!hideRemainingUntilFreeShipping &&
-          !freeShipping &&
-          remainingUntilFreeShippingApplies > 0 && (
-            <RemainingUntilFreeShipping>
-              {t('remainingUntilFreeShipping', {
-                amount: remainingUntilFreeShippingApplies
-              })}
-            </RemainingUntilFreeShipping>
-          )}
-      </div>
+      <div style={{ height: 15 }} />
+      <Totals />
     </Outer>
   );
-};
+}

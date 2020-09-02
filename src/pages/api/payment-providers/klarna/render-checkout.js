@@ -1,66 +1,98 @@
 import { getClient } from 'lib-api/payment-providers/klarna';
 import getHost from 'lib-api/util/get-host';
+import { validatePaymentModel } from 'lib-api/util/checkout';
 
-function orderToKlarnaCart(lineItems) {
-  let order_tax_amount = 0;
-  let order_amount = 0;
+// Klarna represents numbers as number * 100
+// Ex: 11.59 becomes 1159. 9 becomes 900
 
-  const order_lines = lineItems.map((item) => {
-    let item_tax_amount = item.product_tax_amount * 100 * item.quantity;
-    order_tax_amount += item_tax_amount;
-
-    // Klarna represents numbers as number * 100
-    // Ex: 11.59 becomes 1159. 9 becomes 900
-    const amount = item.gross * 100 * item.quantity;
-    order_amount += amount;
-
-    return {
-      name: item.name,
-      reference: item.sku,
-      quantity: item.quantity,
-      tax_rate: item.tax_group.percent * 100 || 0,
-      discount_rate: item.discount_rate * 100 || 0,
-      unit_price: item.gross * 100,
-      merchant_data: JSON.stringify({
-        productId: item.product_id,
-        productVariantId: item.product_variant_id,
-        taxGroup: item.tax_group
-      }),
-      image_url: item.image_url,
-      total_amount: amount,
-      total_tax_amount: item_tax_amount
-    };
-  });
+function orderToKlarnaCart({ cart, total }) {
+  const order_amount = total.gross * 100;
 
   return {
-    order_lines,
-    order_tax_amount,
-    order_amount
+    order_amount,
+    order_tax_amount: order_amount - total.net * 100,
+    order_lines: cart.map(
+      ({
+        quantity,
+        price,
+        name,
+        sku,
+        productId,
+        productVariantId,
+        imageUrl
+      }) => {
+        const { gross, net, tax } = price;
+
+        const unit_price = gross * 100;
+        const total_amount = unit_price * quantity;
+        const total_tax_amount = total_amount - net * quantity * 100;
+
+        return {
+          name,
+          reference: sku,
+          unit_price,
+          quantity,
+          total_amount,
+          total_tax_amount,
+          type: 'physical',
+          tax_rate: tax.percent * 100,
+          image_url: imageUrl,
+          merchant_data: JSON.stringify({
+            productId,
+            productVariantId,
+            taxGroup: tax
+          })
+        };
+      }
+    )
   };
 }
 
 export default async (req, res) => {
   try {
-    const { lineItems, currency, multilingualUrlPrefix } = req.body;
+    const { paymentModel } = req.body;
+
+    const validPaymentModel = await validatePaymentModel({ paymentModel });
     const host = getHost(req);
 
-    const { success, order, error } = await getClient().createOrder({
-      ...orderToKlarnaCart(lineItems),
-      purchase_country: 'NO',
-      purchase_currency: currency || 'NOK',
-      locale: 'no-nb',
-      merchant_urls: {
-        terms: `${host}${multilingualUrlPrefix}/checkout`,
-        checkout: `${host}${multilingualUrlPrefix}/checkout`,
-        confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
-        push: `${host}/api/payment-providers/klarna/order-persistence?id={checkout.order.id}`
-      }
-    });
+    const { multilingualUrlPrefix, metadata } = paymentModel;
+    const order_id = metadata?.order_id;
+    let response;
+
+    if (order_id) {
+      response = await getClient().updateOrder(order_id, {
+        ...orderToKlarnaCart(validPaymentModel),
+        purchase_country: 'NO',
+        purchase_currency: validPaymentModel.total.currency || 'NOK',
+        locale: 'no-nb',
+        merchant_urls: {
+          terms: `${host}${multilingualUrlPrefix}/checkout`,
+          checkout: `${host}${multilingualUrlPrefix}/checkout`,
+          confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
+          push: `${host}/api/payment-providers/klarna/order-persistence?id={checkout.order.id}`
+        }
+      });
+    } else {
+      response = await getClient().createOrder({
+        ...orderToKlarnaCart(validPaymentModel),
+        purchase_country: 'NO',
+        purchase_currency: validPaymentModel.total.currency || 'NOK',
+        locale: 'no-nb',
+        merchant_urls: {
+          terms: `${host}${multilingualUrlPrefix}/checkout`,
+          checkout: `${host}${multilingualUrlPrefix}/checkout`,
+          confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
+          push: `${host}/api/payment-providers/klarna/order-persistence?id={checkout.order.id}`
+        }
+      });
+    }
+    const { success, order, error } = response;
 
     if (success) {
       return res.json({
         success: true,
-        html: order.html_snippet
+        html: order.html_snippet,
+        order_id: order.order_id
       });
     }
 

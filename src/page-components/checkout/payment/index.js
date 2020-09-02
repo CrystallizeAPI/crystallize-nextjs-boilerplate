@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import appConfig, { useLocale } from 'lib/app-config';
 import { useT } from 'lib/i18n';
+import { useBasket } from 'components/basket';
 
 import {
   Input,
@@ -36,11 +37,12 @@ const Row = styled.div`
 
 const Inner = styled.div``;
 
-export default function Payment({ items, currency }) {
+export default function Payment() {
   const t = useT();
   const locale = useLocale();
   const router = useRouter();
-  const [paymentProvider, setPaymentProvider] = useState('stripe');
+  const { cart, actions, metadata } = useBasket();
+  const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
@@ -49,10 +51,22 @@ export default function Payment({ items, currency }) {
 
   const { firstName, lastName, email } = state;
 
-  const personalDetails = {
-    firstName,
-    lastName,
-    email
+  // Define the shared payment model for all payment providers
+  const paymentModel = {
+    multilingualUrlPrefix: locale.urlPrefix ? `/${locale.urlPrefix}` : '',
+    locale,
+    cart,
+    metadata,
+    customer: {
+      firstName,
+      lastName,
+      addresses: [
+        {
+          type: 'billing',
+          email
+        }
+      ]
+    }
   };
 
   const paymentProviders = [
@@ -67,9 +81,7 @@ export default function Payment({ items, currency }) {
             <script key="stripe-js" src="https://js.stripe.com/v3/" async />
           </Head>
           <StripeCheckout
-            personalDetails={personalDetails}
-            items={items}
-            currency={currency}
+            paymentModel={paymentModel}
             onSuccess={(orderId) => {
               if (locale.urlPrefix) {
                 router.push(
@@ -96,11 +108,7 @@ export default function Payment({ items, currency }) {
       logo: '/static/klarna-logo.png',
       render: () => (
         <PaymentProvider>
-          <KlarnaCheckout
-            personalDetails={personalDetails}
-            items={items}
-            currency={currency}
-          />
+          <KlarnaCheckout paymentModel={paymentModel} basketActions={actions} />
         </PaymentProvider>
       )
     },
@@ -113,9 +121,7 @@ export default function Payment({ items, currency }) {
       render: () => (
         <PaymentProvider>
           <VippsCheckout
-            personalDetails={personalDetails}
-            items={items}
-            currency={currency}
+            paymentModel={paymentModel}
             onSuccess={(url) => {
               if (url) window.location = url;
             }}
@@ -193,8 +199,10 @@ export default function Payment({ items, currency }) {
                     key={paymentProvider.name}
                     color={paymentProvider.color}
                     type="button"
-                    active={paymentProvider === paymentProvider.name}
-                    onClick={() => setPaymentProvider(paymentProvider.name)}
+                    selected={selectedPaymentProvider === paymentProvider.name}
+                    onClick={() =>
+                      setSelectedPaymentProvider(paymentProvider.name)
+                    }
                   >
                     <img
                       src={paymentProvider.logo}
@@ -207,7 +215,9 @@ export default function Payment({ items, currency }) {
               })}
             </PaymentSelector>
 
-            {paymentProviders.find((p) => p.name === paymentProvider)?.render()}
+            {paymentProviders
+              .find((p) => p.name === selectedPaymentProvider)
+              ?.render()}
           </PaymentProviders>
         )}
       </div>
