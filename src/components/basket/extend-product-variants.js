@@ -29,6 +29,7 @@ async function getProducts({ paths, locale }) {
                 value
               }
               images {
+                url
                 variants {
                   url
                   width
@@ -42,7 +43,7 @@ async function getProducts({ paths, locale }) {
     }`
   });
 
-  return paths.map((_, i) => response.data[`product${i}`]);
+  return paths.map((_, i) => response.data[`product${i}`]).filter((p) => !!p);
 }
 
 export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
@@ -65,33 +66,35 @@ export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
 
           setExtendedProductData([
             ...extendedProductData,
-            ...productsToFetch.map((cartItem) => {
-              const product = productsFromApi.find((product) =>
-                product.variants.some((v) => v.sku === cartItem.sku)
-              );
-              if (product) {
-                const { vatType } = product;
-                const { price, ...variant } = product.variants.find(
-                  (v) => v.sku === cartItem.sku
+            ...productsToFetch
+              .map((cartItem) => {
+                const product = productsFromApi.find((product) =>
+                  product?.variants.some((v) => v.sku === cartItem.sku)
                 );
+                if (product) {
+                  const { vatType } = product;
+                  const { price, ...variant } = product.variants.find(
+                    (v) => v.sku === cartItem.sku
+                  );
 
-                const gross = price;
-                const net = (price / (100 + vatType.percent)) * 100;
-                const vat = gross - net;
+                  const gross = price;
+                  const net = (price / (100 + vatType.percent)) * 100;
+                  const vat = gross - net;
 
-                return {
-                  vatType,
-                  price: {
-                    gross,
-                    net,
-                    vat,
-                    currency: locale.defaultCurrency
-                  },
-                  ...variant
-                };
-              }
-              return null;
-            })
+                  return {
+                    vatType,
+                    price: {
+                      gross,
+                      net,
+                      vat,
+                      currency: locale.defaultCurrency
+                    },
+                    ...variant
+                  };
+                }
+                return null;
+              })
+              .filter((p) => !!p)
           ]);
         } catch (error) {
           console.log(error);

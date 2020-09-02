@@ -1,7 +1,9 @@
 import styled, { keyframes, css } from 'styled-components';
 import CrystallizeImage from '@crystallize/react-image';
 
-const animationItemHighlight = keyframes`
+export const drawAttentionDuration = 400;
+
+const drawAttention = keyframes`
     0% {
       transform: scale(1);
     }
@@ -48,7 +50,7 @@ export const Item = styled.div`
   ${(p) =>
     p.animate &&
     css`
-      animation: ${animationItemHighlight} }ms 1;
+      animation: ${drawAttention} ${drawAttentionDuration}ms 1;
     `};
   &:hover {
     ${ItemDelete} {

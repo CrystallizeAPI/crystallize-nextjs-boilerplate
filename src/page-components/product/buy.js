@@ -10,17 +10,16 @@ import { ProductFooter, Price } from './styles';
 
 export default function BuyButton({ product, selectedVariant }) {
   const basket = useBasket();
+  const layout = useContext(LayoutContext);
   const t = useT();
 
-  const layout = useContext(LayoutContext);
-
   async function buy() {
+    await layout.actions.showRight();
+
     basket.actions.addItem({
       sku: selectedVariant.sku,
       path: product.path
     });
-    await layout.actions.showRight();
-    // basket.actions.pulsateItemInBasket(basketItemToAdd);
   }
 
   return (

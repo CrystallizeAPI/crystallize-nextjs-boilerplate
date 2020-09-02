@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { useT } from 'lib/i18n';
 import { doPost } from 'lib/rest-api/helpers';
@@ -6,6 +6,7 @@ import { doPost } from 'lib/rest-api/helpers';
 export default function KlarnaCheckout({ paymentModel, basketActions }) {
   const [state, setState] = useState('loading');
   const t = useT();
+  const paymentContainerRef = useRef();
 
   useEffect(() => {
     async function loadCheckout() {
@@ -31,9 +32,8 @@ export default function KlarnaCheckout({ paymentModel, basketActions }) {
 
         basketActions.setMetadata({ klarnaOrderId: order_id });
 
-        const checkoutContainer = document.getElementById(
-          'klarna-checkout-container'
-        );
+        const checkoutContainer = paymentContainerRef.current;
+        
         checkoutContainer.innerHTML = html;
 
         const scriptsTags = checkoutContainer.getElementsByTagName('script');
@@ -62,7 +62,7 @@ export default function KlarnaCheckout({ paymentModel, basketActions }) {
       {state === 'error' && (
         <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
       )}
-      <div id="klarna-checkout-container" />
+      <div ref={paymentContainerRef} />
     </>
   );
 }
