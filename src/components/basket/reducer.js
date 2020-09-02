@@ -20,6 +20,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
 
     case 'empty': {
       draft.cart = [];
+      draft.metadata = {};
       draft.status = 'hydrated';
       break;
     }

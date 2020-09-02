@@ -36,7 +36,6 @@ function orderToKlarnaCart({ cart, total }) {
           total_tax_amount,
           type: 'physical',
           tax_rate: tax.percent * 100,
-          discount_rate: 0,
           image_url: imageUrl,
           merchant_data: JSON.stringify({
             productId,
@@ -52,6 +51,7 @@ function orderToKlarnaCart({ cart, total }) {
 export default async (req, res) => {
   try {
     const { paymentModel } = req.body;
+
     const validPaymentModel = await validatePaymentModel({ paymentModel });
     const host = getHost(req);
 

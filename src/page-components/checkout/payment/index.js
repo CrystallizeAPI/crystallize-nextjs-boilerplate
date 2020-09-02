@@ -132,8 +132,6 @@ export default function Payment() {
     // {{/if}}
   ];
 
-  console.log(paymentModel);
-
   return (
     <Inner>
       <form noValidate>
