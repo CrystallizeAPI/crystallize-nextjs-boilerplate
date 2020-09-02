@@ -28,6 +28,8 @@ export default function klarnaOrderDenormalizer(orderData) {
       orders: {
         get: {
           total: {
+            status: orderData.status,
+            // html_snippet: orderData.html_snippet,
             net: denormalizedCart.reduce(
               (acc, item) => acc + item.price.net * item.quantity,
               0

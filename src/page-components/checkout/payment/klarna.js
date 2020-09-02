@@ -3,16 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { useT } from 'lib/i18n';
 import { doPost } from 'lib/rest-api/helpers';
 
-export default function KlarnaCheckout({ paymentModel }) {
+export default function KlarnaCheckout({ paymentModel, basketActions }) {
   const [state, setState] = useState('loading');
   const t = useT();
 
   useEffect(() => {
     async function loadCheckout() {
-      setState('loading');
+      if (state !== 'loading') {
+        return;
+      }
 
       try {
-        const { success, html } = await doPost(
+        const { success, html, order_id } = await doPost(
           '/api/payment-providers/klarna/render-checkout',
           {
             body: JSON.stringify({ paymentModel })
@@ -26,6 +28,8 @@ export default function KlarnaCheckout({ paymentModel }) {
         }
 
         setState('loaded');
+
+        basketActions.setMetadata({ klarnaOrderId: order_id });
 
         const checkoutContainer = document.getElementById(
           'klarna-checkout-container'
@@ -50,17 +54,15 @@ export default function KlarnaCheckout({ paymentModel }) {
     }
 
     loadCheckout();
-  }, [paymentModel]);
+  }, [basketActions, paymentModel, state]);
 
-  if (state === 'loading') {
-    return <p>{t('checkout.loadingPaymentGateway')}</p>;
-  }
-
-  if (state === 'error') {
-    return (
-      <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
-    );
-  }
-
-  return <div id="klarna-checkout-container" />;
+  return (
+    <>
+      {state === 'loading' && <p>{t('checkout.loadingPaymentGateway')}</p>}
+      {state === 'error' && (
+        <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
+      )}
+      <div id="klarna-checkout-container" />
+    </>
+  );
 }

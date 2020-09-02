@@ -18,8 +18,8 @@ export function BasketProvider({ children }) {
   // Retrieve cached cart
   useEffect(() => {
     (async function init() {
-      const { cart } = await retrieveFromCache();
-      dispatch({ action: 'hydrate', cart });
+      const { cart, metadata } = await retrieveFromCache();
+      dispatch({ action: 'hydrate', cart, metadata });
     })();
   }, [status]);
 
@@ -57,7 +57,7 @@ export function BasketProvider({ children }) {
         metadata,
         actions: {
           empty: () => dispatch({ action: 'empty' }),
-          setMetadata: ({ metadata }) =>
+          setMetadata: (metadata) =>
             dispatch({ action: 'set-metadata', metadata }),
           addItem: dispatchCartItemAction('add-item'),
           removeItem: dispatchCartItemAction('remove-item'),
