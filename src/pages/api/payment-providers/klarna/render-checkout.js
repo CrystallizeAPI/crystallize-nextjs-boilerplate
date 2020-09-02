@@ -55,11 +55,8 @@ export default async (req, res) => {
     const validPaymentModel = await validatePaymentModel({ paymentModel });
     const host = getHost(req);
 
-    const {
-      multilingualUrlPrefix,
-      metadata: { klarnaOrderId: order_id }
-    } = paymentModel;
-
+    const { multilingualUrlPrefix, metadata } = paymentModel;
+    const order_id = metadata?.order_id;
     let response;
 
     if (order_id) {
