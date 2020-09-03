@@ -43,6 +43,7 @@ async function getProducts({ paths, locale }) {
     }`
   });
 
+
   return paths.map((_, i) => response.data[`product${i}`]).filter((p) => !!p);
 }
 
