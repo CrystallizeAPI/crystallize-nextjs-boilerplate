@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AttributeList from 'components/attribute-list';
 import { CurrencyValue } from 'components/currency-value';
@@ -16,27 +16,41 @@ import {
   ItemDelete,
   PriceWrap,
   Price,
-  PriceVat
+  PriceVat,
+  drawAttentionDuration
 } from './styles';
 
 export default function TinyBasketItem({ actions, item }) {
   const t = useT();
-  const increment = () => {
+  const [drawAttention, setDrawAttention] = useState(false);
+
+  const { attributes, addItemTime } = item;
+
+  // Draw users attention when the item is added to the basket
+  useEffect(() => {
+    setDrawAttention(true);
+
+    let timeout = setTimeout(
+      () => setDrawAttention(false),
+      drawAttentionDuration
+    );
+    return () => clearTimeout(timeout);
+  }, [addItemTime]);
+
+  function increment() {
     actions.incrementItem(item);
-  };
+  }
 
-  const decrement = () => {
+  function decrement() {
     actions.decrementItem(item);
-  };
+  }
 
-  const remove = () => {
+  function remove() {
     actions.removeItem(item);
-  };
-
-  const { attributes } = item;
+  }
 
   return (
-    <Item animate={item.animate}>
+    <Item animate={drawAttention}>
       <ItemImage {...item.images?.[0]} />
       <ItemInfo>
         <Row>

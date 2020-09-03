@@ -62,11 +62,22 @@ export default produce(function reducer(draft, { action, ...rest }) {
           });
         }
       }
+
+      /**
+       * Set addItemTime in order for the tiny basket to run an
+       * animation to help drawing attention to the added item
+       **/
+      if (action === 'add-item') {
+        draft.cart.find((i) => i.sku === sku).addItemTime = Date.now();
+      }
       break;
     }
 
     case 'extended-product-variants': {
       draft.extendedProductVariants = rest.extendedProductVariants;
+      draft.cart = draft.cart.filter((c) =>
+        draft.extendedProductVariants?.find((e) => e.sku === c.sku)
+      );
       break;
     }
 

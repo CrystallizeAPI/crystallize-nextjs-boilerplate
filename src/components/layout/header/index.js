@@ -31,9 +31,9 @@ export default function Header({ simple, preview }) {
     <>
       {preview && (
         <PreviewBar>
-          Preview mode (
+          You are in preview mode (
           <a href={'/api/preview?leave=' + encodeURIComponent(router.asPath)}>
-            Leave
+            leave
           </a>
           )
         </PreviewBar>
