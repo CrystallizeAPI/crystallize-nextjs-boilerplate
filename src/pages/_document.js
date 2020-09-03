@@ -1,4 +1,4 @@
-import Document, { Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 import { getLocaleFromContext } from 'lib/app-config';
@@ -35,7 +35,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <html lang={this.props.locale.appLanguage}>
+      <Html lang={this.props.locale.appLanguage}>
         <Head>
           <link rel="icon" href="/static/favicon.svg" />
           <link rel="mask-icon" href="/static/mask-icon.svg" color="#5bbad5" />
@@ -48,7 +48,7 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }

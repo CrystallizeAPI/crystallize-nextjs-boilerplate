@@ -1,9 +1,10 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 
 import { retrieveFromCache, persistToCache } from './cache';
 export { TinyBasket } from './tiny-basket';
 import reducer, { initialState } from './reducer';
 import { useExtendedProductVariants } from './extend-product-variants';
+import { getChannel } from './shared-channel';
 
 const BasketContext = React.createContext();
 
@@ -11,17 +12,32 @@ export const useBasket = () => React.useContext(BasketContext);
 
 export function BasketProvider({ children }) {
   const [
-    { cart, total, status, productsVariantsToExtend, metadata },
+    {
+      cart,
+      total,
+      status,
+      productsVariantsToExtend,
+      metadata,
+      changeTriggeredByChannel
+    },
     dispatch
   ] = useReducer(reducer, initialState);
+  const sharedChannelRef = useRef(getChannel());
 
-  // Retrieve cached cart
   useEffect(() => {
+    // Retrieve cached cart
     (async function init() {
-      const { cart, metadata } = await retrieveFromCache();
-      dispatch({ action: 'hydrate', cart, metadata });
+      const cache = await retrieveFromCache();
+      dispatch({ action: 'hydrate', ...cache });
     })();
-  }, [status]);
+
+    // Listen for channel updates
+    if (sharedChannelRef.current) {
+      sharedChannelRef.current.onmessage = function (event) {
+        dispatch({ action: 'update-cart', ...JSON.parse(event.data) });
+      };
+    }
+  }, []);
 
   // Get extended product data from the Catalogue API
   const extendedProductVariants = useExtendedProductVariants({
@@ -34,12 +50,17 @@ export function BasketProvider({ children }) {
   // Store cart on change
   useEffect(() => {
     if (status !== 'not-hydrated') {
-      persistToCache({
+      const data = {
         cart: cart.map(({ extended, ...rest }) => rest),
         metadata
-      });
+      };
+      persistToCache(data);
+
+      if (!changeTriggeredByChannel) {
+        sharedChannelRef.current?.postMessage(JSON.stringify(data));
+      }
     }
-  }, [status, cart, metadata]);
+  }, [status, cart, metadata, changeTriggeredByChannel]);
 
   function dispatchCartItemAction(action) {
     return (data) => dispatch({ action, ...data });

@@ -8,6 +8,8 @@ export const initialState = {
 };
 
 export default produce(function reducer(draft, { action, ...rest }) {
+  draft.changeTriggeredByChannel = false;
+
   switch (action) {
     case 'hydrate': {
       if (draft.status === 'not-hydrated') {
@@ -15,6 +17,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
         draft.metadata = rest.metadata;
         draft.status = 'hydrated';
       }
+      break;
+    }
+
+    case 'update-cart': {
+      draft.cart = rest.cart;
+      draft.metadata = rest.metadata;
+      draft.changeTriggeredByChannel = true;
       break;
     }
 
