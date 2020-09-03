@@ -29,7 +29,9 @@ const KlarnaCheckout = dynamic(() => import('./klarna'));
 // {{#if payment-provider-vipps}}
 const VippsCheckout = dynamic(() => import('./vipps'));
 // {{/if}}
+// {{#if payment-provider-mollie}}
 const MollieCheckout = dynamic(() => import('./mollie'));
+// {{/if}}
 
 const Row = styled.div`
   display: flex;
