@@ -137,9 +137,7 @@ export default function Payment() {
       render: () => (
         <PaymentProvider>
           <MollieCheckout
-            personalDetails={personalDetails}
-            items={items}
-            currency={currency}
+            paymentModel={paymentModel}
             onSuccess={(url) => {
               if (url) window.location = url;
             }}

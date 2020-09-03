@@ -6,14 +6,14 @@ export default async (req, res) => {
     body: { id }
   } = req;
   try {
-    const molliePayment = await getClient().payments.get(id);
+    const mollieOrderData = await getClient().payments.get(id);
     const customerData = await getClient().customers.get(
-      molliePayment.customerId
+      mollieOrderData.customerId
     );
 
     const validCrystallizeOrder = orderNormalizer({
-      crystallizeOrderId: molliePayment.metadata.crystallizeOrderId,
-      orderData: molliePayment,
+      crystallizeOrderId: mollieOrderData.metadata.crystallizeOrderId,
+      mollieOrderData,
       customerData
     });
     const createCrystallizeOrderResponse = await updateCrystallizeOrder(

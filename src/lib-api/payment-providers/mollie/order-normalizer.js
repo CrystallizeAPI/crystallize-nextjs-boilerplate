@@ -43,44 +43,12 @@ function generateMollieProperties(orderData) {
 
 export default function mollieOrderNormalizer({
   crystallizeOrderId,
-  orderData,
+  mollieOrderData,
   customerData,
-  lineItems,
-  personalDetails,
-  currency
+  validPaymentModel
 }) {
   if (crystallizeOrderId) {
-    const orderItemsArray = orderData.metadata.basket.map((lineItem) => {
-      const productMetaData = lineItem.merchant_data
-        ? JSON.parse(lineItem.merchant_data)
-        : {};
-
-      return {
-        name: lineItem.name,
-        sku: lineItem.sku,
-        quantity: lineItem.quantity,
-        subscription: lineItem.subscription,
-        productId: productMetaData.productId,
-        productVariantId: productMetaData.productVariantId,
-        imageUrl: lineItem.image_url,
-        price: {
-          gross: lineItem.gross,
-          net: lineItem.net,
-          currency: 'EUR',
-          discounts: [
-            {
-              percent: 0
-            }
-          ],
-          tax: {
-            name: lineItem.tax_group.name,
-            percent: lineItem.tax_group.percent
-          }
-        }
-      };
-    });
     // TODO: review what happens to the General Order Vat Group on multiple tax groups on order (mult. items having diff vatTypes, is it a thing?)
-    const vatGroup = orderItemsArray[0].price.tax;
 
     const customerName = customerData.name.split(' ');
 
@@ -122,39 +90,31 @@ export default function mollieOrderNormalizer({
           }
         ]
       },
-      cart: orderItemsArray,
       payment: [
         {
           provider: 'custom',
           custom: {
-            properties: generateMollieProperties(orderData)
+            properties: generateMollieProperties(mollieOrderData)
           }
         }
       ],
       total: {
-        gross: parseFloat(orderData.amount.value),
-        net: parseFloat(orderData.amount.value),
-        currency: orderData.amount.currency,
+        gross: parseFloat(mollieOrderData.amount.value),
+        net: parseFloat(mollieOrderData.amount.value),
+        currency: mollieOrderData.amount.currency,
         discounts: [
           {
             percent: 0
           }
-        ],
-        tax: {
-          name: vatGroup.name,
-          percent: vatGroup.percent
-        }
+        ]
       },
       id: crystallizeOrderId,
       additionalInformation: 'STATUS CHECKED'
     };
   } else {
-    let totalGrossCartAmount = 0;
-    let totalNetCartAmount = 0;
+    const { customer, cart, total } = validPaymentModel;
 
-    const orderItemsArray = lineItems.map((lineItem) => {
-      totalGrossCartAmount += lineItem.gross;
-      totalNetCartAmount += lineItem.net;
+    const orderItemsArray = cart.map((lineItem) => {
       return {
         name: lineItem.name,
         sku: lineItem.sku,
@@ -163,32 +123,19 @@ export default function mollieOrderNormalizer({
         productId: lineItem.productId,
         productVariantId: lineItem.productVariantId,
         imageUrl: lineItem.image_url,
-        price: {
-          gross: lineItem.gross,
-          net: lineItem.net,
-          currency: currency,
-          discounts: [
-            {
-              percent: 0
-            }
-          ],
-          tax: {
-            name: lineItem.tax_group.name,
-            percent: lineItem.tax_group.percent
-          }
-        }
+        price: lineItem.price
       };
     });
 
     return {
       customer: {
-        firstName: personalDetails.firstName,
-        lastName: personalDetails.lastName,
+        firstName: customer.firstName,
+        lastName: customer.lastName,
         addresses: [
           {
             type: 'billing',
-            firstName: personalDetails.firstName,
-            lastName: personalDetails.lastName,
+            firstName: customer.firstName,
+            lastName: customer.lastName,
             street: 'Test line1',
             street2: 'Test line2',
             postalCode: 'Test postal_code',
@@ -196,25 +143,15 @@ export default function mollieOrderNormalizer({
             state: 'Test state',
             country: 'Test country',
             phone: 'Test Phone',
-            email: personalDetails.email
+            email: customer.addresses[0]?.email
           }
         ]
       },
       cart: orderItemsArray,
 
       total: {
-        gross: totalGrossCartAmount,
-        net: totalNetCartAmount,
-        currency: currency,
-        discounts: [
-          {
-            percent: 0
-          }
-        ],
-        tax: {
-          name: lineItems[0].tax_group.name,
-          percent: lineItems[0].tax_group.percent
-        }
+        ...total,
+        tax: cart[0].price.tax
       },
       additionalInformation: JSON.stringify({ status: 'initiated' })
     };

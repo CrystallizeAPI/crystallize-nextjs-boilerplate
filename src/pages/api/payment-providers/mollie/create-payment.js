@@ -2,23 +2,26 @@
 import getHost from 'lib-api/util/get-host';
 import { getClient, orderNormalizer } from 'lib-api/payment-providers/mollie';
 import { createCrystallizeOrder } from 'lib-api/crystallize/order';
+import { validatePaymentModel } from 'lib-api/util/checkout';
 
-function getTotalAmount(acc, lineItem) {
-  return acc + lineItem.net * lineItem.quantity;
-}
-
-function orderTomollieBody({ basket, customerId, host, orderId }) {
-  const totalCartAmount = basket.lineItems.reduce(getTotalAmount, 0);
-  const shippingCost = 0;
+function orderTomollieBody({
+  multilingualUrlPrefix,
+  basket,
+  locale,
+  total,
+  customerId,
+  host,
+  orderId
+}) {
   return {
     amount: {
-      currency: 'EUR',
-      value: `${totalCartAmount.toFixed(2)}`
+      currency: locale.defaultCurrency,
+      value: `${total.gross.toFixed(2)}`
     },
     customerId,
     sequenceType: 'first',
     description: 'Mollie test transaction',
-    redirectUrl: `${host}/confirmation/mollie/${orderId}`,
+    redirectUrl: `${host}${multilingualUrlPrefix}/confirmation/mollie/${orderId}`,
     webhookUrl: `${host}/api/payment-providers/mollie/order-update`,
     metadata: { crystallizeOrderId: orderId, basket: basket.lineItems }
   };
@@ -26,24 +29,20 @@ function orderTomollieBody({ basket, customerId, host, orderId }) {
 
 export default async (req, res) => {
   try {
-    const {
-      personalDetails,
-      multilingualUrlPrefix,
-      lineItems,
-      currency
-    } = req.body;
+    const { paymentModel } = req.body;
+    const { multilingualUrlPrefix, customer, locale } = paymentModel;
+
+    const validPaymentModel = await validatePaymentModel({ paymentModel });
     const host = getHost(req);
 
     const mollieCustomer = await getClient().customers.create({
-      name: `${personalDetails.firstName} ${personalDetails.lastName}`,
-      email: personalDetails.email
+      name: `${customer.firstName} ${customer.lastName}`,
+      email: customer.addresses[0].email
     });
 
     // disable if you want subscriptions
     const validCrystallizeOrder = orderNormalizer({
-      lineItems,
-      currency,
-      personalDetails
+      validPaymentModel
     });
     // disable if you want subscriptions
     const createCrystallizeOrderResponse = await createCrystallizeOrder(
@@ -53,8 +52,10 @@ export default async (req, res) => {
     // swap with subscriptions if you want to activate a subscription for a customer
     const mollieResponse = await getClient().payments.create(
       orderTomollieBody({
-        basket: req.body,
-        personalDetails,
+        multilingualUrlPrefix,
+        basket: validPaymentModel.cart,
+        locale,
+        total: validPaymentModel.total,
         orderId: createCrystallizeOrderResponse.data.orders.create.id,
         customerId: mollieCustomer.id,
         host
@@ -75,7 +76,7 @@ export default async (req, res) => {
     //   customerId: mollieCustomer.id,
     //   amount: orderTomollieBody({
     //     basket: req.body,
-    //     personalDetails,
+    //     customer,
     //     orderId: createCrystallizeOrderResponse.data.orders.create.id,
     //     customerId: mollieCustomer.id,
     //     host
