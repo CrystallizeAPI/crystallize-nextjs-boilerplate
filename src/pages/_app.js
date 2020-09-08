@@ -3,8 +3,8 @@ import { AuthProvider } from 'components/auth-context';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
 import { simplyFetchFromGraph } from 'lib/graph';
-import { getLocaleFromContext } from 'lib/app-config';
-import { I18nextProvider, defaultLocale } from 'lib/i18n';
+import { getLocaleFromContext, defaultLocale } from 'lib/app-config';
+import { I18nextProvider } from 'lib/i18n';
 
 function MyApp({ Component, pageProps, commonData }) {
   const { tenant, mainNavigation, locale, localeResource } = commonData;
