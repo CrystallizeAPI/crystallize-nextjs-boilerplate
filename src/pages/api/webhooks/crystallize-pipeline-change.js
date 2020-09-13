@@ -3,7 +3,7 @@ import { updateCrystallizeOrder } from 'lib-api/crystallize/order';
 
 export default async (req, res) => {
   const {
-    orders: { get: order }
+    order: { get: order }
   } = req.body;
 
   const inStages = order.pipelines.map(({ pipeline, stageId }) => ({
