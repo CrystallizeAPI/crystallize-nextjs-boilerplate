@@ -14,7 +14,6 @@ export default async (req, res) => {
       validCrystallizeOrder
     );
 
-    console.log('acknowledge', klarnaOrderId);
     await client.ordermanagementV1.orders.acknowledge(klarnaOrderId);
 
     await emailOrderConfirmation(createCrystallizeOrderResponse);
