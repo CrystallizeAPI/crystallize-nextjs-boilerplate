@@ -1,7 +1,9 @@
-import { getClient } from './index';
+import { client } from './index';
 
 export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
-  const { order, success } = await getClient().getOrder(klarnaOrderId);
+  const { order, success } = await client.checkoutV3.retrieveOrder(
+    klarnaOrderId
+  );
 
   if (!success) {
     throw new Error('Could not get Klarna order');
