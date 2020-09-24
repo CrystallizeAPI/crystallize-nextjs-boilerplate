@@ -12,21 +12,17 @@ export default function ProductItem({ data }) {
   if (!data) {
     return null;
   }
-  let image;
-
   const { name, path, type, variants } = data;
-  const { price, image: i } = variants
+  const { price, image } = variants
     ? variants.find((variant) => variant.isDefault)
     : {};
-
-  image = i;
 
   return (
     <Link as={path} href="/[...catalogue]" passHref>
       <Outer type={type}>
         <Inner>
           <ImageWrapper>
-            {image && <Img {...image} alt={name} sizes={`250px`} />}
+            {image && <Img {...image} alt={name} sizes="250px" />}
           </ImageWrapper>
 
           <Text>
