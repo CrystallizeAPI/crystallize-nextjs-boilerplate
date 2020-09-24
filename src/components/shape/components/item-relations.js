@@ -2,9 +2,7 @@ import styled from 'styled-components';
 
 import { responsive } from 'ui';
 
-import DocumentItem from 'components/items/document-item';
-import FolderItem from 'components/items/folder-item';
-import ProductItem from 'components/items/product-item';
+import ItemMicroformat from 'components/item-microformat';
 
 const Outer = styled.ul`
   display: grid;
@@ -24,17 +22,6 @@ const Outer = styled.ul`
 
 const ListItem = styled.li``;
 
-function Item({ type, ...rest }) {
-  switch (type) {
-    case 'product':
-      return <ProductItem data={rest} />;
-    case 'folder':
-      return <FolderItem data={rest} />;
-    default:
-      return <DocumentItem data={rest} />;
-  }
-}
-
 export default function ItemRelations({ items }) {
   if (!items) {
     return null;
@@ -44,7 +31,7 @@ export default function ItemRelations({ items }) {
     <Outer>
       {items.map((item) => (
         <ListItem key={item.id}>
-          <Item {...item} />
+          <ItemMicroformat {...item} />
         </ListItem>
       ))}
     </Outer>

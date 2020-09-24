@@ -5,7 +5,7 @@ import { H1, Header, Outer } from 'ui';
 import Layout from 'components/layout';
 import { simplyFetchFromGraph } from 'lib/graph';
 import ShapeComponents from 'components/shape/components';
-import items from 'components/items';
+import ItemMicroformat from 'components/item-microformat';
 import { useT } from 'lib/i18n';
 
 import query from './query';
@@ -63,7 +63,9 @@ export default function DocumentPage({ document, preview }) {
             })}
           </H2>
           <List>
-            {relatedProducts.content.items.map((item) => items(item))}
+            {relatedProducts.content.items.map((item, i) => (
+              <ItemMicroformat key={i} item={item} />
+            ))}
           </List>
         </Related>
       )}

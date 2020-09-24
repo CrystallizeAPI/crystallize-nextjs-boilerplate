@@ -5,7 +5,7 @@ import { Outer, Header, H1 } from 'ui';
 import Layout from 'components/layout';
 import Grid, { GridItem } from 'components/grid';
 import ShapeComponents from 'components/shape/components';
-import items from 'components/items';
+import ItemMicroformat from 'components/item-microformat';
 
 import { List } from './styles';
 import query from './query';
@@ -48,7 +48,13 @@ export default function FolderPage({ folder, preview }) {
                 )}
               />
             ))
-          : children && <List>{children.map((item) => items(item))}</List>}
+          : children && (
+              <List>
+                {children.map((item, i) => (
+                  <ItemMicroformat item={item} key={i} />
+                ))}
+              </List>
+            )}
       </Outer>
     </Layout>
   );
