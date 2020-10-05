@@ -88,7 +88,7 @@ export async function validatePaymentModel({ paymentModel }) {
             gross,
             net,
             tax: vatType,
-            currency: locale.defaultCurrency,
+            currency: locale.fallbackCurrency,
             discounts: [
               {
                 percent: 0
@@ -109,7 +109,7 @@ export async function validatePaymentModel({ paymentModel }) {
     },
     { gross: 0, net: 0 }
   );
-  total.currency = locale.defaultCurrency;
+  total.currency = locale.fallbackCurrency;
   total.discounts = [
     {
       percent: 0

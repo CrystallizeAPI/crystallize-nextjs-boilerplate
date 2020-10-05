@@ -12,7 +12,11 @@ export default `
       id
       name
       sku
-      price
+      priceVariants {
+        identifier
+        price
+        currency
+      }
       stock
       isDefault
       attributes {
@@ -167,7 +171,11 @@ export default `
             language
             ... on Product {
               defaultVariant {
-                price
+                priceVariants {
+                  identifier
+                  price
+                  currency
+                }
                 isDefault
                 name
                 image {

@@ -15,7 +15,7 @@ function orderTomollieBody({
 }) {
   return {
     amount: {
-      currency: locale.defaultCurrency,
+      currency: locale.fallbackCurrency,
       value: `${total.gross.toFixed(2)}`
     },
     customerId,

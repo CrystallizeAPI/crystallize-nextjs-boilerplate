@@ -66,7 +66,12 @@ export default function TinyBasketItem({ actions, item }) {
           </PriceWrap>
 
           <PriceVat>
-            <span>{t('common.vat', { value: item.price?.vat })}</span>
+            <span>
+              {t('common.vat', {
+                value: item.price?.vat,
+                currency: item.price?.currency
+              })}
+            </span>
           </PriceVat>
         </PriceWrapper>
       </ItemInfo>

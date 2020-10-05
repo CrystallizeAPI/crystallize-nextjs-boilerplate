@@ -8,7 +8,7 @@ export default async (req, res) => {
 
     const paymentIntent = await getClient().paymentIntents.create({
       amount: validPaymentModel.total.gross * 100,
-      currency: validPaymentModel.locale.defaultCurrency
+      currency: validPaymentModel.locale.fallbackCurrency
     });
 
     return res.json(paymentIntent);

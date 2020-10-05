@@ -7,7 +7,9 @@
       "urlPrefix": "",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
-      "defaultCurrency": "USD"
+      "fallbackCurrency": "USD",
+      "fallbackPriceVariant": "default",
+      "priceVariant": "membership"
     }
   ]
 }
