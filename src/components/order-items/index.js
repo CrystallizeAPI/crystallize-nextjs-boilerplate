@@ -30,10 +30,17 @@ const OrderItems = ({ cart }) => (
         </ItemInfo>
         <ItemAmount>
           <ItemQuantity>
-            {item.quantity} x <CurrencyValue value={item.price.gross} />
+            {item.quantity} x{' '}
+            <CurrencyValue
+              value={item.price.gross}
+              currency={item.price.currency}
+            />
           </ItemQuantity>
           <ItemPrice>
-            <CurrencyValue value={item.price.gross * item.quantity} />
+            <CurrencyValue
+              value={item.price.gross * item.quantity}
+              currency={item.price.currency}
+            />
           </ItemPrice>
         </ItemAmount>
       </Item>

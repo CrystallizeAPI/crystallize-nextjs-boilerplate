@@ -92,13 +92,13 @@ export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
 
                   return {
                     vatType,
-                    ...variant,
                     price: {
                       gross,
                       net,
                       vat,
                       currency
-                    }
+                    },
+                    ...variant
                   };
                 }
                 return null;

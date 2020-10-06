@@ -19,9 +19,11 @@ import {
   PriceVat,
   drawAttentionDuration
 } from './styles';
+import { useLocale } from 'lib/app-config';
 
 export default function TinyBasketItem({ actions, item }) {
   const t = useT();
+  const locale = useLocale();
   const [drawAttention, setDrawAttention] = useState(false);
 
   const { attributes, addItemTime } = item;
@@ -61,15 +63,18 @@ export default function TinyBasketItem({ actions, item }) {
         <PriceWrapper>
           <PriceWrap>
             <Price>
-              <CurrencyValue value={item.price?.gross} />
+              <CurrencyValue
+                value={item.price?.gross ?? 0}
+                currency={item.price?.currency ?? locale.fallbackCurrency}
+              />
             </Price>
           </PriceWrap>
 
           <PriceVat>
             <span>
               {t('common.vat', {
-                value: item.price?.vat,
-                currency: item.price?.currency
+                value: item.price?.vat ?? 0,
+                currency: item.price?.currency ?? locale.fallbackCurrency
               })}
             </span>
           </PriceVat>

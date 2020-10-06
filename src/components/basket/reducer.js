@@ -118,10 +118,12 @@ export default produce(function reducer(draft, { action, ...rest }) {
 
   // Calculate totals
   draft.total = draft.cart.reduce(
-    (acc, { quantity, extended }) => {
+    (acc, curr) => {
+      const { quantity, extended } = curr;
       if (extended) {
         acc.gross += extended.price.gross * quantity;
         acc.net += extended.price.net * quantity;
+        acc.currency = extended.price.currency;
       }
       acc.quantity += quantity;
       return acc;

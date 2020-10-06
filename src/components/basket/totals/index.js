@@ -14,7 +14,9 @@ export const Totals = () => {
       <Rows>
         <Row modifier="total-price">
           <span>{t('basket.totalPrice')}:</span>
-          <span>{t('common.price', { value: total.net })}</span>
+          <span>
+            {t('common.price', { value: total.net, currency: total.currency })}
+          </span>
         </Row>
         {/* {discount && (
           <>
@@ -33,11 +35,18 @@ export const Totals = () => {
 
         <Row modifier="total-vat">
           <span>{t('basket.vat')}:</span>
-          <span>{t('common.price', { value: total.vat })}</span>
+          <span>
+            {t('common.price', { value: total.vat, currency: total.currency })}
+          </span>
         </Row>
         <Row modifier="to-pay">
           <span>{t('basket.totalToPay')}:</span>
-          <span>{t('common.price', { value: total.gross })}</span>
+          <span>
+            {t('common.price', {
+              value: total.gross,
+              currency: total.currency
+            })}
+          </span>
         </Row>
       </Rows>
     </Outer>
