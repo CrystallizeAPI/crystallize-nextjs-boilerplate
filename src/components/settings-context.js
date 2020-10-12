@@ -1,22 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 
 // A simple context for handling the current settings
 export const SettingsContext = React.createContext({
-  currency: 'eur',
   mainNavigation: []
 });
 
 export const useSettings = () => useContext(SettingsContext);
 
-export const SettingsProvider = ({
-  currency: cur,
-  mainNavigation,
-  children
-}) => {
-  const [currency, setCurrency] = useState(cur);
-
+export const SettingsProvider = ({ mainNavigation, children }) => {
   return (
-    <SettingsContext.Provider value={{ currency, setCurrency, mainNavigation }}>
+    <SettingsContext.Provider value={{ mainNavigation }}>
       {children}
     </SettingsContext.Provider>
   );

@@ -7,7 +7,6 @@ import { useBasket } from 'components/basket';
 import OrderItems from 'components/order-items';
 import { H1, H3, Outer, Header } from 'ui';
 import { useT } from 'lib/i18n';
-import { CurrencyValue } from 'components/currency-value';
 
 import BillingDetails from './billing-details';
 
@@ -38,7 +37,6 @@ const TotalLine = styled.div`
 export default function Confirmation({ order: orderData }) {
   const basket = useBasket();
   const t = useT();
-
   const [emptied, setEmptied] = useState(false);
 
   useEffect(() => {
@@ -89,11 +87,16 @@ export default function Confirmation({ order: orderData }) {
           <OrderItems cart={cart} />
           <Totals>
             <TotalLine bold>
-              {t('order.total')}: <CurrencyValue value={total.gross} />
+              {t('order.total')}:{' '}
+              {t('common.price', {
+                value: total.gross,
+                currency: total.currency
+              })}
             </TotalLine>
             <TotalLine>
               {t('common.vat', {
-                value: total.gross - total.net
+                value: total.gross - total.net,
+                currency: total.currency
               })}
             </TotalLine>
           </Totals>

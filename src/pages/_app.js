@@ -7,15 +7,12 @@ import { getLocaleFromContext, defaultLocale } from 'lib/app-config';
 import { I18nextProvider } from 'lib/i18n';
 
 function MyApp({ Component, pageProps, commonData }) {
-  const { tenant, mainNavigation, locale, localeResource } = commonData;
+  const { mainNavigation, locale, localeResource } = commonData;
   return (
     <>
       <MetaTags />
       <I18nextProvider locale={locale} localeResource={localeResource}>
-        <SettingsProvider
-          currency={tenant.defaults.currency}
-          mainNavigation={mainNavigation}
-        >
+        <SettingsProvider mainNavigation={mainNavigation}>
           <AuthProvider>
             <BasketProvider>
               <Component {...pageProps} />
@@ -56,9 +53,6 @@ MyApp.getInitialProps = async function ({ ctx }) {
 
           tenant(language: $language) {
             name
-            defaults {
-              currency
-            }
           }
         }
       `,
@@ -84,11 +78,7 @@ MyApp.getInitialProps = async function ({ ctx }) {
       commonData: {
         mainNavigation: [],
         locale: defaultLocale,
-        tenant: {
-          defaults: {
-            currency: 'usd'
-          }
-        }
+        tenant: {}
       }
     };
   }

@@ -4,10 +4,9 @@ import { getClient, orderNormalizer } from 'lib-api/payment-providers/mollie';
 import { createCrystallizeOrder } from 'lib-api/crystallize/order';
 import { validatePaymentModel } from 'lib-api/util/checkout';
 
-function orderTomollieBody({
+function orderToMollieBody({
   multilingualUrlPrefix,
   basket,
-  locale,
   total,
   customerId,
   host,
@@ -15,7 +14,7 @@ function orderTomollieBody({
 }) {
   return {
     amount: {
-      currency: locale.fallbackCurrency,
+      currency: total.currency,
       value: `${total.gross.toFixed(2)}`
     },
     customerId,
@@ -30,7 +29,7 @@ function orderTomollieBody({
 export default async (req, res) => {
   try {
     const { paymentModel } = req.body;
-    const { multilingualUrlPrefix, customer, locale } = paymentModel;
+    const { multilingualUrlPrefix, customer } = paymentModel;
 
     const validPaymentModel = await validatePaymentModel({ paymentModel });
     const host = getHost(req);
@@ -51,10 +50,9 @@ export default async (req, res) => {
 
     // swap with subscriptions if you want to activate a subscription for a customer
     const mollieResponse = await getClient().payments.create(
-      orderTomollieBody({
+      orderToMollieBody({
         multilingualUrlPrefix,
         basket: validPaymentModel.cart,
-        locale,
         total: validPaymentModel.total,
         orderId: createCrystallizeOrderResponse.data.orders.create.id,
         customerId: mollieCustomer.id,
@@ -74,7 +72,7 @@ export default async (req, res) => {
 
     // await getClient().customers_subscriptions.create({
     //   customerId: mollieCustomer.id,
-    //   amount: orderTomollieBody({
+    //   amount: orderToMollieBody({
     //     basket: req.body,
     //     customer,
     //     orderId: createCrystallizeOrderResponse.data.orders.create.id,

@@ -43,7 +43,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
     case 'remove-item':
     case 'increment-item':
     case 'decrement-item': {
-      const { sku, path } = rest;
+      const { sku, path, priceVariantIdentifier = 'default' } = rest;
 
       if (!sku || !path) {
         throw new Error(`Please provide "sku" and "path" for ${action}`);
@@ -67,7 +67,8 @@ export default produce(function reducer(draft, { action, ...rest }) {
         if (!['remove-item', 'decrement-item'].includes(action)) {
           draft.cart.push({
             sku,
-            path
+            path,
+            priceVariantIdentifier
           });
         }
       }

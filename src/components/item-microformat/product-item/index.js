@@ -19,9 +19,7 @@ export default function ProductItem({ data }) {
     ? variants.find((variant) => variant.isDefault)
     : {};
   const { price, currency } = priceVariants.find(
-    (pv) =>
-      pv.identifier === locale.priceVariant ||
-      pv.identifier === locale.fallbackPriceVariant
+    (pv) => pv.identifier === locale.priceVariant
   );
 
   return (

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useT } from 'lib/i18n';
-import { CurrencyValue } from 'components/currency-value';
 import { responsive, H3 } from 'ui';
 
 const Outer = styled.div`
@@ -40,12 +39,6 @@ const BillingDetails = ({ order }) => {
         </p>
         <p>
           {t('customer.email')}: <strong>{email}</strong>
-        </p>
-        <p>
-          {t('order.total')}:{' '}
-          <strong>
-            <CurrencyValue value={order.total.gross} />
-          </strong>
         </p>
       </Inner>
     </Outer>

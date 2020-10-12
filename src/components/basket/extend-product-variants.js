@@ -81,13 +81,11 @@ export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
                     (v) => v.sku === cartItem.sku
                   );
                   const { price, currency } = variant.priceVariants.find(
-                    (pv) =>
-                      pv.identifier === locale.priceVariant ||
-                      pv.identifier === locale.fallbackPriceVariant
+                    (pv) => pv.identifier === locale.priceVariant
                   );
 
                   const gross = price;
-                  const net = (price / (100 + vatType.percent)) * 100;
+                  const net = (price * 100) / (100 + vatType.percent);
                   const vat = gross - net;
 
                   return {

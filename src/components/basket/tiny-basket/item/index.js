@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import AttributeList from 'components/attribute-list';
-import { CurrencyValue } from 'components/currency-value';
 import { useT } from 'lib/i18n';
 
 import {
@@ -19,25 +18,25 @@ import {
   PriceVat,
   drawAttentionDuration
 } from './styles';
-import { useLocale } from 'lib/app-config';
 
 export default function TinyBasketItem({ actions, item }) {
   const t = useT();
-  const locale = useLocale();
   const [drawAttention, setDrawAttention] = useState(false);
 
-  const { attributes, addItemTime } = item;
+  const { id, attributes, addItemTime, images } = item;
 
   // Draw users attention when the item is added to the basket
   useEffect(() => {
-    setDrawAttention(true);
+    if (id) {
+      setDrawAttention(true);
 
-    let timeout = setTimeout(
-      () => setDrawAttention(false),
-      drawAttentionDuration
-    );
-    return () => clearTimeout(timeout);
-  }, [addItemTime]);
+      let timeout = setTimeout(
+        () => setDrawAttention(false),
+        drawAttentionDuration
+      );
+      return () => clearTimeout(timeout);
+    }
+  }, [id, addItemTime]);
 
   function increment() {
     actions.incrementItem(item);
@@ -51,9 +50,14 @@ export default function TinyBasketItem({ actions, item }) {
     actions.removeItem(item);
   }
 
+  // Data is not fetched from the API yet
+  if (!id) {
+    return null;
+  }
+
   return (
     <Item animate={drawAttention}>
-      <ItemImage {...item.images?.[0]} />
+      <ItemImage {...images?.[0]} />
       <ItemInfo>
         <Row>
           <ItemName>{item.name}</ItemName>
@@ -63,10 +67,10 @@ export default function TinyBasketItem({ actions, item }) {
         <PriceWrapper>
           <PriceWrap>
             <Price>
-              <CurrencyValue
-                value={item.price?.gross ?? 0}
-                currency={item.price?.currency ?? locale.fallbackCurrency}
-              />
+              {t('common.price', {
+                value: item.price?.gross ?? 0,
+                currency: item.price?.currency
+              })}
             </Price>
           </PriceWrap>
 
@@ -74,7 +78,7 @@ export default function TinyBasketItem({ actions, item }) {
             <span>
               {t('common.vat', {
                 value: item.price?.vat ?? 0,
-                currency: item.price?.currency ?? locale.fallbackCurrency
+                currency: item.price?.currency
               })}
             </span>
           </PriceVat>

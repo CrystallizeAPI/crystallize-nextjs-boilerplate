@@ -20,7 +20,7 @@ export default async function klarnaOrderNormalizer({ klarnaOrderId }) {
       : {};
 
     const gross = lineItem.unit_price / 100;
-    const net = (gross / (100 + productMetaData.taxGroup.percent || 0)) * 100;
+    const net = (gross * 100) / (100 + productMetaData.taxGroup.percent || 0);
 
     total.net += net * lineItem.quantity;
     total.gross += gross * lineItem.quantity;

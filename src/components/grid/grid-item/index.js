@@ -32,9 +32,7 @@ export default function GridItem({ data, gridCell }) {
       : defaultVariant;
 
     const { price, currency } = priceVariants.find(
-      (pv) =>
-        pv.identifier === locale.priceVariant ||
-        pv.identifier === locale.fallbackPriceVariant
+      (pv) => pv.identifier === locale.priceVariant
     );
 
     image = i;
