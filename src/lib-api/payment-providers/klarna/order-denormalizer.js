@@ -46,20 +46,20 @@ export default function klarnaOrderDenormalizer(orderData) {
           },
           cart: denormalizedCart,
           customer: {
-            firstName: orderData.billing_address.given_name,
-            lastName: orderData.billing_address.family_name,
+            firstName: orderData.billing_address.given_name || null,
+            lastName: orderData.billing_address.family_name || null,
             addresses: [
               {
                 type: 'billing',
-                street: orderData.billing_address.street_address,
-                street2: orderData.billing_address.street_address2,
-                email: orderData.billing_address.email
+                street: orderData.billing_address.street_address || null,
+                street2: orderData.billing_address.street_address2 || null,
+                email: orderData.billing_address.email || null
               },
               {
                 type: 'shipping',
-                street: orderData.shipping_address.street_address,
-                street2: orderData.shipping_address.street_address2,
-                email: orderData.shipping_address.email
+                street: orderData.shipping_address.street_address || null,
+                street2: orderData.shipping_address.street_address2 || null,
+                email: orderData.shipping_address.email || null
               }
             ]
           }

@@ -5,17 +5,19 @@
  * Crystallize (https://crystallize.com/learn/developer-guides/order-api/fulfilment-pipelines)
  */
 
-import { getClient } from 'lib-api/payment-providers/klarna';
+import { client } from 'lib-api/payment-providers/klarna';
 
 export default async (req, res) => {
   try {
     const klarnaOrderId = req.query.id;
 
-    const { success, ...rest } = await getClient().captureOrder(klarnaOrderId);
+    const { error, response } = await client.ordermanagementV1.captures.capture(
+      klarnaOrderId
+    );
 
     return res.status(200).send({
-      success,
-      ...rest
+      success: !error,
+      ...response
     });
   } catch (error) {
     return res.status(503).send({

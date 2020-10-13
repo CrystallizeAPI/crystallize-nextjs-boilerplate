@@ -1,4 +1,4 @@
-import { getClient } from 'lib-api/payment-providers/klarna';
+import { client } from 'lib-api/payment-providers/klarna';
 import getHost from 'lib-api/util/get-host';
 import { validatePaymentModel } from 'lib-api/util/checkout';
 
@@ -57,33 +57,34 @@ export default async (req, res) => {
 
     const { multilingualUrlPrefix, metadata } = paymentModel;
     const klarnaOrderId = metadata?.klarnaOrderId;
-    let response;
-
+    console.log({ klarnaOrderId });
     if (klarnaOrderId) {
-      response = await getClient().updateOrder(klarnaOrderId, {
-        ...orderToKlarnaCart(validPaymentModel),
-        purchase_country: 'NO',
-        purchase_currency: validPaymentModel.total.currency || 'NOK',
-        locale: 'no-nb',
-        merchant_urls: {
-          terms: `${host}${multilingualUrlPrefix}/checkout`,
-          checkout: `${host}${multilingualUrlPrefix}/checkout`,
-          confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
-          push: `${host}/api/payment-providers/klarna/order-persistence?id={checkout.order.id}`
+      const { error, response } = await client.checkoutV3.updateOrder(
+        klarnaOrderId,
+        {
+          ...orderToKlarnaCart(validPaymentModel),
+          purchase_country: 'NO',
+          purchase_currency: validPaymentModel.total.currency || 'NOK',
+          locale: 'no-nb',
+          merchant_urls: {
+            terms: `${host}${multilingualUrlPrefix}/checkout`,
+            checkout: `${host}${multilingualUrlPrefix}/checkout`,
+            confirmation: `${host}${multilingualUrlPrefix}/confirmation/klarna/{checkout.order.id}`,
+            push: `${host}/api/payment-providers/klarna/order-persistence?id={checkout.order.id}`
+          }
         }
-      });
+      );
 
-      const { success, order } = response;
-
-      if (success) {
+      if (!error) {
         return res.json({
           success: true,
-          html: order.html_snippet,
-          order_id: order.order_id
+          html: response.html_snippet,
+          order_id: response.order_id
         });
       }
     }
-    response = await getClient().createOrder({
+
+    const { error, response } = await client.checkoutV3.createOrder({
       ...orderToKlarnaCart(validPaymentModel),
       purchase_country: 'NO',
       purchase_currency: validPaymentModel.total.currency || 'NOK',
@@ -96,13 +97,11 @@ export default async (req, res) => {
       }
     });
 
-    const { success, order, error } = response;
-
-    if (success) {
+    if (!error) {
       return res.json({
         success: true,
-        html: order.html_snippet,
-        order_id: order.order_id
+        html: response.html_snippet,
+        order_id: response.order_id
       });
     }
     return res.json({
@@ -110,6 +109,7 @@ export default async (req, res) => {
       error
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       success: false,
       error: error.stack
