@@ -16,7 +16,8 @@ export default function klarnaOrderDenormalizer(orderData) {
         price: {
           net: (total_amount - total_tax_amount) / quantity / 100,
           gross: unit_price / 100,
-          currency: orderLine.purchase_currency || null
+          currency:
+            orderLine.purchase_currency || orderData.purchase_currency || null
         },
         imageUrl: orderLine.image_url || null
       };

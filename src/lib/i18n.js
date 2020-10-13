@@ -12,11 +12,6 @@ export const useT = () => {
 export function I18nextProvider({ locale, localeResource, children }) {
   const lng = locale.appLanguage;
 
-  const currencyFormatter = new Intl.NumberFormat(locale, {
-    style: 'currency',
-    currency: locale.defaultCurrency
-  });
-
   i18n.init({
     resources: {
       [lng]: localeResource
@@ -25,13 +20,16 @@ export function I18nextProvider({ locale, localeResource, children }) {
 
     interpolation: {
       escapeValue: false, // react already safe from xss
-      format: function (value, format) {
+      format: function (value, format, _, { currency }) {
         if (format === 'uppercase') {
           return value.toUpperCase();
         }
 
-        if (format === 'currency') {
-          return currencyFormatter.format(value);
+        if (format === 'currency' && currency) {
+          return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency
+          }).format(value);
         }
 
         return value;

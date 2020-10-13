@@ -23,7 +23,11 @@ async function getProducts({ paths, locale }) {
               sku
               name
               stock
-              price
+              priceVariants {
+                price
+                identifier
+                currency
+              }
               attributes {
                 attribute
                 value
@@ -42,7 +46,6 @@ async function getProducts({ paths, locale }) {
       )}
     }`
   });
-
 
   return paths.map((_, i) => response.data[`product${i}`]).filter((p) => !!p);
 }
@@ -74,12 +77,15 @@ export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
                 );
                 if (product) {
                   const { vatType } = product;
-                  const { price, ...variant } = product.variants.find(
+                  const variant = product.variants.find(
                     (v) => v.sku === cartItem.sku
+                  );
+                  const { price, currency } = variant.priceVariants.find(
+                    (pv) => pv.identifier === locale.priceVariant
                   );
 
                   const gross = price;
-                  const net = (price / (100 + vatType.percent)) * 100;
+                  const net = (price * 100) / (100 + vatType.percent);
                   const vat = gross - net;
 
                   return {
@@ -88,7 +94,7 @@ export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
                       gross,
                       net,
                       vat,
-                      currency: locale.defaultCurrency
+                      currency
                     },
                     ...variant
                   };

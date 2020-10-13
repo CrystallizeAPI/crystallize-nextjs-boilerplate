@@ -8,9 +8,10 @@ export async function validatePaymentModel({ paymentModel }) {
     multilingualUrlPrefix,
     metadata
   } = paymentModel;
-  const productVariantsToValidate = cart.map(({ sku, path }) => ({
+  const productVariantsToValidate = cart.map(({ sku, path, priceVariant }) => ({
     sku,
-    path
+    path,
+    priceVariant
   }));
 
   const response = await simplyFetchFromGraph({
@@ -30,7 +31,12 @@ export async function validatePaymentModel({ paymentModel }) {
                   sku
                   name
                   stock
-                  price
+                  priceVariants {
+                    identifier
+                    name
+                    price
+                    currency
+                  }
                   attributes {
                     attribute
                     value
@@ -62,13 +68,16 @@ export async function validatePaymentModel({ paymentModel }) {
         const {
           id: productVariantId,
           name,
-          price,
           images,
-          sku
+          sku,
+          priceVariants
         } = product.variants.find((v) => v.sku === cartItem.sku);
+        const { price, currency } = priceVariants.find(
+          (v) => v.identifier === (cartItem.priceVariant || locale.priceVariant)
+        );
 
         const gross = price;
-        const net = (price / (100 + vatType.percent)) * 100;
+        const net = (price * 100) / (100 + vatType.percent);
 
         // Get a small preview of the first image
         const image = images[0];
@@ -88,7 +97,7 @@ export async function validatePaymentModel({ paymentModel }) {
             gross,
             net,
             tax: vatType,
-            currency: locale.defaultCurrency,
+            currency,
             discounts: [
               {
                 percent: 0
@@ -109,14 +118,13 @@ export async function validatePaymentModel({ paymentModel }) {
     },
     { gross: 0, net: 0 }
   );
-  total.currency = locale.defaultCurrency;
+  total.currency = validatedCart[0].price.currency;
+  total.tax = validatedCart[0].vatType;
   total.discounts = [
     {
       percent: 0
     }
   ];
-
-  total.tax = validatedCart[0].vatType;
 
   return {
     locale,

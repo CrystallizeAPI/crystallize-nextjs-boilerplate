@@ -43,7 +43,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
     case 'remove-item':
     case 'increment-item':
     case 'decrement-item': {
-      const { sku, path } = rest;
+      const { sku, path, priceVariantIdentifier = 'default' } = rest;
 
       if (!sku || !path) {
         throw new Error(`Please provide "sku" and "path" for ${action}`);
@@ -67,7 +67,8 @@ export default produce(function reducer(draft, { action, ...rest }) {
         if (!['remove-item', 'decrement-item'].includes(action)) {
           draft.cart.push({
             sku,
-            path
+            path,
+            priceVariantIdentifier
           });
         }
       }
@@ -118,10 +119,12 @@ export default produce(function reducer(draft, { action, ...rest }) {
 
   // Calculate totals
   draft.total = draft.cart.reduce(
-    (acc, { quantity, extended }) => {
+    (acc, curr) => {
+      const { quantity, extended } = curr;
       if (extended) {
         acc.gross += extended.price.gross * quantity;
         acc.net += extended.price.net * quantity;
+        acc.currency = extended.price.currency;
       }
       acc.quantity += quantity;
       return acc;

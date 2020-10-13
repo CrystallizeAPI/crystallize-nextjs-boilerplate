@@ -1,5 +1,10 @@
 {
-  "paymentProviders": ["stripe", "vipps", "klarna", "mollie"],
+  "paymentProviders": [
+    "stripe",
+    "vipps",
+    "klarna",
+    "mollie"
+  ],
   "locales": [
     {
       "isDefault": true,
@@ -7,7 +12,7 @@
       "urlPrefix": "",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
-      "defaultCurrency": "USD"
+      "priceVariant": "default"
     }
   ]
 }
