@@ -72,10 +72,13 @@ export const ItemImage = styled(CrystallizeImage).attrs(() => ({
   sizes: '50px'
 }))`
   width: 50px;
+  position: relative;
+
   img {
-    top: 50%;
-    position: relative;
-    transform: translateY(-50%);
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 `;
 
