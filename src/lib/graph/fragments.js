@@ -125,7 +125,11 @@ export default `
       path
       ... on Product {
         variants {
-          price
+          priceVariants {
+            identifier
+            price
+            currency
+          }
           isDefault
           name
           image {
