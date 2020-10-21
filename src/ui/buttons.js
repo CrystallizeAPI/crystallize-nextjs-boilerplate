@@ -5,7 +5,7 @@ import { isNot } from 'styled-is';
 import { Spinner } from './spinner';
 
 const STATES = {
-  LOADING: 'loading',
+  LOADING: 'loading'
 };
 
 const Inner = styled.span`
@@ -20,7 +20,7 @@ const Inner = styled.span`
 `;
 
 const Outer = styled.button.attrs((p) => ({
-  type: p.type || 'button',
+  type: p.type || 'button'
 }))`
   min-width: ${(p) => (p.width ? p.width : '120px')};
   display: inline-flex;
@@ -39,6 +39,7 @@ const Outer = styled.button.attrs((p) => ({
 
   &[disabled] {
     cursor: default;
+    opacity: 0.5;
 
     ${Inner} {
       background: #aaa;

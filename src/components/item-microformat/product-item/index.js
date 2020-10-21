@@ -14,13 +14,14 @@ export default function ProductItem({ data }) {
   if (!data) {
     return null;
   }
+
   const { name, path, type, variants } = data;
+
   const { priceVariants, image } = variants
     ? variants.find((variant) => variant.isDefault)
     : {};
-  const { price, currency } = priceVariants.find(
-    (pv) => pv.identifier === locale.priceVariant
-  );
+  const { price, currency } =
+    priceVariants.find((pv) => pv.identifier === locale.priceVariant) || {};
 
   return (
     <Link as={path} href="/[...catalogue]" passHref>

@@ -31,14 +31,6 @@ export default `
           width
         }
       }
-      subscriptionPlans {
-        id
-        name
-        initialPeriod
-        initialPrice
-        recurringPeriod
-        recurringPrice
-      }
     }
   }
 

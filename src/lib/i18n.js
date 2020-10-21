@@ -25,7 +25,10 @@ export function I18nextProvider({ locale, localeResource, children }) {
           return value.toUpperCase();
         }
 
-        if (format === 'currency' && currency) {
+        if (format === 'currency') {
+          if (typeof value === 'undefined' || !currency) {
+            return 'N/A';
+          }
           return new Intl.NumberFormat(locale, {
             style: 'currency',
             currency

@@ -13,9 +13,11 @@ export default function BuyButton({ product, selectedVariant }) {
   const layout = useContext(LayoutContext);
   const t = useT();
   const locale = useLocale();
-  const { identifier, price, currency } = selectedVariant.priceVariants.find(
-    (pv) => pv.identifier === locale.priceVariant
-  );
+
+  const { identifier, price, currency } =
+    selectedVariant.priceVariants.find(
+      (pv) => pv.identifier === locale.priceVariant
+    ) || {};
 
   async function buy() {
     await layout.actions.showRight();
@@ -32,7 +34,7 @@ export default function BuyButton({ product, selectedVariant }) {
       <Price>
         <strong>{t('common.price', { value: price, currency })}</strong>
       </Price>
-      <Button width="200px" onClick={buy}>
+      <Button width="200px" onClick={buy} disabled={!currency}>
         {t('product.addToBasket')}
       </Button>
     </ProductFooter>

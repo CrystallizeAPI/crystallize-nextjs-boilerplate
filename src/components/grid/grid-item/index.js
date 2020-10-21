@@ -27,13 +27,13 @@ export default function GridItem({ data, gridCell }) {
     image = images?.content?.images?.[0];
     text = <Title>{name}</Title>;
   } else {
-    const { priceVariants, image: i } = variants
+    const variant = variants
       ? variants.find((variant) => variant.isDefault)
       : defaultVariant;
+    const { priceVariants, image: i } = variant;
 
-    const { price, currency } = priceVariants.find(
-      (pv) => pv.identifier === locale.priceVariant
-    );
+    const { price, currency } =
+      priceVariants?.find((pv) => pv.identifier === locale.priceVariant) || {};
 
     image = i;
     text = (
