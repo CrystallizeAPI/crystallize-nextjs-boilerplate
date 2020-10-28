@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import videojs from 'video.js';
 import 'dashjs';
 import 'videojs-contrib-dash';
-
-import playerCss from './player-css';
+import 'video.js/dist/video-js.css';
 
 const HLS_EXTENSION = /\.(m3u8)($|\?)/i;
 const DASH_EXTENSION = /\.(mpd)($|\?)/i;
@@ -24,8 +23,6 @@ function getVideoType(url) {
 const playSize = 100;
 
 const Outer = styled.div`
-  ${playerCss}
-
   .video-js {
     height: 100% !important;
     position: absolute;
@@ -86,10 +83,12 @@ export default function VideoPlayer({
   const playerRef = useRef();
 
   const sources =
-    playlists?.map((playlist) => ({
-      type: getVideoType(playlist),
-      src: playlist
-    })) || [];
+    playlists
+      ?.map((playlist) => ({
+        type: getVideoType(playlist),
+        src: playlist
+      }))
+      .sort((s) => (HLS_EXTENSION.test(s.src) ? -1 : 1)) || [];
 
   useEffect(() => {
     if (ref.current) {
