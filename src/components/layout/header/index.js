@@ -9,6 +9,7 @@ import { useT } from 'lib/i18n';
 import BurgerButton from './burger-button';
 import BasketButton from './basket-button';
 import LocaleSwitcher from './locale-switcher';
+import Search from './search';
 import {
   Outer,
   Nav,
@@ -16,7 +17,8 @@ import {
   NavActions,
   NavList,
   NavListItem,
-  PreviewBar
+  PreviewBar,
+  IconBar
 } from './styles';
 
 export default function Header({ simple, preview }) {
@@ -40,11 +42,9 @@ export default function Header({ simple, preview }) {
       )}
       <Outer simple={simple}>
         <Link href="/">
-          <a>
-            <Logo>
-              <img src="/static/shop-logo.svg" alt="" />
-            </Logo>
-          </a>
+          <Logo>
+            <img src="/static/shop-logo.svg" alt="" />
+          </Logo>
         </Link>
         <Nav open={navOpen}>
           <NavList>
@@ -69,7 +69,12 @@ export default function Header({ simple, preview }) {
             </Link>
           )}
         </NavActions>
-        {!simple && <BasketButton />}
+        {!simple && (
+          <IconBar>
+            <Search />
+            <BasketButton />
+          </IconBar>
+        )}
         <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
       </Outer>
     </>

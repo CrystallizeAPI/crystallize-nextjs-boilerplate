@@ -77,8 +77,20 @@ export default {
     },
     layout: {
       menu: 'Meny',
+      searchPlaceholder: 'Søk etter ting',
       ecomBy: 'Nettbutikk av',
       loadingVideo: 'Laster video'
+    },
+    search: {
+      foundResults: `{{count}} treff`,
+      order: {
+        ITEM_NAME_ASC: 'Navn stigende',
+        ITEM_NAME_DESC: 'Navn synkende',
+        PRICE_ASC: 'Pris stigende',
+        PRICE_DESC: 'Pris synkende',
+        STOCK_ASC: 'Lagerbeholding stigende',
+        STOCK_DESC: 'Lagerbeholding synkende'
+      }
     }
   }
 };

@@ -1,4 +1,5 @@
-let hostName;
+let hostName =
+  'https://crystallize-nextjs-boilerplate-git-search.crystallize.vercel.app';
 if (typeof window !== 'undefined') {
   const l = window.location;
   hostName = `${l.protocol}//${l.host}`;
@@ -16,7 +17,7 @@ export const doPost = async (url, options) => {
     };
 
     if (typeof opts.body !== 'string') {
-      opts.body = opts.body.toString();
+      opts.body = JSON.stringify(opts.body);
     }
 
     const response = await fetch(`${hostName}${url}`, opts);
@@ -29,13 +30,6 @@ export const doPost = async (url, options) => {
   }
 };
 
-export const doGet = async (url, options) => {
-  try {
-    const response = await fetch(`${hostName}/${url}`, options);
-    return response.json();
-  } catch (error) {
-    return {
-      error
-    };
-  }
-};
+export function doGet(url, options) {
+  return fetch(`${hostName}${url}`, options).then((r) => r.json());
+}

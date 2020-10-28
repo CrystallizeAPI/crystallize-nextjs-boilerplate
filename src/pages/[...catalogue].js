@@ -13,6 +13,7 @@ import Head from 'next/head';
 import DefaultErrorPage from 'next/error';
 
 import { simplyFetchFromGraph } from 'lib/graph';
+import { urlToSpec } from 'lib/search';
 import appConfig, {
   getLocaleFromContext,
   isMultilingual,
@@ -23,8 +24,9 @@ import Layout from 'components/layout';
 import DocPage, { getData as getDataDoc } from 'page-components/document';
 import FolderPage, { getData as getDataFolder } from 'page-components/folder';
 import ProdPage, { getData as getDataProd } from 'page-components/product';
+import SearchPage, { getData as getDataSearch } from 'page-components/search';
 
-const typesMap = {
+const renderers = {
   document: {
     component: DocPage,
     getData: getDataDoc
@@ -36,8 +38,18 @@ const typesMap = {
   product: {
     component: ProdPage,
     getData: getDataProd
+  },
+  search: {
+    component: SearchPage,
+    getData: getDataSearch
   }
 };
+
+// Returns true if more than half of the children are products
+function childrenIsMostlyProducts(children) {
+  const productsCount = children.filter((c) => c.type === 'product').length;
+  return productsCount > children.length / 2;
+}
 
 export async function getStaticProps({ params, preview }) {
   const { catalogue } = params;
@@ -52,6 +64,9 @@ export async function getStaticProps({ params, preview }) {
           catalogue(language: $language, path: $path) {
             type
             language
+            children {
+              type
+            }
           }
         }
       `,
@@ -60,24 +75,33 @@ export async function getStaticProps({ params, preview }) {
         path: asPath
       }
     });
-    const { type } = getItemType.data.catalogue;
+    const { type, children } = getItemType.data.catalogue;
 
-    const renderer = typesMap[type] || typesMap.folder;
+    let renderer = 'folder';
+    if (type === 'folder' && childrenIsMostlyProducts(children || [])) {
+      renderer = 'search';
+    } else if (type in renderers) {
+      renderer = type;
+    }
 
-    const data = await renderer.getData({
+    const data = await renderers[renderer].getData({
       asPath,
       language: locale.crystallizeCatalogueLanguage,
-      preview
+      preview,
+      ...(renderer === 'search' && {
+        searchSpec: urlToSpec({ asPath })
+      })
     });
 
     return {
       props: {
         ...data,
-        type
+        renderer
       },
       revalidate: 1
     };
   } catch (error) {
+    console.log(error);
     console.warn(`Could not get data for ${asPath}`);
   }
 
@@ -164,10 +188,9 @@ export async function getStaticPaths() {
   };
 }
 
-export default function GenericCatalogueItem({ type, ...rest }) {
+export default function GenericCatalogueItem({ renderer, ...rest }) {
   const router = useRouter();
-  const renderer = typesMap[type] || typesMap.folder;
-  const Component = renderer.component;
+  const Component = (renderers[renderer] || renderers.folder).component;
 
   if (router.isFallback) {
     return <Layout loading />;

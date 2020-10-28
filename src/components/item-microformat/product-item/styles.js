@@ -9,6 +9,7 @@ export const Outer = styled.a`
   color: var(--color-main-background);
   position: relative;
   padding: 20px;
+  justify-content: center;
   background: var(--color-box-background);
   transition: all 0.1s ease-in-out;
   grid-column-end: span 3;

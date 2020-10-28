@@ -23,7 +23,7 @@ export default `
         attribute
         value
       }
-      image {
+      images {
         url
         altText
         variants {

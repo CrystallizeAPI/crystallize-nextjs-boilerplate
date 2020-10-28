@@ -80,6 +80,17 @@ export default {
       menu: 'Μενού',
       ecomBy: 'Ηλεκτρονικό κατάστημα από',
       loadingVideo: 'Το βίνετο φορτώνει'
+    },
+    search: {
+      foundResults: `Found {{count}} matching results`,
+      order: {
+        ITEM_NAME_ASC: 'Name ascending',
+        ITEM_NAME_DESC: 'Name descending',
+        PRICE_ASC: 'Price ascending',
+        PRICE_DESC: 'Price descending',
+        STOCK_ASC: 'Stock ascending',
+        STOCK_DESC: 'Stock descending'
+      }
     }
   }
 };
