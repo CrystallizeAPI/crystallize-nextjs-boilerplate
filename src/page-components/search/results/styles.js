@@ -4,7 +4,7 @@ export const Outer = styled.div`
   grid-area: products;
 
   ul {
-    margin-top: 15px;
+    /* margin-top: 15px; */
     list-style: none;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

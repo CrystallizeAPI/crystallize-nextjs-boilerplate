@@ -5,7 +5,9 @@ export const Outer = styled.div`
 `;
 
 export const Inner = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-gap: 25px;
   flex-direction: column;
   padding: 0;
   align-items: center;
@@ -20,5 +22,6 @@ export const InputFooter = styled.div`
 `;
 
 export const TotalResults = styled.div`
-  font-weight: 500;
+  font-weight: 600;
+  color: #000;
 `;

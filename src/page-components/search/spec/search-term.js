@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
-import { InputGroup, Input, InputButton } from 'ui';
+import { InputGroup as IG, Input as I, InputButton as IB } from 'ui';
+const Input = styled(I)`
+  padding-left: 20px;
+`;
+const InputGroup = styled(IG)`
+  border-radius: 0;
+`;
 
+const InputButton = styled(IB)`
+  border-radius: 0;
+`;
 export default function SearchTerm({ searchTerm, onChange }) {
   const [term, setTerm] = useState(searchTerm || '');
   return (

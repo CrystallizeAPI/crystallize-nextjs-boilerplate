@@ -4,7 +4,7 @@ import { useT } from 'lib/i18n';
 import { orderByOptions } from 'lib/search';
 
 const Outer = styled.select`
-  padding: 10px 0;
+  padding: 10px 15px;
   outline: none;
   border: none;
   width: 160px;

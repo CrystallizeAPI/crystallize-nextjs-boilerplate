@@ -5,23 +5,31 @@ import styled from 'styled-components';
 import Layout from 'components/layout';
 import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
 import { urlToSpec, specToQuery, SEARCH_QUERY } from 'lib/search';
-import { Outer, Header, H1 } from 'ui';
-import ShapeComponents from 'components/shape/components';
+import { Outer, Header as H, H1 as h1 } from 'ui';
+// import ShapeComponents from 'components/shape/components';
 
 import query from './query';
 import reducer from './reducer';
 import Spec from './spec';
 import Results from './results';
 import Facets from './facets';
-
+const Header = styled(H)`
+  padding: 75px 70px 25px;
+  margin: 0;
+`;
+const H1 = styled(h1)`
+  padding: 0;
+`;
 const ListOuter = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 1600px;
+  margin: 0px auto 0;
+  padding: 0 70px;
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 40px;
+  grid-template-columns: 300px 1fr 1fr 1fr;
   grid-template-areas:
-    'empty spec spec spec spec'
-    'facets products products products products';
+    'spec spec spec spec '
+    'facets products products products ';
 `;
 
 export async function getData({ asPath, preview, language, searchSpec }) {
@@ -146,13 +154,8 @@ export default function SearchPage({
   return (
     <Layout>
       <Outer>
-        <Header centerContent>
+        <Header>
           <H1>{catalogueData?.name ? catalogueData.name : 'Search'}</H1>
-          <ShapeComponents
-            components={catalogueData?.components?.filter((c) =>
-              ['images', 'videos', 'richText'].includes(c.type)
-            )}
-          />
         </Header>
         <ListOuter>
           <Spec

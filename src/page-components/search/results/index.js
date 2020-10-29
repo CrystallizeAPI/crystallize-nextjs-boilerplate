@@ -6,7 +6,6 @@ import Pagination from './pagination';
 export default function SearchResults({ edges = [], navigate, pageInfo }) {
   return (
     <Outer>
-      <Pagination navigate={navigate} pageInfo={pageInfo} />
       <ul>
         {edges.map(({ cursor, node }) => (
           <li key={cursor}>
