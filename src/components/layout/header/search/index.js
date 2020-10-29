@@ -5,7 +5,6 @@ import produce from 'immer';
 import { useT } from 'lib/i18n';
 import { simplyFetchFromSearchGraph } from 'lib/graph';
 import { SEARCH_QUERY } from 'lib/search';
-import { useOnOutsideClick } from 'components/outside-click';
 import Link from 'components/link';
 
 import { Btn } from './../styles';
@@ -77,15 +76,6 @@ export default function Search() {
     dispatch({ action: 'focus' });
     searchInput.current.focus();
   }
-
-  useOnOutsideClick({
-    element: outerRef.current,
-    onOutsideClick: () => {
-      if (isOpen) {
-        dispatch({ action: 'blur' });
-      }
-    }
-  });
 
   // Do new search
   useEffect(() => {
@@ -188,7 +178,7 @@ export default function Search() {
         </Outer>
         <CloseBtn onClick={() => dispatch({ action: 'blur' })} />
       </SearchWrapper>
-      {!!isOpen && <BodyOverlay />}
+      {!!isOpen && <BodyOverlay onClick={() => dispatch({ action: 'blur' })} />}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import produce from 'immer';
 
 export default produce(function SearchSpecReducer(draft, { action, ...rest }) {
+  console.log(action);
   if (!draft.filter.productVariants) {
     draft.filter.productVariants = {};
   }

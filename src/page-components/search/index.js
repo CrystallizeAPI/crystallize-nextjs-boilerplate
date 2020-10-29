@@ -71,13 +71,12 @@ export async function getData({ asPath, preview, language, searchSpec }) {
 export default function SearchPage({
   searchData,
   searchAggregations,
-  searchSpec,
   catalogueData
 }) {
   const router = useRouter();
   const firstLoad = useRef();
   const [data, setData] = useState(searchData);
-  const [spec, dispatch] = useReducer(reducer, searchSpec);
+  const [spec, dispatch] = useReducer(reducer, urlToSpec(router));
 
   // Initial data changed
   useEffect(() => {
@@ -101,7 +100,10 @@ export default function SearchPage({
     if (!router.isFallback) {
       if (!firstLoad.current) {
         firstLoad.current = true;
-        return;
+
+        if (Object.keys(router.query).length === 0) {
+          return;
+        }
       }
 
       load();
