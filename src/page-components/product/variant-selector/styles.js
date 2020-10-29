@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import is from 'styled-is';
 
@@ -13,7 +13,7 @@ export const Variant = styled.div`
 export const Values = styled.div``;
 
 export const Button = styled.button.attrs(() => ({
-  type: 'button',
+  type: 'button'
 }))`
   color: var(--color-text-sub);
   width: 100%;

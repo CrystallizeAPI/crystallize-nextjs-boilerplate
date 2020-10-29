@@ -15,20 +15,22 @@ export default function ProductItem({ data }) {
     return null;
   }
 
-  const { name, path, type, variants } = data;
-
-  const { priceVariants, image } = variants
-    ? variants.find((variant) => variant.isDefault)
-    : {};
-  const { price, currency } =
-    priceVariants.find((pv) => pv.identifier === locale.priceVariant) || {};
+  const { name, path, type, variants, matchingVariant } = data;
+  const { priceVariants, images } =
+    matchingVariant || variants?.find((variant) => variant.isDefault) || {};
+  const { price, currency } = priceVariants?.find(
+    (pv) => pv.identifier === locale.priceVariant
+  ) || {
+    price: matchingVariant?.price || 'n/a',
+    currency: 'eur'
+  };
 
   return (
     <Link as={path} href="/[...catalogue]" passHref>
       <Outer type={type}>
         <Inner>
           <ImageWrapper>
-            {image && <Img {...image} alt={name} sizes="250px" />}
+            {images?.[0] && <Img {...images?.[0]} alt={name} sizes="250px" />}
           </ImageWrapper>
 
           <Text>

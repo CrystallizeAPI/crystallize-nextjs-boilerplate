@@ -45,3 +45,10 @@ export async function simplyFetchFromGraph({
 
   return response.json();
 }
+
+export function simplyFetchFromSearchGraph(args) {
+  return simplyFetchFromGraph({
+    uri: `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}/search`,
+    ...args
+  });
+}

@@ -25,7 +25,8 @@ export async function getData({ asPath, language, preview = null }) {
 
 export default function DocumentPage({ document, preview }) {
   const t = useT();
-  const title = document?.components.find((c) => c.name === 'Title');
+  const title = document?.components.find((c) => c.name === 'Title')?.content
+    ?.text;
   const description = document?.components.find((c) => c.name === 'Intro');
   const images = document?.components.find((c) => c.name === 'Image');
   const relatedProducts = document?.components?.find(
@@ -37,10 +38,10 @@ export default function DocumentPage({ document, preview }) {
   );
 
   return (
-    <Layout title={title.content.text || document.name} preview={preview}>
+    <Layout title={title || document.name} preview={preview}>
       <Outer>
         <Header centerContent>
-          <H1>{title.content.text}</H1>
+          <H1>{title}</H1>
           <ContentTransformer {...description?.content?.json} />
         </Header>
         <HeroImage>

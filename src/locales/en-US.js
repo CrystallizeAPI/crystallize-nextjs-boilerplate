@@ -77,8 +77,27 @@ export default {
     },
     layout: {
       menu: 'Menu',
+      searchPlaceholder: 'Find things',
       ecomBy: 'eCommerce by',
       loadingVideo: 'Loading video'
+    },
+    search: {
+      foundResults: `Found {{count}} matching results`,
+      order: {
+        ITEM_NAME_ASC: 'Name ascending',
+        ITEM_NAME_DESC: 'Name descending',
+        PRICE_ASC: 'Price ascending',
+        PRICE_DESC: 'Price descending',
+        STOCK_ASC: 'Stock ascending',
+        STOCK_DESC: 'Stock descending'
+      },
+      facets: {
+        price: {
+          title: 'Price',
+          min: 'Minimum price',
+          max: 'Maximum price'
+        }
+      }
     }
   }
 };

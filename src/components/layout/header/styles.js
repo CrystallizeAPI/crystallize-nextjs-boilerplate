@@ -18,11 +18,13 @@ export const Outer = styled.header`
   }
 `;
 
-export const Logo = styled.div`
+export const Logo = styled.a`
   height: 84px;
   display: block;
   object-fit: contain;
 
+  position: relative;
+  z-index: 99;
   img,
   svg {
     height: 100%;
@@ -94,7 +96,7 @@ export const NavListItem = styled.li`
   }
 `;
 
-export const Basket = styled.button`
+export const Btn = styled.button`
   position: relative;
   display: flex;
   justify-content: center;
@@ -104,7 +106,7 @@ export const Basket = styled.button`
   padding: 0;
   border-radius: 5px;
   justify-self: flex-end;
-
+  margin-left: 15px;
   img,
   svg {
     width: 40px;
@@ -175,4 +177,7 @@ export const PreviewBar = styled.div`
   color: #fff;
   padding: 20px;
   text-align: center;
+`;
+export const IconBar = styled.div`
+  display: flex;
 `;
