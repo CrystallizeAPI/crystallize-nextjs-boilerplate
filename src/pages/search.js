@@ -2,7 +2,7 @@ import Cmp, { getData } from 'page-components/search';
 import { getLocaleFromContext } from 'lib/app-config';
 import { urlToSpec } from 'lib/search';
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const locale = getLocaleFromContext(context);
 
   const data = await getData({

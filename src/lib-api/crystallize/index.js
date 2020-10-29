@@ -16,7 +16,7 @@ function createApiCaller(uri) {
 }
 
 export const callOrdersApi = createApiCaller(
-  `https://api-dev.crystallize.digital/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}/orders`
+  `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}/orders`
 );
 
 export const callCoreApi = createApiCaller(

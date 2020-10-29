@@ -13,6 +13,7 @@ import reducer from './reducer';
 import Spec from './spec';
 import Results from './results';
 import Facets from './facets';
+
 const Header = styled(H)`
   padding: 75px 70px 25px;
   margin: 0;
@@ -113,14 +114,22 @@ export default function SearchPage({
       return;
     }
 
-    const asPath = router.asPath.split('?')[0];
-    const query = specToQuery(spec);
-    const existingQuery = specToQuery(
-      urlToSpec({ query: router.query, asPath })
-    );
+    // Remove include paths from query since that is a part of the location path
+    const specWithouthPaths = { ...spec };
+    try {
+      delete specWithouthPaths.filter.include.paths;
+      if (Object.keys(specWithouthPaths.filter.include).length === 0) {
+        delete specWithouthPaths.filter.include;
+      }
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
 
+    const asPath = router.asPath.split('?')[0];
+    const query = specToQuery(specWithouthPaths);
+    const existingQuery = specToQuery(urlToSpec({ query: router.query }));
+
+    // No change to query
     if (JSON.stringify(query) === JSON.stringify(existingQuery)) {
-      // No change to query
       return;
     }
 
@@ -144,12 +153,12 @@ export default function SearchPage({
   }
 
   // We're waiting for the search result to come in
-  if (router.isFallback) {
+  if (router.isFallback || !data) {
     return (
       <Layout>
         <Outer>
           <div style={{ background: '#eee', height: 100, padding: 50 }}>
-            Skeleton...?
+            ...
           </div>
         </Outer>
       </Layout>

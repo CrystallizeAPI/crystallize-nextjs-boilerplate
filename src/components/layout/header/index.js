@@ -41,7 +41,7 @@ export default function Header({ simple, preview }) {
         </PreviewBar>
       )}
       <Outer simple={simple}>
-        <Link href="/">
+        <Link href="/" passHref>
           <Logo>
             <img src="/static/shop-logo.svg" alt="" />
           </Logo>
