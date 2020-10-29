@@ -96,6 +96,7 @@ export async function getStaticProps({ params, preview }) {
     return {
       props: {
         ...data,
+        asPath,
         renderer
       },
       revalidate: 1
@@ -188,7 +189,7 @@ export async function getStaticPaths() {
   };
 }
 
-export default function GenericCatalogueItem({ renderer, ...rest }) {
+export default function GenericCatalogueItem({ renderer, asPath, ...rest }) {
   const router = useRouter();
   const Component = (renderers[renderer] || renderers.folder).component;
 
@@ -208,5 +209,5 @@ export default function GenericCatalogueItem({ renderer, ...rest }) {
     );
   }
 
-  return <Component {...rest} />;
+  return <Component key={asPath} {...rest} />;
 }
