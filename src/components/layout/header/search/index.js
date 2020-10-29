@@ -73,16 +73,21 @@ export default function Search() {
     initialState
   );
 
-  const onClickSearchBtn = () => {
+  function onClickSearchBtn() {
     dispatch({ action: 'focus' });
     searchInput.current.focus();
-  };
+  }
+
   useOnOutsideClick({
     element: outerRef.current,
-    onOutsideClick: () => dispatch({ action: 'blur' })
+    onOutsideClick: () => {
+      if (isOpen) {
+        dispatch({ action: 'blur' });
+      }
+    }
   });
 
-  // Initiate searching
+  // Do new search
   useEffect(() => {
     async function doSearch() {
       const filter = { searchTerm, productVariants: { isDefault: true } };
@@ -120,7 +125,7 @@ export default function Search() {
 
   return (
     <>
-      <Btn type="button" onClick={() => onClickSearchBtn()}>
+      <Btn type="button" onClick={onClickSearchBtn}>
         <svg
           width="32"
           height="32"

@@ -12,7 +12,6 @@ export const SEARCH_QUERY = `
       filter: $aggregationsFilter
     ) {
       aggregations {
-        totalResults
         price {
           min
           max
@@ -31,6 +30,9 @@ export const SEARCH_QUERY = `
       orderBy: $orderBy
       filter: $filter
     ) {
+      aggregations {
+        totalResults
+      }
       pageInfo {
         totalNodes
         hasNextPage
