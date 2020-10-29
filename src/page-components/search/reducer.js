@@ -4,6 +4,9 @@ export default produce(function SearchSpecReducer(draft, { action, ...rest }) {
   if (!draft.filter.productVariants) {
     draft.filter.productVariants = {};
   }
+  if (!draft.filter.productVariants.attributes) {
+    draft.filter.productVariants.attributes = [];
+  }
 
   switch (action) {
     case 'setSearchTerm': {
@@ -31,10 +34,6 @@ export default produce(function SearchSpecReducer(draft, { action, ...rest }) {
     }
     case 'singleFacetValueChanged': {
       const { attribute, value, checked } = rest;
-
-      if (!draft.filter.productVariants.attributes) {
-        draft.filter.productVariants.attributes = [];
-      }
 
       const existingAttr = draft.filter.productVariants.attributes.find(
         (attr) => attr.attribute === attribute
@@ -66,5 +65,18 @@ export default produce(function SearchSpecReducer(draft, { action, ...rest }) {
 
   if (!draft.filter.searchTerm) {
     delete draft.filter.searchTerm;
+  }
+
+  // Remove empty groups from attributes
+  draft.filter.productVariants.attributes = draft.filter.productVariants.attributes.filter(
+    (attr) => attr.values.length > 0
+  );
+  if (draft.filter.productVariants.attributes.length === 0) {
+    delete draft.filter.productVariants.attributes;
+  }
+
+  // Remove productVariants if empty
+  if (Object.keys(draft.filter.productVariants).length === 0) {
+    delete draft.filter.productVariants;
   }
 });

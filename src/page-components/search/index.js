@@ -95,9 +95,9 @@ export default function SearchPage({
   // Search specifications changed from internal spec
   useEffect(() => {
     if (spec.blockingUIElement) {
-      console.log('spec.blockingUIElement', spec.blockingUIElement);
       return;
     }
+
     const asPath = router.asPath.split('?')[0];
     const query = specToQuery(spec);
     const existingQuery = specToQuery(

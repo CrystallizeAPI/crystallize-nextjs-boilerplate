@@ -13,7 +13,7 @@ export default function SearchSpec({ spec, dispatch, aggregations }) {
     <Outer>
       <Inner>
         <SearchTerm
-          searchTerm={spec.filter.searchTerm}
+          searchTerm={spec.filter?.searchTerm}
           onChange={(searchTerm) =>
             dispatch({ action: 'setSearchTerm', searchTerm })
           }

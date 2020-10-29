@@ -4,6 +4,7 @@ import { useT } from 'lib/i18n';
 
 import { Outer, Facet, FacetTitle } from './styles';
 import { Price } from './price';
+import SingleFacetValue from './single-facet-value';
 
 function groupAttributes({ variantAttributes = [] }) {
   const groups = [];
@@ -21,26 +22,6 @@ function groupAttributes({ variantAttributes = [] }) {
   });
 
   return groups;
-}
-
-function SingleFacetValue({ attribute, value, count, spec, onChange }) {
-  console.log(Date.now(), spec.filter?.productVariants?.attributes);
-  const checked = !!spec.filter?.productVariants?.attributes?.some((attr) => {
-    return attr.attribute === attribute && attr.values.includes(value);
-  });
-
-  function onInputChange(evt) {
-    onChange({ attribute, value, checked: evt.target.checked });
-  }
-
-  return (
-    <div>
-      <label>
-        <input type="checkbox" checked={checked} onChange={onInputChange} />
-        {value} ({count})
-      </label>
-    </div>
-  );
 }
 
 export default function Facets({ aggregations, spec, dispatch }) {
