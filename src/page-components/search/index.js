@@ -33,7 +33,10 @@ export async function getData({ asPath, preview, language, searchSpec }) {
   ] = await Promise.all([
     simplyFetchFromSearchGraph({
       query: SEARCH_QUERY,
-      variables: searchSpec
+      variables: {
+        ...searchSpec,
+        aggregationsFilter: searchSpec.filter
+      }
     }),
     asPath
       ? simplyFetchFromGraph({
@@ -75,9 +78,13 @@ export default function SearchPage({
   // Search specifications changed from url
   useEffect(() => {
     async function load() {
+      const newSpec = urlToSpec(router);
       const { data } = await simplyFetchFromSearchGraph({
         query: SEARCH_QUERY,
-        variables: urlToSpec(router)
+        variables: {
+          ...newSpec,
+          aggregationsFilter: newSpec.filter
+        }
       });
       setData(data.search);
     }
@@ -155,12 +162,7 @@ export default function SearchPage({
           />
         </Header>
         <ListOuter>
-          <Spec
-            {...data}
-            aggregations={searchAggregations}
-            spec={spec}
-            dispatch={dispatch}
-          />
+          <Spec {...data} spec={spec} dispatch={dispatch} />
           <Facets
             aggregations={searchAggregations}
             spec={spec}
