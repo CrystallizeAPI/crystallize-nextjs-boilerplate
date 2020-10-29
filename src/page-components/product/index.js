@@ -63,7 +63,7 @@ export default function ProductPage({ product, preview }) {
           <Media>
             <MediaInner>
               <Img
-                {...selectedVariant.image}
+                {...selectedVariant.images?.[0]}
                 sizes={`(max-width: ${screen.sm}px) 400px, 60vw`}
                 alt={product.name}
               />
