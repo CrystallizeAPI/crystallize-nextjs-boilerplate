@@ -1,13 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import { getValidLocale } from 'lib/app-config';
-
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const locale = getValidLocale(ctx.locale);
-    console.log({ locale });
-
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -21,7 +16,6 @@ export default class MyDocument extends Document {
       const initialProps = await Document.getInitialProps(ctx);
       return {
         ...initialProps,
-        locale,
         styles: (
           <>
             {initialProps.styles}
@@ -36,7 +30,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={this.props.locale.appLanguage}>
+      <Html>
         <Head>
           <link rel="icon" href="/static/favicon.svg" />
           <link rel="mask-icon" href="/static/mask-icon.svg" color="#5bbad5" />

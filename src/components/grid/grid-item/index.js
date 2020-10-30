@@ -1,6 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
 
-import Link from 'components/link';
 import DocumentItem from 'components/item-microformat/document-item';
 import { screen, Button } from 'ui';
 import { useT } from 'lib/i18n';
@@ -55,7 +55,7 @@ export default function GridItem({ data, gridCell }) {
   }
 
   return (
-    <Link as={path} href="/[...catalogue]" passHref>
+    <Link href={path} passHref>
       <Outer className={cellSize} type={type}>
         <Text>{text}</Text>
         <ImageWrapper>

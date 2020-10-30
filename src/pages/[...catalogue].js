@@ -47,9 +47,10 @@ function childrenIsMostlyProducts(children) {
   return productsCount > children.length / 2;
 }
 
-export async function getStaticProps({ params, preview }) {
+export async function getStaticProps(context) {
+  const { params, preview } = context;
   const { catalogue } = params;
-  const locale = getLocaleFromContext(params);
+  const locale = getLocaleFromContext(context);
   const asPath = `/${catalogue.join('/')}`;
 
   try {
@@ -120,7 +121,6 @@ export async function getStaticPaths({ locales, defaultLocale }) {
       if (path !== '/index' && !name?.startsWith('_')) {
         if (defaultLocale !== locale.locale) {
           paths.push(`/${locale.locale}${path}`);
-          console.log(`/${locale.locale}${path}`);
         } else {
           paths.push(path);
         }

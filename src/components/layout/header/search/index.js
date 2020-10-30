@@ -1,11 +1,11 @@
 import React, { useReducer, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import produce from 'immer';
 
 import { useT } from 'lib/i18n';
 import { simplyFetchFromSearchGraph } from 'lib/graph';
 import { SEARCH_QUERY } from 'lib/search';
-import Link from 'components/link';
 
 import { Btn } from './../styles';
 import { Input, InputGroup, InputButton, InputSpinner } from 'ui';
@@ -164,9 +164,8 @@ export default function Search() {
                 {searchResult.edges.map(({ cursor, node }) => (
                   <li key={cursor}>
                     <Link
-                      as={node.path}
+                      href={node.path}
                       onClick={() => dispatch({ action: 'blue' })}
-                      href="/[...catalogue]"
                     >
                       <a>{node.name}</a>
                     </Link>

@@ -1,6 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
 
-import Link from 'components/link';
 import LogoCrystallize from 'ui/icons/logo-crystallize';
 import { useT } from 'lib/i18n';
 
@@ -25,7 +25,7 @@ export default function Footer() {
         <h5>{t('layout.menu')}</h5>
         {mainNavigation.map((category) => (
           <li key={category.path}>
-            <Link as={category.path} href="/[...catalogue]">
+            <Link href={category.path}>
               <a>{category.name}</a>
             </Link>
           </li>

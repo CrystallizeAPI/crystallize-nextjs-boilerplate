@@ -137,7 +137,6 @@ export default function SearchPage({
 
     router.replace(
       {
-        as: asPath,
         pathname: asPath,
         query
       },

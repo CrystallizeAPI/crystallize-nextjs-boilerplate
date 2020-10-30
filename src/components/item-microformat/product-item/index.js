@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Link from 'components/link';
+import Link from 'next/link';
 import { useT } from 'lib/i18n';
 import { H3 } from 'ui';
 import { useLocale } from 'lib/app-config';
@@ -26,7 +26,7 @@ export default function ProductItem({ data }) {
   };
 
   return (
-    <Link as={path} href="/[...catalogue]" passHref>
+    <Link href={path} passHref>
       <Outer type={type}>
         <Inner>
           <ImageWrapper>
