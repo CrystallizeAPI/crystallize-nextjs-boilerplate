@@ -1,8 +1,8 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { screen, H3 } from 'ui';
 import ContentTransformer from 'ui/content-transformer';
-import Link from 'components/link';
 import VideoPlayer from 'components/video-player';
 
 import {
@@ -48,7 +48,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
     );
   } else {
     return (
-      <Link as={path} href="/[...catalogue]" passHref>
+      <Link href={path} passHref>
         <Outer span={colSpan}>
           <Text>
             <H3>{name}</H3>
@@ -62,7 +62,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
   }
 
   return (
-    <Link as={path} href="/[...catalogue]" passHref>
+    <Link href={path} passHref>
       <Outer span={colSpan}>
         <MediaWrapper>
           <MediaInner>{media && media}</MediaInner>

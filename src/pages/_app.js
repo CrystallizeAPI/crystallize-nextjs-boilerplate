@@ -24,9 +24,9 @@ function MyApp({ Component, pageProps, commonData }) {
   );
 }
 
-MyApp.getInitialProps = async function ({ ctx }) {
+MyApp.getInitialProps = async function ({ router }) {
   try {
-    const locale = getLocaleFromContext(ctx);
+    const locale = getLocaleFromContext(router);
 
     const localeResource = await import(`../locales/${locale.appLanguage}`);
 

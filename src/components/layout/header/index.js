@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import { useAuth } from 'components/auth-context';
 import { useSettings } from 'components/settings-context';
-import Link from 'components/link';
 import { useT } from 'lib/i18n';
 
 import BurgerButton from './burger-button';
@@ -50,7 +50,7 @@ export default function Header({ simple, preview }) {
           <NavList>
             {mainNavigation.map((category) => (
               <NavListItem key={category.path}>
-                <Link as={category.path} href="/[...catalogue]">
+                <Link href={category.path}>
                   <a onClick={() => setNavOpen(false)}>{category.name}</a>
                 </Link>
               </NavListItem>

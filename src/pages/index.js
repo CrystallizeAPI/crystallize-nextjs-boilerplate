@@ -1,11 +1,9 @@
 import Cmp, { getData } from 'page-components/index';
-import appConfig, {
-  getLocaleFromContext,
-  isMultilingual
-} from 'lib/app-config';
+import { getLocaleFromContext } from 'lib/app-config';
 
-export async function getStaticProps({ params = {}, preview }) {
-  const locale = getLocaleFromContext(params);
+export async function getStaticProps(context) {
+  const { preview } = context;
+  const locale = getLocaleFromContext(context);
 
   const data = await getData({
     asPath: '/',
@@ -18,14 +16,5 @@ export async function getStaticProps({ params = {}, preview }) {
     revalidate: 1
   };
 }
-
-export const getStaticPaths = !isMultilingual
-  ? undefined
-  : async () => {
-      return {
-        paths: appConfig.locales.map((l) => `/${l.urlPrefix}`),
-        fallback: false
-      };
-    };
 
 export default Cmp;
