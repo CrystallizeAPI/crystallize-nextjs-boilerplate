@@ -1,11 +1,12 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-import { getLocaleFromContext } from 'lib/app-config';
+import { getValidLocale } from 'lib/app-config';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const locale = getLocaleFromContext(ctx);
+    const locale = getValidLocale(ctx.locale);
+    console.log({ locale });
 
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;

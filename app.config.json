@@ -7,11 +7,17 @@
   ],
   "locales": [
     {
-      "isDefault": true,
+      "locale": "en",
       "displayName": "English - US",
-      "urlPrefix": "",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
+      "priceVariant": "default"
+    },
+    {
+      "locale": "no",
+      "displayName": "Norsk",
+      "appLanguage": "no-NB",
+      "crystallizeCatalogueLanguage": "no",
       "priceVariant": "default"
     }
   ]

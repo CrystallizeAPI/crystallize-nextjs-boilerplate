@@ -14,11 +14,7 @@ import DefaultErrorPage from 'next/error';
 
 import { simplyFetchFromGraph } from 'lib/graph';
 import { urlToSpec } from 'lib/search';
-import appConfig, {
-  getLocaleFromContext,
-  isMultilingual,
-  defaultLocale
-} from 'lib/app-config';
+import { getLocaleFromContext, getValidLocale } from 'lib/app-config';
 import Layout from 'components/layout';
 
 import DocPage, { getData as getDataDoc } from 'page-components/document';
@@ -112,20 +108,19 @@ export async function getStaticProps({ params, preview }) {
   };
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales, defaultLocale }) {
   const paths = [];
 
-  if (isMultilingual) {
-    await Promise.all(appConfig.locales.map(handleLocale));
-  } else {
-    await handleLocale(defaultLocale);
-  }
+  await Promise.all(locales.map(handleLocale));
 
-  async function handleLocale(locale) {
+  async function handleLocale(localeName) {
+    const locale = getValidLocale(localeName);
+
     function handleItem({ path, name, children }) {
       if (path !== '/index' && !name?.startsWith('_')) {
-        if (isMultilingual) {
-          paths.push(`/${locale.urlPrefix}${path}`);
+        if (defaultLocale !== locale.locale) {
+          paths.push(`/${locale.locale}${path}`);
+          console.log(`/${locale.locale}${path}`);
         } else {
           paths.push(path);
         }

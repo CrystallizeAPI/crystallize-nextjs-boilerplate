@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
-import appConfig, { useLocale, isMultilingual } from 'lib/app-config';
+import appConfig, { useLocale } from 'lib/app-config';
 
 const Outer = styled.div`
   display: inline-flex;
@@ -29,10 +29,10 @@ export default function LocaleSwitcher() {
   const locale = useLocale();
 
   function onChange(e) {
-    router.push(`/${e.target.value}`);
+    router.push('/', '/', { locale: e.target.value });
   }
 
-  if (!isMultilingual) {
+  if (appConfig.locales.length === 0) {
     return null;
   }
 
@@ -40,9 +40,9 @@ export default function LocaleSwitcher() {
     <Outer>
       <SelectAsText>
         <span>{locale.displayName}</span>
-        <select onChange={onChange} defaultValue={locale.urlPrefix}>
+        <select onChange={onChange} defaultValue={locale.locale}>
           {appConfig.locales.map((l) => (
-            <option value={l.urlPrefix} key={l.urlPrefix}>
+            <option value={l.locale} key={l.locale}>
               {l.displayName}
             </option>
           ))}
