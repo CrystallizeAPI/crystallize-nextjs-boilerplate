@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Layout from 'components/layout';
 import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
 import { urlToSpec, specToQuery, SEARCH_QUERY } from 'lib/search';
+import { useLocale } from 'lib/app-config';
 import { Outer, Header as H, H1 as h1 } from 'ui';
 // import ShapeComponents from 'components/shape/components';
 
@@ -75,8 +76,10 @@ export default function SearchPage({
 }) {
   const router = useRouter();
   const firstLoad = useRef();
+  const locale = useLocale();
+
   const [data, setData] = useState(searchData);
-  const [spec, dispatch] = useReducer(reducer, urlToSpec(router));
+  const [spec, dispatch] = useReducer(reducer, urlToSpec(router, locale));
 
   // Initial data changed
   useEffect(() => {
@@ -86,7 +89,7 @@ export default function SearchPage({
   // Search specifications changed from url
   useEffect(() => {
     async function load() {
-      const newSpec = urlToSpec(router);
+      const newSpec = urlToSpec(router, locale);
       const { data } = await simplyFetchFromSearchGraph({
         query: SEARCH_QUERY,
         variables: {
@@ -108,7 +111,7 @@ export default function SearchPage({
 
       load();
     }
-  }, [router]);
+  }, [router, locale]);
 
   // Search specifications changed from internal spec
   useEffect(() => {
@@ -128,7 +131,9 @@ export default function SearchPage({
 
     const asPath = router.asPath.split('?')[0];
     const query = specToQuery(specWithouthPaths);
-    const existingQuery = specToQuery(urlToSpec({ query: router.query }));
+    const existingQuery = specToQuery(
+      urlToSpec({ query: router.query }, locale)
+    );
 
     // No change to query
     if (JSON.stringify(query) === JSON.stringify(existingQuery)) {
@@ -143,7 +148,7 @@ export default function SearchPage({
       undefined,
       { shallow: true }
     );
-  }, [spec, router]);
+  }, [spec, router, locale]);
 
   function navigate({ direction }) {
     if (direction === 'nextPage') {

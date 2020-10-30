@@ -103,7 +103,7 @@ export const defaultSpec = {
 };
 
 // eslint-disable-next-line no-unused-vars
-export function urlToSpec({ query = {}, asPath }) {
+export function urlToSpec({ query = {}, asPath }, locale) {
   const spec = produce(defaultSpec, (draft) => {
     if (asPath && asPath !== '/search') {
       if (!draft.filter.include) {
@@ -138,6 +138,12 @@ export function urlToSpec({ query = {}, asPath }) {
       }
       // eslint-disable-next-line no-empty
     } catch (error) {}
+
+    if (!draft.filter) {
+      draft.filter = {};
+    }
+
+    draft.filter.priceVariant = locale?.priceVariant || 'default';
   });
 
   return spec;
