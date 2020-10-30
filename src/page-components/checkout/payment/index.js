@@ -52,11 +52,17 @@ export default function Payment() {
     email: ''
   });
 
+  // Handle locale with sub-path routing
+  let multilingualUrlPrefix = '';
+  if (window.location.pathname.startsWith(`/${router.locale}/`)) {
+    multilingualUrlPrefix = router.locale;
+  }
+
   const { firstName, lastName, email } = state;
 
   // Define the shared payment model for all payment providers
   const paymentModel = {
-    multilingualUrlPrefix: locale.urlPrefix ? `/${locale.urlPrefix}` : '',
+    multilingualUrlPrefix,
     locale,
     cart,
     metadata,
@@ -86,10 +92,10 @@ export default function Payment() {
           <StripeCheckout
             paymentModel={paymentModel}
             onSuccess={(orderId) => {
-              if (locale.urlPrefix) {
+              if (multilingualUrlPrefix) {
                 router.push(
                   '/[locale]/confirmation/stripe/[orderId]',
-                  `/${locale.urlPrefix}/confirmation/stripe/${orderId}`
+                  `/${multilingualUrlPrefix}/confirmation/stripe/${orderId}`
                 );
               } else {
                 router.push(
