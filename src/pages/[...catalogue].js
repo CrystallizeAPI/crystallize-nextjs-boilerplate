@@ -88,7 +88,7 @@ export async function getStaticProps(context) {
       language: locale.crystallizeCatalogueLanguage,
       preview,
       ...(renderer === 'search' && {
-        searchSpec: urlToSpec({ asPath })
+        searchSpec: urlToSpec({ asPath }, locale)
       })
     });
 

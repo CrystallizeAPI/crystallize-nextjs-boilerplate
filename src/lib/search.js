@@ -98,11 +98,12 @@ export const defaultSpec = {
     field: orderByOptions[0].field,
     direction: orderByOptions[0].direction
   },
-  filter: {},
+  filter: {
+    priceVariant: 'default'
+  },
   include: {}
 };
 
-// eslint-disable-next-line no-unused-vars
 export function urlToSpec({ query = {}, asPath }, locale) {
   const spec = produce(defaultSpec, (draft) => {
     if (asPath && asPath !== '/search') {
@@ -143,7 +144,9 @@ export function urlToSpec({ query = {}, asPath }, locale) {
       draft.filter = {};
     }
 
-    draft.filter.priceVariant = locale?.priceVariant || 'default';
+    if (!draft.filter.priceVariant) {
+      draft.filter.priceVariant = locale?.priceVariant || 'default';
+    }
   });
 
   return spec;
