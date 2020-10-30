@@ -51,9 +51,11 @@ export async function getStaticProps(context) {
   const { params, preview } = context;
   const { catalogue } = params;
   const locale = getLocaleFromContext(context);
-  const asPath = `/${catalogue.join('/')}`;
 
+  let asPath;
   try {
+    asPath = `/${catalogue.join('/')}`;
+
     // Get the item type
     const getItemType = await simplyFetchFromGraph({
       query: `
