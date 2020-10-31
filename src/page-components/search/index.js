@@ -1,6 +1,13 @@
-import React, { useEffect, useRef, useState, useReducer } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useReducer,
+  useCallback
+} from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import produce from 'immer';
 
 import Layout from 'components/layout';
 import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
@@ -19,9 +26,11 @@ const Header = styled(H)`
   padding: 75px 70px 25px;
   margin: 0;
 `;
+
 const H1 = styled(h1)`
   padding: 0;
 `;
+
 const ListOuter = styled.div`
   max-width: 1600px;
   margin: 0px auto 0;
@@ -34,10 +43,20 @@ const ListOuter = styled.div`
     'facets products products products ';
 `;
 
+function cleanFilterForTotalAggregations(filter) {
+  return produce(filter, (draft) => {
+    delete draft.productVariants.priceRange;
+    delete draft.productVariants.attributes;
+  });
+}
+
 export async function getData({ asPath, preview, language, searchSpec }) {
   const [
     {
-      data: { search, searchAggregations }
+      data: {
+        search,
+        aggregations: { aggregations }
+      }
     },
     { data: { searchPage } = {} }
   ] = await Promise.all([
@@ -45,7 +64,7 @@ export async function getData({ asPath, preview, language, searchSpec }) {
       query: SEARCH_QUERY,
       variables: {
         ...searchSpec,
-        aggregationsFilter: searchSpec.filter
+        aggregationsFilter: cleanFilterForTotalAggregations(searchSpec.filter)
       }
     }),
     asPath
@@ -61,43 +80,54 @@ export async function getData({ asPath, preview, language, searchSpec }) {
   ]);
 
   return {
-    searchData: search,
-    searchAggregations: searchAggregations.aggregations,
-    catalogueData: searchPage || null,
-    language,
-    searchSpec
+    search: {
+      search,
+      aggregations
+    },
+    catalogue: searchPage || null,
+    language
   };
 }
 
-export default function SearchPage({
-  searchData,
-  searchAggregations,
-  catalogueData
-}) {
-  const router = useRouter();
+export default function SearchPage({ search, catalogue }) {
   const firstLoad = useRef();
+  const router = useRouter();
   const locale = useLocale();
 
-  const [data, setData] = useState(searchData);
-  const [spec, dispatch] = useReducer(reducer, urlToSpec(router, locale));
+  const getNewSpec = useCallback(() => {
+    const newSpec = urlToSpec(router, locale);
+    return newSpec;
+  }, [router, locale]);
+
+  const [data, setData] = useState(search);
+  const [spec, dispatch] = useReducer(reducer, getNewSpec());
 
   // Initial data changed
   useEffect(() => {
-    setData(searchData);
-  }, [searchData]);
+    setData(search);
+  }, [search]);
 
   // Search specifications changed from url
   useEffect(() => {
     async function load() {
-      const newSpec = urlToSpec(router, locale);
+      const newSpec = getNewSpec();
       const { data } = await simplyFetchFromSearchGraph({
         query: SEARCH_QUERY,
         variables: {
           ...newSpec,
-          aggregationsFilter: newSpec.filter
+          aggregationsFilter: cleanFilterForTotalAggregations(newSpec.filter)
         }
       });
-      setData(data.search);
+
+      const {
+        search,
+        aggregations: { aggregations }
+      } = data;
+
+      setData({
+        search,
+        aggregations
+      });
     }
 
     if (!router.isFallback) {
@@ -111,7 +141,7 @@ export default function SearchPage({
 
       load();
     }
-  }, [router, locale]);
+  }, [router, getNewSpec]);
 
   // Search specifications changed from internal spec
   useEffect(() => {
@@ -119,42 +149,29 @@ export default function SearchPage({
       return;
     }
 
-    // Remove include paths from query since that is a part of the location path
-    const specWithouthPaths = { ...spec };
-    try {
-      delete specWithouthPaths.filter.include.paths;
-      if (Object.keys(specWithouthPaths.filter.include).length === 0) {
-        delete specWithouthPaths.filter.include;
-      }
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
+    const { catalogue, ...existingQuery } = router.query;
 
-    const asPath = router.asPath.split('?')[0];
-    const query = specToQuery(specWithouthPaths);
-    const existingQuery = specToQuery(
-      urlToSpec({ query: router.query }, locale)
-    );
-
-    // No change to query
-    if (JSON.stringify(query) === JSON.stringify(existingQuery)) {
-      return;
+    const query = specToQuery(spec);
+    if (JSON.stringify(existingQuery) !== JSON.stringify(query)) {
+      router.replace(
+        {
+          pathname: router.asPath.split('?')[0],
+          query
+        },
+        undefined,
+        { shallow: true }
+      );
     }
-
-    router.replace(
-      {
-        pathname: asPath,
-        query
-      },
-      undefined,
-      { shallow: true }
-    );
   }, [spec, router, locale]);
 
   function navigate({ direction }) {
     if (direction === 'nextPage') {
-      dispatch({ action: 'navigate', after: data.pageInfo.endCursor });
+      dispatch({ action: 'navigate', after: data.search.pageInfo.endCursor });
     } else {
-      dispatch({ action: 'navigate', before: data.pageInfo.startCursor });
+      dispatch({
+        action: 'navigate',
+        before: data.search.pageInfo.startCursor
+      });
     }
   }
 
@@ -162,36 +179,25 @@ export default function SearchPage({
   if (router.isFallback || !data) {
     return (
       <Layout>
-        <Outer>
-          <div style={{ background: '#eee', height: 100, padding: 50 }}>
-            ...
-          </div>
-        </Outer>
+        <Outer style={{ height: '50vh' }} />
       </Layout>
     );
   }
-
-  const productEdges = data.edges.filter((e) => e.node.type === 'product');
 
   return (
     <Layout>
       <Outer>
         <Header>
-          <H1>{catalogueData?.name ? catalogueData.name : 'Search'}</H1>
+          <H1>{catalogue?.name ? catalogue.name : 'Search'}</H1>
         </Header>
         <ListOuter>
-          <Spec {...data} spec={spec} dispatch={dispatch} />
+          <Spec {...data.search} spec={spec} dispatch={dispatch} />
           <Facets
-            aggregations={searchAggregations}
+            aggregations={data.aggregations}
             spec={spec}
             dispatch={dispatch}
           />
-          <Results
-            {...data}
-            spec={spec}
-            edges={productEdges}
-            navigate={navigate}
-          />
+          <Results {...data.search} spec={spec} navigate={navigate} />
         </ListOuter>
       </Outer>
     </Layout>

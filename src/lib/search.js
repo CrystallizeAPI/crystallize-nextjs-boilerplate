@@ -8,7 +8,7 @@ export const SEARCH_QUERY = `
     $filter: CatalogueSearchFilter
     $aggregationsFilter: CatalogueSearchFilter
   ) {
-    searchAggregations: search(
+    aggregations: search(
       filter: $aggregationsFilter
     ) {
       aggregations {
@@ -106,14 +106,52 @@ export const defaultSpec = {
 
 export function urlToSpec({ query = {}, asPath }, locale) {
   const spec = produce(defaultSpec, (draft) => {
-    if (asPath && asPath !== '/search') {
-      if (!draft.filter.include) {
-        draft.filter.include = {};
+    function handleSingleAttribute(attr) {
+      const [attribute, valuesAsString] = attr.split(':');
+      const values = valuesAsString.split(',');
+      draft.filter.productVariants.attributes.push({
+        attribute,
+        values
+      });
+    }
+
+    draft.filter.priceVariant = locale.priceVariant;
+
+    draft.filter.productVariants = {};
+
+    if (asPath) {
+      const path = asPath.split('?')[0];
+      if (path !== '/search') {
+        if (!draft.filter.include) {
+          draft.filter.include = {};
+        }
+        draft.filter.include.paths = [path];
+        draft.filter.productVariants.isDefault = true;
+      } else {
+        delete draft.filter.include;
       }
-      if (!draft.filter.include.paths) {
-        draft.filter.include.paths = [];
+    }
+
+    if (query.attrs) {
+      draft.filter.productVariants.attributes = [];
+      if (Array.isArray(query.attrs)) {
+        query.attrs.forEach(handleSingleAttribute);
+      } else {
+        handleSingleAttribute(query.attrs);
       }
-      draft.filter.include.paths = [asPath];
+    }
+
+    const min = parseFloat(query.min, 10);
+    const max = parseFloat(query.max, 10);
+    if (!isNaN(min) || !isNaN(max)) {
+      const priceRange = {};
+      if (!isNaN(min)) {
+        priceRange.min = min;
+      }
+      if (!isNaN(max)) {
+        priceRange.max = max;
+      }
+      draft.filter.productVariants.priceRange = priceRange;
     }
 
     const first = parseInt(query.first, 10);
@@ -132,20 +170,8 @@ export function urlToSpec({ query = {}, asPath }, locale) {
       draft.orderBy = { direction: orderBy.direction, field: orderBy.field };
     }
 
-    try {
-      const filter = JSON.parse(query.filter);
-      if (filter) {
-        draft.filter = filter;
-      }
-      // eslint-disable-next-line no-empty
-    } catch (error) {}
-
-    if (!draft.filter) {
-      draft.filter = {};
-    }
-
-    if (!draft.filter.priceVariant) {
-      draft.filter.priceVariant = locale?.priceVariant || 'default';
+    if (query.searchTerm) {
+      draft.filter.searchTerm = query.searchTerm;
     }
   });
 
@@ -153,25 +179,60 @@ export function urlToSpec({ query = {}, asPath }, locale) {
 }
 
 export function specToQuery(spec) {
-  const { orderBy, filter, before, after, ...rest } = spec;
+  function singleAttrToQuery(attr) {
+    return `${attr.attribute}:${attr.values.join(',')}`;
+  }
 
-  let query = {
-    ...rest
-  };
+  const { orderBy, filter, before, after } = spec;
+
+  const query = {};
 
   if (orderBy) {
-    query.orderby = orderByOptions.find(
+    const orderByOption = orderByOptions.find(
       (o) => o.field === orderBy.field && o.direction === orderBy.direction
-    ).value;
-  }
-  if (filter) {
-    query.filter = JSON.stringify(filter);
+    );
+
+    if (
+      orderByOption.value !==
+      `${defaultSpec.orderBy.field}_${defaultSpec.orderBy.direction}`
+    ) {
+      query.orderby = orderByOption.value;
+    }
   }
   if (before) {
     query.before = before;
   }
   if (after) {
     query.after = after;
+  }
+
+  if (filter) {
+    if (filter.type) {
+      query.type = filter.type;
+    }
+    if (filter.searchTerm) {
+      query.searchTerm = filter.searchTerm;
+    }
+
+    if (filter.productVariants?.priceRange) {
+      const min = parseFloat(filter.productVariants.priceRange.min, 10);
+      const max = parseFloat(filter.productVariants.priceRange.max, 10);
+      if (!isNaN(min)) {
+        query.min = min.toString();
+      }
+      if (!isNaN(max)) {
+        query.max = max.toString();
+      }
+    }
+
+    const attrs = filter.productVariants?.attributes;
+    if (attrs && attrs.length > 0) {
+      query.attrs = attrs.map(singleAttrToQuery);
+
+      if (query.attrs.length === 1) {
+        query.attrs = query.attrs[0];
+      }
+    }
   }
 
   return query;
