@@ -15,7 +15,7 @@ export default function FolderItem({ data, gridCell }) {
 
   let image;
 
-  const images = data.components.find((c) => c.type === 'images');
+  const images = data.components?.find((c) => c.type === 'images');
   image = images?.content?.images?.[0];
 
   return (

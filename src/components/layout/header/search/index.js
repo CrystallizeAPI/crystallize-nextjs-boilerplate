@@ -40,10 +40,9 @@ const searchReducer = produce(function reducer(draft, { action, ...rest }) {
       break;
     }
     case 'setResult': {
-      const { search, searchAggregations } = rest;
+      const { search, aggregations } = rest;
       draft.searchResult.edges = search.edges;
-      draft.searchResult.totalCount =
-        searchAggregations.aggregations.totalResults;
+      draft.searchResult.totalCount = aggregations.aggregations.totalResults;
       draft.status = 'got-results';
       break;
     }
@@ -103,10 +102,7 @@ export default function Search() {
     router.push({
       pathname: '/search',
       query: {
-        filter: JSON.stringify({
-          searchTerm,
-          productVariants: { isDefault: true }
-        })
+        searchTerm
       }
     });
 
