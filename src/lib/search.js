@@ -214,9 +214,6 @@ export function specToQuery(spec) {
   }
 
   if (filter) {
-    if (filter.type) {
-      query.type = filter.type;
-    }
     if (filter.searchTerm) {
       query.searchTerm = filter.searchTerm;
     }
