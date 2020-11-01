@@ -91,13 +91,14 @@ export async function getData({ asPath, preview, language, searchSpec }) {
 
 export default function SearchPage({ search, catalogue }) {
   const firstLoad = useRef();
-  const router = useRouter();
+  const { query, asPath, isFallback, replace, ...router } = useRouter();
   const locale = useLocale();
 
-  const getNewSpec = useCallback(() => {
-    const newSpec = urlToSpec(router, locale);
-    return newSpec;
-  }, [router, locale]);
+  const getNewSpec = useCallback(() => urlToSpec({ query, asPath }, locale), [
+    query,
+    asPath,
+    locale
+  ]);
 
   const [data, setData] = useState(search);
   const [spec, dispatch] = useReducer(reducer, getNewSpec());
@@ -130,18 +131,19 @@ export default function SearchPage({ search, catalogue }) {
       });
     }
 
-    if (!router.isFallback) {
+    if (!isFallback) {
       if (!firstLoad.current) {
         firstLoad.current = true;
 
-        if (Object.keys(router.query).length === 0) {
+        // No need to initially load SSG pages
+        if (query.catalogue) {
           return;
         }
       }
 
       load();
     }
-  }, [router, getNewSpec]);
+  }, [isFallback, query, getNewSpec]);
 
   // Search specifications changed from internal spec
   useEffect(() => {
@@ -149,20 +151,20 @@ export default function SearchPage({ search, catalogue }) {
       return;
     }
 
-    const { catalogue, ...existingQuery } = router.query;
+    const { catalogue, ...existingQuery } = query;
 
-    const query = specToQuery(spec);
-    if (JSON.stringify(existingQuery) !== JSON.stringify(query)) {
-      router.replace(
+    const newQuery = specToQuery(spec);
+    if (JSON.stringify(existingQuery) !== JSON.stringify(newQuery)) {
+      replace(
         {
-          pathname: router.asPath.split('?')[0],
-          query
+          pathname: asPath.split('?')[0],
+          query: newQuery
         },
         undefined,
         { shallow: true }
       );
     }
-  }, [spec, router, locale]);
+  }, [spec, query, asPath, replace]);
 
   function navigate({ direction }) {
     if (direction === 'nextPage') {
@@ -179,7 +181,12 @@ export default function SearchPage({ search, catalogue }) {
   if (router.isFallback || !data) {
     return (
       <Layout>
-        <Outer style={{ height: '50vh' }} />
+        <Outer>
+          <ListOuter>
+            <Spec spec={spec} dispatch={dispatch} />
+            <Facets spec={spec} dispatch={dispatch} />
+          </ListOuter>
+        </Outer>
       </Layout>
     );
   }

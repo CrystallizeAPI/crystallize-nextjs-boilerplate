@@ -18,15 +18,19 @@ export default function SearchSpec({ spec, dispatch, aggregations }) {
             dispatch({ action: 'setSearchTerm', searchTerm })
           }
         />
-        <InputFooter>
-          <TotalResults>
-            {t('search.foundResults', { count: aggregations.totalResults })}
-          </TotalResults>
-          <OrderBy
-            orderBy={spec.orderBy}
-            onChange={(orderBy) => dispatch({ action: 'setOrderBy', orderBy })}
-          />
-        </InputFooter>
+        {aggregations && (
+          <InputFooter>
+            <TotalResults>
+              {t('search.foundResults', { count: aggregations.totalResults })}
+            </TotalResults>
+            <OrderBy
+              orderBy={spec.orderBy}
+              onChange={(orderBy) =>
+                dispatch({ action: 'setOrderBy', orderBy })
+              }
+            />
+          </InputFooter>
+        )}
       </Inner>
     </Outer>
   );

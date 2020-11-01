@@ -24,7 +24,7 @@ function groupAttributes({ variantAttributes = [] }) {
   return groups;
 }
 
-export default function Facets({ aggregations, spec, dispatch }) {
+export default function Facets({ aggregations = {}, spec, dispatch }) {
   const t = useT();
 
   const { price } = aggregations;
@@ -47,16 +47,18 @@ export default function Facets({ aggregations, spec, dispatch }) {
 
   return (
     <Outer>
-      <Facet>
-        <FacetTitle>{t('search.facets.price.title')}</FacetTitle>
-        <Price
-          {...price}
-          onChange={onPriceChange}
-          onRangeChanging={onRangeChanging}
-          onRangeFinished={onRangeFinished}
-          value={spec.filter?.productVariants?.priceRange || price}
-        />
-      </Facet>
+      {price && price.min !== price.max && (
+        <Facet>
+          <FacetTitle>{t('search.facets.price.title')}</FacetTitle>
+          <Price
+            {...price}
+            onChange={onPriceChange}
+            onRangeChanging={onRangeChanging}
+            onRangeFinished={onRangeFinished}
+            value={spec.filter?.productVariants?.priceRange || price}
+          />
+        </Facet>
+      )}
       {groupAttributes(aggregations).map(({ attribute, values }) => (
         <Facet key={attribute}>
           <FacetTitle>{attribute}</FacetTitle>
