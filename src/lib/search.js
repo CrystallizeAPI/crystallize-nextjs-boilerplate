@@ -125,7 +125,14 @@ export function urlToSpec({ query = {}, asPath }, locale) {
         if (!draft.filter.include) {
           draft.filter.include = {};
         }
+
+        // Category page. Only show products
+        draft.filter.type = 'PRODUCT';
+
+        // Only find products under this path (ex: /shop/chairs)
         draft.filter.include.paths = [path];
+
+        // Only present the default product variants
         draft.filter.productVariants.isDefault = true;
       } else {
         delete draft.filter.include;
