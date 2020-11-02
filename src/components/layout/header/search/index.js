@@ -99,22 +99,17 @@ export default function Search() {
   function onSubmit(e) {
     e.preventDefault();
 
+    const options = {
+      pathname: '/search'
+    };
+    if (searchTerm) {
+      options.query = { searchTerm };
+    }
+
     if (router.pathname === '/search') {
-      router.replace(
-        {
-          pathname: '/search',
-          query: { searchTerm }
-        },
-        undefined,
-        { shallow: true }
-      );
+      router.replace(options, undefined, { shallow: true });
     } else {
-      router.push({
-        pathname: '/search',
-        query: {
-          searchTerm
-        }
-      });
+      router.push(options);
     }
 
     dispatch({ action: 'blur' });

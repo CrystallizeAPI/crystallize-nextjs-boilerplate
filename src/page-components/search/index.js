@@ -1,23 +1,16 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useReducer,
-  useCallback
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import produce from 'immer';
 
 import Layout from 'components/layout';
 import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
-import { urlToSpec, specToQuery, SEARCH_QUERY } from 'lib/search';
+import { urlToSpec, SEARCH_QUERY } from 'lib/search';
 import { useLocale } from 'lib/app-config';
 import { Outer, Header as H, H1 as h1 } from 'ui';
 // import ShapeComponents from 'components/shape/components';
 
 import query from './query';
-import reducer from './reducer';
 import Spec from './spec';
 import Results from './results';
 import Facets from './facets';
@@ -89,90 +82,95 @@ export async function getData({ asPath, preview, language, searchSpec }) {
   };
 }
 
+async function loadPage(spec) {
+  const { data } = await simplyFetchFromSearchGraph({
+    query: SEARCH_QUERY,
+    variables: {
+      ...spec,
+      aggregationsFilter: cleanFilterForTotalAggregations(spec.filter)
+    }
+  });
+
+  const {
+    search,
+    aggregations: { aggregations }
+  } = data;
+
+  return {
+    search,
+    aggregations
+  };
+}
+
 export default function SearchPage({ search, catalogue }) {
   const firstLoad = useRef();
   const { query, asPath, isFallback, replace, ...router } = useRouter();
   const locale = useLocale();
-
-  const getNewSpec = useCallback(() => urlToSpec({ query, asPath }, locale), [
-    query,
-    asPath,
-    locale
-  ]);
-
   const [data, setData] = useState(search);
-  const [spec, dispatch] = useReducer(reducer, getNewSpec());
+
+  /**
+   * Memoize the load page function so that it only changes
+   * if the asPath or locale changes
+   */
+  const loadPageCb = useCallback(
+    async (query) => {
+      const { catalogue, ...rest } = query;
+      const newData = await loadPage(
+        urlToSpec({ query: rest, asPath }, locale)
+      );
+      setData(newData);
+    },
+    [asPath, locale]
+  );
+
+  // The search specifications from the path, locale and query
+  const spec = urlToSpec({ query, asPath }, locale);
 
   // Initial data changed
   useEffect(() => {
     setData(search);
   }, [search]);
 
-  // Search specifications changed from url
+  // Query changed
   useEffect(() => {
-    async function load() {
-      const newSpec = getNewSpec();
-      const { data } = await simplyFetchFromSearchGraph({
-        query: SEARCH_QUERY,
-        variables: {
-          ...newSpec,
-          aggregationsFilter: cleanFilterForTotalAggregations(newSpec.filter)
-        }
-      });
-
-      const {
-        search,
-        aggregations: { aggregations }
-      } = data;
-
-      setData({
-        search,
-        aggregations
-      });
-    }
-
     if (!isFallback) {
       if (!firstLoad.current) {
         firstLoad.current = true;
 
-        // No need to initially load SSG pages
         if (query.catalogue) {
           return;
         }
       }
 
-      load();
+      loadPageCb(query);
     }
-  }, [isFallback, query, getNewSpec]);
+  }, [query, isFallback, loadPageCb]);
 
-  // Search specifications changed from internal spec
-  useEffect(() => {
-    if (spec.blockingUIElement) {
-      return;
-    }
-
+  // Change the url query paramns
+  function changeQuery(fn) {
     const { catalogue, ...existingQuery } = query;
+    const newQuery = produce(existingQuery, fn);
 
-    const newQuery = specToQuery(spec);
-    if (JSON.stringify(existingQuery) !== JSON.stringify(newQuery)) {
-      replace(
-        {
-          pathname: asPath.split('?')[0],
-          query: newQuery
-        },
-        undefined,
-        { shallow: true }
-      );
-    }
-  }, [spec, query, asPath, replace]);
+    replace(
+      {
+        pathname: asPath.split('?')[0],
+        query: newQuery
+      },
+      undefined,
+      { shallow: true }
+    );
+  }
 
   function navigate({ direction }) {
     if (direction === 'nextPage') {
-      dispatch({ action: 'navigate', after: data.search.pageInfo.endCursor });
+      changeQuery((query) => {
+        delete query.before;
+        query.after = data.search.pageInfo.endCursor;
+      });
     } else {
-      dispatch({
-        action: 'navigate',
-        before: data.search.pageInfo.startCursor
+      changeQuery((query) => {
+        delete query.after;
+        query.before = data.search.pageInfo.startCursor;
       });
     }
   }
@@ -183,8 +181,8 @@ export default function SearchPage({ search, catalogue }) {
       <Layout>
         <Outer>
           <ListOuter>
-            <Spec spec={spec} dispatch={dispatch} />
-            <Facets spec={spec} dispatch={dispatch} />
+            <Spec spec={spec} changeQuery={changeQuery} />
+            <Facets spec={spec} changeQuery={changeQuery} />
           </ListOuter>
         </Outer>
       </Layout>
@@ -198,11 +196,11 @@ export default function SearchPage({ search, catalogue }) {
           <H1>{catalogue?.name ? catalogue.name : 'Search'}</H1>
         </Header>
         <ListOuter>
-          <Spec {...data.search} spec={spec} dispatch={dispatch} />
+          <Spec {...data.search} spec={spec} changeQuery={changeQuery} />
           <Facets
             aggregations={data.aggregations}
             spec={spec}
-            dispatch={dispatch}
+            changeQuery={changeQuery}
           />
           <Results {...data.search} spec={spec} navigate={navigate} />
         </ListOuter>

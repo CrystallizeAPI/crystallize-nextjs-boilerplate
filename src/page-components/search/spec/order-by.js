@@ -18,7 +18,10 @@ export default function OrderBy({ orderBy, onChange }) {
     <Outer
       value={orderBy?.value}
       onChange={(e) => {
-        onChange(orderByOptions.find((o) => o.value === e.target.value));
+        const index = orderByOptions.findIndex(
+          (o) => o.value === e.target.value
+        );
+        onChange(orderByOptions[index], index);
       }}
     >
       {orderByOptions.map((option) => (
