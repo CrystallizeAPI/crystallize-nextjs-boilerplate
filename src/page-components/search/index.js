@@ -149,7 +149,11 @@ export default function SearchPage({ search, catalogue }) {
   // Change the url query paramns
   function changeQuery(fn) {
     const { catalogue, ...existingQuery } = query;
-    const newQuery = produce(existingQuery, fn);
+    const newQuery = produce(existingQuery, (draft) => {
+      delete draft.before;
+      delete draft.after;
+      fn(draft);
+    });
 
     replace(
       {
@@ -164,12 +168,10 @@ export default function SearchPage({ search, catalogue }) {
   function navigate({ direction }) {
     if (direction === 'nextPage') {
       changeQuery((query) => {
-        delete query.before;
         query.after = data.search.pageInfo.endCursor;
       });
     } else {
       changeQuery((query) => {
-        delete query.after;
         query.before = data.search.pageInfo.startCursor;
       });
     }
