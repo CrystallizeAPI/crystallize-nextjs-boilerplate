@@ -83,6 +83,7 @@ export default {
     },
     search: {
       foundResults: `{{count}} treff`,
+      orderTitle: 'Sorter etter',
       order: {
         ITEM_NAME_ASC: 'Navn stigende',
         ITEM_NAME_DESC: 'Navn synkende',
@@ -90,6 +91,13 @@ export default {
         PRICE_DESC: 'Pris synkende',
         STOCK_ASC: 'Lagerbeholding stigende',
         STOCK_DESC: 'Lagerbeholding synkende'
+      },
+      facets: {
+        price: {
+          title: 'Pris',
+          min: 'Minpris',
+          max: 'Makspris'
+        }
       }
     }
   }

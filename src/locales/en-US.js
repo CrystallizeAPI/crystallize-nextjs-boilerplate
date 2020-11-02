@@ -83,6 +83,7 @@ export default {
     },
     search: {
       foundResults: `Found {{count}} matching results`,
+      orderTitle: 'Order by',
       order: {
         ITEM_NAME_ASC: 'Name ascending',
         ITEM_NAME_DESC: 'Name descending',

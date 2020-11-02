@@ -5,11 +5,13 @@ export const SEARCH_QUERY = `
     $first: Int
     $after: String
     $orderBy: OrderBy
+    $language: String
     $filter: CatalogueSearchFilter
     $aggregationsFilter: CatalogueSearchFilter
   ) {
     aggregations: search(
       filter: $aggregationsFilter
+      language: $language
     ) {
       aggregations {
         price {
@@ -29,6 +31,7 @@ export const SEARCH_QUERY = `
       after: $after
       orderBy: $orderBy
       filter: $filter
+      language: $language
     ) {
       aggregations {
         totalResults
@@ -116,6 +119,8 @@ export function urlToSpec({ query = {}, asPath }, locale) {
     }
 
     draft.filter.priceVariant = locale.priceVariant;
+
+    draft.language = locale.crystallizeCatalogueLanguage;
 
     draft.filter.productVariants = {};
 

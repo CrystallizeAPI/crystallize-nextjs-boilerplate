@@ -83,6 +83,7 @@ export default {
     },
     search: {
       foundResults: `Found {{count}} matching results`,
+      orderTitle: 'Order by',
       order: {
         ITEM_NAME_ASC: 'Name ascending',
         ITEM_NAME_DESC: 'Name descending',
@@ -90,6 +91,13 @@ export default {
         PRICE_DESC: 'Price descending',
         STOCK_ASC: 'Stock ascending',
         STOCK_DESC: 'Stock descending'
+      },
+      facets: {
+        price: {
+          title: 'Price',
+          min: 'Minimum price',
+          max: 'Maximum price'
+        }
       }
     }
   }

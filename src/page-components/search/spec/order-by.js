@@ -23,6 +23,7 @@ export default function OrderBy({ orderBy, onChange }) {
         );
         onChange(orderByOptions[index], index);
       }}
+      aria-label={t('search.orderTitle')}
     >
       {orderByOptions.map((option) => (
         <option key={option.value} value={option.value}>
