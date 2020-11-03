@@ -2,13 +2,18 @@ import styled from 'styled-components';
 
 import { useT } from 'lib/i18n';
 import { orderByOptions } from 'lib/search';
+import { responsive } from 'ui';
 
 const Outer = styled.select`
   padding: 10px 15px;
   outline: none;
   border: none;
   width: 160px;
-  margin-top: 15px;
+  font-size: 1rem;
+
+  ${responsive.smPlus} {
+    margin-top: 15px;
+  }
 `;
 
 export default function OrderBy({ orderBy, onChange }) {

@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import produce from 'immer';
 
 import { useT } from 'lib/i18n';
+import { Button } from 'ui';
 
-import { Outer, Facet, FacetTitle } from './styles';
+import {
+  Outer,
+  Facet,
+  FacetTitle,
+  FacetMobileButton,
+  FacetMobileCloseButton
+} from './styles';
 import { Price } from './price';
 import SingleFacetValue from './single-facet-value';
+import SearchTerm from './search-term';
 
 function groupAttributes({ variantAttributes = [] }) {
   const groups = [];
@@ -29,10 +37,26 @@ function singleAttrToQuery(attr) {
   return `${attr.attribute}:${attr.values.join(',')}`;
 }
 
-export default function Facets({ aggregations = {}, spec, changeQuery }) {
+export default function Facets({
+  aggregations = {},
+  spec,
+  changeQuery,
+  totalResults
+}) {
   const t = useT();
   const { priceRange } = spec.filter.productVariants;
   const { price } = aggregations;
+  const [show, setShow] = useState(false);
+
+  function onSearchTermChange(searchTerm) {
+    changeQuery((query) => {
+      if (searchTerm) {
+        query.searchTerm = searchTerm;
+      } else {
+        delete query.searchTerm;
+      }
+    });
+  }
 
   function onPriceChange(priceRange) {
     changeQuery((query) => {
@@ -85,35 +109,52 @@ export default function Facets({ aggregations = {}, spec, changeQuery }) {
   }
 
   return (
-    <Outer>
-      {price && price.min !== price.max && (
-        <Facet>
-          <FacetTitle>{t('search.facets.price.title')}</FacetTitle>
-          <Price
-            {...price}
-            onChange={onPriceChange}
-            value={{
-              ...price,
-              ...priceRange
-            }}
-          />
-        </Facet>
-      )}
-      {groupAttributes(aggregations).map(({ attribute, values }) => (
-        <Facet key={attribute}>
-          <FacetTitle>{attribute}</FacetTitle>
-          {values.map(({ value, count }) => (
-            <SingleFacetValue
-              key={value}
-              attribute={attribute}
-              value={value}
-              count={count}
-              spec={spec}
-              onChange={onSingleFacetValueChange}
+    <>
+      <FacetMobileButton>
+        <Button onClick={() => setShow(true)}>
+          {t('search.filterResults')}
+        </Button>
+      </FacetMobileButton>
+      <Outer $show={show}>
+        <SearchTerm
+          searchTerm={spec.filter?.searchTerm}
+          onChange={onSearchTermChange}
+        />
+
+        {price && price.min !== price.max && (
+          <Facet>
+            <FacetTitle>{t('search.facets.price.title')}</FacetTitle>
+            <Price
+              {...price}
+              onChange={onPriceChange}
+              value={{
+                ...price,
+                ...priceRange
+              }}
             />
-          ))}
-        </Facet>
-      ))}
-    </Outer>
+          </Facet>
+        )}
+        {groupAttributes(aggregations).map(({ attribute, values }) => (
+          <Facet key={attribute}>
+            <FacetTitle>{attribute}</FacetTitle>
+            {values.map(({ value, count }) => (
+              <SingleFacetValue
+                key={value}
+                attribute={attribute}
+                value={value}
+                count={count}
+                spec={spec}
+                onChange={onSingleFacetValueChange}
+              />
+            ))}
+          </Facet>
+        ))}
+        <FacetMobileCloseButton>
+          <Button onClick={() => setShow(false)}>
+            {t('search.facets.viewNResults', { count: totalResults })}
+          </Button>
+        </FacetMobileCloseButton>
+      </Outer>
+    </>
   );
 }

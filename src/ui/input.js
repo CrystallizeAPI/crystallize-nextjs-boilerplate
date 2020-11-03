@@ -20,13 +20,14 @@ export const InputButton = styled.button`
   background: #000;
   border-radius: 50%;
 `;
+
 export const Input = styled.input`
   font-size: 1rem;
   background: transparent;
   outline: none;
   padding: 12px 35px;
   border: none;
-  font-size: 16px;
+  font-size: 1rem;
 `;
 
 export const InputSpinner = styled(Spinner)`

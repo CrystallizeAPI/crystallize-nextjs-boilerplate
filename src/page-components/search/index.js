@@ -7,7 +7,7 @@ import Layout from 'components/layout';
 import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
 import { urlToSpec, SEARCH_QUERY } from 'lib/search';
 import { useLocale } from 'lib/app-config';
-import { Outer, Header as H, H1 as h1 } from 'ui';
+import { Outer, Header as H, H1 as h1, responsive } from 'ui';
 // import ShapeComponents from 'components/shape/components';
 
 import query from './query';
@@ -16,8 +16,12 @@ import Results from './results';
 import Facets from './facets';
 
 const Header = styled(H)`
-  padding: 75px 70px 25px;
   margin: 0;
+  padding: 30px 0;
+
+  ${responsive.mdPlus} {
+    padding: 75px 70px 25px;
+  }
 `;
 
 const H1 = styled(h1)`
@@ -26,14 +30,16 @@ const H1 = styled(h1)`
 
 const ListOuter = styled.div`
   max-width: 1600px;
-  margin: 0px auto 0;
-  padding: 0 70px;
-  display: grid;
-  grid-gap: 40px;
-  grid-template-columns: 300px 1fr 1fr 1fr;
-  grid-template-areas:
-    'spec spec spec spec '
-    'facets products products products ';
+  margin: 0 auto;
+
+  ${responsive.mdPlus} {
+    padding: 0 70px;
+    display: grid;
+    grid-gap: 40px;
+    grid-template-areas:
+      'facets spec spec spec '
+      'facets products products products ';
+  }
 `;
 
 function cleanFilterForTotalAggregations(filter) {
@@ -203,6 +209,7 @@ export default function SearchPage({ search, catalogue }) {
             aggregations={data.aggregations}
             spec={spec}
             changeQuery={changeQuery}
+            totalResults={data.search.aggregations.totalResults}
           />
           <Results {...data.search} spec={spec} navigate={navigate} />
         </ListOuter>

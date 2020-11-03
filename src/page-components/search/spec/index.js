@@ -3,21 +3,11 @@ import React from 'react';
 import { useT } from 'lib/i18n';
 
 import { Outer, Inner, InputFooter, TotalResults } from './styles';
-import SearchTerm from './search-term';
+
 import OrderBy from './order-by';
 
 export default function SearchSpec({ spec, changeQuery, aggregations }) {
   const t = useT();
-
-  function onSearchTermChange(searchTerm) {
-    changeQuery((query) => {
-      if (searchTerm) {
-        query.searchTerm = searchTerm;
-      } else {
-        delete query.searchTerm;
-      }
-    });
-  }
 
   function onOrderChange(orderBy, index) {
     changeQuery((query) => {
@@ -32,10 +22,6 @@ export default function SearchSpec({ spec, changeQuery, aggregations }) {
   return (
     <Outer>
       <Inner>
-        <SearchTerm
-          searchTerm={spec.filter?.searchTerm}
-          onChange={onSearchTermChange}
-        />
         {aggregations && (
           <InputFooter>
             <TotalResults>

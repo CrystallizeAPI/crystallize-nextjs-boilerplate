@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
+import { responsive } from 'ui';
+
 export const Outer = styled.div`
   grid-area: spec;
 `;
 
 export const Inner = styled.div`
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-gap: 25px;
-  flex-direction: column;
-  padding: 0;
-  align-items: center;
+  ${responsive.mdPlus} {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export const InputFooter = styled.div`
@@ -18,7 +18,10 @@ export const InputFooter = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 0 15px;
+
+  ${responsive.mdPlus} {
+    padding: 0 15px;
+  }
 `;
 
 export const TotalResults = styled.div`

@@ -82,21 +82,24 @@ export default {
       loadingVideo: 'Laster video'
     },
     search: {
-      foundResults: `{{count}} treff`,
+      foundResults: 'Fant {{count}} resultater',
       orderTitle: 'Sorter etter',
       order: {
-        ITEM_NAME_ASC: 'Navn stigende',
-        ITEM_NAME_DESC: 'Navn synkende',
+        ITEM_NAME_ASC: 'Nanv stigende',
+        ITEM_NAME_DESC: 'Nanv synkende',
         PRICE_ASC: 'Pris stigende',
         PRICE_DESC: 'Pris synkende',
         STOCK_ASC: 'Lagerbeholding stigende',
         STOCK_DESC: 'Lagerbeholding synkende'
       },
+      filterResults: 'Filtrer resultater',
       facets: {
+        viewNResults: 'Vis {{count}} resultat',
+        viewNResults_plural: 'Vis {{count}} resultater',
         price: {
           title: 'Pris',
           min: 'Minpris',
-          max: 'Makspris'
+          max: 'Maksprice'
         }
       }
     }

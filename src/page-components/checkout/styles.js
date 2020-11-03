@@ -37,7 +37,7 @@ export const Input = styled.input`
   background: var(--color-main-background);
   width: 100%;
   color: var(--color-text-sub);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   padding: 15px 15px;
   margin-bottom: 0.5rem;
