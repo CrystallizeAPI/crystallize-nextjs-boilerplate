@@ -146,7 +146,7 @@ export default function SearchPage({ search, catalogue }) {
     }
   }, [query, isFallback, loadPageCb]);
 
-  // Change the url query paramns
+  // Change the url query params
   function changeQuery(fn) {
     const { catalogue, ...existingQuery } = query;
     const newQuery = produce(existingQuery, (draft) => {
