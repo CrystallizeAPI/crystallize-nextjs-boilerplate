@@ -51,7 +51,10 @@ const searchReducer = produce(function reducer(draft, { action, ...rest }) {
       break;
     }
     case 'blur': {
-      draft.isOpen = false;
+      if (draft.isOpen) {
+        draft.isOpen = false;
+        document.activeElement.blur();
+      }
       break;
     }
     default: {
