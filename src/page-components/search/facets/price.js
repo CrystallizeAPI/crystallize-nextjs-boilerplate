@@ -56,7 +56,6 @@ export function Price({ min, max, value, onChange }) {
   const [priceValue, setPriceValue] = useState(value);
 
   useEffect(() => {
-    console.log('new price value', value);
     setPriceValue(value);
   }, [value]);
 
