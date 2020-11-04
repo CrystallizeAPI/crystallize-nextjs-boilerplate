@@ -6,6 +6,7 @@ import produce from 'immer';
 import { useT } from 'lib/i18n';
 import { simplyFetchFromSearchGraph } from 'lib/graph';
 import { SEARCH_QUERY } from 'lib/search';
+import { useLocale } from 'lib/app-config';
 
 import { Btn } from './../styles';
 import { Input, InputGroup, InputButton, InputSpinner } from 'ui';
@@ -68,6 +69,7 @@ export default function Search() {
   const router = useRouter();
   const outerRef = useRef();
   const searchInput = useRef();
+  const locale = useLocale();
 
   const [{ searchTerm, status, searchResult, isOpen }, dispatch] = useReducer(
     searchReducer,
@@ -87,7 +89,8 @@ export default function Search() {
         query: SEARCH_QUERY,
         variables: {
           filter,
-          aggregationsFilter: filter
+          aggregationsFilter: filter,
+          language: locale.crystallizeCatalogueLanguage
         }
       });
 
@@ -97,7 +100,7 @@ export default function Search() {
     if (status === 'searching') {
       doSearch();
     }
-  }, [searchTerm, status]);
+  }, [searchTerm, status, locale]);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -147,7 +150,7 @@ export default function Search() {
       </Btn>
       <SearchWrapper isOpen={isOpen}>
         <Outer ref={outerRef}>
-          <SearchLabel>Search for something</SearchLabel>
+          <SearchLabel>{t('layout.searchPlaceholder')}</SearchLabel>
           <InputGroup as="form" method="get" onSubmit={onSubmit}>
             <Input
               ref={searchInput}

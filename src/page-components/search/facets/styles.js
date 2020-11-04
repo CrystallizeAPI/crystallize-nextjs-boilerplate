@@ -52,6 +52,10 @@ export const FacetMobileButton = styled.div`
   display: flex;
   justify-content: flex-end;
   margin: 15px 0;
+
+  ${responsive.mdPlus} {
+    display: none;
+  }
 `;
 
 export const FacetMobileCloseButton = styled.div`

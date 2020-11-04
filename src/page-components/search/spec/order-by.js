@@ -8,7 +8,6 @@ const Outer = styled.select`
   padding: 10px 15px;
   outline: none;
   border: none;
-  width: 160px;
   font-size: 1rem;
 
   ${responsive.smPlus} {
