@@ -48,7 +48,7 @@ export default function Header({ simple, preview }) {
         </Link>
         <Nav open={navOpen}>
           <NavList>
-            {mainNavigation.map((category) => (
+            {mainNavigation?.map((category) => (
               <NavListItem key={category.path}>
                 <Link href={category.path}>
                   <a onClick={() => setNavOpen(false)}>{category.name}</a>
