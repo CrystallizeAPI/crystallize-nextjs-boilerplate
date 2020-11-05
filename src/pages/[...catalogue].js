@@ -173,7 +173,7 @@ export async function getStaticPaths({ locales, defaultLocale }) {
         }
       });
 
-      allCatalogueItems.data.catalogue.children.forEach(handleItem);
+      allCatalogueItems.data.catalogue.children?.forEach(handleItem);
     } catch (error) {
       console.error(
         'Could not get all catalogue items for ',
