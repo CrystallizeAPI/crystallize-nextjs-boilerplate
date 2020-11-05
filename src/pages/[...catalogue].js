@@ -117,7 +117,7 @@ export async function getStaticProps(context) {
 export async function getStaticPaths({ locales, defaultLocale }) {
   const paths = [];
 
-  await Promise.all(locales.map(handleLocale));
+  await Promise.all((locales || ['en']).map(handleLocale));
 
   async function handleLocale(localeName) {
     const locale = getValidLocale(localeName);
