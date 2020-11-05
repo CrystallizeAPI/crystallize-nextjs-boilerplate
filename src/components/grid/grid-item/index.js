@@ -23,7 +23,7 @@ export default function GridItem({ data, gridCell }) {
   let text;
 
   if (type === 'folder' || type === 'document') {
-    const images = data.components.find((c) => c.type === 'images');
+    const images = data.components?.find((c) => c.type === 'images');
     image = images?.content?.images?.[0];
     text = <Title>{name}</Title>;
   } else {

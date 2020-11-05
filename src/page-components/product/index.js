@@ -47,11 +47,13 @@ export default function ProductPage({ product, preview }) {
     setSelectedVariant(variant);
   }
 
-  const summaryComponent = product.components.find((c) => c.name === 'Summary');
-  const descriptionComponent = product.components.find(
+  const summaryComponent = product.components?.find(
+    (c) => c.name === 'Summary'
+  );
+  const descriptionComponent = product.components?.find(
     (c) => c.name === 'Description'
   );
-  const specs = product.components.find((c) => c.name === 'Specs');
+  const specs = product.components?.find((c) => c.name === 'Specs');
   const componentsRest = product.components?.filter(
     (c) => !['Summary', 'Description', 'Specs'].includes(c.name)
   );

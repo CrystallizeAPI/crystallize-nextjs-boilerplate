@@ -25,10 +25,10 @@ export async function getData({ asPath, language, preview = null }) {
 
 export default function DocumentPage({ document, preview }) {
   const t = useT();
-  const title = document?.components.find((c) => c.name === 'Title')?.content
+  const title = document?.components?.find((c) => c.name === 'Title')?.content
     ?.text;
-  const description = document?.components.find((c) => c.name === 'Intro');
-  const images = document?.components.find((c) => c.name === 'Image');
+  const description = document?.components?.find((c) => c.name === 'Intro');
+  const images = document?.components?.find((c) => c.name === 'Image');
   const relatedProducts = document?.components?.find(
     (c) => c.name === 'Products'
   );
