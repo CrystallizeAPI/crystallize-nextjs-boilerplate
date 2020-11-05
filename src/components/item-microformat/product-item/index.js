@@ -19,7 +19,7 @@ export default function ProductItem({ data }) {
   const { priceVariants, images } =
     matchingVariant || variants?.find((variant) => variant.isDefault) || {};
   const { price, currency } = priceVariants?.find(
-    (pv) => pv.identifier === locale.priceVariant
+    (pv) => pv.identifier === locale.crystallizePriceVariant
   ) || {
     price: matchingVariant?.price || 'n/a',
     currency: 'eur'

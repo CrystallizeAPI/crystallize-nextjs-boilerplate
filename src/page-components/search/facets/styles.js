@@ -25,6 +25,27 @@ export const Outer = styled.div`
   }
 `;
 
+export const FacetTitle = styled.h4`
+  margin: 0 0 15px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  min-height: 15px;
+
+  > span {
+    margin-right: 15px;
+  }
+
+  button {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 250ms;
+  }
+`;
+
 export const Facet = styled.div`
   border-top: 1px solid #dfdfdf;
   padding-top: 35px;
@@ -38,14 +59,13 @@ export const Facet = styled.div`
       border: none;
     }
   }
-`;
 
-export const FacetTitle = styled.h4`
-  margin: 0 0 15px;
-  font-weight: 600;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #000;
+  &:hover ${FacetTitle} {
+    button {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 `;
 
 export const FacetMobileButton = styled.div`
@@ -63,7 +83,7 @@ export const FacetMobileCloseButton = styled.div`
 
   ${responsive.smAndLess} {
     display: block;
-    position: absolute;
+    position: fixed;
     right: 15px;
     bottom: 15px;
     z-index: 1;

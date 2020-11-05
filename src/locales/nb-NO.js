@@ -96,6 +96,7 @@ export default {
       facets: {
         viewNResults: 'Vis {{count}} resultat',
         viewNResults_plural: 'Vis {{count}} resultater',
+        reset: 'Tilbakestill',
         price: {
           title: 'Pris',
           min: 'Minpris',

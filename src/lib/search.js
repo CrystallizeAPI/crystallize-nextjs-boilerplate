@@ -118,7 +118,7 @@ export function urlToSpec({ query = {}, asPath }, locale) {
       });
     }
 
-    draft.filter.priceVariant = locale.priceVariant;
+    draft.filter.priceVariant = locale.crystallizePriceVariant;
 
     draft.language = locale.crystallizeCatalogueLanguage;
 

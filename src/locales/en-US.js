@@ -97,6 +97,7 @@ export default {
       facets: {
         viewNResults: 'Show {{count}} result',
         viewNResults_plural: 'Show {{count}} results',
+        reset: 'Reset',
         price: {
           title: 'Price',
           min: 'Minimum price',

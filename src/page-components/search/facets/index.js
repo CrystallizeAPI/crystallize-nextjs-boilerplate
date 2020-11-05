@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import produce from 'immer';
 
 import { useT } from 'lib/i18n';
-import { Button } from 'ui';
+import { Button, screen } from 'ui';
 
 import {
   Outer,
@@ -47,6 +47,44 @@ export default function Facets({
   const { priceRange } = spec.filter.productVariants;
   const { price } = aggregations;
   const [show, setShow] = useState(false);
+
+  // Prevent body scroll while mobile facets filter is open
+  useEffect(() => {
+    document.body.style.overflow = show ? 'hidden' : 'auto';
+  }, [show]);
+
+  // Auto hide mobile facets filter if view is changed to desktop
+  useEffect(() => {
+    function onMediaMatch(evt) {
+      if (evt.matches && show) {
+        setShow(false);
+      }
+    }
+
+    const matcher = matchMedia(`(min-width: ${screen.md}px)`);
+    matcher.addEventListener('change', onMediaMatch);
+
+    return () => matcher.removeEventListener('change', onMediaMatch);
+  }, [show, setShow]);
+
+  // Reset a single facet
+  function reset({ name, ...rest }) {
+    changeQuery((query) => {
+      if (name === 'price') {
+        delete query.min;
+        delete query.max;
+      } else if (name === 'attribute') {
+        if (Array.isArray(query.attrs)) {
+          const index = query.attrs.findIndex((a) =>
+            a.startsWith(`${rest.attribute}:`)
+          );
+          query.attrs.splice(index, 1);
+        } else {
+          delete query.attrs;
+        }
+      }
+    });
+  }
 
   function onSearchTermChange(searchTerm) {
     changeQuery((query) => {
@@ -123,7 +161,16 @@ export default function Facets({
 
         {price && price.min !== price.max && (
           <Facet>
-            <FacetTitle>{t('search.facets.price.title')}</FacetTitle>
+            <FacetTitle>
+              <span>{t('search.facets.price.title')}</span>
+              {priceRange &&
+                priceRange.min !== price.min &&
+                priceRange.max !== price.max && (
+                  <button onClick={() => reset({ name: 'price' })}>
+                    {t('search.facets.reset')}
+                  </button>
+                )}
+            </FacetTitle>
             <Price
               {...price}
               onChange={onPriceChange}
@@ -136,7 +183,16 @@ export default function Facets({
         )}
         {groupAttributes(aggregations).map(({ attribute, values }) => (
           <Facet key={attribute}>
-            <FacetTitle>{attribute}</FacetTitle>
+            <FacetTitle>
+              <span>{attribute}</span>
+              {spec?.filter?.productVariants?.attributes?.some(
+                (a) => a.attribute === attribute
+              ) && (
+                <button onClick={() => reset({ name: 'attribute', attribute })}>
+                  {t('search.facets.reset')}
+                </button>
+              )}
+            </FacetTitle>
             {values.map(({ value, count }) => (
               <SingleFacetValue
                 key={value}

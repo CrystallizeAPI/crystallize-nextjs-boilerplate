@@ -11,7 +11,7 @@
       "displayName": "English - US",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
-      "priceVariant": "default"
+      "crystallizePriceVariant": "default"
     }
   ]
 }

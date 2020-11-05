@@ -33,7 +33,9 @@ export default function GridItem({ data, gridCell }) {
     const { priceVariants, image: i } = variant;
 
     const { price, currency } =
-      priceVariants?.find((pv) => pv.identifier === locale.priceVariant) || {};
+      priceVariants?.find(
+        (pv) => pv.identifier === locale.crystallizePriceVariant
+      ) || {};
 
     image = i;
     text = (

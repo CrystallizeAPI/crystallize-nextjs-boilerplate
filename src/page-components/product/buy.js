@@ -16,7 +16,7 @@ export default function BuyButton({ product, selectedVariant }) {
 
   const { identifier, price, currency } =
     selectedVariant.priceVariants.find(
-      (pv) => pv.identifier === locale.priceVariant
+      (pv) => pv.identifier === locale.crystallizePriceVariant
     ) || {};
 
   async function buy() {
@@ -25,7 +25,7 @@ export default function BuyButton({ product, selectedVariant }) {
     basket.actions.addItem({
       sku: selectedVariant.sku,
       path: product.path,
-      priceVariantIdentifier: identifier || locale.priceVariant
+      priceVariantIdentifier: identifier || locale.crystallizePriceVariant
     });
   }
 

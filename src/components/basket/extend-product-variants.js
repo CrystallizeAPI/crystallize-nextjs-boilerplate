@@ -82,7 +82,7 @@ export function useExtendedProductVariants({ productsVariantsToExtend = [] }) {
                   );
                   const { price, currency } =
                     variant.priceVariants.find(
-                      (pv) => pv.identifier === locale.priceVariant
+                      (pv) => pv.identifier === locale.crystallizePriceVariant
                     ) ||
                     variant.priceVariants.find(
                       (p) => p.identifier === 'default'

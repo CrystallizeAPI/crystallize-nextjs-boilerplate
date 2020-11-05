@@ -73,7 +73,9 @@ export async function validatePaymentModel({ paymentModel }) {
           priceVariants
         } = product.variants.find((v) => v.sku === cartItem.sku);
         const { price, currency } = priceVariants.find(
-          (v) => v.identifier === (cartItem.priceVariant || locale.priceVariant)
+          (v) =>
+            v.identifier ===
+            (cartItem.priceVariant || locale.crystallizePriceVariant)
         );
 
         const gross = price;

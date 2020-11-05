@@ -37,8 +37,13 @@ const ListOuter = styled.div`
     display: grid;
     grid-gap: 40px;
     grid-template-areas:
-      'facets spec spec spec '
-      'facets products products products ';
+      'facets spec'
+      'facets products';
+    grid-template-columns: 1fr 3fr;
+  }
+
+  ${responsive.lg} {
+    grid-template-columns: 1fr 4fr;
   }
 `;
 
@@ -110,7 +115,7 @@ async function loadPage(spec) {
 
 export default function SearchPage({ search, catalogue }) {
   const firstLoad = useRef();
-  const { query, asPath, isFallback, replace, ...router } = useRouter();
+  const { query, asPath, isFallback, ...router } = useRouter();
   const locale = useLocale();
   const [data, setData] = useState(search);
 
@@ -154,19 +159,32 @@ export default function SearchPage({ search, catalogue }) {
 
   // Change the url query params
   function changeQuery(fn) {
-    const { catalogue, ...existingQuery } = query;
-    const newQuery = produce(existingQuery, (draft) => {
+    const newQuery = produce(query, (draft) => {
       delete draft.before;
       delete draft.after;
       fn(draft);
     });
 
-    replace(
+    /**
+     * We need to extract the [...catalogue] query params
+     * in order to get a clean set of query params to work with
+     */
+    const { catalogue, ...queryWithoutRouteInfo } = newQuery;
+
+    const newQueryAsString = new URLSearchParams(
+      queryWithoutRouteInfo
+    ).toString();
+    let asPathClean = asPath.split('?')[0];
+    if (newQueryAsString) {
+      asPathClean += `?${newQueryAsString}`;
+    }
+
+    router.replace(
       {
-        pathname: asPath.split('?')[0],
+        pathname: router.pathname,
         query: newQuery
       },
-      undefined,
+      asPathClean,
       { shallow: true }
     );
   }
