@@ -5,7 +5,6 @@ import { responsive } from './responsive';
 export const H1 = styled.h1`
   margin: 0 0 15px;
   font-size: 3rem;
-  font-family: 'Roboto Slab', sans-serif;
   color: var(--color-text-main);
 
   ${responsive.smAndLess} {

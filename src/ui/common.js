@@ -28,7 +28,6 @@ export const Header = styled.div`
   h1 {
     font-size: 2.4rem;
     margin-bottom: 10px;
-    font-family: 'Roboto', sans-serif;
     text-transform: uppercase;
   }
 

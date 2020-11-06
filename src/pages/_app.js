@@ -1,4 +1,3 @@
-import MetaTags from 'components/head/meta-tags';
 import { AuthProvider } from 'components/auth-context';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
@@ -10,7 +9,6 @@ function MyApp({ Component, pageProps, commonData }) {
   const { mainNavigation, locale, localeResource } = commonData;
   return (
     <>
-      <MetaTags />
       <I18nextProvider locale={locale} localeResource={localeResource}>
         <SettingsProvider mainNavigation={mainNavigation}>
           <AuthProvider>

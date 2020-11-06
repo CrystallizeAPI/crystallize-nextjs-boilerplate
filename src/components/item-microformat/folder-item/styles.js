@@ -54,7 +54,6 @@ export const Text = styled.div`
     font-size: 1.4em;
     text-transform: uppercase;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
     margin: 0;
     color: black;
   }

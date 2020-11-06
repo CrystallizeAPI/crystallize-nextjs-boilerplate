@@ -29,6 +29,7 @@ export default `
         variants {
           url
           width
+          height
         }
       }
     }
@@ -76,6 +77,7 @@ export default `
     variants {
       url
       width
+      height
     }
   }
 

@@ -44,11 +44,8 @@ export const RelatedTopics = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 15px;
-  ${responsive.xs} {
-    /* display: none; */
-  }
+
   h2 {
-    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     text-transform: uppercase;
     margin-bottom: 10px;

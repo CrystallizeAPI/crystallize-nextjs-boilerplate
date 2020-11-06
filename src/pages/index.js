@@ -1,4 +1,4 @@
-import Cmp, { getData } from 'page-components/index';
+import Cmp, { getData } from 'page-components/frontpage';
 import { getLocaleFromContext } from 'lib/app-config';
 
 export async function getStaticProps(context) {
