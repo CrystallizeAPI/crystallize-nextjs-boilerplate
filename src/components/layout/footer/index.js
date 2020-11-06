@@ -23,7 +23,7 @@ export default function Footer() {
       </Link>
       <NavList>
         <h5>{t('layout.menu')}</h5>
-        {mainNavigation.map((category) => (
+        {mainNavigation?.map((category) => (
           <li key={category.path}>
             <Link href={category.path}>
               <a>{category.name}</a>
