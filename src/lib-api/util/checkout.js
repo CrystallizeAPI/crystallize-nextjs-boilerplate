@@ -1,4 +1,15 @@
+import produce from 'immer';
 import { simplyFetchFromGraph } from 'lib/graph';
+
+function validCustomer(customer) {
+  return produce(customer, (draft) => {
+    draft.addresses?.forEach((address) => {
+      if (!address.email) {
+        delete address.email;
+      }
+    });
+  });
+}
 
 export async function validatePaymentModel({ paymentModel }) {
   const {
@@ -132,7 +143,7 @@ export async function validatePaymentModel({ paymentModel }) {
     locale,
     cart: validatedCart,
     total,
-    customer,
+    customer: validCustomer(customer),
     metadata,
     multilingualUrlPrefix
   };

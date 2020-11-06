@@ -41,16 +41,20 @@ export default async (req, res) => {
     const validPaymentModel = await validatePaymentModel({ paymentModel });
     const host = getHost(req);
 
-    const createCrystallizeOrderResponse = await createCrystallizeOrder(
+    const { errors, data } = await createCrystallizeOrder(
       orderNormalizer({
         paymentModel: validPaymentModel
       })
     );
 
+    if (errors?.length > 0) {
+      throw new Error(JSON.stringify(errors, null, 2));
+    }
+
     const vippsResponse = await getClient().initiatePayment({
       order: orderToVippsBody({
         paymentModel: validPaymentModel,
-        orderId: createCrystallizeOrderResponse.data.orders.create.id,
+        orderId: data.orders.create.id,
         host
       })
     });
