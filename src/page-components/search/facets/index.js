@@ -62,9 +62,21 @@ export default function Facets({
     }
 
     const matcher = matchMedia(`(min-width: ${screen.md}px)`);
-    matcher.addEventListener('change', onMediaMatch);
 
-    return () => matcher.removeEventListener('change', onMediaMatch);
+    const isModern = 'addEventListener' in matcher;
+    if (isModern) {
+      matcher.addEventListener('change', onMediaMatch);
+    } else {
+      matcher.addListener(onMediaMatch);
+    }
+
+    return () => {
+      if (isModern) {
+        matcher.removeEventListener('change', onMediaMatch);
+      } else {
+        matcher.removeListener(onMediaMatch);
+      }
+    };
   }, [show, setShow]);
 
   // Reset a single facet
