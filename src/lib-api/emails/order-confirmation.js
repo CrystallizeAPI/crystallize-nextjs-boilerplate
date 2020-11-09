@@ -1,4 +1,4 @@
-import mjml2html from '@nerdenough/mjml-ncc-bundle';
+import mjml2html from 'mjml';
 
 import { callOrdersApi } from 'lib-api/crystallize';
 import QUERY_ORDER_BY_ID from 'lib-api/crystallize/graph/queries/order-by-id';

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import mjml2html from '@nerdenough/mjml-ncc-bundle';
+import mjml2html from 'mjml';
 import sgMail from '@sendgrid/mail';
 
 import getHost from 'lib-api/util/get-host';
