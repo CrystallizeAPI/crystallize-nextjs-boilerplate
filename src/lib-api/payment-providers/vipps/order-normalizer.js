@@ -2,15 +2,15 @@ function generateVippsProperties(vippsData) {
   const propertiesArray = [
     {
       property: 'vipps_bankIdVerified',
-      value: vippsData.userDetails.bankIdVerified
+      value: vippsData.userDetails?.bankIdVerified
     },
     {
       property: 'vipps_ssn',
-      value: vippsData.userDetails.ssn
+      value: vippsData.userDetails?.ssn
     },
     {
       property: 'vipps_userId',
-      value: vippsData.userDetails.userId
+      value: vippsData.userDetails?.userId
     }
   ];
 
@@ -31,7 +31,7 @@ export default function VippsOrderNormalizer({
 }) {
   // If we don't get a vippsOrderId we need to create an order in Crystallize
   if (vippsOrderId) {
-    const { shippingDetails, userDetails } = vippsData;
+    const { shippingDetails, userDetails = {} } = vippsData;
     return {
       id: vippsOrderId,
       customer: {
