@@ -8,20 +8,6 @@ import { useLocale } from 'lib/app-config';
 
 import { Outer, Text, ImageWrapper, Img, Price, Title } from './styles';
 
-function getImageSize({ variants } = {}) {
-  if (variants) {
-    const biggestImage = variants.sort((a, b) => b.width - a.width)[0];
-    const { width, height } = biggestImage;
-
-    return {
-      width,
-      height
-    };
-  }
-
-  return {};
-}
-
 export default function GridItem({ data, gridCell }) {
   const t = useT();
   const locale = useLocale();
@@ -78,7 +64,6 @@ export default function GridItem({ data, gridCell }) {
           {image && (
             <Img
               {...image}
-              {...getImageSize(image)}
               alt={name}
               sizes={`(min-width ${screen.md}px) ${imageMdWidth}vw, 60vw`}
             />
