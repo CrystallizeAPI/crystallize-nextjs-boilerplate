@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Image from '@crystallize/react-image';
+import { Image } from '@crystallize/react-image';
 
 import { responsive } from 'ui';
 import WidescreenRatio from 'ui/widescreen-ratio';

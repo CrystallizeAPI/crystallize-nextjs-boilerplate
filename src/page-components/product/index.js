@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Img from '@crystallize/react-image';
+import { Image as Img } from '@crystallize/react-image';
 import ContentTransformer from 'ui/content-transformer';
 
 import { simplyFetchFromGraph } from 'lib/graph';

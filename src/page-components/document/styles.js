@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Image from '@crystallize/react-image';
+import { Image } from '@crystallize/react-image';
 
 import { H2 as H, responsive } from 'ui';
 

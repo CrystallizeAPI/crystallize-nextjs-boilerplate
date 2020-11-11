@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Image from '@crystallize/react-image';
+import { Image } from '@crystallize/react-image';
 
 import { responsive } from 'ui';
 
@@ -28,7 +28,7 @@ export const ItemAmount = styled.div`
 `;
 
 export const ItemImage = styled(Image).attrs(() => ({
-  sizes: '80px',
+  sizes: '80px'
 }))`
   display: flex;
   flex: 0 0 auto;

@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import CrystallizeImage from '@crystallize/react-image';
+import { Image as CrystallizeImage } from '@crystallize/react-image';
 
 export const drawAttentionDuration = 400;
 
