@@ -14,7 +14,8 @@ function orderToMollieBody({
 }) {
   return {
     amount: {
-      currency: total.currency.toUpperCase(),
+      currency:
+        process.env.MOLLIE_DEFAULT_CURRENCY || total.currency.toUpperCase(),
       value: `${total.gross.toFixed(2)}`
     },
     customerId,
