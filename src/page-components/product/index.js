@@ -5,6 +5,7 @@ import { simplyFetchFromGraph } from 'lib/graph';
 import { screen } from 'ui';
 import Layout from 'components/layout';
 import ShapeComponents from 'components/shape/components';
+import toText from '@crystallize/content-transformer/toText';
 
 import VariantSelector from './variant-selector';
 import Buy from './buy';
@@ -45,7 +46,6 @@ export default function ProductPage({ product, preview }) {
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants.find((v) => v.isDefault)
   );
-
   function onVariantChange(variant) {
     setSelectedVariant(variant);
   }
@@ -74,7 +74,7 @@ export default function ProductPage({ product, preview }) {
         '@type': 'Product',
         sku: variant?.sku,
         name: variant?.name,
-        description: summaryComponent?.content?.plainText?.[0],
+        description: toText(summaryComponent?.content?.json),
         image: variant?.images?.[0]?.url,
         offers: {
           '@type': 'Offer',
