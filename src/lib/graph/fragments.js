@@ -69,6 +69,7 @@ export default `
 
   fragment richText on RichTextContent {
     json
+    plainText
   }
 
   fragment image on Image {
