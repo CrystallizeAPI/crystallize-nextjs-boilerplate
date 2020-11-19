@@ -19,6 +19,6 @@ export const callOrdersApi = createApiCaller(
   `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}/orders`
 );
 
-export const callCoreApi = createApiCaller(
+export const callPimApi = createApiCaller(
   'https://pim.crystallize.com/graphql'
 );
