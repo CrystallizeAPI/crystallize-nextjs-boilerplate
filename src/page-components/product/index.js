@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Image as Img } from '@crystallize/react-image';
-import ContentTransformer from 'ui/content-transformer';
+import toText from '@crystallize/content-transformer/toText';
+
+import { useLocale } from 'lib/app-config';
 import { simplyFetchFromGraph } from 'lib/graph';
 import { screen } from 'ui';
+import ContentTransformer from 'ui/content-transformer';
 import Layout from 'components/layout';
 import ShapeComponents from 'components/shape/components';
-import toText from '@crystallize/content-transformer/toText';
 
 import VariantSelector from './variant-selector';
 import Buy from './buy';
 import query from './query';
 import Topics from 'components/topics';
-import { useLocale } from 'lib/app-config';
-import { useRouter } from 'next/router';
 
 import {
   Outer,
