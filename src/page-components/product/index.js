@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Image as Img } from '@crystallize/react-image';
 import ContentTransformer from 'ui/content-transformer';
+import toText from '@crystallize/content-transformer/toText';
+import { useLocale } from 'lib/app-config';
 import { simplyFetchFromGraph } from 'lib/graph';
 import { screen } from 'ui';
 import Layout from 'components/layout';
@@ -38,6 +41,8 @@ export async function getData({ asPath, language, preview = null }) {
 }
 
 export default function ProductPage({ product, preview }) {
+  const locale = useLocale();
+  const router = useRouter();
   // Set the selected variant to the default
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants.find((v) => v.isDefault)
@@ -57,6 +62,36 @@ export default function ProductPage({ product, preview }) {
     (c) => !['Summary', 'Description', 'Specs'].includes(c.name)
   );
 
+  let schema = [];
+  product.variants.map((variant) => {
+    const { price, currency } =
+      variant.priceVariants.find(
+        (pv) => pv.identifier === locale.crystallizePriceVariant
+      ) || {};
+    schema = [
+      ...schema,
+      {
+        '@context': 'https://schema.org/',
+        '@type': 'Product',
+        sku: variant?.sku,
+        name: variant?.name,
+        description: toText(summaryComponent?.content?.json),
+        image: variant?.images?.[0]?.url,
+        offers: {
+          '@type': 'Offer',
+          // priceValidUntil: 'YYYY-MM-DD',
+          priceCurrency: currency,
+          url: router?.asPath,
+          availability:
+            variant?.stock > 0
+              ? `https://schema.org/InStock`
+              : `https://schema.org/OutOfStock`,
+          price,
+          currency
+        }
+      }
+    ];
+  });
   return (
     <Layout title={product.name} preview={preview}>
       <SchemaOrg {...product} />
