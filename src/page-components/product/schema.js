@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 const SchemaOrg = ({ variants, summary }) => {
   const router = useRouter();
   let schema = [];
+
   variants?.forEach((variant) => {
     const { price, currency } =
       variant.priceVariants.find((pv) => pv.identifier === 'default') || {};
