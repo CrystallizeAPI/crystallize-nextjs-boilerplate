@@ -51,7 +51,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mjml": "^4.7.1",
-    "next": "^10.0.1",
+    "next": "^10.0.2",
     "prop-types": "^15.7.2",
     "rc-slider": "^9.5.4",
     "react": "^17.0.1",
