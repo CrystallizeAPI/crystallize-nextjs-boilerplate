@@ -27,7 +27,7 @@ export async function getServerSideProps({ query: { orderId } }) {
       await updateProductStock({
         id: cartItem.productId,
         language: 'en',
-        variants: [{ ...defaultVariant, stock: 0 }]
+        variants: [{ ...defaultVariant, stock: defaultVariant.stock - 1 }]
       });
 
       await publishProduct({

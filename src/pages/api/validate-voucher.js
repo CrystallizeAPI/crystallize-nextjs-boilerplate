@@ -11,7 +11,7 @@ export default async (req, res) => {
       ...voucher,
       success: true
     };
-    if (voucher && voucher.stock != 0) {
+    if (voucher && voucher.stock > 0) {
       response.message = `Enjoy off Price`;
     } else if (!voucher) {
       response.message = `Try again`;
