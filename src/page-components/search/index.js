@@ -55,15 +55,7 @@ function cleanFilterForTotalAggregations(filter) {
 }
 
 export async function getData({ asPath, preview, language, searchSpec }) {
-  const [
-    {
-      data: {
-        search,
-        aggregations: { aggregations }
-      }
-    },
-    { data: { searchPage } = {} }
-  ] = await Promise.all([
+  const [searchQueryResponse, catalogueQueryResponse] = await Promise.all([
     simplyFetchFromSearchGraph({
       query: SEARCH_QUERY,
       variables: {
@@ -83,12 +75,25 @@ export async function getData({ asPath, preview, language, searchSpec }) {
       : {}
   ]);
 
+  if (!searchQueryResponse.data) {
+    return {
+      search: null,
+      catalogue: null,
+      language
+    };
+  }
+
+  const {
+    search,
+    aggregations: { aggregations } = {}
+  } = searchQueryResponse.data;
+
   return {
     search: {
       search,
       aggregations
     },
-    catalogue: searchPage || null,
+    catalogue: catalogueQueryResponse.data || null,
     language
   };
 }
@@ -102,10 +107,7 @@ async function loadPage(spec) {
     }
   });
 
-  const {
-    search,
-    aggregations: { aggregations }
-  } = data;
+  const { search, aggregations: { aggregations } = {} } = data || {};
 
   return {
     search,
@@ -113,7 +115,8 @@ async function loadPage(spec) {
   };
 }
 
-export default function SearchPage({ search, catalogue }) {
+export default function SearchPage(props) {
+  const { search, catalogue } = props;
   const firstLoad = useRef();
   const { query, asPath, isFallback, ...router } = useRouter();
   const locale = useLocale();
@@ -202,7 +205,7 @@ export default function SearchPage({ search, catalogue }) {
   }
 
   // We're waiting for the search result to come in
-  if (router.isFallback || !data) {
+  if (router.isFallback || !data || !data.search) {
     return (
       <Layout>
         <Outer>
