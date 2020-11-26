@@ -6,6 +6,7 @@ import { useBasket, TinyBasket } from 'components/basket';
 import { Button } from 'ui';
 import { useT } from 'lib/i18n';
 
+import { Voucher } from 'components/basket/voucher';
 import { Basket, Header, Footer } from './styles';
 
 const CheckoutBtn = styled(Button)`
@@ -53,6 +54,7 @@ export default function Aside() {
       <Header>{t('basket.title')}</Header>
       <TinyBasket />
       <Footer>
+        <Voucher />
         <Link href="/checkout" passHref>
           <CheckoutBtn
             as="a"

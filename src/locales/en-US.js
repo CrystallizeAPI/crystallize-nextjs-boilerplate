@@ -49,6 +49,9 @@ export default {
       totalPriceAfterDiscount: 'Total after discount',
       shippingPrice: 'Shipping',
       vat: 'VAT',
+      addVoucher: 'Add Voucher',
+      voucherCode: 'Your code here',
+      voucherCheck: 'Validate',
       totalToPay: 'To pay',
       goToCheckout: 'Go to checkout'
     },

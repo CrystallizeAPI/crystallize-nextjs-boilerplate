@@ -11,6 +11,31 @@ function validCustomer(customer) {
   });
 }
 
+export function fetchVoucher({ voucherCode }) {
+  console.log(voucherCode);
+  return simplyFetchFromGraph({
+    query: `
+      {
+        voucher: catalogue (language: "en", path: "/vouchers/${voucherCode.toLowerCase()}") {
+          ... on Product{
+            defaultVariant{
+              price
+              sku
+              stock
+              images {
+                variants {
+                  url
+                  width
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+  });
+}
+
 export async function validatePaymentModel({ paymentModel }) {
   const {
     cart,
