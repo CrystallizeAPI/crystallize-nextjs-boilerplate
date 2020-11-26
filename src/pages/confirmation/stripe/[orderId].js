@@ -23,7 +23,7 @@ export async function getServerSideProps({ query: { orderId } }) {
       defaultVariant.images = defaultVariant.images.map((image) => ({
         key: image.key
       }));
-      const urt = await updateProductStock({
+      await updateProductStock({
         id: cartItem.productId,
         language: 'en',
         variants: [{ ...defaultVariant, stock: 0 }]
