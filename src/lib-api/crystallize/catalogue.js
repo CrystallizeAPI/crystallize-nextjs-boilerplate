@@ -11,13 +11,13 @@ export const updateProductStock = (variables) =>
     operationName: 'updateProductStock'
   });
 
-export const fetchProduct = (variables) => {
+export const fetchProduct = (variables) =>
   callPimApi({
     query: fetchProductQuery,
     variables,
     operationName: 'fetchProduct'
   });
-};
+
 export const publishProduct = (variables) =>
   callPimApi({
     query: publishProductMutation,

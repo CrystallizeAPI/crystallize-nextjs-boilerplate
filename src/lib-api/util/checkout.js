@@ -12,7 +12,6 @@ function validCustomer(customer) {
 }
 
 export function fetchVoucher({ voucherCode }) {
-  console.log(voucherCode);
   return simplyFetchFromGraph({
     query: `
       {

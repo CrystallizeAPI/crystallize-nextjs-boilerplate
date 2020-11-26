@@ -13,30 +13,26 @@ export async function getServerSideProps({ query: { orderId } }) {
 
   for (const cartItem of cart) {
     if (cartItem.sku.includes('gift-card')) {
-      const response = fetchProduct({
+      const response = await fetchProduct({
         id: cartItem.productId,
         language: 'en'
       });
-      console.log(response?.data?.product?.get?.defaultVariant);
 
-      // await updateProductStock({
-      //   id: cartItem.productId,
-      //   language: 'en',
-      //   variants: [
-      //     {
-      //       isDefault: true,
-      //       id: cartItem.productVariantId,
-      //       sku: cartItem.sku,
-      //       stock: 0,
-      //       price: cartItem.price.gross,
-      //       key: cartItem.image
-      //     }
-      //   ]
-      // });
-      // await publishProduct({
-      //   id: cartItem.productId,
-      //   language: 'en'
-      // });
+      const defaultVariant = response?.data?.product?.get?.defaultVariant;
+
+      defaultVariant.images = defaultVariant.images.map((image) => ({
+        key: image.key
+      }));
+      const urt = await updateProductStock({
+        id: cartItem.productId,
+        language: 'en',
+        variants: [{ ...defaultVariant, stock: 0 }]
+      });
+
+      await publishProduct({
+        id: cartItem.productId,
+        language: 'en'
+      });
     }
   }
 

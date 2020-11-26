@@ -1,10 +1,10 @@
 export default `
-query{
+query fetchProduct($id: ID!, $language:String!){
     product{
-      get(id:"5dc3fceb43b90166bc9edaee", language:"en"){
-        externalReference
-        variants{
+      get(id:$id, language:$language){
+        defaultVariant{
           id
+          sku
           name
           externalReference
           price
