@@ -12,6 +12,13 @@
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
       "crystallizePriceVariant": "default"
+    },
+    {
+      "locale": "no",
+      "displayName": "Norsk",
+      "appLanguage": "nb-NO",
+      "crystallizeCatalogueLanguage": "no",
+      "crystallizePriceVariant": "Norway"
     }
   ]
 }

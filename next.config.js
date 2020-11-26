@@ -3,7 +3,7 @@ module.exports = {
   // check out the Next.js docs:
   // https://nextjs.org/docs/advanced-features/i18n-routing
   i18n: {
-    locales: ['en'],
+    locales: ['en', 'no'],
     defaultLocale: 'en'
   },
   async redirects() {
@@ -11,7 +11,7 @@ module.exports = {
       {
         source: '/web-frontpage',
         destination: '/',
-        permanent: true
+        permanent: false
       }
     ];
   }

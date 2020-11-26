@@ -1,5 +1,4 @@
-let hostName =
-  'https://crystallize-nextjs-boilerplate-git-search.crystallize.vercel.app';
+let hostName = '';
 if (typeof window !== 'undefined') {
   const l = window.location;
   hostName = `${l.protocol}//${l.host}`;
