@@ -27,6 +27,8 @@ export default `
         cart {
           sku
           name
+          productId
+          productVariantId
           quantity
           price {
             net

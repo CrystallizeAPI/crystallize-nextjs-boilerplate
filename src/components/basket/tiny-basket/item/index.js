@@ -84,21 +84,23 @@ export default function TinyBasketItem({ actions, item }) {
           </PriceVat>
         </PriceWrapper>
       </ItemInfo>
-      <div>
-        <ItemQuantityChanger>
-          <button
-            onClick={decrement}
-            type="button"
-            disabled={item.quantity === 1}
-          >
-            -
-          </button>
-          <ItemQuantity>{item.quantity}</ItemQuantity>
-          <button onClick={increment} type="button">
-            +
-          </button>
-        </ItemQuantityChanger>
-      </div>
+      {item.price?.gross > 0 ? (
+        <div>
+          <ItemQuantityChanger>
+            <button
+              onClick={decrement}
+              type="button"
+              disabled={item.quantity === 1}
+            >
+              -
+            </button>
+            <ItemQuantity>{item.quantity}</ItemQuantity>
+            <button onClick={increment} type="button">
+              +
+            </button>
+          </ItemQuantityChanger>
+        </div>
+      ) : null}
       <ItemDelete onClick={remove}>{t('basket.removeItem', item)}</ItemDelete>
     </Item>
   );

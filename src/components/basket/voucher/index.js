@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 
 import { useT } from 'lib/i18n';
-// import { useBasket } from '../index';
+import { useBasket } from '../index';
+import { useLocale } from 'lib/app-config';
+
 import { doPost } from 'lib/rest-api/helpers';
 import { Outer, VoucherButton, VoucherInput } from './styles';
 
 export const Voucher = () => {
   const t = useT();
+  const basket = useBasket();
+  const locale = useLocale();
+
   const [state, setState] = useState({
     showButton: true,
     validated: false,
@@ -16,15 +21,23 @@ export const Voucher = () => {
 
   const validateVoucher = async (voucherCode) => {
     try {
-      const response = await doPost('/api/validate-voucher', {
+      const voucher = await doPost('/api/validate-voucher', {
         body: JSON.stringify({ voucherCode })
       });
 
       setState({
         ...state,
-        validated: response.message === 'Enjoy off Price',
-        voucherMessage: response.message
+        validated: voucher.message === 'Enjoy off Price',
+        voucherMessage: voucher.message
       });
+
+      if (voucher.message === 'Enjoy off Price') {
+        basket.actions.addItem({
+          sku: voucher.sku,
+          path: `/vouchers/${voucherCode.toLowerCase()}`,
+          priceVariantIdentifier: locale.crystallizePriceVariant
+        });
+      }
     } catch (err) {
       console.log(err);
     }

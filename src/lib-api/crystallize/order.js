@@ -1,5 +1,5 @@
 import orderMutation from './graph/mutations/create-order';
-import updateMutation from './graph/mutations/update-order';
+import updateOrderMutation from './graph/mutations/update-order';
 import orderQuery from './graph/queries/order-by-id';
 
 import { callOrdersApi, callPimApi } from './index';
@@ -20,7 +20,7 @@ export const fetchCrystallizeOrder = (orderId) =>
 
 export const updateCrystallizeOrder = (variables) =>
   callPimApi({
-    query: updateMutation,
+    query: updateOrderMutation,
     variables,
     operationName: 'updateOrder'
   });
