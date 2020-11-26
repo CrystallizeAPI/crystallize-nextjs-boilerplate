@@ -9,6 +9,7 @@ export { default } from 'page-components/checkout/confirmation';
 export async function getServerSideProps({ query: { orderId } }) {
   const order = await fetchCrystallizeOrder(orderId);
   const cart = order?.data?.orders?.get?.cart;
+
   // Disable gift card by setting stock 0 & Publish changes
 
   for (const cartItem of cart) {
