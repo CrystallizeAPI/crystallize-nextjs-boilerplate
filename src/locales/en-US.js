@@ -51,7 +51,7 @@ export default {
       vat: 'VAT',
       addVoucher: 'Add Voucher',
       voucherCode: 'Your code here',
-      voucherCheck: 'Validate',
+      voucherCheck: 'Add',
       totalToPay: 'To pay',
       goToCheckout: 'Go to checkout'
     },

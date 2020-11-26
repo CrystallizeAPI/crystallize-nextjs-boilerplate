@@ -5,7 +5,14 @@ import { useBasket } from '../index';
 import { useLocale } from 'lib/app-config';
 
 import { doPost } from 'lib/rest-api/helpers';
-import { Outer, VoucherButton, VoucherInput } from './styles';
+import {
+  Outer,
+  VoucherButton,
+  VoucherInput,
+  VoucherFeedback,
+  InputGroup,
+  OpenVoucherBtn
+} from './styles';
 
 export const Voucher = () => {
   const t = useT();
@@ -16,7 +23,7 @@ export const Voucher = () => {
     showButton: true,
     validated: false,
     voucherMessage: '',
-    voucherCode: t('basket.voucherCode')
+    voucherCode: ''
   });
 
   const validateVoucher = async (voucherCode) => {
@@ -48,7 +55,7 @@ export const Voucher = () => {
   return (
     <Outer>
       {showButton && !validated ? (
-        <VoucherButton
+        <OpenVoucherBtn
           onClick={() =>
             setState({
               ...state,
@@ -56,14 +63,16 @@ export const Voucher = () => {
             })
           }
         >
-          {t('basket.addVoucher')}
-        </VoucherButton>
+          <span> {t('basket.addVoucher')} </span>
+          <span>+</span>
+        </OpenVoucherBtn>
       ) : null}
-      {voucherMessage ? <p>{voucherMessage}</p> : null}
+
       {!showButton && !validated ? (
-        <div>
+        <InputGroup>
           <VoucherInput
             type="text"
+            placeholder={t('basket.voucherCode')}
             onChange={(e) =>
               setState({ ...state, voucherCode: e.target.value })
             }
@@ -72,7 +81,12 @@ export const Voucher = () => {
           <VoucherButton onClick={() => validateVoucher(voucherCode)}>
             {t('basket.voucherCheck')}
           </VoucherButton>
-        </div>
+        </InputGroup>
+      ) : null}
+      {voucherMessage ? (
+        <VoucherFeedback>
+          <p>{voucherMessage}</p>
+        </VoucherFeedback>
       ) : null}
     </Outer>
   );

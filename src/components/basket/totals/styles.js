@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
 export const Outer = styled.div`
-  flex-grow: 1;
+  /* flex-grow: 1; */
+  border-bottom: 1px solid #000;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 `;
 
 export const Rows = styled.div`
@@ -20,7 +23,7 @@ export const Row = styled.div`
     font-weight: 600;
     text-align: right;
 
-    opacity: ${p => (p.hideValue ? '0' : '1')};
+    opacity: ${(p) => (p.hideValue ? '0' : '1')};
   }
 `;
 
