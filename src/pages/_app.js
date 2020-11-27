@@ -1,3 +1,5 @@
+import { DefaultSeo } from 'next-seo';
+
 import { AuthProvider } from 'components/auth-context';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
@@ -7,8 +9,28 @@ import { I18nextProvider } from 'lib/i18n';
 
 function MyApp({ Component, pageProps, commonData }) {
   const { mainNavigation, locale, localeResource } = commonData;
+
+  /**
+   * Customise these values to match your site
+   * Read more here: https://github.com/garmeeh/next-seo#default-seo-configuration
+   */
+  const SEOSettings = {
+    // openGraph: {
+    //   type: 'website',
+    //   locale: locale.appLanguage,
+    //   url: 'https://www.url.ie/',
+    //   site_name: 'SiteName'
+    // },
+    // twitter: {
+    //   handle: '@handle',
+    //   site: '@site',
+    //   cardType: 'summary_large_image'
+    // }
+  };
+
   return (
     <>
+      <DefaultSeo {...SEOSettings} />
       <I18nextProvider locale={locale} localeResource={localeResource}>
         <SettingsProvider mainNavigation={mainNavigation}>
           <AuthProvider>
