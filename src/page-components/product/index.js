@@ -5,6 +5,7 @@ import { simplyFetchFromGraph } from 'lib/graph';
 import { screen } from 'ui';
 import Layout from 'components/layout';
 import ShapeComponents from 'components/shape/components';
+import toText from '@crystallize/content-transformer/toText';
 
 import VariantSelector from './variant-selector';
 import Buy from './buy';
@@ -56,9 +57,13 @@ export default function ProductPage({ product, preview }) {
   const componentsRest = product.components?.filter(
     (c) => !['Summary', 'Description', 'Specs'].includes(c.name)
   );
-
   return (
-    <Layout title={product.name} preview={preview}>
+    <Layout
+      title={product.name}
+      image={selectedVariant?.images?.[0]?.url}
+      description={toText(summaryComponent?.content?.json)}
+      preview={preview}
+    >
       <SchemaOrg {...product} summary={summaryComponent} />
       <Outer>
         <Sections>

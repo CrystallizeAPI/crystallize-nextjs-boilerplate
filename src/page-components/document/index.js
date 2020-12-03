@@ -7,6 +7,7 @@ import { simplyFetchFromGraph } from 'lib/graph';
 import ShapeComponents from 'components/shape/components';
 import ItemMicroformat from 'components/item-microformat';
 import { useT } from 'lib/i18n';
+import toText from '@crystallize/content-transformer/toText';
 
 import query from './query';
 import { HeroImage, Img, List, H2, Related } from './styles';
@@ -36,9 +37,13 @@ export default function DocumentPage({ document, preview }) {
   const componentsRest = document?.components?.filter(
     (c) => !['Intro', 'Title', 'Image', 'Products'].includes(c.name)
   );
-
   return (
-    <Layout title={title || document.name} preview={preview}>
+    <Layout
+      title={title || document.name}
+      description={toText(description?.content?.json)}
+      image={images?.content?.images?.[0]?.url}
+      preview={preview}
+    >
       <Outer>
         <Header centerContent>
           <H1>{title}</H1>

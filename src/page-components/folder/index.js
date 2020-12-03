@@ -6,7 +6,7 @@ import Layout from 'components/layout';
 import Grid, { GridItem } from 'components/grid';
 import ShapeComponents from 'components/shape/components';
 import ItemMicroformat from 'components/item-microformat';
-
+import toText from '@crystallize/content-transformer/toText';
 import { List } from './styles';
 import query from './query';
 
@@ -30,9 +30,16 @@ export default function FolderPage({ folder, preview }) {
     ?.filter((c) => c.type === 'gridRelations')
     ?.reduce((acc, g) => [...acc, ...(g?.content?.grids || [])], []);
   const rest = folder.components?.filter((c) => c.type !== 'gridRelations');
-
+  const description = folder.components?.find((c) => c.name === 'Brief')
+    ?.content?.json;
+  const icon = folder.components?.find((c) => c.name === 'Icon');
   return (
-    <Layout title={folder.name} preview={preview}>
+    <Layout
+      title={folder.name}
+      description={toText(description)}
+      image={icon?.content?.images?.[0]?.url}
+      preview={preview}
+    >
       <Outer>
         <Header centerContent>
           <H1>{folder.name}</H1>

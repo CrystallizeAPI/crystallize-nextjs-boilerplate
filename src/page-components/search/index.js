@@ -7,6 +7,7 @@ import Layout from 'components/layout';
 import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
 import { urlToSpec, SEARCH_QUERY } from 'lib/search';
 import { useLocale } from 'lib/app-config';
+import toText from '@crystallize/content-transformer/toText';
 import { Outer, Header as H, H1 as h1, responsive } from 'ui';
 // import ShapeComponents from 'components/shape/components';
 
@@ -207,7 +208,7 @@ export default function SearchPage(props) {
   // We're waiting for the search result to come in
   if (router.isFallback || !data || !data.search) {
     return (
-      <Layout>
+      <Layout title="Searching...">
         <Outer>
           <ListOuter>
             <Spec spec={spec} changeQuery={changeQuery} />
@@ -217,12 +218,18 @@ export default function SearchPage(props) {
       </Layout>
     );
   }
+  const title = catalogue?.searchPage?.name
+    ? catalogue.searchPage.name
+    : 'Search';
+  const description = catalogue?.searchPage?.components?.find(
+    (c) => c.name === 'Brief'
+  )?.content?.json;
 
   return (
-    <Layout>
+    <Layout title={title} description={toText(description)}>
       <Outer>
         <Header>
-          <H1>{catalogue?.name ? catalogue.name : 'Search'}</H1>
+          <H1>{title}</H1>
         </Header>
         <ListOuter>
           <Spec {...data.search} spec={spec} changeQuery={changeQuery} />
