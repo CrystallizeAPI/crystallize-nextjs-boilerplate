@@ -41,6 +41,8 @@ export default function Layout({
   const headTilte = title
     ? `${title} | ${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}`
     : `${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}`;
+
+  //@TODO add url to .env
   const siteUrl = 'https://furniture.superfast.shop';
   return (
     <>
