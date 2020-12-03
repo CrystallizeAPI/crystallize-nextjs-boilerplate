@@ -43,7 +43,7 @@ export default function Layout({
     : `${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}`;
 
   //@TODO add url to .env
-  const siteUrl = 'https://furniture.superfast.shop';
+  const siteUrl = null;
   return (
     <>
       <Head>
@@ -51,7 +51,9 @@ export default function Layout({
         <meta name="title" content={headTilte} />
         <meta property="og:title" content={headTilte} />
         <meta property="twitter:title" content={headTilte} />
-        <meta href={`${siteUrl}${router?.asPath}`} rel="canonical" />
+        {siteUrl && (
+          <link href={`${siteUrl}${router?.asPath}`} rel="canonical" />
+        )}
         {description && (
           <>
             <meta key="description" name="description" content={description} />
@@ -70,8 +72,14 @@ export default function Layout({
         <link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
         <link rel="manifest" href="/static/manifest.json" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${siteUrl}${router?.asPath}`} />
-        <meta property="twitter:url" content={`${siteUrl}${router?.asPath}`} />
+        <meta
+          property="og:url"
+          content={siteUrl ? `${siteUrl}${router?.asPath}` : router?.asPath}
+        />
+        <meta
+          property="twitter:url"
+          content={siteUrl ? `${siteUrl}${router?.asPath}` : router?.asPath}
+        />
         <meta property="twitter:card" content="summary_large_image" />
       </Head>
       <GlobalStyle />
