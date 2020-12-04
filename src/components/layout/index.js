@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import CrystallizeLayout from '@crystallize/react-layout';
 
 import { Spinner } from 'ui';
@@ -38,50 +39,44 @@ export default function Layout({
   preview
 }) {
   const router = useRouter();
-  const headTilte = title
-    ? `${title} | ${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}`
-    : `${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}`;
+
+  const tenant = process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER;
+  const headTitle = title ? `${title} | ${tenant}` : `${tenant}`;
 
   //@TODO add url to .env
   const siteUrl = null;
+
+  const canonical = siteUrl ? `${siteUrl}${router?.asPath}` : router?.asPath;
+
+  const SEO = {
+    title: headTitle,
+    description,
+    canonical,
+    openGraph: {
+      type: 'website',
+      url: canonical,
+      title: headTitle,
+      description,
+      ...(image && { images: [image] }),
+      site_name: tenant
+    },
+    twitter: {
+      // handle: '@handle',
+      site: canonical,
+      cardType: 'summary_large_image'
+    }
+  };
+
   return (
     <>
       <Head>
-        <title key="title">{headTilte}</title>
-        <meta name="title" content={headTilte} />
-        <meta property="og:title" content={headTilte} />
-        <meta property="twitter:title" content={headTilte} />
-        {siteUrl && (
-          <link href={`${siteUrl}${router?.asPath}`} rel="canonical" />
-        )}
-        {description && (
-          <>
-            <meta key="description" name="description" content={description} />
-            <meta property="og:description" content={description} />
-            <meta property="twitter:description" content={description} />
-          </>
-        )}
-        {image && (
-          <>
-            <meta property="og:image" content={image} />
-            <meta property="twitter:image" content={image} />
-          </>
-        )}
         <link rel="icon" href="/static/favicon.svg" />
         <link rel="mask-icon" href="/static/mask-icon.svg" color="#5bbad5" />
         <link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
         <link rel="manifest" href="/static/manifest.json" />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={siteUrl ? `${siteUrl}${router?.asPath}` : router?.asPath}
-        />
-        <meta
-          property="twitter:url"
-          content={siteUrl ? `${siteUrl}${router?.asPath}` : router?.asPath}
-        />
-        <meta property="twitter:card" content="summary_large_image" />
       </Head>
+      <NextSeo {...SEO} />
+
       <GlobalStyle />
 
       {simple ? (
