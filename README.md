@@ -123,5 +123,5 @@ and [Platform.sh][23]
 [20]: https://vercel.com
 [21]:
   https://img.shields.io/static/v1?label=Slack&logo=slack&message=Crystallize%20Community&color=68d1b7
-[22]: https://slack.com
+[22]: crystallizecommunity.slack.com
 [23]: https://platform.sh
