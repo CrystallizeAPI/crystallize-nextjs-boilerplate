@@ -67,10 +67,16 @@ export default function Layout({
             <meta property="twitter:image" content={image} />
           </>
         )}
+
+        {/* Preconnect to Crystallize media CDN */}
+        <link rel="preconnect" href="https://media.crystallize.com" />
+
+        {/* Favicon */}
         <link rel="icon" href="/static/favicon.svg" />
         <link rel="mask-icon" href="/static/mask-icon.svg" color="#5bbad5" />
         <link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
         <link rel="manifest" href="/static/manifest.json" />
+
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
