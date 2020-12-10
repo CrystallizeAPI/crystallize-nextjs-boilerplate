@@ -4,7 +4,7 @@ export default async (req, res) => {
   try {
     const { customer, cart } = req?.body?.order?.get;
 
-    const deliveryAddress = customer.addresses.find(
+    const deliveryAddress = customer?.addresses?.find(
       (add) => add.type === 'delivery'
     );
 
@@ -46,14 +46,13 @@ export default async (req, res) => {
     const { id: defaultVatTypeId } = vatTypes.find(
       (i) => i.percentage === 25 && !i.name.includes('Fradrag')
     );
-    console.log(defaultVatTypeId);
+
     for (const lineItem of cart) {
       const {
         data: {
           product: { get: productData }
         }
       } = await getCrystallizeProduct({ id: lineItem.productId });
-
       const currentVariant = productData.variants.find(
         (v) => (v.id = lineItem.productVariantId)
       );

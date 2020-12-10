@@ -1,6 +1,6 @@
-import TripletexClient from 'node-tripletex';
+import TripletexClient from '@crystallize/node-tripletex';
 import ProductQuery from 'lib-api/crystallize/graph/queries/product-by-sku';
-import { callCoreApi } from 'lib-api/crystallize';
+import { callPimApi } from 'lib-api/crystallize';
 
 let client;
 export const getClient = () => {
@@ -18,7 +18,7 @@ export const getClient = () => {
 };
 
 export const getCrystallizeProduct = ({ id }) => {
-  return callCoreApi({
+  return callPimApi({
     operationName: 'getProduct',
     variables: {
       id
