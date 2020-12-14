@@ -12,7 +12,7 @@ if (process.env.KLARNA_USERNAME && process.env.KLARNA_PASSWORD) {
   klarnaClient = new Klarna({
     username: process.env.KLARNA_USERNAME,
     password: process.env.KLARNA_PASSWORD,
-    apiEndpoint: 'https://api.playground.klarna.com'
+    apiEndpoint: 'api.playground.klarna.com'
   });
 }
 
