@@ -20,6 +20,7 @@ export default async (req, res) => {
       ...response
     });
   } catch (error) {
+    console.log(error);
     return res.status(503).send({
       success: false,
       error: error.stack
