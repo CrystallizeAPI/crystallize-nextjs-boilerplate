@@ -59,11 +59,12 @@ export default function Header({ simple, preview }) {
         </Nav>
         <NavActions open={navOpen}>
           <LocaleSwitcher />
-          {auth.isLoggedIn ? (
-            <button type="button" onClick={auth.logout}>
-              Logout
-            </button>
-          ) : (
+          {auth.isLoggedIn === true && (
+            <Link href="/my-account">
+              <a>{t('customer.account.title')}</a>
+            </Link>
+          )}
+          {auth.isLoggedIn === false && (
             <Link href="/login">
               <a>{t('customer.login.title')}</a>
             </Link>

@@ -4,16 +4,10 @@ import ServiceApi from 'lib/service-api';
 
 export const AuthContext = React.createContext();
 
-export function logout() {
-  return fetch(`${process.env.NEXT_PUBLIC_SERVICE_API_URL}/api/user/logout`, {
-    credentials: 'include'
-  });
-}
-
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [status, setStatus] = useState({});
 
   useEffect(() => {
     async function checkIfLoggedIn() {
@@ -23,12 +17,25 @@ export function AuthProvider({ children }) {
             {
               user {
                 isLoggedIn
+                logoutLink
+                email
               }
             }
           `
         });
 
-        setIsLoggedIn(response.data.user.isLoggedIn);
+        const { user } = response.data;
+
+        const logoutLinkWithRedirect = new URL(user.logoutLink);
+        logoutLinkWithRedirect.searchParams.append(
+          'redirect',
+          encodeURIComponent(location.href)
+        );
+
+        setStatus({
+          ...user,
+          logoutLink: logoutLinkWithRedirect
+        });
       } catch (error) {
         console.log(error);
       }
@@ -36,19 +43,5 @@ export function AuthProvider({ children }) {
     checkIfLoggedIn();
   }, []);
 
-  function doLogout() {
-    logout();
-    setIsLoggedIn(false);
-  }
-
-  return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn,
-        logout: doLogout
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={status}>{children}</AuthContext.Provider>;
 }

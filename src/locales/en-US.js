@@ -22,6 +22,9 @@ export default {
           'Enter your email address and we’ll send a magic login link to your inbox.',
         emailAddressInvalid: 'Please enter a valid email address',
         sendMagicLink: 'Send me a magic link'
+      },
+      account: {
+        title: 'My account'
       }
     },
     product: {

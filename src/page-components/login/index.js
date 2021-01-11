@@ -31,8 +31,7 @@ export default function Login() {
             user {
               sendMagicLink(
                 email: "${email}"
-                magicLinkCallback: "${process.env.NEXT_PUBLIC_SERVICE_API_URL}/api/user/login-magic-link"
-                loggedInRedirect: "${location.href}"
+                loggedInRedirect: "${location.protocol}//${location.host}/my-account"
               ) {
                 success
                 error

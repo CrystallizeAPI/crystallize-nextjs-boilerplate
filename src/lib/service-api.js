@@ -1,7 +1,5 @@
-const NEXT_PUBLIC_SERVICE_API_URL = process.env.NEXT_PUBLIC_SERVICE_API_URL;
-
 export default async function serviceApi({
-  uri = `${NEXT_PUBLIC_SERVICE_API_URL}/api/graphql`,
+  uri = `${process.env.NEXT_PUBLIC_SERVICE_API_URL}/api/graphql`,
   query,
   variables
 }) {
