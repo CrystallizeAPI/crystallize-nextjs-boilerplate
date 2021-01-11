@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Layout from 'components/layout';
 import { H1, Button } from 'ui';
-import { sendMagicLink } from 'lib/rest-api';
+import ServiceApi from 'lib/service-api';
 import { useAuth } from 'components/auth-context';
 import { useT } from 'lib/i18n';
 
@@ -25,30 +25,38 @@ export default function Login() {
     const { email } = userData;
 
     try {
-      const { error, message } = await sendMagicLink(email);
-
-      if (error) {
-        console.error('Login failed');
-        throw error;
-      }
+      const response = await ServiceApi({
+        query: `
+          mutation {
+            user {
+              sendMagicLink(
+                email: "${email}"
+                magicLinkCallback: "${process.env.NEXT_PUBLIC_SERVICE_API_URL}/api/user/login-magic-link"
+                loggedInRedirect: "${location.href}"
+              ) {
+                success
+                error
+              }
+            }
+          }
+        `
+      });
 
       setUserData(
         Object.assign({}, userData, {
           loading: false,
-          message: message
+          message: response.data.user.sendMagicLink.success
+            ? 'Check your mail inbox for a login link'
+            : response.error || 'Could not send the login link email =('
         })
       );
     } catch (error) {
-      console.error(
-        'You have an error in your code or there are Network issues.',
-        error
-      );
+      console.error(error);
 
-      const { response } = error;
       setUserData(
         Object.assign({}, userData, {
           loading: false,
-          error: response ? response.statusText : error.message
+          error: 'Could not send a magic link email =('
         })
       );
     }

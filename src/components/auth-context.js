@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { authenticate } from 'lib/rest-api';
-import { logout } from 'lib/auth';
+import ServiceApi from 'lib/service-api';
 
 export const AuthContext = React.createContext();
+
+export function logout() {
+  return fetch(`${process.env.NEXT_PUBLIC_SERVICE_API_URL}/api/user/logout`, {
+    credentials: 'include'
+  });
+}
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -13,11 +18,17 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function checkIfLoggedIn() {
       try {
-        const response = await authenticate();
+        const response = await ServiceApi({
+          query: `
+            {
+              user {
+                isLoggedIn
+              }
+            }
+          `
+        });
 
-        const loggedIn = !!response.loggedIn;
-        setIsLoggedIn(loggedIn);
-        window.isLoggedIn = loggedIn;
+        setIsLoggedIn(response.data.user.isLoggedIn);
       } catch (error) {
         console.log(error);
       }
