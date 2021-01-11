@@ -15,14 +15,13 @@ export default function MyAccount() {
   return (
     <Layout title={t('customer.account.title')}>
       <Outer>
-        {auth.isLoggedIn ? (
+        {auth.isLoggedIn === true && (
           <div>
             <H1>Hi {auth.email}!</H1>
             <a href={auth.logoutLink}>Logout</a>
           </div>
-        ) : (
-          <div>You are not logged in</div>
         )}
+        {auth.isLoggedIn === false && <div>You are not logged in</div>}
       </Outer>
     </Layout>
   );
