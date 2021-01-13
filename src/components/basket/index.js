@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef, useMemo } from 'react';
 
 import ServiceApi from 'lib/service-api';
 
@@ -65,6 +65,19 @@ export function BasketProvider({ locale, children }) {
     }
   }, [status, simpleCart, serverState, metadata, changeTriggeredByOtherTab]);
 
+  /**
+   * Define the cartModel object.
+   * It will be used for payments in checkout
+   */
+  const cartModel = useMemo(
+    () => ({
+      language: locale.crystallizeCatalogueLanguage,
+      items: simpleCart.map(simpleCartItemForAPI),
+      voucherCodes: []
+    }),
+    [locale, simpleCart]
+  );
+
   // Get server state on cart change
   useEffect(() => {
     let stale = false;
@@ -72,8 +85,8 @@ export function BasketProvider({ locale, children }) {
     async function getServerState() {
       const response = await ServiceApi({
         query: `
-          query getServerCart($simpleCart: SimpleCartInput!) {
-            cart(simpleCart: $simpleCart) {
+          query getServerCart($cartModel: CartModelInput!) {
+            cart(cartModel: $cartModel) {
               total {
                 gross
                 net
@@ -109,11 +122,7 @@ export function BasketProvider({ locale, children }) {
           }
         `,
         variables: {
-          simpleCart: {
-            language: locale.crystallizeCatalogueLanguage,
-            items: simpleCart.map(simpleCartItemForAPI),
-            voucherCodes: []
-          }
+          cartModel
         }
       });
 
@@ -134,7 +143,7 @@ export function BasketProvider({ locale, children }) {
       stale = true;
       clearTimeout(timeout);
     };
-  }, [status, locale.crystallizeCatalogueLanguage, simpleCart]);
+  }, [status, locale.crystallizeCatalogueLanguage, cartModel]);
 
   function dispatchCartItemAction(action) {
     return (data) => dispatch({ action, ...data });
@@ -158,6 +167,7 @@ export function BasketProvider({ locale, children }) {
     <BasketContext.Provider
       value={{
         status,
+        cartModel,
         cart: (serverState?.items || []).map(withLocalState).filter(Boolean),
         total: serverState?.total || {},
         metadata,
