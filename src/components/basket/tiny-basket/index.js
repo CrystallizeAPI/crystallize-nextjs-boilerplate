@@ -8,11 +8,11 @@ import TinyBasketItem from './item';
 
 import { Outer, Items, ItemOuter, BasketIsEmpty } from './styles';
 
-export function TinyBasket() {
+export function TinyBasket({ showTotals = true }) {
   const t = useT();
   const { status, cart, actions } = useBasket();
 
-  if (status !== 'ready') {
+  if (status === 'not-hydrated') {
     return null;
   }
 
@@ -34,7 +34,7 @@ export function TinyBasket() {
         ))}
       </Items>
       <div style={{ height: 15 }} />
-      <Totals />
+      {!showTotals && <Totals />}
     </Outer>
   );
 }

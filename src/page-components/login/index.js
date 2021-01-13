@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import Layout from 'components/layout';
 import { H1, Button } from 'ui';
-import ServiceApi from 'lib/service-api';
-import { useAuth } from 'components/auth-context';
+import Layout from 'components/layout';
+import { useAuth, loginWithMagicLink } from 'components/auth';
 import { useT } from 'lib/i18n';
 
 import { LoginStyle, Outer, Fields } from './styles';
@@ -25,28 +24,14 @@ export default function Login() {
     const { email } = userData;
 
     try {
-      const response = await ServiceApi({
-        query: `
-          mutation {
-            user {
-              sendMagicLink(
-                email: "${email}"
-                loggedInRedirect: "${location.protocol}//${location.host}/my-account"
-              ) {
-                success
-                error
-              }
-            }
-          }
-        `
-      });
+      const { success, error } = await loginWithMagicLink(email);
 
       setUserData(
         Object.assign({}, userData, {
           loading: false,
-          message: response.data.user.sendMagicLink.success
+          message: success
             ? 'Check your mail inbox for a login link'
-            : response.error || 'Could not send the login link email =('
+            : error || 'Could not send the login link email =('
         })
       );
     } catch (error) {

@@ -55,6 +55,8 @@ export default function TinyBasketItem({ actions, item }) {
     return null;
   }
 
+  console.log(item);
+
   return (
     <Item animate={drawAttention}>
       <ItemImage {...images?.[0]} />

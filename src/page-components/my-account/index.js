@@ -2,8 +2,7 @@ import React from 'react';
 
 import Layout from 'components/layout';
 import { H1 } from 'ui';
-// import ServiceApi from 'lib/service-api';
-import { useAuth } from 'components/auth-context';
+import { useAuth } from 'components/auth';
 import { useT } from 'lib/i18n';
 
 import { Outer } from './styles';

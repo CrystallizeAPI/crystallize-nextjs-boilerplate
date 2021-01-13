@@ -4,9 +4,10 @@ import Link from 'next/link';
 
 import { useBasket, TinyBasket } from 'components/basket';
 import { Button } from 'ui';
+import { Spinner } from 'ui/spinner';
 import { useT } from 'lib/i18n';
 
-import { Basket, Header, Footer } from './styles';
+import { Outer, Header, Footer } from './styles';
 
 const CheckoutBtn = styled(Button)`
   width: 100%;
@@ -44,13 +45,18 @@ export default function Aside() {
     setGoing(true);
   };
 
-  if (basket.status !== 'ready') {
+  if (basket.status === 'not-hydrated') {
     return t('basket.loading');
   }
 
   return (
-    <Basket>
-      <Header>{t('basket.title')}</Header>
+    <Outer>
+      <Header>
+        {t('basket.title')}
+        {basket.status === 'server-state-is-stale' && (
+          <Spinner style={{ marginLeft: 15 }} />
+        )}
+      </Header>
       <TinyBasket />
       <Footer>
         <Link href="/checkout" passHref>
@@ -64,6 +70,6 @@ export default function Aside() {
           </CheckoutBtn>
         </Link>
       </Footer>
-    </Basket>
+    </Outer>
   );
 }

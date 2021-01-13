@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { useAuth } from 'components/auth-context';
+import { useAuth } from 'components/auth';
 import { useSettings } from 'components/settings-context';
 import { useT } from 'lib/i18n';
 

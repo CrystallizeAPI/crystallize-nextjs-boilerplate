@@ -1,25 +1,20 @@
 import React, { useEffect, useReducer, useRef } from 'react';
 
+import ServiceApi from 'lib/service-api';
+
 import { retrieveFromCache, persistToCache } from './cache';
-export { TinyBasket } from './tiny-basket';
 import reducer, { initialState } from './reducer';
-import { useExtendedProductVariants } from './extend-product-variants';
 import { getChannel } from './shared-channel';
+
+export { TinyBasket } from './tiny-basket';
 
 const BasketContext = React.createContext();
 
 export const useBasket = () => React.useContext(BasketContext);
 
-export function BasketProvider({ children }) {
+export function BasketProvider({ locale, children }) {
   const [
-    {
-      cart,
-      total,
-      status,
-      productsVariantsToExtend,
-      metadata,
-      changeTriggeredByChannel
-    },
+    { status, simpleCart, metadata, serverState, changeTriggeredByOtherTab },
     dispatch
   ] = useReducer(reducer, initialState);
   const sharedChannelRef = useRef(getChannel());
@@ -34,47 +29,134 @@ export function BasketProvider({ children }) {
     // Listen for channel updates
     if (sharedChannelRef.current) {
       sharedChannelRef.current.onmessage = function (event) {
-        dispatch({ action: 'update-cart', ...JSON.parse(event.data) });
+        dispatch({ action: 'channel-update', ...JSON.parse(event.data) });
       };
     }
   }, []);
 
-  // Get extended product data from the Catalogue API
-  const extendedProductVariants = useExtendedProductVariants({
-    productsVariantsToExtend
-  });
-  useEffect(() => {
-    dispatch({ action: 'extended-product-variants', extendedProductVariants });
-  }, [extendedProductVariants]);
-
-  // Store cart on change
+  // Persist the cart on the client
   useEffect(() => {
     if (status !== 'not-hydrated') {
-      const data = {
-        cart: cart.map(({ extended, ...rest }) => rest),
+      persistToCache({
+        simpleCart,
         metadata
-      };
-      persistToCache(data);
+      });
+    }
+  }, [status, simpleCart, metadata]);
 
-      if (!changeTriggeredByChannel) {
-        sharedChannelRef.current?.postMessage(JSON.stringify(data));
+  /**
+   * Broadcast this change to anyone listening to the channel
+   * This is typically other tabs opened for this site, thus
+   * enabling a synced cart across all open tabs
+   */
+  useEffect(() => {
+    if (status === 'ready') {
+      if (!changeTriggeredByOtherTab) {
+        sharedChannelRef.current?.postMessage(
+          JSON.stringify({
+            simpleCart,
+            metadata,
+            serverState
+          })
+        );
       }
     }
-  }, [status, cart, metadata, changeTriggeredByChannel]);
+  }, [status, simpleCart, serverState, metadata, changeTriggeredByOtherTab]);
+
+  // Get server state on cart change
+  useEffect(() => {
+    let stale = false;
+
+    async function getServerState() {
+      const response = await ServiceApi({
+        query: `
+          query getServerCart($simpleCart: SimpleCartInput!) {
+            cart(simpleCart: $simpleCart) {
+              total {
+                gross
+                net
+                vat
+                currency
+              }
+              items {
+                id
+                name
+                sku
+                path
+                quantity
+                attributes {
+                  attribute
+                  value
+                }
+                price {
+                  gross
+                  net
+                  vat
+                  currency
+                }
+                images {
+                  url
+                  variants {
+                    url
+                    width
+                    height
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          simpleCart: {
+            language: locale.crystallizeCatalogueLanguage,
+            items: simpleCart,
+            voucherCodes: []
+          }
+        }
+      });
+
+      if (!stale) {
+        dispatch({
+          action: 'set-server-state',
+          serverState: response.data.cart
+        });
+      }
+    }
+
+    let timeout;
+    if (status === 'server-state-is-stale') {
+      timeout = setTimeout(getServerState, 250);
+    }
+
+    return () => {
+      stale = true;
+      clearTimeout(timeout);
+    };
+  }, [status, locale.crystallizeCatalogueLanguage, simpleCart]);
 
   function dispatchCartItemAction(action) {
     return (data) => dispatch({ action, ...data });
+  }
+
+  function withLocalState(item) {
+    const simpleCartItem = simpleCart.find((c) => c.path === item.path);
+
+    if (!simpleCartItem) {
+      return null;
+    }
+
+    return {
+      ...item,
+      quantity: simpleCartItem.quantity
+    };
   }
 
   return (
     <BasketContext.Provider
       value={{
         status,
-        cart: cart.map(({ extended, ...rest }) => ({
-          ...extended,
-          ...rest
-        })),
-        total,
+        cart: (serverState?.items || []).map(withLocalState).filter(Boolean),
+        total: serverState?.total || {},
         metadata,
         actions: {
           empty: () => dispatch({ action: 'empty' }),

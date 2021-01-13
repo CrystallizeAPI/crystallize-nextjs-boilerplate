@@ -1,6 +1,6 @@
 import { DefaultSeo } from 'next-seo';
 
-import { AuthProvider } from 'components/auth-context';
+import { AuthProvider } from 'components/auth';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
 import { simplyFetchFromGraph } from 'lib/graph';
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps, commonData }) {
       <I18nextProvider locale={locale} localeResource={localeResource}>
         <SettingsProvider mainNavigation={mainNavigation}>
           <AuthProvider>
-            <BasketProvider>
+            <BasketProvider locale={locale}>
               <Component {...pageProps} />
             </BasketProvider>
           </AuthProvider>

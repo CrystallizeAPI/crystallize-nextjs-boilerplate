@@ -2,35 +2,47 @@ import produce from 'immer';
 
 export const initialState = {
   status: 'not-hydrated',
-  cart: [],
-  total: {},
-  metadata: {}
+  // A simplistic cart which gets stored on client side
+  simpleCart: [],
+  // Any metadata will also get stored on the client side
+  metadata: {},
+  // The validated cart sent back from the Service API
+  serverState: null
 };
 
 export default produce(function reducer(draft, { action, ...rest }) {
-  draft.changeTriggeredByChannel = false;
+  console.log({ action });
+  /**
+   * This flag helps keeping track of if the incoming
+   * change is triggered by _this_ browser tab or a
+   * different browser tab
+   */
+  draft.changeTriggeredByOtherTab = false;
 
   switch (action) {
     case 'hydrate': {
       if (draft.status === 'not-hydrated') {
-        draft.cart = rest.cart;
+        draft.simpleCart = rest.simpleCart || [];
         draft.metadata = rest.metadata;
-        draft.status = 'hydrated';
+        draft.status = 'server-state-is-stale';
       }
       break;
     }
 
-    case 'update-cart': {
-      draft.cart = rest.cart;
+    case 'channel-update': {
+      draft.simpleCart = rest.simpleCart;
       draft.metadata = rest.metadata;
-      draft.changeTriggeredByChannel = true;
+      draft.serverState = rest.serverState;
+      draft.changeTriggeredByOtherTab = true;
+      draft.status = 'ready';
       break;
     }
 
     case 'empty': {
-      draft.cart = [];
+      draft.simpleCart = [];
       draft.metadata = {};
       draft.status = 'hydrated';
+      draft.status = 'server-state-is-stale';
       break;
     }
 
@@ -49,13 +61,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
         throw new Error(`Please provide "sku" and "path" for ${action}`);
       }
 
-      const itemIndex = draft.cart.findIndex((i) => i.sku === sku);
+      const itemIndex = draft.simpleCart.findIndex((i) => i.sku === sku);
 
       if (itemIndex !== -1) {
         if (action === 'remove-item') {
-          draft.cart.splice(itemIndex, 1);
+          draft.simpleCart.splice(itemIndex, 1);
         } else {
-          const item = draft.cart[itemIndex];
+          const item = draft.simpleCart[itemIndex];
 
           if (action === 'decrement-item') {
             item.quantity -= 1;
@@ -65,29 +77,24 @@ export default produce(function reducer(draft, { action, ...rest }) {
         }
       } else {
         if (!['remove-item', 'decrement-item'].includes(action)) {
-          draft.cart.push({
+          draft.simpleCart.push({
             sku,
             path,
-            priceVariantIdentifier
+            priceVariantIdentifier,
+            quantity: 1
           });
         }
       }
 
-      /**
-       * Set addItemTime in order for the tiny basket to run an
-       * animation to help drawing attention to the added item
-       **/
-      if (action === 'add-item') {
-        draft.cart.find((i) => i.sku === sku).addItemTime = Date.now();
-      }
+      draft.status = 'server-state-is-stale';
+
       break;
     }
 
-    case 'extended-product-variants': {
-      draft.extendedProductVariants = rest.extendedProductVariants;
-      draft.cart = draft.cart.filter((c) =>
-        draft.extendedProductVariants?.find((e) => e.sku === c.sku)
-      );
+    case 'set-server-state': {
+      console.log('SET SERVER STATE', rest.serverState);
+      draft.serverState = rest.serverState;
+      draft.status = 'ready';
       break;
     }
 
@@ -97,53 +104,10 @@ export default produce(function reducer(draft, { action, ...rest }) {
   }
 
   // A cart item is only valid if we have path and sku
-  draft.cart = draft.cart.filter(function validateCartItem({ path, sku }) {
+  draft.simpleCart = draft.simpleCart.filter(function validateCartItem({
+    path,
+    sku
+  }) {
     return path && sku;
   });
-
-  // Extend with data from the API
-  draft.cart = draft.cart.map(function extendAndMakeValid({
-    quantity = 1,
-    priceVariantIdentifier = 'default',
-    sku,
-    ...rest
-  }) {
-    return {
-      ...rest,
-      sku,
-      quantity,
-      priceVariantIdentifier,
-      extended: draft.extendedProductVariants?.find((e) => e.sku === sku)
-    };
-  });
-
-  // Calculate totals
-  draft.total = draft.cart.reduce(
-    (acc, curr) => {
-      const { quantity, extended } = curr;
-      if (extended) {
-        acc.gross += extended.price.gross * quantity;
-        acc.net += extended.price.net * quantity;
-        acc.currency = extended.price.currency;
-      }
-      acc.quantity += quantity;
-      return acc;
-    },
-    { gross: 0, net: 0, quantity: 0 }
-  );
-
-  draft.total.vat =
-    parseInt((draft.total.gross - draft.total.net) * 100, 10) / 100;
-
-  draft.productsVariantsToExtend = draft.cart.map(({ sku, path }) => ({
-    sku,
-    path
-  }));
-
-  if (
-    draft.status === 'hydrated' &&
-    (draft.cart.length === 0 || draft.extendedProductVariants?.length > 0)
-  ) {
-    draft.status = 'ready';
-  }
 });

@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
-export const Header = styled.h4`
-  flex: 0 0 100px;
-  padding: 50px 0;
-  align-items: center;
+export const Outer = styled.div`
+  flex: 1;
   position: relative;
-`;
-
-export const Basket = styled.div`
-  position: relative;
-  height: 100vh;
   padding: 0 25px;
   display: flex;
   flex-direction: column;
   position: relative;
   background: var(--color-main-background);
   z-index: 15;
+`;
+
+export const Header = styled.h4`
+  flex: 0 0 100px;
+  padding: 50px 0;
+  display: flex;
+  align-items: center;
 `;
 
 export const Footer = styled.div`
