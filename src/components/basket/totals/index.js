@@ -1,54 +1,50 @@
 import React from 'react';
 
 import { useT } from 'lib/i18n';
+import { Spinner } from 'ui/spinner';
+
 import { useBasket } from '../index';
 
-import { Outer, Row, Rows } from './styles';
+import { Outer, Rows, Row, RowValue, SpinnerWrap } from './styles';
 
-export const Totals = () => {
+export default function Totals() {
   const t = useT();
-  const { total } = useBasket();
+  const { cart, total, status } = useBasket();
+
+  if (cart.length === 0) {
+    return null;
+  }
 
   return (
     <Outer>
       <Rows>
+        {status === 'server-state-is-stale' && (
+          <SpinnerWrap>
+            <Spinner />
+          </SpinnerWrap>
+        )}
         <Row modifier="total-price">
           <span>{t('basket.totalPrice')}:</span>
-          <span>
+          <RowValue hide={status === 'server-state-is-stale'}>
             {t('common.price', { value: total.net, currency: total.currency })}
-          </span>
+          </RowValue>
         </Row>
-        {/* {discount && (
-          <>
-            <Row modifier="discount">
-              <span>{t('basket.discount')}:</span>
-              <span>{t('common.price', { value: discount })}</span>
-            </Row>
-            <Row modifier="total-after-discount">
-              <span>{t('common.totalPriceAfterDiscount')}:</span>
-              <span>
-                {t('common.price', { value: totalPriceMinusDiscount })}
-              </span>
-            </Row>
-          </>
-        )} */}
-
         <Row modifier="total-vat">
           <span>{t('basket.vat')}:</span>
-          <span>
+          <RowValue hide={status === 'server-state-is-stale'}>
             {t('common.price', { value: total.vat, currency: total.currency })}
-          </span>
+          </RowValue>
         </Row>
         <Row modifier="to-pay">
           <span>{t('basket.totalToPay')}:</span>
-          <span>
+          <RowValue hide={status === 'server-state-is-stale'}>
             {t('common.price', {
               value: total.gross,
               currency: total.currency
             })}
-          </span>
+          </RowValue>
         </Row>
       </Rows>
     </Outer>
   );
-};
+}

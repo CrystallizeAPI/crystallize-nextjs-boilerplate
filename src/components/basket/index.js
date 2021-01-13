@@ -6,11 +6,13 @@ import { retrieveFromCache, persistToCache } from './cache';
 import reducer, { initialState } from './reducer';
 import { getChannel } from './shared-channel';
 
-export { TinyBasket } from './tiny-basket';
-
 const BasketContext = React.createContext();
 
 export const useBasket = () => React.useContext(BasketContext);
+
+function simpleCartItemForAPI({ sku, path, quantity, priceVariantIdentifier }) {
+  return { sku, path, quantity, priceVariantIdentifier };
+}
 
 export function BasketProvider({ locale, children }) {
   const [
@@ -38,7 +40,7 @@ export function BasketProvider({ locale, children }) {
   useEffect(() => {
     if (status !== 'not-hydrated') {
       persistToCache({
-        simpleCart,
+        simpleCart: simpleCart.map(simpleCartItemForAPI),
         metadata
       });
     }
@@ -109,7 +111,7 @@ export function BasketProvider({ locale, children }) {
         variables: {
           simpleCart: {
             language: locale.crystallizeCatalogueLanguage,
-            items: simpleCart,
+            items: simpleCart.map(simpleCartItemForAPI),
             voucherCodes: []
           }
         }
@@ -139,7 +141,7 @@ export function BasketProvider({ locale, children }) {
   }
 
   function withLocalState(item) {
-    const simpleCartItem = simpleCart.find((c) => c.path === item.path);
+    const simpleCartItem = simpleCart.find((c) => c.sku === item.sku);
 
     if (!simpleCartItem) {
       return null;
@@ -147,6 +149,7 @@ export function BasketProvider({ locale, children }) {
 
     return {
       ...item,
+      attentionTime: simpleCartItem.attentionTime,
       quantity: simpleCartItem.quantity
     };
   }
@@ -165,7 +168,8 @@ export function BasketProvider({ locale, children }) {
           addItem: dispatchCartItemAction('add-item'),
           removeItem: dispatchCartItemAction('remove-item'),
           incrementItem: dispatchCartItemAction('increment-item'),
-          decrementItem: dispatchCartItemAction('decrement-item')
+          decrementItem: dispatchCartItemAction('decrement-item'),
+          drawAttention: (sku) => dispatch({ action: 'draw-attention', sku })
         }
       }}
     >

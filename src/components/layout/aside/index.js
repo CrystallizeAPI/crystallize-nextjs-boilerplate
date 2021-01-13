@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { useBasket, TinyBasket } from 'components/basket';
+import { useBasket } from 'components/basket';
+import TinyBasket from 'components/basket/tiny-basket';
+import Totals from 'components/basket/totals';
 import { Button } from 'ui';
 import { Spinner } from 'ui/spinner';
 import { useT } from 'lib/i18n';
 
-import { Outer, Header, Footer } from './styles';
+import { Outer, Heading, Content, Footer } from './styles';
 
 const CheckoutBtn = styled(Button)`
   width: 100%;
@@ -51,14 +53,17 @@ export default function Aside() {
 
   return (
     <Outer>
-      <Header>
+      <Heading>
         {t('basket.title')}
         {basket.status === 'server-state-is-stale' && (
           <Spinner style={{ marginLeft: 15 }} />
         )}
-      </Header>
-      <TinyBasket />
+      </Heading>
+      <Content>
+        <TinyBasket />
+      </Content>
       <Footer>
+        <Totals />
         <Link href="/checkout" passHref>
           <CheckoutBtn
             as="a"

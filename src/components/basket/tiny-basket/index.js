@@ -3,12 +3,11 @@ import React from 'react';
 import { useT } from 'lib/i18n';
 
 import { useBasket } from '../index';
-import { Totals } from '../totals';
 import TinyBasketItem from './item';
 
 import { Outer, Items, ItemOuter, BasketIsEmpty } from './styles';
 
-export function TinyBasket({ showTotals = true }) {
+export default function TinyBasket() {
   const t = useT();
   const { status, cart, actions } = useBasket();
 
@@ -33,8 +32,6 @@ export function TinyBasket({ showTotals = true }) {
           </ItemOuter>
         ))}
       </Items>
-      <div style={{ height: 15 }} />
-      {!showTotals && <Totals />}
     </Outer>
   );
 }

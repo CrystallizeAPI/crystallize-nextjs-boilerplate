@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { LayoutContext } from '@crystallize/react-layout';
 
 import { Button } from 'ui';
@@ -9,6 +9,7 @@ import { useLocale } from 'lib/app-config';
 import { ProductFooter, Price } from './styles';
 
 export default function BuyButton({ product, selectedVariant }) {
+  const [buying, setBuying] = useState(false);
   const basket = useBasket();
   const layout = useContext(LayoutContext);
   const t = useT();
@@ -19,8 +20,8 @@ export default function BuyButton({ product, selectedVariant }) {
       (pv) => pv.identifier === locale.crystallizePriceVariant
     ) || {};
 
-  async function buy() {
-    await layout.actions.showRight();
+  function buy() {
+    setBuying(true);
 
     basket.actions.addItem({
       sku: selectedVariant.sku,
@@ -29,12 +30,34 @@ export default function BuyButton({ product, selectedVariant }) {
     });
   }
 
+  /**
+   * Draw attention to the item when the server state has
+   * been updated
+   */
+  useEffect(() => {
+    async function showItemInBasket() {
+      setBuying(false);
+      await layout.actions.showRight();
+      setTimeout(() => {
+        basket.actions.drawAttention(selectedVariant.sku);
+      }, 250);
+    }
+    if (buying && basket.status === 'ready') {
+      showItemInBasket();
+    }
+  }, [buying, basket.status, basket.actions, selectedVariant, layout]);
+
   return (
     <ProductFooter>
       <Price>
         <strong>{t('common.price', { value: price, currency })}</strong>
       </Price>
-      <Button width="200px" onClick={buy} disabled={!currency}>
+      <Button
+        width="200px"
+        onClick={buy}
+        disabled={!currency}
+        state={buying ? 'loading' : null}
+      >
         {t('product.addToBasket')}
       </Button>
     </ProductFooter>

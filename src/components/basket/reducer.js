@@ -11,7 +11,6 @@ export const initialState = {
 };
 
 export default produce(function reducer(draft, { action, ...rest }) {
-  console.log({ action });
   /**
    * This flag helps keeping track of if the incoming
    * change is triggered by _this_ browser tab or a
@@ -92,9 +91,15 @@ export default produce(function reducer(draft, { action, ...rest }) {
     }
 
     case 'set-server-state': {
-      console.log('SET SERVER STATE', rest.serverState);
       draft.serverState = rest.serverState;
       draft.status = 'ready';
+      break;
+    }
+
+    case 'draw-attention': {
+      draft.simpleCart.find(
+        (c) => c.sku === rest.sku
+      ).attentionTime = Date.now();
       break;
     }
 

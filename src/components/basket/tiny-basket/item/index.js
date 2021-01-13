@@ -23,7 +23,7 @@ export default function TinyBasketItem({ actions, item }) {
   const t = useT();
   const [drawAttention, setDrawAttention] = useState(false);
 
-  const { id, attributes, addItemTime, images } = item;
+  const { id, attributes, attentionTime, images } = item;
 
   // Draw users attention when the item is added to the basket
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function TinyBasketItem({ actions, item }) {
       );
       return () => clearTimeout(timeout);
     }
-  }, [id, addItemTime]);
+  }, [id, attentionTime]);
 
   function increment() {
     actions.incrementItem(item);
@@ -54,8 +54,6 @@ export default function TinyBasketItem({ actions, item }) {
   if (!id) {
     return null;
   }
-
-  console.log(item);
 
   return (
     <Item animate={drawAttention}>
