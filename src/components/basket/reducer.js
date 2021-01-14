@@ -40,7 +40,6 @@ export default produce(function reducer(draft, { action, ...rest }) {
     case 'empty': {
       draft.simpleCart = [];
       draft.metadata = {};
-      draft.status = 'hydrated';
       draft.status = 'server-state-is-stale';
       break;
     }

@@ -21,6 +21,11 @@ export default function BuyButton({ product, selectedVariant }) {
     ) || {};
 
   function buy() {
+    /**
+     * Give user immidiate feedback that they've triggered
+     * the buy action. This is important for user gratification
+     * and conveys trust in the service
+     */
     setBuying(true);
 
     basket.actions.addItem({
@@ -35,7 +40,7 @@ export default function BuyButton({ product, selectedVariant }) {
    * been updated
    */
   useEffect(() => {
-    async function showItemInBasket() {
+    async function drawAttentionToItemInBasket() {
       setBuying(false);
       await layout.actions.showRight();
       setTimeout(() => {
@@ -43,7 +48,7 @@ export default function BuyButton({ product, selectedVariant }) {
       }, 250);
     }
     if (buying && basket.status === 'ready') {
-      showItemInBasket();
+      drawAttentionToItemInBasket();
     }
   }, [buying, basket.status, basket.actions, selectedVariant, layout]);
 

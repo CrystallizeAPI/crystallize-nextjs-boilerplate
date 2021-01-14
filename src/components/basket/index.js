@@ -19,6 +19,7 @@ export function BasketProvider({ locale, children }) {
     { status, simpleCart, metadata, serverState, changeTriggeredByOtherTab },
     dispatch
   ] = useReducer(reducer, initialState);
+
   const sharedChannelRef = useRef(getChannel());
 
   useEffect(() => {
@@ -83,8 +84,9 @@ export function BasketProvider({ locale, children }) {
     let stale = false;
 
     async function getServerState() {
-      const response = await ServiceApi({
-        query: `
+      try {
+        const response = await ServiceApi({
+          query: `
           query getServerCart($cartModel: CartModelInput!) {
             cart(cartModel: $cartModel) {
               total {
@@ -121,15 +123,21 @@ export function BasketProvider({ locale, children }) {
             }
           }
         `,
-        variables: {
-          cartModel
-        }
-      });
+          variables: {
+            cartModel
+          }
+        });
 
-      if (!stale) {
+        if (!stale) {
+          dispatch({
+            action: 'set-server-state',
+            serverState: response.data.cart
+          });
+        }
+      } catch (error) {
+        console.log(error);
         dispatch({
-          action: 'set-server-state',
-          serverState: response.data.cart
+          action: 'server-update-failed'
         });
       }
     }

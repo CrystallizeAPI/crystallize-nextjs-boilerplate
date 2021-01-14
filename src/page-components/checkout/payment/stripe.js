@@ -60,6 +60,7 @@ function Form({ stripePaymentIntent, paymentModel, onSuccess }) {
           }
         }
       );
+
       if (error) {
         setStatus({ error });
       } else {
