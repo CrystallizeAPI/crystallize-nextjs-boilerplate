@@ -211,3 +211,7 @@ export default function GenericCatalogueItem({ renderer, asPath, ...rest }) {
 
   return <Component key={asPath} {...rest} />;
 }
+
+export const config = {
+  unstable_runtimeJS: false
+};

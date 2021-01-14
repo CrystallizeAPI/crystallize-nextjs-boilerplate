@@ -18,3 +18,7 @@ export async function getStaticProps(context) {
 }
 
 export default Cmp;
+
+export const config = {
+  unstable_runtimeJS: false
+};
