@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -27,8 +27,6 @@ export default function Header({ simple, preview }) {
   const auth = useAuth();
   const router = useRouter();
 
-  const [navOpen, setNavOpen] = useState(false);
-
   return (
     <>
       {preview && (
@@ -46,18 +44,18 @@ export default function Header({ simple, preview }) {
             <img src="/static/shop-logo.svg" alt="" width="56" height="84" />
           </Logo>
         </Link>
-        <Nav open={navOpen}>
+        <Nav id="main-menu">
           <NavList>
             {mainNavigation?.map((category) => (
               <NavListItem key={category.path}>
                 <Link href={category.path}>
-                  <a onClick={() => setNavOpen(false)}>{category.name}</a>
+                  <a>{category.name}</a>
                 </Link>
               </NavListItem>
             ))}
           </NavList>
         </Nav>
-        <NavActions open={navOpen}>
+        <NavActions id="main-menu-actions">
           <LocaleSwitcher />
           {auth.isLoggedIn ? (
             <button type="button" onClick={auth.logout}>
@@ -75,7 +73,7 @@ export default function Header({ simple, preview }) {
             <BasketButton />
           </IconBar>
         )}
-        <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
+        <BurgerButton />
       </Outer>
     </>
   );

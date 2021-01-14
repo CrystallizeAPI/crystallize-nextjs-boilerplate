@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { responsive } from 'ui';
 
 const Outer = styled.button.attrs(() => ({
-  type: 'button',
+  type: 'button'
 }))`
   appearance: none;
   display: none;
@@ -26,7 +26,7 @@ const Outer = styled.button.attrs(() => ({
 const Lines = styled.div`
   width: 100%;
   position: absolute;
-  background: ${(p) => (p.open ? 'transparent' : 'var(--color-text-main)')};
+  background: var(--color-text-main);
   height: 4px;
   top: 50%;
   margin-top: -2px;
@@ -44,22 +44,75 @@ const Lines = styled.div`
     left: 0;
     transition: all 0.2s ease-out;
   }
+
   &:after {
-    transform: ${(p) => (p.open ? 'rotate(-45deg)' : 'rotate(0deg)')};
-    left: ${(p) => (p.open ? '0px' : '8px')};
-    width: ${(p) => (p.open ? '100%' : 'calc(100% - 8px)')};
-    top: ${(p) => (p.open ? '0' : '14px')};
+    transform: rotate(0deg);
+    left: 8px;
+    width: calc(100% - 8px);
+    top: 14px;
   }
   &:before {
-    transform: ${(p) => (p.open ? 'rotate(45deg)' : 'rotate(0deg)')};
-    top: ${(p) => (p.open ? '0' : '-14px')};
+    transform: rotate(0deg);
+    top: -14px;
+  }
+
+  &.open {
+    background: transparent;
+
+    &:after {
+      transform: rotate(-45deg);
+      left: 0px;
+      width: 100%;
+      top: 0;
+    }
+    &:before {
+      transform: rotate(45deg);
+      top: 0;
+    }
   }
 `;
 
-export default function BurgerButton({ active, onClick }) {
+export default function BurgerButton() {
   return (
-    <Outer open={active} onClick={onClick}>
-      <Lines open={active} />
-    </Outer>
+    <>
+      <Outer id="main-menu-button">
+        <Lines />
+      </Outer>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+          (function init() {
+            let isOpen = false;
+
+            const btn = document.querySelector("#main-menu-button");
+            const menu = document.querySelector("#main-menu");
+            const menuActions = document.querySelector("#main-menu-actions");
+            console.log(btn, menu, menuActions);
+
+            // Toggle menu on button click
+            btn.addEventListener("click", function () {
+              isOpen = !isOpen;
+              render();
+            });
+
+            // Close the menu on click on links inside the menu
+            function hideMenu() {
+              isOpen = false;
+              render();
+            }
+            menu.querySelectorAll("a").forEach(function(link) {
+              link.addEventListener("click", hideMenu);
+            });
+
+            function render() {
+              btn.children[0].classList.toggle('open', isOpen);
+              menu.classList.toggle('open', isOpen);
+              menuActions.classList.toggle('open', isOpen);
+            }
+          }());
+        `
+        }}
+      />
+    </>
   );
 }

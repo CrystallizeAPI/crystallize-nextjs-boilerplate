@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import is from 'styled-is';
 
 import { responsive } from 'ui';
 
@@ -55,9 +54,9 @@ export const Nav = styled.nav`
     padding: 2em;
     font-size: 1.5rem;
 
-    ${is('open')`
+    &.open {
       display: block;
-    `};
+    }
   }
 `;
 
@@ -165,10 +164,10 @@ export const NavActions = styled.div`
     margin: 0;
     font-size: 1.5rem;
 
-    ${is('open')`
+    &.open {
       display: flex;
       justify-content: center;
-    `};
+    }
   }
 `;
 
