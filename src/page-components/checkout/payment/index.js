@@ -22,6 +22,7 @@ import {
   PaymentProvider,
   SectionHeader
 } from '../styles';
+import Voucher from '../voucher';
 
 const StripeCheckout = dynamic(() => import('./stripe'));
 const KlarnaCheckout = dynamic(() => import('./klarna'));
@@ -236,6 +237,8 @@ export default function Payment() {
           </InputGroup>
         </Row>
       </form>
+
+      <Voucher />
 
       <div>
         <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>

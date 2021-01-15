@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { useBasket } from 'components/basket';
 import AttributeList from 'components/attribute-list';
 import { useT } from 'lib/i18n';
 
@@ -22,12 +23,15 @@ import {
 export default function TinyBasketItem({ actions, item }) {
   const t = useT();
   const [drawAttention, setDrawAttention] = useState(false);
+  const {
+    metadata: { attentionItem }
+  } = useBasket();
 
-  const { id, attributes, attentionTime, images } = item;
+  const { id, attributes, images } = item;
 
   // Draw users attention when the item is added to the basket
   useEffect(() => {
-    if (id) {
+    if (attentionItem.sku === item.sku) {
       setDrawAttention(true);
 
       let timeout = setTimeout(
@@ -36,7 +40,7 @@ export default function TinyBasketItem({ actions, item }) {
       );
       return () => clearTimeout(timeout);
     }
-  }, [id, attentionTime]);
+  }, [attentionItem.sku, item.sku]);
 
   function increment() {
     actions.incrementItem(item);

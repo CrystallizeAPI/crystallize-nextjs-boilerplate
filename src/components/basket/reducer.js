@@ -2,10 +2,15 @@ import produce from 'immer';
 
 export const initialState = {
   status: 'not-hydrated',
-  // A simplistic cart which gets stored on client side
-  simpleCart: [],
-  // Any metadata will also get stored on the client side
-  metadata: {},
+  /**
+   * A simplistic cart which gets stored on client side
+   * Each client cart item consists of these fields:
+   *  - sku
+   *  - path
+   *  - priceVariantIdentifier
+   *  - quantity
+   */
+  clientCart: { items: [], voucher: null },
   // The validated cart sent back from the Service API
   serverState: null
 };
@@ -21,16 +26,15 @@ export default produce(function reducer(draft, { action, ...rest }) {
   switch (action) {
     case 'hydrate': {
       if (draft.status === 'not-hydrated') {
-        draft.simpleCart = rest.simpleCart || [];
-        draft.metadata = rest.metadata;
+        draft.clientCart = rest.clientCart || initialState.clientCart;
+        console.log(draft.clientCart);
         draft.status = 'server-state-is-stale';
       }
       break;
     }
 
     case 'channel-update': {
-      draft.simpleCart = rest.simpleCart;
-      draft.metadata = rest.metadata;
+      draft.clientCart = rest.clientCart;
       draft.serverState = rest.serverState;
       draft.changeTriggeredByOtherTab = true;
       draft.status = 'ready';
@@ -38,14 +42,8 @@ export default produce(function reducer(draft, { action, ...rest }) {
     }
 
     case 'empty': {
-      draft.simpleCart = [];
-      draft.metadata = {};
+      draft.clientCart = initialState.clientCart;
       draft.status = 'server-state-is-stale';
-      break;
-    }
-
-    case 'set-metadata': {
-      draft.metadata = rest.metadata;
       break;
     }
 
@@ -59,13 +57,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
         throw new Error(`Please provide "sku" and "path" for ${action}`);
       }
 
-      const itemIndex = draft.simpleCart.findIndex((i) => i.sku === sku);
+      const itemIndex = draft.clientCart.items.findIndex((i) => i.sku === sku);
 
       if (itemIndex !== -1) {
         if (action === 'remove-item') {
-          draft.simpleCart.splice(itemIndex, 1);
+          draft.clientCart.items.splice(itemIndex, 1);
         } else {
-          const item = draft.simpleCart[itemIndex];
+          const item = draft.clientCart.items[itemIndex];
 
           if (action === 'decrement-item') {
             item.quantity -= 1;
@@ -75,7 +73,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
         }
       } else {
         if (!['remove-item', 'decrement-item'].includes(action)) {
-          draft.simpleCart.push({
+          draft.clientCart.items.push({
             sku,
             path,
             priceVariantIdentifier,
@@ -96,9 +94,10 @@ export default produce(function reducer(draft, { action, ...rest }) {
     }
 
     case 'draw-attention': {
-      draft.simpleCart.find(
-        (c) => c.sku === rest.sku
-      ).attentionTime = Date.now();
+      draft.attentionItem = {
+        time: Date.now(),
+        sku: rest.sku
+      };
       break;
     }
 
@@ -108,10 +107,9 @@ export default produce(function reducer(draft, { action, ...rest }) {
   }
 
   // A cart item is only valid if we have path and sku
-  draft.simpleCart = draft.simpleCart.filter(function validateCartItem({
-    path,
-    sku
-  }) {
-    return path && sku;
-  });
+  draft.clientCart.items = draft.clientCart.items.filter(
+    function validateCartItem({ path, sku }) {
+      return path && sku;
+    }
+  );
 });

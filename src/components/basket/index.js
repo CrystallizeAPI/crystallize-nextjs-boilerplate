@@ -10,13 +10,19 @@ const BasketContext = React.createContext();
 
 export const useBasket = () => React.useContext(BasketContext);
 
-function simpleCartItemForAPI({ sku, path, quantity, priceVariantIdentifier }) {
+function clientCartItemForAPI({ sku, path, quantity, priceVariantIdentifier }) {
   return { sku, path, quantity, priceVariantIdentifier };
 }
 
 export function BasketProvider({ locale, children }) {
   const [
-    { status, simpleCart, metadata, serverState, changeTriggeredByOtherTab },
+    {
+      status,
+      clientCart,
+      serverCart,
+      changeTriggeredByOtherTab,
+      attentionItem
+    },
     dispatch
   ] = useReducer(reducer, initialState);
 
@@ -41,11 +47,11 @@ export function BasketProvider({ locale, children }) {
   useEffect(() => {
     if (status !== 'not-hydrated') {
       persistToCache({
-        simpleCart: simpleCart.map(simpleCartItemForAPI),
-        metadata
+        ...clientCart,
+        items: clientCart.items.map(clientCartItemForAPI)
       });
     }
-  }, [status, simpleCart, metadata]);
+  }, [status, clientCart]);
 
   /**
    * Broadcast this change to anyone listening to the channel
@@ -57,14 +63,13 @@ export function BasketProvider({ locale, children }) {
       if (!changeTriggeredByOtherTab) {
         sharedChannelRef.current?.postMessage(
           JSON.stringify({
-            simpleCart,
-            metadata,
-            serverState
+            clientCart,
+            serverCart
           })
         );
       }
     }
-  }, [status, simpleCart, serverState, metadata, changeTriggeredByOtherTab]);
+  }, [status, clientCart, serverCart, changeTriggeredByOtherTab]);
 
   /**
    * Define the cartModel object.
@@ -73,42 +78,23 @@ export function BasketProvider({ locale, children }) {
   const cartModel = useMemo(
     () => ({
       language: locale.crystallizeCatalogueLanguage,
-      items: simpleCart.map(simpleCartItemForAPI),
-      voucherCodes: []
+      items: clientCart.items.map(clientCartItemForAPI),
+      voucher: clientCart.voucher
     }),
-    [locale, simpleCart]
+    [locale, clientCart]
   );
 
   // Get server state on cart change
   useEffect(() => {
     let stale = false;
 
-    async function getServerState() {
+    async function getServerCart() {
       try {
         const response = await ServiceApi({
           query: `
-          query getServerCart($cartModel: CartModelInput!) {
-            cart(cartModel: $cartModel) {
-              total {
-                gross
-                net
-                tax {
-                  name
-                  percent
-                }
-                currency
-              }
-              items {
-                id
-                name
-                sku
-                path
-                quantity
-                attributes {
-                  attribute
-                  value
-                }
-                price {
+            query getServerCart($cartModel: CartModelInput!) {
+              cart(cartModel: $cartModel) {
+                total {
                   gross
                   net
                   tax {
@@ -117,17 +103,36 @@ export function BasketProvider({ locale, children }) {
                   }
                   currency
                 }
-                images {
-                  url
-                  variants {
+                items {
+                  id
+                  name
+                  sku
+                  path
+                  quantity
+                  attributes {
+                    attribute
+                    value
+                  }
+                  price {
+                    gross
+                    net
+                    tax {
+                      name
+                      percent
+                    }
+                    currency
+                  }
+                  images {
                     url
-                    width
-                    height
+                    variants {
+                      url
+                      width
+                      height
+                    }
                   }
                 }
               }
             }
-          }
         `,
           variables: {
             cartModel
@@ -137,7 +142,7 @@ export function BasketProvider({ locale, children }) {
         if (!stale) {
           dispatch({
             action: 'set-server-state',
-            serverState: response.data.cart
+            serverCart: response.data.cart
           });
         }
       } catch (error) {
@@ -150,7 +155,7 @@ export function BasketProvider({ locale, children }) {
 
     let timeout;
     if (status === 'server-state-is-stale') {
-      timeout = setTimeout(getServerState, 250);
+      timeout = setTimeout(getServerCart, 250);
     }
 
     return () => {
@@ -164,16 +169,15 @@ export function BasketProvider({ locale, children }) {
   }
 
   function withLocalState(item) {
-    const simpleCartItem = simpleCart.find((c) => c.sku === item.sku);
+    const clientCartItem = clientCart.items.find((c) => c.sku === item.sku);
 
-    if (!simpleCartItem) {
+    if (!clientCartItem) {
       return null;
     }
 
     return {
       ...item,
-      attentionTime: simpleCartItem.attentionTime,
-      quantity: simpleCartItem.quantity
+      quantity: clientCartItem.quantity
     };
   }
 
@@ -182,13 +186,11 @@ export function BasketProvider({ locale, children }) {
       value={{
         status,
         cartModel,
-        cart: (serverState?.items || []).map(withLocalState).filter(Boolean),
-        total: serverState?.total || {},
-        metadata,
+        cart: (serverCart?.items || []).map(withLocalState).filter(Boolean),
+        total: serverCart?.total || {},
+        metadata: { attentionItem },
         actions: {
           empty: () => dispatch({ action: 'empty' }),
-          setMetadata: (metadata) =>
-            dispatch({ action: 'set-metadata', metadata }),
           addItem: dispatchCartItemAction('add-item'),
           removeItem: dispatchCartItemAction('remove-item'),
           incrementItem: dispatchCartItemAction('increment-item'),

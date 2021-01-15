@@ -30,10 +30,10 @@ export default function KlarnaCheckout({ paymentModel, basketActions }) {
 
         setState('loaded');
 
-        basketActions.setMetadata({ klarnaOrderId: order_id });
+        // basketActions.setMetadata({ klarnaOrderId: order_id });
 
         const checkoutContainer = paymentContainerRef.current;
-        
+
         checkoutContainer.innerHTML = html;
 
         const scriptsTags = checkoutContainer.getElementsByTagName('script');
