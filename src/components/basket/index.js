@@ -92,7 +92,10 @@ export function BasketProvider({ locale, children }) {
               total {
                 gross
                 net
-                vat
+                tax {
+                  name
+                  percent
+                }
                 currency
               }
               items {
@@ -108,7 +111,10 @@ export function BasketProvider({ locale, children }) {
                 price {
                   gross
                   net
-                  vat
+                  tax {
+                    name
+                    percent
+                  }
                   currency
                 }
                 images {

@@ -2,7 +2,7 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      vat: 'Moms: {{value, currency}}'
+      tax: 'Moms: {{value, currency}}'
     },
     frontpage: {
       title: 'Hjem'
@@ -48,7 +48,7 @@ export default {
       discount: 'Fratrekk',
       totalPriceAfterDiscount: 'Totalt etter fratrekk',
       shippingPrice: 'Frakt',
-      vat: 'Moms',
+      tax: 'Moms',
       totalToPay: 'Til betaling',
       goToCheckout: 'Gå til betaling'
     },

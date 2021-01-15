@@ -9,26 +9,10 @@ import {
 } from '@stripe/react-stripe-js';
 
 import ServiceApi from 'lib/service-api';
-import { doPost } from 'lib/rest-api/helpers';
 import { Button, Spinner } from 'ui';
 import { useT } from 'lib/i18n';
 
-// Persist by create order in Crystallize
-async function persistOrder({ paymentIntent, paymentModel }) {
-  const { data } = await doPost(
-    '/api/payment-providers/stripe/order-persistence',
-    {
-      body: JSON.stringify({
-        paymentIntentId: paymentIntent.id,
-        paymentModel
-      })
-    }
-  );
-
-  return data.orders.create.id;
-}
-
-function Form({ stripePaymentIntent, paymentModel, onSuccess }) {
+function Form({ client_secret, checkoutModel, onSuccess, onError }) {
   const t = useT();
   const stripe = useStripe();
   const elements = useElements();
@@ -47,10 +31,10 @@ function Form({ stripePaymentIntent, paymentModel, onSuccess }) {
         return;
       }
 
-      const { customer } = paymentModel;
+      const { customer } = checkoutModel;
 
       const { error, paymentIntent } = await stripe.confirmCardPayment(
-        stripePaymentIntent,
+        client_secret,
         {
           payment_method: {
             card: elements.getElement(CardElement),
@@ -71,12 +55,34 @@ function Form({ stripePaymentIntent, paymentModel, onSuccess }) {
           // execution. Set up a webhook or plugin to listen for the
           // payment_intent.succeeded event that handles any business critical
           // post-payment actions.
-          const orderId = await persistOrder({
-            paymentIntent,
-            paymentModel
+          const response = await ServiceApi({
+            query: `
+              mutation confirmStripeOrder($checkoutModel: CheckoutModelInput!, $paymentIntentId: String!) {
+                paymentProviders {
+                  stripe {
+                    confirmOrder(checkoutModel: $checkoutModel, paymentIntentId: $paymentIntentId) {
+                      success
+                      orderId
+                    }
+                  }
+                }
+              }
+            `,
+            variables: {
+              checkoutModel,
+              paymentIntentId: paymentIntent.id
+            }
           });
-          if (orderId) {
+
+          const {
+            success,
+            orderId
+          } = response.data.paymentProviders.stripe.confirmOrder;
+
+          if (success) {
             onSuccess(orderId);
+          } else {
+            onError();
           }
         }
       }
@@ -99,7 +105,7 @@ function Form({ stripePaymentIntent, paymentModel, onSuccess }) {
   );
 }
 
-export default function StripeWrapper({ paymentModel, ...props }) {
+export default function StripeWrapper({ checkoutModel, ...props }) {
   const [stripeLoader, setStripeLoader] = useState(null);
   const stripeConfig = useQuery('stripeConfig', () =>
     ServiceApi({
@@ -125,7 +131,7 @@ export default function StripeWrapper({ paymentModel, ...props }) {
     }
   }, [stripeConfig, stripeLoader]);
 
-  // Get new client secret every time the payment model changes
+  // Get new paymentIntent
   const stripePaymentIntent = useQuery('stripePaymentIntent', () =>
     ServiceApi({
       query: `
@@ -138,10 +144,9 @@ export default function StripeWrapper({ paymentModel, ...props }) {
             }
           }
         }
-      
       `,
       variables: {
-        cartModel: paymentModel.cartModel
+        cartModel: checkoutModel.cartModel
       }
     })
   );
@@ -154,10 +159,10 @@ export default function StripeWrapper({ paymentModel, ...props }) {
     <Elements locale="en" stripe={stripeLoader}>
       <Form
         {...props}
-        paymentModel={paymentModel}
-        stripePaymentIntent={
+        checkoutModel={checkoutModel}
+        client_secret={
           stripePaymentIntent?.data?.data?.paymentProviders.stripe
-            .createPaymentIntent
+            .createPaymentIntent.client_secret
         }
       />
     </Elements>

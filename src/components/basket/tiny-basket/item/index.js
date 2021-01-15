@@ -68,16 +68,16 @@ export default function TinyBasketItem({ actions, item }) {
           <PriceWrap>
             <Price>
               {t('common.price', {
-                value: item.price?.gross ?? 0,
-                currency: item.price?.currency
+                value: item.price.gross,
+                currency: item.price.currency
               })}
             </Price>
           </PriceWrap>
 
           <PriceVat>
             <span>
-              {t('common.vat', {
-                value: item.price?.vat ?? 0,
+              {t('common.tax', {
+                value: item.price.gross - item.price.net,
                 currency: item.price?.currency
               })}
             </span>

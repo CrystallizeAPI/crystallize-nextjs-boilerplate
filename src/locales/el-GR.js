@@ -2,7 +2,7 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      vat: 'ΦΠΑ: {{value, currency}}'
+      tax: 'ΦΠΑ: {{value, currency}}'
     },
     frontpage: {
       title: 'Κεντρική'
@@ -48,7 +48,7 @@ export default {
       discount: 'Έκπτωση',
       totalPriceAfterDiscount: 'Τελική τιμή μετά την έκπτωση',
       shippingPrice: 'Μεταφορικά',
-      vat: 'ΦΠΑ',
+      tax: 'ΦΠΑ',
       totalToPay: 'Αξία',
       goToCheckout: 'Oλοκλήρωση παραγγελίας'
     },

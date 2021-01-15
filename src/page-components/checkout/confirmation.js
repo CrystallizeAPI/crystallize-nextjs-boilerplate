@@ -34,7 +34,7 @@ const TotalLine = styled.div`
   `};
 `;
 
-export default function Confirmation({ order: orderData }) {
+export default function Confirmation({ order }) {
   const basket = useBasket();
   const t = useT();
   const [emptied, setEmptied] = useState(false);
@@ -45,8 +45,6 @@ export default function Confirmation({ order: orderData }) {
       setEmptied(true);
     }
   }, [emptied, basket.actions]);
-
-  const order = orderData.data.orders?.get;
 
   useEffect(() => {
     if (!order) {
@@ -94,7 +92,7 @@ export default function Confirmation({ order: orderData }) {
               })}
             </TotalLine>
             <TotalLine>
-              {t('common.vat', {
+              {t('common.tax', {
                 value: total.gross - total.net,
                 currency: total.currency
               })}

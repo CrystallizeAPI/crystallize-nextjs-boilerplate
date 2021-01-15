@@ -29,10 +29,13 @@ export default function Totals() {
             {t('common.price', { value: total.net, currency: total.currency })}
           </RowValue>
         </Row>
-        <Row modifier="total-vat">
-          <span>{t('basket.vat')}:</span>
+        <Row modifier="total-tax">
+          <span>{t('basket.tax')}:</span>
           <RowValue hide={status === 'server-state-is-stale'}>
-            {t('common.price', { value: total.vat, currency: total.currency })}
+            {t('common.price', {
+              value: parseInt((total.gross - total.net) * 100, 10) / 100,
+              currency: total.currency
+            })}
           </RowValue>
         </Row>
         <Row modifier="to-pay">

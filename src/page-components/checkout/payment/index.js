@@ -96,6 +96,21 @@ export default function Payment() {
     }
   };
 
+  const checkoutModel = {
+    cartModel,
+    customer: {
+      firstName,
+      lastName,
+      addresses: [
+        {
+          type: 'billing',
+          email
+        }
+      ]
+    },
+    metadata
+  };
+
   const paymentProviders = [
     {
       name: 'stripe',
@@ -107,18 +122,14 @@ export default function Payment() {
             <script key="stripe-js" src="https://js.stripe.com/v3/" async />
           </Head>
           <StripeCheckout
-            paymentModel={paymentModel}
+            checkoutModel={checkoutModel}
             onSuccess={(orderId) => {
               if (multilingualUrlPrefix) {
                 router.push(
-                  '/[locale]/confirmation/stripe/[orderId]',
-                  `/${multilingualUrlPrefix}/confirmation/stripe/${orderId}`
+                  `/${multilingualUrlPrefix}/confirmation/${orderId}`
                 );
               } else {
-                router.push(
-                  '/confirmation/stripe/[orderId]',
-                  `/confirmation/stripe/${orderId}`
-                );
+                router.push(`/confirmation/${orderId}`);
               }
               scrollTo(0, 0);
             }}

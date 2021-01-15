@@ -2,7 +2,7 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      vat: 'VAT: {{value, currency}}'
+      tax: 'TAX: {{value, currency}}'
     },
     frontpage: {
       title: 'Home'
@@ -51,7 +51,7 @@ export default {
       discount: 'Discount',
       totalPriceAfterDiscount: 'Total after discount',
       shippingPrice: 'Shipping',
-      vat: 'VAT',
+      tax: 'Tax',
       totalToPay: 'To pay',
       goToCheckout: 'Go to checkout'
     },
