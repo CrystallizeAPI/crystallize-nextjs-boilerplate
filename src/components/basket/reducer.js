@@ -12,7 +12,7 @@ export const initialState = {
    */
   clientCart: { items: [], voucher: null },
   // The validated cart sent back from the Service API
-  serverState: null
+  serverCart: null
 };
 
 export default produce(function reducer(draft, { action, ...rest }) {
@@ -35,7 +35,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
 
     case 'channel-update': {
       draft.clientCart = rest.clientCart;
-      draft.serverState = rest.serverState;
+      draft.serverCart = rest.serverCart;
       draft.changeTriggeredByOtherTab = true;
       draft.status = 'ready';
       break;
@@ -88,7 +88,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
     }
 
     case 'set-server-state': {
-      draft.serverState = rest.serverState;
+      draft.serverCart = rest.serverCart;
       draft.status = 'ready';
       break;
     }
