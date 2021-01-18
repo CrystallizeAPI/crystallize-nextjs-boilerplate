@@ -74,7 +74,7 @@ export default function Payment() {
   // Handle locale with sub-path routing
   let multilingualUrlPrefix = '';
   if (window.location.pathname.startsWith(`/${router.locale}/`)) {
-    multilingualUrlPrefix = router.locale;
+    multilingualUrlPrefix = '/' + router.locale;
   }
 
   const { firstName, lastName, email } = state;
@@ -96,6 +96,10 @@ export default function Payment() {
     }
   };
 
+  function getURL(path) {
+    return `${location.protocol}//${location.host}${multilingualUrlPrefix}${path}`;
+  }
+
   /**
    * The checkout model shared between all the payment providers
    * It contains everything needed to make a purchase and complete
@@ -109,11 +113,15 @@ export default function Payment() {
       addresses: [
         {
           type: 'billing',
-          email
+          email: email || null
         }
       ]
     }
   };
+
+  const confirmationURL = getURL(
+    `/confirmation/{crystallizeOrderId}?emptyBasket`
+  );
 
   const paymentProviders = [
     {
@@ -127,14 +135,13 @@ export default function Payment() {
           </Head>
           <StripeCheckout
             checkoutModel={checkoutModel}
-            onSuccess={(orderId) => {
-              if (multilingualUrlPrefix) {
-                router.push(
-                  `/${multilingualUrlPrefix}/confirmation/${orderId}?emptyBasket`
-                );
-              } else {
-                router.push(`/confirmation/${orderId}?emptyBasket`);
-              }
+            onSuccess={(crystallizeOrderId) => {
+              router.push(
+                confirmationURL.replace(
+                  '{crystallizeOrderId}',
+                  crystallizeOrderId
+                )
+              );
               scrollTo(0, 0);
             }}
           />
@@ -147,7 +154,12 @@ export default function Payment() {
       logo: '/static/klarna-logo.png',
       render: () => (
         <PaymentProvider>
-          <KlarnaCheckout paymentModel={paymentModel} basketActions={actions} />
+          <KlarnaCheckout
+            checkoutModel={checkoutModel}
+            confirmationURL={confirmationURL}
+            getURL={getURL}
+            basketActions={actions}
+          />
         </PaymentProvider>
       )
     },

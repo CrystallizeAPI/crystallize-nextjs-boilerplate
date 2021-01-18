@@ -79,7 +79,9 @@ export function BasketProvider({ locale, children }) {
     () => ({
       language: locale.crystallizeCatalogueLanguage,
       cart: clientBasket.cart.map(clientCartItemForAPI),
-      voucher: clientBasket.voucher
+      voucher: clientBasket.voucher,
+      crystallizeOrderId: clientBasket.crystallizeOrderId,
+      klarnaOrderId: clientBasket.klarnaOrderId
     }),
     [locale, clientBasket]
   );
@@ -201,7 +203,14 @@ export function BasketProvider({ locale, children }) {
           removeItem: dispatchCartItemAction('remove-item'),
           incrementItem: dispatchCartItemAction('increment-item'),
           decrementItem: dispatchCartItemAction('decrement-item'),
-          drawAttention: (sku) => dispatch({ action: 'draw-attention', sku })
+          drawAttention: (sku) => dispatch({ action: 'draw-attention', sku }),
+          setCrystallizeOrderId: (crystallizeOrderId) =>
+            dispatch({
+              action: 'set-crystallize-order-id',
+              crystallizeOrderId
+            }),
+          setKlarnaOrderId: (klarnaOrderId) =>
+            dispatch({ action: 'set-klarna-order-id', klarnaOrderId })
         }
       }}
     >

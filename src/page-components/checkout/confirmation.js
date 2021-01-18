@@ -46,12 +46,16 @@ export default function Confirmation({ order }) {
       if ('emptyBasket' in router.query) {
         basket.actions.empty();
 
+        const url = new URL(location.href);
+
+        url.searchParams.delete('emptyBasket');
+
         router.replace(
           {
             pathname: router.pathname,
-            query: {}
+            query: Object.fromEntries(url.searchParams)
           },
-          router.asPath.split('?')[0],
+          url.pathname + url.search,
           { shallow: true }
         );
       }

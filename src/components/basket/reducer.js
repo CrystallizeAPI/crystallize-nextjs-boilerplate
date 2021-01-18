@@ -3,14 +3,30 @@ import produce from 'immer';
 export const initialState = {
   status: 'not-hydrated',
   /**
-   * A simplistic baskeet which gets stored on client side
+   * A simplistic basket which gets stored on client side
    * Each client cart item consists of these fields:
    *  - sku
    *  - path
    *  - priceVariantIdentifier
    *  - quantity
    */
-  clientBasket: { cart: [], voucherCode: null },
+  clientBasket: {
+    cart: [],
+    voucherCode: null,
+
+    /**
+     * In some cases we create an order in Crystallize before
+     * the checkout is completed. Currently, this is done for
+     * Klarna and Vipps payments
+     */
+    crystallizeOrderId: null,
+
+    /**
+     * Track unfinished Klarna order
+     * Only used if you're doing Klarna payments
+     */
+    klarnaOrderId: null
+  },
 
   // The validated basket sent back from the Service API
   serverBasket: null,
@@ -47,6 +63,16 @@ export default produce(function reducer(draft, { action, ...rest }) {
       draft.serverBasket = rest.serverBasket;
       draft.changeTriggeredByOtherTab = true;
       draft.status = 'ready';
+      break;
+    }
+
+    case 'set-crystallize-order-id': {
+      draft.clientBasket.crystallizeOrderId = rest.crystallizeOrderId;
+      break;
+    }
+
+    case 'set-klarna-order-id': {
+      draft.clientBasket.klarnaOrderId = rest.klarnaOrderId;
       break;
     }
 
