@@ -40,7 +40,7 @@ export default function Payment() {
   const t = useT();
   const locale = useLocale();
   const router = useRouter();
-  const { cartModel, actions, metadata } = useBasket();
+  const { basketModel, actions } = useBasket();
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
   const [state, setState] = useState({
     firstName: '',
@@ -79,12 +79,11 @@ export default function Payment() {
 
   const { firstName, lastName, email } = state;
 
-  // Define the shared payment model for all payment providers
+  // DEPRECATED: Define the shared payment model for all payment providers
   const paymentModel = {
-    cartModel,
+    basketModel,
     multilingualUrlPrefix,
     locale,
-    metadata,
     customer: {
       firstName,
       lastName,
@@ -97,8 +96,13 @@ export default function Payment() {
     }
   };
 
+  /**
+   * The checkout model shared between all the payment providers
+   * It contains everything needed to make a purchase and complete
+   * an order
+   */
   const checkoutModel = {
-    cartModel,
+    basketModel,
     customer: {
       firstName,
       lastName,
@@ -108,8 +112,7 @@ export default function Payment() {
           email
         }
       ]
-    },
-    metadata
+    }
   };
 
   const paymentProviders = [

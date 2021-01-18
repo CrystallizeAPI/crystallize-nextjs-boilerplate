@@ -3,16 +3,20 @@ import produce from 'immer';
 export const initialState = {
   status: 'not-hydrated',
   /**
-   * A simplistic cart which gets stored on client side
+   * A simplistic baskeet which gets stored on client side
    * Each client cart item consists of these fields:
    *  - sku
    *  - path
    *  - priceVariantIdentifier
    *  - quantity
    */
-  clientCart: { items: [], voucher: null },
-  // The validated cart sent back from the Service API
-  serverCart: null
+  clientBasket: { cart: [], voucherCode: null },
+
+  // The validated basket sent back from the Service API
+  serverBasket: null,
+
+  // The basket cart item to draw attention to
+  attentionCartItem: {}
 };
 
 export default produce(function reducer(draft, { action, ...rest }) {
@@ -26,23 +30,22 @@ export default produce(function reducer(draft, { action, ...rest }) {
   switch (action) {
     case 'hydrate': {
       if (draft.status === 'not-hydrated') {
-        draft.clientCart = rest.clientCart || initialState.clientCart;
-        console.log(draft.clientCart);
+        draft.clientBasket = rest.clientBasket || initialState.clientBasket;
         draft.status = 'server-state-is-stale';
       }
       break;
     }
 
     case 'channel-update': {
-      draft.clientCart = rest.clientCart;
-      draft.serverCart = rest.serverCart;
+      draft.clientBasket = rest.clientBasket;
+      draft.serverBasket = rest.serverBasket;
       draft.changeTriggeredByOtherTab = true;
       draft.status = 'ready';
       break;
     }
 
     case 'empty': {
-      draft.clientCart = initialState.clientCart;
+      draft.clientBasket = initialState.clientBasket;
       draft.status = 'server-state-is-stale';
       break;
     }
@@ -57,13 +60,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
         throw new Error(`Please provide "sku" and "path" for ${action}`);
       }
 
-      const itemIndex = draft.clientCart.items.findIndex((i) => i.sku === sku);
+      const itemIndex = draft.clientBasket.cart.findIndex((i) => i.sku === sku);
 
       if (itemIndex !== -1) {
         if (action === 'remove-item') {
-          draft.clientCart.items.splice(itemIndex, 1);
+          draft.clientBasket.cart.splice(itemIndex, 1);
         } else {
-          const item = draft.clientCart.items[itemIndex];
+          const item = draft.clientBasket.cart[itemIndex];
 
           if (action === 'decrement-item') {
             item.quantity -= 1;
@@ -73,7 +76,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
         }
       } else {
         if (!['remove-item', 'decrement-item'].includes(action)) {
-          draft.clientCart.items.push({
+          draft.clientBasket.cart.push({
             sku,
             path,
             priceVariantIdentifier,
@@ -88,13 +91,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
     }
 
     case 'set-server-state': {
-      draft.serverCart = rest.serverCart;
+      draft.serverBasket = rest.serverBasket;
       draft.status = 'ready';
       break;
     }
 
     case 'draw-attention': {
-      draft.attentionItem = {
+      draft.attentionCartItem = {
         time: Date.now(),
         sku: rest.sku
       };
@@ -107,7 +110,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
   }
 
   // A cart item is only valid if we have path and sku
-  draft.clientCart.items = draft.clientCart.items.filter(
+  draft.clientBasket.cart = draft.clientBasket.cart.filter(
     function validateCartItem({ path, sku }) {
       return path && sku;
     }

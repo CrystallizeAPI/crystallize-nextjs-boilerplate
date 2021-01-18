@@ -42,7 +42,14 @@ export default function BuyButton({ product, selectedVariant }) {
   useEffect(() => {
     async function drawAttentionToItemInBasket() {
       setBuying(false);
+
+      // Wait for the layout menu to open
       await layout.actions.showRight();
+
+      /**
+       * Give the user time to rest their eyes after the
+       * right layou menu has been shown
+       */
       setTimeout(() => {
         basket.actions.drawAttention(selectedVariant.sku);
       }, 250);

@@ -23,15 +23,13 @@ import {
 export default function TinyBasketItem({ actions, item }) {
   const t = useT();
   const [drawAttention, setDrawAttention] = useState(false);
-  const {
-    metadata: { attentionItem }
-  } = useBasket();
+  const { attentionCartItem } = useBasket();
 
-  const { id, attributes, images } = item;
+  const { attributes, images } = item;
 
   // Draw users attention when the item is added to the basket
   useEffect(() => {
-    if (attentionItem.sku === item.sku) {
+    if (attentionCartItem.sku === item.sku) {
       setDrawAttention(true);
 
       let timeout = setTimeout(
@@ -40,7 +38,7 @@ export default function TinyBasketItem({ actions, item }) {
       );
       return () => clearTimeout(timeout);
     }
-  }, [attentionItem.sku, item.sku]);
+  }, [attentionCartItem.sku, item.sku]);
 
   function increment() {
     actions.incrementItem(item);
@@ -52,11 +50,6 @@ export default function TinyBasketItem({ actions, item }) {
 
   function remove() {
     actions.removeItem(item);
-  }
-
-  // Data is not fetched from the API yet
-  if (!id) {
-    return null;
   }
 
   return (

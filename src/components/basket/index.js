@@ -18,10 +18,10 @@ export function BasketProvider({ locale, children }) {
   const [
     {
       status,
-      clientCart,
-      serverCart,
+      clientBasket,
+      serverBasket,
       changeTriggeredByOtherTab,
-      attentionItem
+      attentionCartItem
     },
     dispatch
   ] = useReducer(reducer, initialState);
@@ -29,7 +29,7 @@ export function BasketProvider({ locale, children }) {
   const sharedChannelRef = useRef(getChannel());
 
   useEffect(() => {
-    // Retrieve cached cart
+    // Retrieve cached basket
     (async function init() {
       const cache = await retrieveFromCache();
       dispatch({ action: 'hydrate', ...cache });
@@ -43,15 +43,15 @@ export function BasketProvider({ locale, children }) {
     }
   }, []);
 
-  // Persist the cart on the client
+  // Persist the basket on the client
   useEffect(() => {
     if (status !== 'not-hydrated') {
       persistToCache({
-        ...clientCart,
-        items: clientCart.items.map(clientCartItemForAPI)
+        ...clientBasket,
+        cart: clientBasket.cart.map(clientCartItemForAPI)
       });
     }
-  }, [status, clientCart]);
+  }, [status, clientBasket]);
 
   /**
    * Broadcast this change to anyone listening to the channel
@@ -63,37 +63,37 @@ export function BasketProvider({ locale, children }) {
       if (!changeTriggeredByOtherTab) {
         sharedChannelRef.current?.postMessage(
           JSON.stringify({
-            clientCart,
-            serverCart
+            clientBasket,
+            serverBasket
           })
         );
       }
     }
-  }, [status, clientCart, serverCart, changeTriggeredByOtherTab]);
+  }, [status, clientBasket, serverBasket, changeTriggeredByOtherTab]);
 
   /**
-   * Define the cartModel object.
-   * It will be used for payments in checkout
+   * Define the basketModel object.
+   * Used here and in the checkout
    */
-  const cartModel = useMemo(
+  const basketModel = useMemo(
     () => ({
       language: locale.crystallizeCatalogueLanguage,
-      items: clientCart.items.map(clientCartItemForAPI),
-      voucher: clientCart.voucher
+      cart: clientBasket.cart.map(clientCartItemForAPI),
+      voucher: clientBasket.voucher
     }),
-    [locale, clientCart]
+    [locale, clientBasket]
   );
 
   // Get server state on cart change
   useEffect(() => {
     let stale = false;
 
-    async function getServerCart() {
+    async function getServerBasket() {
       try {
         const response = await ServiceApi({
           query: `
-            query getServerCart($cartModel: CartModelInput!) {
-              cart(cartModel: $cartModel) {
+            query getServerBasket($basketModel: BasketModelInput!) {
+              basket(basketModel: $basketModel) {
                 total {
                   gross
                   net
@@ -103,7 +103,7 @@ export function BasketProvider({ locale, children }) {
                   }
                   currency
                 }
-                items {
+                cart {
                   id
                   name
                   sku
@@ -135,14 +135,14 @@ export function BasketProvider({ locale, children }) {
             }
         `,
           variables: {
-            cartModel
+            basketModel
           }
         });
 
         if (!stale) {
           dispatch({
             action: 'set-server-state',
-            serverCart: response.data.cart
+            serverBasket: response.data.basket
           });
         }
       } catch (error) {
@@ -155,29 +155,35 @@ export function BasketProvider({ locale, children }) {
 
     let timeout;
     if (status === 'server-state-is-stale') {
-      timeout = setTimeout(getServerCart, 250);
+      timeout = setTimeout(getServerBasket, 250);
     }
 
     return () => {
       stale = true;
       clearTimeout(timeout);
     };
-  }, [status, locale.crystallizeCatalogueLanguage, cartModel]);
+  }, [status, locale.crystallizeCatalogueLanguage, basketModel]);
 
   function dispatchCartItemAction(action) {
     return (data) => dispatch({ action, ...data });
   }
 
   function withLocalState(item) {
-    const clientCartItem = clientCart.items.find((c) => c.sku === item.sku);
+    const clientBasketCartItem = clientBasket.cart.find(
+      (c) => c.sku === item.sku
+    );
 
-    if (!clientCartItem) {
+    /**
+     * Don't show the cart item if it is not in
+     * the client cache.
+     **/
+    if (!clientBasketCartItem) {
       return null;
     }
 
     return {
       ...item,
-      quantity: clientCartItem.quantity
+      quantity: clientBasketCartItem.quantity
     };
   }
 
@@ -185,10 +191,10 @@ export function BasketProvider({ locale, children }) {
     <BasketContext.Provider
       value={{
         status,
-        cartModel,
-        cart: (serverCart?.items || []).map(withLocalState).filter(Boolean),
-        total: serverCart?.total || {},
-        metadata: { attentionItem },
+        basketModel,
+        cart: (serverBasket?.cart || []).map(withLocalState).filter(Boolean),
+        total: serverBasket?.total || {},
+        attentionCartItem,
         actions: {
           empty: () => dispatch({ action: 'empty' }),
           addItem: dispatchCartItemAction('add-item'),
