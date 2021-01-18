@@ -30,7 +30,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
   switch (action) {
     case 'hydrate': {
       if (draft.status === 'not-hydrated') {
-        draft.clientBasket = rest.clientBasket || initialState.clientBasket;
+        if (rest.cart) {
+          draft.clientBasket = rest || initialState.clientBasket;
+
+          if (!draft.clientBasket.cart) {
+            draft.clientBasket.cart = initialState.clientBasket.cart;
+          }
+        }
         draft.status = 'server-state-is-stale';
       }
       break;
@@ -110,9 +116,11 @@ export default produce(function reducer(draft, { action, ...rest }) {
   }
 
   // A cart item is only valid if we have path and sku
-  draft.clientBasket.cart = draft.clientBasket.cart.filter(
-    function validateCartItem({ path, sku }) {
-      return path && sku;
-    }
-  );
+  if (draft.clientBasket.cart.length > 0) {
+    draft.clientBasket.cart = draft.clientBasket.cart.filter(
+      function validateCartItem({ path, sku }) {
+        return path && sku;
+      }
+    );
+  }
 });

@@ -130,10 +130,10 @@ export default function Payment() {
             onSuccess={(orderId) => {
               if (multilingualUrlPrefix) {
                 router.push(
-                  `/${multilingualUrlPrefix}/confirmation/${orderId}`
+                  `/${multilingualUrlPrefix}/confirmation/${orderId}?emptyBasket`
                 );
               } else {
-                router.push(`/confirmation/${orderId}`);
+                router.push(`/confirmation/${orderId}?emptyBasket`);
               }
               scrollTo(0, 0);
             }}

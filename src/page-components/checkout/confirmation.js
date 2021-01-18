@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import is from 'styled-is';
+import { useRouter } from 'next/router';
 
 import Layout from 'components/layout';
 import { useBasket } from 'components/basket';
@@ -37,14 +38,25 @@ const TotalLine = styled.div`
 export default function Confirmation({ order }) {
   const basket = useBasket();
   const t = useT();
-  const [emptied, setEmptied] = useState(false);
+  const router = useRouter();
 
+  // Empty the basket
   useEffect(() => {
-    if (!emptied) {
-      basket.actions.empty();
-      setEmptied(true);
+    if (router.query) {
+      if ('emptyBasket' in router.query) {
+        basket.actions.empty();
+
+        router.replace(
+          {
+            pathname: router.pathname,
+            query: {}
+          },
+          router.asPath.split('?')[0],
+          { shallow: true }
+        );
+      }
     }
-  }, [emptied, basket.actions]);
+  });
 
   useEffect(() => {
     if (!order) {

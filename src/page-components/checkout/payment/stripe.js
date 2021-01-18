@@ -135,7 +135,7 @@ export default function StripeWrapper({ checkoutModel, ...props }) {
   const stripePaymentIntent = useQuery('stripePaymentIntent', () =>
     ServiceApi({
       query: `
-        mutation StripePaymentIntent($basketModel: basketModelInput!) {
+        mutation StripePaymentIntent($basketModel: BasketModelInput!) {
           paymentProviders {
             stripe {
               createPaymentIntent(
