@@ -76,6 +76,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
       break;
     }
 
+    case 'server-update-failed':
     case 'empty': {
       draft.clientBasket = initialState.clientBasket;
       draft.status = 'server-state-is-stale';

@@ -5,6 +5,7 @@ import ServiceApi from 'lib/service-api';
 import { retrieveFromCache, persistToCache } from './cache';
 import reducer, { initialState } from './reducer';
 import { getChannel } from './shared-channel';
+import GET_BASKET_QUERY from './get-basket-query';
 
 const BasketContext = React.createContext();
 
@@ -77,7 +78,7 @@ export function BasketProvider({ locale, children }) {
    */
   const basketModel = useMemo(
     () => ({
-      language: locale.crystallizeCatalogueLanguage,
+      locale,
       cart: clientBasket.cart.map(clientCartItemForAPI),
       voucher: clientBasket.voucher,
       crystallizeOrderId: clientBasket.crystallizeOrderId,
@@ -93,49 +94,7 @@ export function BasketProvider({ locale, children }) {
     async function getServerBasket() {
       try {
         const response = await ServiceApi({
-          query: `
-            query getServerBasket($basketModel: BasketModelInput!) {
-              basket(basketModel: $basketModel) {
-                total {
-                  gross
-                  net
-                  tax {
-                    name
-                    percent
-                  }
-                  currency
-                }
-                cart {
-                  id
-                  name
-                  sku
-                  path
-                  quantity
-                  attributes {
-                    attribute
-                    value
-                  }
-                  price {
-                    gross
-                    net
-                    tax {
-                      name
-                      percent
-                    }
-                    currency
-                  }
-                  images {
-                    url
-                    variants {
-                      url
-                      width
-                      height
-                    }
-                  }
-                }
-              }
-            }
-        `,
+          query: GET_BASKET_QUERY,
           variables: {
             basketModel
           }
