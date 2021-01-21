@@ -1,33 +1,62 @@
 import React, { useState, useEffect } from 'react';
 
-import { useLocale } from 'lib/app-config';
 import { useT } from 'lib/i18n';
+import ServiceApi from 'lib/service-api';
 
-export default function MollieWrapper({ paymentModel, onSuccess }) {
+export default function MollieWrapper({
+  checkoutModel,
+  confirmationURL,
+  basketActions,
+  onSuccess
+}) {
   const t = useT();
-  const [state, setState] = useState('loading');
-  const locale = useLocale();
+  const [status, setStatus] = useState('loading');
 
   useEffect(() => {
     async function load() {
-      setState('loading');
+      setStatus('loading');
 
-      const response = await fetch(
-        '/api/payment-providers/mollie/create-payment',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ paymentModel })
+      const response = await ServiceApi({
+        query: `
+          mutation mollieCreatePayment(
+            $checkoutModel: CheckoutModelInput!
+            $confirmationURL: String!
+          ) {
+            paymentProviders {
+              mollie {
+                createPayment(
+                  checkoutModel: $checkoutModel
+                  confirmationURL: $confirmationURL
+                ) {
+                  success
+                  checkoutLink
+                  crystallizeOrderId
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          checkoutModel,
+          confirmationURL
         }
-      ).then((res) => res.json());
+      });
 
-      return onSuccess(response.href);
+      const { success, crystallizeOrderId, checkoutLink } =
+        response.data?.paymentProviders?.mollie?.createPayment || {};
+
+      if (success) {
+        basketActions.setCrystallizeOrderId(crystallizeOrderId);
+        onSuccess(checkoutLink);
+      } else {
+        setStatus('error');
+      }
     }
 
     load();
-  }, [locale, paymentModel, state]);
+  }, [checkoutModel, basketActions, confirmationURL, onSuccess]);
 
-  if (state === 'error') {
+  if (status === 'error') {
     return (
       <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Mollie' })}</p>
     );

@@ -157,8 +157,8 @@ export default function Payment() {
           <KlarnaCheckout
             checkoutModel={checkoutModel}
             confirmationURL={confirmationURL}
-            getURL={getURL}
             basketActions={actions}
+            getURL={getURL}
           />
         </PaymentProvider>
       )
@@ -185,7 +185,9 @@ export default function Payment() {
       render: () => (
         <PaymentProvider>
           <MollieCheckout
-            paymentModel={paymentModel}
+            checkoutModel={checkoutModel}
+            confirmationURL={confirmationURL}
+            basketActions={actions}
             onSuccess={(url) => {
               if (url) window.location = url;
             }}
