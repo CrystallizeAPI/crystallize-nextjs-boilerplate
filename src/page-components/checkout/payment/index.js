@@ -2,12 +2,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
+
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
 
 import ServiceApi from 'lib/service-api';
-import { useLocale } from 'lib/app-config';
 import { useT } from 'lib/i18n';
 import { useBasket } from 'components/basket';
 import { Spinner } from 'ui/spinner';
@@ -38,7 +37,6 @@ const Inner = styled.div``;
 
 export default function Payment() {
   const t = useT();
-  const locale = useLocale();
   const router = useRouter();
   const { basketModel, actions } = useBasket();
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
@@ -79,23 +77,6 @@ export default function Payment() {
 
   const { firstName, lastName, email } = state;
 
-  // DEPRECATED: Define the shared payment model for all payment providers
-  const paymentModel = {
-    basketModel,
-    multilingualUrlPrefix,
-    locale,
-    customer: {
-      firstName,
-      lastName,
-      addresses: [
-        {
-          type: 'billing',
-          email
-        }
-      ]
-    }
-  };
-
   function getURL(path) {
     return `${location.protocol}//${location.host}${multilingualUrlPrefix}${path}`;
   }
@@ -116,12 +97,11 @@ export default function Payment() {
           email: email || null
         }
       ]
-    }
+    },
+    confirmationURL: getURL(`/confirmation/{crystallizeOrderId}?emptyBasket`),
+    checkoutURL: getURL(`/checkout`),
+    termsURL: getURL(`/terms`)
   };
-
-  const confirmationURL = getURL(
-    `/confirmation/{crystallizeOrderId}?emptyBasket`
-  );
 
   const paymentProviders = [
     {
@@ -130,14 +110,11 @@ export default function Payment() {
       logo: '/static/stripe-logo.png',
       render: () => (
         <PaymentProvider>
-          <Head>
-            <script key="stripe-js" src="https://js.stripe.com/v3/" async />
-          </Head>
           <StripeCheckout
             checkoutModel={checkoutModel}
             onSuccess={(crystallizeOrderId) => {
               router.push(
-                confirmationURL.replace(
+                checkoutModel.confirmationURL.replace(
                   '{crystallizeOrderId}',
                   crystallizeOrderId
                 )
@@ -156,7 +133,6 @@ export default function Payment() {
         <PaymentProvider>
           <KlarnaCheckout
             checkoutModel={checkoutModel}
-            confirmationURL={confirmationURL}
             basketActions={actions}
             getURL={getURL}
           />
@@ -170,7 +146,8 @@ export default function Payment() {
       render: () => (
         <PaymentProvider>
           <VippsCheckout
-            paymentModel={paymentModel}
+            checkoutModel={checkoutModel}
+            basketActions={actions}
             onSuccess={(url) => {
               if (url) window.location = url;
             }}
@@ -186,7 +163,6 @@ export default function Payment() {
         <PaymentProvider>
           <MollieCheckout
             checkoutModel={checkoutModel}
-            confirmationURL={confirmationURL}
             basketActions={actions}
             onSuccess={(url) => {
               if (url) window.location = url;

@@ -5,7 +5,6 @@ import ServiceApi from 'lib/service-api';
 
 export default function MollieWrapper({
   checkoutModel,
-  confirmationURL,
   basketActions,
   onSuccess
 }) {
@@ -20,13 +19,11 @@ export default function MollieWrapper({
         query: `
           mutation mollieCreatePayment(
             $checkoutModel: CheckoutModelInput!
-            $confirmationURL: String!
           ) {
             paymentProviders {
               mollie {
                 createPayment(
                   checkoutModel: $checkoutModel
-                  confirmationURL: $confirmationURL
                 ) {
                   success
                   checkoutLink
@@ -37,8 +34,7 @@ export default function MollieWrapper({
           }
         `,
         variables: {
-          checkoutModel,
-          confirmationURL
+          checkoutModel
         }
       });
 
@@ -54,7 +50,7 @@ export default function MollieWrapper({
     }
 
     load();
-  }, [checkoutModel, basketActions, confirmationURL, onSuccess]);
+  }, [checkoutModel, basketActions, onSuccess]);
 
   if (status === 'error') {
     return (

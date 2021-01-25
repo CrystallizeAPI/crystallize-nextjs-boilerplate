@@ -3,12 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useT } from 'lib/i18n';
 import ServiceApi from 'lib/service-api';
 
-export default function KlarnaCheckout({
-  checkoutModel,
-  basketActions,
-  confirmationURL,
-  getURL
-}) {
+export default function KlarnaCheckout({ checkoutModel, basketActions }) {
   const t = useT();
   const paymentContainerRef = useRef();
   const [status, setStatus] = useState('loading');
@@ -22,17 +17,11 @@ export default function KlarnaCheckout({
           query: `
             mutation klarnaRenderCheckout(
               $checkoutModel: CheckoutModelInput!
-              $termsURL: String!
-              $checkoutURL: String!
-              $confirmationURL: String!
             ) {
               paymentProviders {
                 klarna {
                   renderCheckout(
                     checkoutModel: $checkoutModel
-                    termsURL: $termsURL
-                    checkoutURL: $checkoutURL
-                    confirmationURL: $confirmationURL
                   ) {
                     crystallizeOrderId
                     klarnaOrderId
@@ -43,10 +32,7 @@ export default function KlarnaCheckout({
             }
           `,
           variables: {
-            checkoutModel,
-            confirmationURL,
-            termsURL: getURL(`/terms`),
-            checkoutURL: getURL(`/checkout`)
+            checkoutModel
           }
         });
 
@@ -83,7 +69,7 @@ export default function KlarnaCheckout({
     }
 
     load();
-  }, []);
+  }, [basketActions, checkoutModel]);
 
   return (
     <>

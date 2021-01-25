@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
 import { useQuery } from 'react-query';
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -12,7 +13,7 @@ import ServiceApi from 'lib/service-api';
 import { Button, Spinner } from 'ui';
 import { useT } from 'lib/i18n';
 
-function Form({ client_secret, checkoutModel, onSuccess, onError }) {
+function Form({ stripeClientSecret, checkoutModel, onSuccess, onError }) {
   const t = useT();
   const stripe = useStripe();
   const elements = useElements();
@@ -34,7 +35,7 @@ function Form({ client_secret, checkoutModel, onSuccess, onError }) {
       const { customer } = checkoutModel;
 
       const { error, paymentIntent } = await stripe.confirmCardPayment(
-        client_secret,
+        stripeClientSecret,
         {
           payment_method: {
             card: elements.getElement(CardElement),
@@ -135,18 +136,16 @@ export default function StripeWrapper({ checkoutModel, ...props }) {
   const stripePaymentIntent = useQuery('stripePaymentIntent', () =>
     ServiceApi({
       query: `
-        mutation StripePaymentIntent($basketModel: BasketModelInput!) {
+        mutation StripePaymentIntent($checkoutModel: CheckoutModelInput!) {
           paymentProviders {
             stripe {
-              createPaymentIntent(
-                basketModel: $basketModel
-              )
+              createPaymentIntent(checkoutModel: $checkoutModel)
             }
           }
         }
       `,
       variables: {
-        basketModel: checkoutModel.basketModel
+        checkoutModel
       }
     })
   );
@@ -156,15 +155,20 @@ export default function StripeWrapper({ checkoutModel, ...props }) {
   }
 
   return (
-    <Elements locale="en" stripe={stripeLoader}>
-      <Form
-        {...props}
-        checkoutModel={checkoutModel}
-        client_secret={
-          stripePaymentIntent?.data?.data?.paymentProviders.stripe
-            .createPaymentIntent.client_secret
-        }
-      />
-    </Elements>
+    <>
+      <Head>
+        <script key="stripe-js" src="https://js.stripe.com/v3/" async />
+      </Head>
+      <Elements locale="en" stripe={stripeLoader}>
+        <Form
+          {...props}
+          checkoutModel={checkoutModel}
+          stripeClientSecret={
+            stripePaymentIntent?.data?.data?.paymentProviders.stripe
+              .createPaymentIntent.clientSecret
+          }
+        />
+      </Elements>
+    </>
   );
 }
