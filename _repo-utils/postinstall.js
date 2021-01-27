@@ -12,7 +12,13 @@ if (process.env.CRYSTALLIZE_TENANT_IDENTIFIER) {
   let env = fs.readFileSync('../.env', 'utf-8');
   env = env.replace(
     /NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER=(.+)/,
-    `NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER=${process.env.CRYSTALLIZE_TENANT_IDENTIFIER}`
+    `NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER=${
+      process.env.CRYSTALLIZE_TENANT_IDENTIFIER
+    }
+NEXT_PUBLIC_SERVICE_API_URL=${
+      process.env.SERVICE_API_URL ||
+      'https://service-api-demo.superfast.shop/api/graphql'
+    }`
   );
 
   fs.writeFileSync('../.env', env);

@@ -150,7 +150,11 @@ export default function StripeWrapper({ checkoutModel, ...props }) {
     })
   );
 
-  if (stripeConfig.loading || !stripeLoader) {
+  const stripeClientSecret =
+    stripePaymentIntent?.data?.data?.paymentProviders?.stripe
+      ?.createPaymentIntent?.client_secret;
+
+  if (stripeConfig.loading || !stripeLoader || !stripeClientSecret) {
     return <Spinner />;
   }
 
@@ -163,10 +167,7 @@ export default function StripeWrapper({ checkoutModel, ...props }) {
         <Form
           {...props}
           checkoutModel={checkoutModel}
-          stripeClientSecret={
-            stripePaymentIntent?.data?.data?.paymentProviders.stripe
-              .createPaymentIntent.clientSecret
-          }
+          stripeClientSecret={stripeClientSecret}
         />
       </Elements>
     </>

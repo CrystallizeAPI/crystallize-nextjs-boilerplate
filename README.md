@@ -77,10 +77,6 @@ UI related components live here. Color variables and simple shared components
 
 Enable GraphQL and REST API communication and more for the browser client
 
-### `src/lib-api/`
-
-Serverless API functions related code
-
 ### `public/static/`
 
 Public resources hosted as static files

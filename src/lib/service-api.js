@@ -1,5 +1,5 @@
 export default async function serviceApi({
-  uri = `${process.env.NEXT_PUBLIC_SERVICE_API_URL}/api/graphql`,
+  uri = process.env.NEXT_PUBLIC_SERVICE_API_URL,
   query,
   variables
 }) {
