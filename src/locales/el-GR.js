@@ -2,7 +2,7 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      tax: 'ΦΠΑ: {{value, currency}}'
+      tax: 'ΦΠΑ: {{value, currency}}',
       close: 'Κλείσε'
     },
     frontpage: {

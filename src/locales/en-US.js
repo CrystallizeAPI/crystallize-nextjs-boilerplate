@@ -2,7 +2,7 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      tax: 'TAX: {{value, currency}}'
+      tax: 'TAX: {{value, currency}}',
       close: 'Close'
     },
     frontpage: {
