@@ -15,7 +15,7 @@ import { ButtonToggleFacets } from './toggle-facets-button';
 import { FacetGroup, FaceGroupAction } from './group';
 import { FacetCheckbox } from './checkbox';
 
-const SCREEN_SIZE_FROM_FACETS_ARE_SHOWN_IN_PAGE = 1024;
+const SCREEN_SIZE_FROM_WE_DONT_BLOCK_SCROLL = 1024;
 
 export default function Facets({
   aggregations = {},
@@ -45,7 +45,7 @@ export default function Facets({
   // Also, we don't check if window !== undefined because React Hooks are always executed
   // in the client side, where the window object exists.
   useEffect(() => {
-    if (window.innerWidth <= SCREEN_SIZE_FROM_FACETS_ARE_SHOWN_IN_PAGE) {
+    if (window.innerWidth <= SCREEN_SIZE_FROM_WE_DONT_BLOCK_SCROLL) {
       areFacetsShown ? lockDocumentScroll() : unlockDocumentScroll();
     }
   }, [areFacetsShown]);
