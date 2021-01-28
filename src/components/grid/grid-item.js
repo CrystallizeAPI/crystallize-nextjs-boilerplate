@@ -11,7 +11,6 @@ const Cell = styled.div`
 `;
 
 export default function GridItem({ data, gridCell }) {
-  console.log('grid item', data?.type);
   return (
     <Cell {...gridCell?.layout}>
       <Listformat item={data} />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { useAuth } from 'components/auth';
+// import { useAuth } from 'components/auth';
 import { useSettings } from 'components/settings-context';
 import IconUser from 'ui/icons/user';
 
@@ -56,7 +56,7 @@ export default function Header({ simple, preview }) {
             ))}
           </NavList>
         </Nav>
-        <NavActions open={navOpen}>
+        {/* <NavActions open={navOpen}>
           <LocaleSwitcher />
           {auth.isLoggedIn === true && (
             <Link href="/my-account">
@@ -68,7 +68,7 @@ export default function Header({ simple, preview }) {
               <a>{t('customer.login.title')}</a>
             </Link>
           )}
-        </NavActions>
+        </NavActions> */}
         {!simple && (
           <IconBar>
             <LocaleSwitcher />

@@ -30,7 +30,6 @@ const ShapeComponents = ({ components = [], overrides }) => {
       {components
         .filter((component) => component?.content != null)
         .map(({ type, ...component }, index) => {
-          console.log({ type, component });
           const key = index;
           let Component;
 

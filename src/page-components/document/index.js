@@ -79,9 +79,6 @@ export default function DocumentPage({ document, preview }) {
       relatedArticles.find((a) => a.node.id === id)
     );
   }
-  console.log({ relatedArtclesIds });
-  console.log({ uniquesIdsRelatedArticles });
-  console.log({ uniqueRelatedArticles });
 
   const heading = title || document.name;
   const ISODate = published.toISOString();
