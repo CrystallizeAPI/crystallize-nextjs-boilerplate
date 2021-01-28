@@ -45,7 +45,7 @@ export default function Facets({
   // Also, we don't check if window !== undefined because React Hooks are always executed
   // in the client side, where the window object exists.
   useEffect(() => {
-    if (window.innerWidth <= SCREEN_SIZE_FROM_WE_DONT_BLOCK_SCROLL) {
+    if (window.innerWidth < SCREEN_SIZE_FROM_WE_DONT_BLOCK_SCROLL) {
       areFacetsShown ? lockDocumentScroll() : unlockDocumentScroll();
     }
   }, [areFacetsShown]);
