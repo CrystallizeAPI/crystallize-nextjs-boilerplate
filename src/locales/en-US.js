@@ -3,6 +3,7 @@ export default {
     common: {
       price: '{{value, currency}}',
       tax: 'TAX: {{value, currency}}'
+      close: 'Close'
     },
     frontpage: {
       title: 'Home'
@@ -28,10 +29,12 @@ export default {
       }
     },
     product: {
-      relatedProduct: 'Related product',
-      relatedProduct_plural: 'Related products',
+      relatedProduct: 'You might also be interested in',
+      relatedProduct_plural: 'You might also be interested in',
       addToBasket: 'Add to Basket',
       buy: 'BUY',
+      stock: '{{stockCount}} in stock',
+      outOfStock: 'Out of stock',
       attributes: {
         color: 'Color',
         green: 'Green',
@@ -82,9 +85,14 @@ export default {
       menu: 'Menu',
       searchPlaceholder: 'Find things',
       ecomBy: 'eCommerce by',
-      loadingVideo: 'Loading video'
+      loadingVideo: 'Loading video',
+      slider: {
+        previous: 'See the previous item',
+        next: 'See the next item'
+      }
     },
     search: {
+      label: 'Search',
       foundResults: 'Found {{count}} matching result',
       foundResults_plural: 'Found {{count}} matching results',
       orderTitle: 'Order by',
@@ -96,7 +104,7 @@ export default {
         STOCK_ASC: 'Stock ascending',
         STOCK_DESC: 'Stock descending'
       },
-      filterResults: 'Filter results',
+      filter: 'Filter',
       facets: {
         viewNResults: 'Show {{count}} result',
         viewNResults_plural: 'Show {{count}} results',

@@ -41,7 +41,9 @@ export default `
     type
     path
     language
-
+    shape {
+      name
+    }
     components {
       name
       type
@@ -74,6 +76,10 @@ export default `
   fragment image on Image {
     url
     altText
+    caption {
+      plainText
+      html
+    }
     variants {
       url
       width
@@ -125,6 +131,15 @@ export default `
       id
       name
       path
+      type
+      shape {
+        name
+        id
+      }
+      topics {
+        id
+        name 	
+      }
       ... on Product {
         variants {
           priceVariants {
@@ -143,8 +158,53 @@ export default `
         name
         type
         content {
+          ...singleLine
+          ...richText
           ...imageContent
           ...videoContent
+          ...gridRelations
+
+          ... on BooleanContent {
+            value
+          }
+          ... on ItemRelationsContent {
+            items {
+              id
+              name
+              type
+              path
+              ... on Item {
+                components {
+                  name
+                  type
+                  meta {
+                    key
+                    value
+                  }
+                  content {
+                    ...singleLine
+                    ...richText
+                    ...imageContent
+                    ...videoContent
+                  }
+                }
+              }
+              ... on Product {
+                variants {
+                  priceVariants {
+                    identifier
+                    price
+                    currency
+                  }
+                  isDefault
+                  name
+                  image {
+                    ...image
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -168,6 +228,31 @@ export default `
             type
             language
             ... on Product {
+              variants {
+                id
+                name
+                sku
+                priceVariants {
+                  identifier
+                  price
+                  currency
+                }
+                stock
+                isDefault
+                attributes {
+                  attribute
+                  value
+                }
+                images {
+                  url
+                  altText
+                  variants {
+                    url
+                    width
+                    height
+                  }
+                }
+              }
               defaultVariant {
                 priceVariants {
                   identifier

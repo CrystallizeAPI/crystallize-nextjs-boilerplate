@@ -86,6 +86,7 @@ export default function Layout({
           property="twitter:url"
           content={siteUrl ? `${siteUrl}${router?.asPath}` : router?.asPath}
         />
+
         <meta property="twitter:card" content="summary_large_image" />
       </Head>
       <GlobalStyle />

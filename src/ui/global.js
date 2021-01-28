@@ -2,15 +2,73 @@ import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   :root {
-    --content-padding: 50px;
-    
-    --color-main-background: #fff;
-    --color-text-main: #000;
-    --color-text-sub: #4c505b;
-    --color-box-background: #efefef;
+    /* Typography */
+    --font-family-main: "Trebuchet MS", sans-serif;
 
-    --color-price: #d79b59;
+    --font-size-xl: 40px;
+    --font-size-lg: 32px;
+    --font-size-md: 26px;
+    --font-size-sm: 16px;
+
+    --font-size-body: 20px;
+    --font-size-secondary: 16px;
+    --font-size-tags: 14px;
+
+    --font-listing-name-size: 16px;
+    --font-listing-price-size: 18px;
+    --font-max-width: 800px;
+
+    /* Colors */
+    --color-main-background: #fff;
+    --color-text-main: #080708;
+    --color-text-sub: #4c505b;
+
+    --color-box-background: #efefef;
+    --color-price: var(--color-text-main);
     --color-error: #EF4836;
+    --color-discount:#EE6969;
+    --color-blockquote: var(--color-text-main);
+  
+    --color-primary-action: #FBDCCE;
+    --color-primary-action-content:#080708;
+    --color-icon-details: var(--color-primary-action);
+    --color-ui-details: var(--color-primary-action);
+
+      
+    /* Properties */
+    --content-padding: 50px;
+    --content-max-width:1800px;
+    --content-padding-xs:0 0 0 25px;
+
+    /* Product listformat */
+    --listformat-product-height-xl:500px;
+    --listformat-product-height-lg:580px;
+    --listformat-product-height-md:500px;
+    --listformat-product-height-sm:600px;
+    --listformat-product-height-xs:400px;
+    --listformat-product-image-fit: cover;
+    --listformat-product-image-position: center;
+    --listformat-product-background: #efefef;
+
+    /* Document listformat */
+    --listformat-document-height-xl:750px;
+    --listformat-document-height-lg:750px;
+    --listformat-document-height-md:750px;
+    --listformat-document-height-sm:750px;
+    --listformat-document-height-xs:450px;
+    --listformat-document-image-fit: cover;
+    --listformat-document-background: var(--color-primary-action);
+
+    /* Microformats */
+    --microformat-image-fit:cover;
+    --microformat-image-position:left;
+
+
+    /* How images should behave in their parent container (cover, fill, contain) */
+    --image-object-fit:cover;
+    
+    /* Grid properties */
+    --grid-row-height: 500px;
   }
 
   /* Uncomment this to enable dark mode */
@@ -22,7 +80,9 @@ export default createGlobalStyle`
       --color-box-background: #555;
     }
   } */
-  
+  /* path#detail {
+    fill: var(--color-icon-detail);
+  } */
   html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -30,7 +90,7 @@ export default createGlobalStyle`
 
   body {
     margin: 0;
-    font: 16px/1 Helvetica, Arial, Verdana, sans-serif;
+    font: 14px/1 Helvetica, Arial, Verdana, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     background: var(--color-main-background);
@@ -47,11 +107,13 @@ export default createGlobalStyle`
   h4,
   p,
   blockquote,
-  figure,
   ol,
   ul {
     margin: 0 0 2em;
     padding: 0;
+  }
+  figure {
+    margin:0;
   }
   main {
     display: block;

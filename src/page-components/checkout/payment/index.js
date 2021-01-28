@@ -19,7 +19,8 @@ import {
   PaymentProviders,
   PaymentButton,
   PaymentProvider,
-  SectionHeader
+  SectionHeader,
+  CheckoutFormGroup
 } from '../styles';
 import Voucher from '../voucher';
 
@@ -192,47 +193,53 @@ export default function Payment() {
 
   return (
     <Inner>
-      <form noValidate>
-        <Row>
-          <InputGroup>
-            <Label htmlFor="firstname">{t('customer.firstName')}</Label>
-            <Input
-              name="firstname"
-              type="text"
-              value={firstName}
-              onChange={(e) =>
-                setState({ ...state, firstName: e.target.value })
-              }
-              required
-            />
-          </InputGroup>
-          <InputGroup>
-            <Label htmlFor="lastname">{t('customer.lastName')}</Label>
-            <Input
-              name="lastname"
-              type="text"
-              value={lastName}
-              onChange={(e) => setState({ ...state, lastName: e.target.value })}
-              required
-            />
-          </InputGroup>
-        </Row>
-        <Row>
-          <InputGroup>
-            <Label htmlFor="email">{t('customer.email')}</Label>
-            <Input
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setState({ ...state, email: e.target.value })}
-              required
-            />
-          </InputGroup>
-        </Row>
-      </form>
+      <CheckoutFormGroup>
+        <SectionHeader>{t('checkout.title')}</SectionHeader>
+        <form noValidate>
+          <Row>
+            <InputGroup>
+              <Label htmlFor="firstname">{t('customer.firstName')}</Label>
+              <Input
+                name="firstname"
+                type="text"
+                value={firstName}
+                onChange={(e) =>
+                  setState({ ...state, firstName: e.target.value })
+                }
+                required
+              />
+            </InputGroup>
+            <InputGroup>
+              <Label htmlFor="lastname">{t('customer.lastName')}</Label>
+              <Input
+                name="lastname"
+                type="text"
+                value={lastName}
+                onChange={(e) =>
+                  setState({ ...state, lastName: e.target.value })
+                }
+                required
+              />
+            </InputGroup>
+          </Row>
+          <Row>
+            <InputGroup>
+              <Label htmlFor="email">{t('customer.email')}</Label>
+              <Input
+                name="email"
+                type="email"
+                value={email}
+                onChange={(e) => setState({ ...state, email: e.target.value })}
+                required
+              />
+            </InputGroup>
+          </Row>
+        </form>
+      </CheckoutFormGroup>
 
       <Voucher />
 
+      <CheckoutFormGroup withUpperMargin>
       <div>
         <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
         {paymentConfig.loading ? (
@@ -289,6 +296,7 @@ export default function Payment() {
           </div>
         )}
       </div>
+      </CheckoutFormGroup
     </Inner>
   );
 }

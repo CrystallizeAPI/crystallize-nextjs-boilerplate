@@ -15,18 +15,17 @@ export const Values = styled.div``;
 export const Button = styled.button.attrs(() => ({
   type: 'button'
 }))`
-  color: var(--color-text-sub);
-  width: 100%;
-  font-weight: bold;
   appearance: none;
   background: white;
   border: none;
-  padding: 8px 20px;
-  margin: 0;
+  color: var(--color-text-sub);
   cursor: pointer;
-  text-transform: capitalize;
+  font-weight: bold;
+  margin: 0;
+  padding: 8px 20px;
   position: relative;
-  border-radius: 4px;
+  text-transform: capitalize;
+  width: 100%;
   &:focus,
   &:active {
     outline: none;
@@ -40,11 +39,10 @@ export const Button = styled.button.attrs(() => ({
 `;
 
 export const AttributeName = styled.h4`
-  text-transform: uppercase;
-  margin-bottom: 0.2rem;
+  color: var(--color-text-main);
+  font-size: var(--font-size-sm);
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.4);
-  font-size: 13px;
+  margin: 25px 0 10px;
 `;
 
 export const AttributeSelector = styled.div`
@@ -53,25 +51,42 @@ export const AttributeSelector = styled.div`
 `;
 
 export const AttributeButton = styled.button`
-  flex-grow: 1;
-  flex-basis: 0;
-  text-transform: capitalize;
+  align-items: flex-end;
+  border: 1px solid #dfdfdf;
+  display: flex;
+  flex-wrap: wrap;
   font-weight: bold;
-  padding: 0.8rem;
-
+  justify-content: center;
+  padding: 10px 0;
+  text-transform: capitalize;
+  width: 25%;
   ${is('selected')`
-    background: var(--color-text-main);
-    color: var(--color-main-background);
+    border-color: var(--color-text-main);
   `};
 
-  &:first-child {
-    border-top-left-radius: 0.2rem;
-    border-bottom-left-radius: 0.2rem;
-  }
+  ${({ hasVariantForAttribute }) =>
+    !hasVariantForAttribute &&
+    `
+      position: relative;
+      :after {
+        background-color: rgba(1,1,1,0.05);
+        bottom: 0;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    `}
+`;
 
-  &:last-child {
-    border-top-right-radius: 0.2rem;
-    border-bottom-right-radius: 0.2rem;
-    border-right: none;
+export const VariantImage = styled.div`
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
+  max-width: 100px;
+  position: relative;
+  width: 100%;
 `;

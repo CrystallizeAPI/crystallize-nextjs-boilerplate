@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import is from 'styled-is';
 import { Image } from '@crystallize/react-image';
 
 import { responsive } from 'ui';
@@ -7,10 +8,34 @@ const Outer = styled.div`
   margin: 0 0 2em;
 `;
 
+const ImgContainer = styled.div`
+  border: 4px solid #fff;
+  width: 50%;
+  max-width: 100%;
+  flex-grow: 1;
+  position: relative;
+  figure {
+    height: 100%;
+  }
+  img {
+    object-fit: cover;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #dfdfdf;
+  }
+  ${is('portrait')`
+    width:33.333%;
+    max-width:50%;
+  `}
+  &:first-child {
+    width: 100%;
+  }
+`;
+
 const List = styled.div`
-  display: grid;
-  grid-gap: 5px;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 100px;
 
   > picture {
@@ -48,7 +73,14 @@ export default function Images({ images }) {
     <Outer>
       <List>
         {images.map((image, index) => (
-          <Image key={index} {...image} sizes="80vw" />
+          <ImgContainer
+            key={index}
+            portrait={
+              image?.variants?.[0].height >= image?.variants?.[0]?.width
+            }
+          >
+            <Image {...image} sizes="80vw" />
+          </ImgContainer>
         ))}
       </List>
     </Outer>

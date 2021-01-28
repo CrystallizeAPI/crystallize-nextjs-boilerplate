@@ -5,6 +5,7 @@ export const screen = new Proxy(
     sm: 768,
     md: 1024,
     lg: 1600,
+    xl: 1800,
     get xsMin() {
       return this.xs;
     },
@@ -26,6 +27,12 @@ export const screen = new Proxy(
     get lgMin() {
       return this.lg;
     },
+    get lgMax() {
+      return this.xl - 1;
+    },
+    get xlMin() {
+      return this.xl;
+    }
   },
   {
     get: function (obj, prop) {
@@ -38,6 +45,6 @@ export const screen = new Proxy(
       }
 
       return 1;
-    },
+    }
   }
 );

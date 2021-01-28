@@ -10,7 +10,9 @@ export const responsive = new Proxy(
     mdAndLess: `@media (max-width: ${screen.mdMax}px)`,
     mdPlus: `@media (min-width: ${screen.mdMin}px)`,
     md: `@media (min-width: ${screen.mdMin}px) and (max-width: ${screen.mdMax}px)`,
-    lg: `@media (min-width: ${screen.lgMin}px)`,
+    lg: `@media (min-width: ${screen.lgMin}px) and (max-width: ${screen.lgMax}px)`,
+    lgPlus: `@media (min-width: ${screen.lgMin}px)`,
+    xl: `@media (min-width: ${screen.xlMin}px)`
   },
   {
     get(obj, prop) {
@@ -23,6 +25,6 @@ export const responsive = new Proxy(
       }
 
       return '@media (min-width: 1px)';
-    },
+    }
   }
 );

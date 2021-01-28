@@ -1,4 +1,4 @@
-import Cmp, { getData } from 'page-components/frontpage';
+import Cmp, { getData } from 'page-components/folder';
 import { getLocaleFromContext } from 'lib/app-config';
 
 export async function getStaticProps(context) {
@@ -6,13 +6,13 @@ export async function getStaticProps(context) {
   const locale = getLocaleFromContext(context);
 
   const data = await getData({
-    asPath: '/',
+    asPath: '/frontpage-2021',
     language: locale.crystallizeCatalogueLanguage,
     preview
   });
 
   return {
-    props: data,
+    props: { ...data, hidePageHeader: true },
     revalidate: 1
   };
 }

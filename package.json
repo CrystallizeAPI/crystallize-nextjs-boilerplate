@@ -36,7 +36,7 @@
   "dependencies": {
     "@crystallize/content-transformer": "^5.2.1",
     "@crystallize/grid-renderer": "^2.0.1",
-    "@crystallize/react-image": "^5.0.0",
+    "@crystallize/react-image": "6.0.0",
     "@crystallize/react-layout": "^3.2.0",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.8.0",
