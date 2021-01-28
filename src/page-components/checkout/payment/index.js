@@ -22,7 +22,7 @@ import {
   SectionHeader,
   CheckoutFormGroup
 } from '../styles';
-import Voucher from '../voucher';
+// import Voucher from '../voucher';
 
 const StripeCheckout = dynamic(() => import('./stripe'));
 const KlarnaCheckout = dynamic(() => import('./klarna'));
@@ -237,66 +237,66 @@ export default function Payment() {
         </form>
       </CheckoutFormGroup>
 
-      <Voucher />
+      {/* <Voucher /> */}
 
       <CheckoutFormGroup withUpperMargin>
-      <div>
-        <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
-        {paymentConfig.loading ? (
-          <Spinner />
-        ) : (
-          <div>
-            {enabledPaymentProviders.length === 0 ? (
-              <i>{t('checkout.noPaymentProvidersConfigured')}</i>
-            ) : (
-              <PaymentProviders>
-                <PaymentSelector>
-                  {enabledPaymentProviders.map((paymentProviderName) => {
-                    const paymentProvider = paymentProviders.find(
-                      (p) => p.name === paymentProviderName
-                    );
-                    if (!paymentProvider) {
-                      return (
-                        <small>
-                          {t('checkout.paymentProviderNotConfigured', {
-                            name: paymentProviderName
-                          })}
-                        </small>
+        <div>
+          <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
+          {paymentConfig.loading ? (
+            <Spinner />
+          ) : (
+            <div>
+              {enabledPaymentProviders.length === 0 ? (
+                <i>{t('checkout.noPaymentProvidersConfigured')}</i>
+              ) : (
+                <PaymentProviders>
+                  <PaymentSelector>
+                    {enabledPaymentProviders.map((paymentProviderName) => {
+                      const paymentProvider = paymentProviders.find(
+                        (p) => p.name === paymentProviderName
                       );
-                    }
+                      if (!paymentProvider) {
+                        return (
+                          <small>
+                            {t('checkout.paymentProviderNotConfigured', {
+                              name: paymentProviderName
+                            })}
+                          </small>
+                        );
+                      }
 
-                    return (
-                      <PaymentButton
-                        key={paymentProvider.name}
-                        color={paymentProvider.color}
-                        type="button"
-                        selected={
-                          selectedPaymentProvider === paymentProvider.name
-                        }
-                        onClick={() =>
-                          setSelectedPaymentProvider(paymentProvider.name)
-                        }
-                      >
-                        <img
-                          src={paymentProvider.logo}
-                          alt={t('checkout.paymentProviderLogoAlt', {
-                            name: paymentProvider.name
-                          })}
-                        />
-                      </PaymentButton>
-                    );
-                  })}
-                </PaymentSelector>
+                      return (
+                        <PaymentButton
+                          key={paymentProvider.name}
+                          color={paymentProvider.color}
+                          type="button"
+                          selected={
+                            selectedPaymentProvider === paymentProvider.name
+                          }
+                          onClick={() =>
+                            setSelectedPaymentProvider(paymentProvider.name)
+                          }
+                        >
+                          <img
+                            src={paymentProvider.logo}
+                            alt={t('checkout.paymentProviderLogoAlt', {
+                              name: paymentProvider.name
+                            })}
+                          />
+                        </PaymentButton>
+                      );
+                    })}
+                  </PaymentSelector>
 
-                {paymentProviders
-                  .find((p) => p.name === selectedPaymentProvider)
-                  ?.render()}
-              </PaymentProviders>
-            )}
-          </div>
-        )}
-      </div>
-      </CheckoutFormGroup
+                  {paymentProviders
+                    .find((p) => p.name === selectedPaymentProvider)
+                    ?.render()}
+                </PaymentProviders>
+              )}
+            </div>
+          )}
+        </div>
+      </CheckoutFormGroup>
     </Inner>
   );
 }

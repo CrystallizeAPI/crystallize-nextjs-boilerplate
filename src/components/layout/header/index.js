@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-// import { useAuth } from 'components/auth';
 import { useSettings } from 'components/settings-context';
 import IconUser from 'ui/icons/user';
 
@@ -15,7 +14,6 @@ import {
   Nav,
   Btn,
   Logo,
-  // NavActions,
   NavList,
   NavListItem,
   PreviewBar,
@@ -56,31 +54,16 @@ export default function Header({ simple, preview }) {
             ))}
           </NavList>
         </Nav>
-        {/* <NavActions open={navOpen}>
+        <IconBar>
           <LocaleSwitcher />
-          {auth.isLoggedIn === true && (
-            <Link href="/my-account">
-              <a>{t('customer.account.title')}</a>
-            </Link>
-          )}
-          {auth.isLoggedIn === false && (
-            <Link href="/login">
-              <a>{t('customer.login.title')}</a>
-            </Link>
-          )}
-        </NavActions> */}
-        {!simple && (
-          <IconBar>
-            <LocaleSwitcher />
-            <Link href="/account">
-              <Btn as="a" aria-label="User area">
-                <IconUser />
-              </Btn>
-            </Link>
-            <Search />
-            <BasketButton />
-          </IconBar>
-        )}
+          <Link href="/account">
+            <Btn as="a" aria-label="User area">
+              <IconUser />
+            </Btn>
+          </Link>
+          <Search />
+          <BasketButton />
+        </IconBar>
         <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
       </Outer>
     </>

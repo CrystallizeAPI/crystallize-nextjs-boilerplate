@@ -13,7 +13,11 @@ const BasketButton = () => {
   const t = useT();
 
   return (
-    <Btn onClick={layout.actions.showRight} type="button" aria-label={t('basket.title')}>
+    <Btn
+      onClick={layout?.actions?.showRight}
+      type="button"
+      aria-label={t('basket.title')}
+    >
       <IconBasket />
       <BasketQuantity>
         {cart?.reduce((acc, curr) => acc + curr.quantity, 0)}

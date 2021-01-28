@@ -14,8 +14,8 @@ import {
   Percentage
 } from './styles';
 
-  const [buying, setBuying] = useState(false);
 export default function BuyButton({ product, selectedVariant, pricing }) {
+  const [buying, setBuying] = useState(false);
   const basket = useBasket();
   const layout = useContext(LayoutContext);
   const t = useT();
@@ -42,7 +42,6 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
     value: pricing?.defaultPrice?.price,
     currency: pricing?.defaultPrice?.currency
   });
-
 
   /**
    * Draw attention to the item when the server state has
@@ -92,6 +91,7 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
         width="250px"
         onClick={buy}
         disabled={!pricing?.defaultPrice.currency}
+        state={buying && 'loading'}
       >
         {t('product.addToBasket')}
       </Button>

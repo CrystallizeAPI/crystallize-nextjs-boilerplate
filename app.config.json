@@ -5,8 +5,7 @@
       "displayName": "English - US",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
-      "crystallizePriceVariant": "default",
-      "crystallizePriceVariantSales": "sales"
+      "crystallizePriceVariant": "default"
     }
   ]
 }
