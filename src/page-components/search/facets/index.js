@@ -15,6 +15,8 @@ import { ButtonToggleFacets } from './toggle-facets-button';
 import { FacetGroup, FaceGroupAction } from './group';
 import { FacetCheckbox } from './checkbox';
 
+const SCREEN_SIZE_FROM_FACETS_ARE_SHOWN_IN_PAGE = 1024;
+
 export default function Facets({
   aggregations = {},
   spec,
@@ -31,9 +33,21 @@ export default function Facets({
     areFacetsShown ? hideFilters() : showFilters();
   };
 
-  // Prevent body scroll while mobile facets filter is open
+  // Only for small devices, the facets are shown as a "modal" when opened.
+  // After opening them, the window scroll is blocked so the content
+  // underneath that modal, can't be scrolled.
+  //
+  // For larger resolutions than 1024px included, we don't have that behavioir anymore.
+  // When the facets are opened, the are toggled below the open/hide buttons.
+  // Because of this, the body scroll should not be blocked.
+  //
+  // Given this requirements, we block the scroll of the body depending on the screen width.
+  // Also, we don't check if window !== undefined because React Hooks are always executed
+  // in the client side, where the window object exists.
   useEffect(() => {
-    areFacetsShown ? lockDocumentScroll() : unlockDocumentScroll();
+    if (window.innerWidth <= SCREEN_SIZE_FROM_FACETS_ARE_SHOWN_IN_PAGE) {
+      areFacetsShown ? lockDocumentScroll() : unlockDocumentScroll();
+    }
   }, [areFacetsShown]);
 
   // Reset a single facet
