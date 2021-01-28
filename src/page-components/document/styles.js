@@ -128,7 +128,7 @@ export const H2 = styled(H)`
 
 export const Sidebar = styled.div`
   margin-top: -15px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export const SidebarBlock = styled.aside`
