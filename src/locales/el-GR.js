@@ -2,7 +2,8 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      tax: 'ΦΠΑ: {{value, currency}}'
+      tax: 'ΦΠΑ: {{value, currency}}',
+      close: 'Κλείσε'
     },
     frontpage: {
       title: 'Κεντρική'
@@ -29,6 +30,8 @@ export default {
       relatedProduct_plural: 'Σχετικά προϊόντα',
       addToBasket: 'Προσθήκη στο καλάθι',
       buy: 'ΑΓΟΡΑ',
+      outOfStock: 'Μη διαθέσιμο',
+      stock: '{{stockCount}} σε αποθεμα',
       attributes: {
         color: 'Χρώμα',
         green: 'Πράσινο',
@@ -79,9 +82,14 @@ export default {
     layout: {
       menu: 'Μενού',
       ecomBy: 'Ηλεκτρονικό κατάστημα από',
-      loadingVideo: 'Το βίνετο φορτώνει'
+      loadingVideo: 'Το βίνετο φορτώνει',
+      slider: {
+        previous: 'Δείτε το προηγούμενο αντικείμενο',
+        next: 'Δείτε το επόμενο αντικείμενο'
+      }
     },
     search: {
+      label: 'Αναζήτηση',
       foundResults: 'Found {{count}} matching result',
       foundResults_plural: 'Found {{count}} matching results',
       orderTitle: 'Order by',
@@ -93,7 +101,7 @@ export default {
         STOCK_ASC: 'Stock ascending',
         STOCK_DESC: 'Stock descending'
       },
-      filterResults: 'Filter results',
+      filter: 'Filter',
       facets: {
         viewNResults: 'Show {{count}} result',
         viewNResults_plural: 'Show {{count}} results',

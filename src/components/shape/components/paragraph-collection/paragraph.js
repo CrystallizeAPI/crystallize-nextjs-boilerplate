@@ -12,24 +12,28 @@ const Paragraph = ({
   videos,
   headingComponent: HeadingComponent = H3
 }) => {
+  const hasText = !!body?.json?.length;
+  const hasMedia = !!images || !!videos;
   return (
-    <Outer>
+    <Outer media={hasMedia} text={hasText}>
       <Text>
         {!!title && title.text && (
           <Title>
             <HeadingComponent>{title.text}</HeadingComponent>
           </Title>
         )}
-        {body?.json?.length > 0 && (
+        {hasText && (
           <Body>
             <ContentTransformer {...body.json} />
           </Body>
         )}
       </Text>
-      <Media>
-        <Images images={images} />
-        <Videos videos={videos} />
-      </Media>
+      {hasMedia && (
+        <Media>
+          <Images images={images} />
+          <Videos videos={videos} />
+        </Media>
+      )}
     </Outer>
   );
 };

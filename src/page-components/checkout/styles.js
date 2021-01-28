@@ -11,22 +11,20 @@ export const Outer = styled(GlobalOuter)`
 `;
 
 export const Inner = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 30px;
-  grid-gap: 15px;
-  ${responsive.smAndLess} {
-    grid-template-columns: 1fr;
+  ${responsive.smPlus} {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 30px;
   }
 `;
 
 export const Label = styled.div`
   font-size: 0.7rem;
-  /* padding-left: 15px; */
-  opacity: 1;
-  text-transform: uppercase;
-  padding-bottom: 8px;
   font-weight: 600;
+  opacity: 1;
+  padding-bottom: 8px;
+  text-transform: uppercase;
 `;
 export const InputGroup = styled.div`
   width: 100%;
@@ -35,21 +33,22 @@ export const InputGroup = styled.div`
 
 export const Input = styled.input`
   background: var(--color-main-background);
-  width: 100%;
+  border-bottom: 1px solid var(--color-box-background);
+  border: none;
   color: var(--color-text-sub);
   font-size: 1rem;
   font-weight: 500;
-  padding: 15px 15px;
   margin-bottom: 0.5rem;
-  border: none;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  border-bottom: 1px solid var(--color-box-background);
+  padding: 15px 15px;
   transition: border 0.2s ease-in-out;
+  width: 100%;
+
   &::placeholder {
     font-size: 12px;
     opacity: 0.5;
     padding-left: 10px;
   }
+
   &:valid {
     border-bottom: 1px solid #b7e2e4;
   }
@@ -64,14 +63,14 @@ export const Input = styled.input`
 `;
 
 export const ErrorMessage = styled.p`
-  font-size: 16px;
   color: var(--color-error);
+  font-size: 16px;
   margin-top: 1rem;
 `;
 
 export const StripeWrapper = styled.div`
-  width: 100%;
   padding-bottom: 1rem;
+  width: 100%;
 `;
 
 export const PaymentProviders = styled.div`
@@ -82,18 +81,19 @@ export const PaymentProviders = styled.div`
 
 export const PaymentButton = styled.button`
   background: ${(p) => p.color};
-  font-size: 18px;
-  padding: 0.5rem;
-  width: 32%;
-  margin-right: 1%;
-  height: 80px;
   border-radius: 10px;
+  font-size: 18px;
+  height: 80px;
+  margin-right: 1%;
+  margin-bottom: 3%;
+  padding: 0.5rem;
+  min-width: 125px;
 
   img {
-    max-width: 100px;
-    max-height: 25px;
     display: block;
     margin: 0 auto;
+    max-height: 25px;
+    max-width: 100px;
   }
 
   &:last-child {
@@ -114,25 +114,41 @@ export const PaymentProvider = styled.div`
 
 export const PaymentSelector = styled.div`
   display: flex;
+  flex-wrap: wrap;
+
+  ${responsive.mdPlus} {
+    flex-wrap: no-wrap;
+  }
 `;
 
 export const SectionHeader = styled(H3)`
+  border-bottom: 1px solid #dfdfdf;
   font-size: 16px;
   font-weight: 600;
-  text-transform: uppercase;
-  margin-top: 75px;
-  margin-bottom: 20px;
+  margin-top: 0;
   padding-bottom: 20px;
-  border-bottom: 1px solid #dfdfdf;
+  text-transform: uppercase;
+`;
+
+export const CheckoutFormGroup = styled.div`
+  ${(props) =>
+    props.withUpperMargin &&
+    `
+    margin-top: 50px;
+  `}
 `;
 
 export const Container = styled.div`
-  width: 100%;
-  padding: 0 75px 50px 75px;
   background: var(--color-box-background);
+  margin-bottom: 25px;
+  padding: 50px 30px;
+  width: 100%;
 
-  ${responsive.smAndLess} {
-    margin-bottom: 25px;
-    padding: 0 40px 40px 40px;
+  ${responsive.smPlus} {
+    margin-bottom: 0;
+  }
+
+  ${responsive.mdPlus} {
+    padding: 50px 75px;
   }
 `;

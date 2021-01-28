@@ -2,7 +2,8 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      tax: 'Moms: {{value, currency}}'
+      tax: 'Moms: {{value, currency}}',
+      close: 'Lukk'
     },
     frontpage: {
       title: 'Hjem'
@@ -29,6 +30,8 @@ export default {
       relatedProduct_plural: 'Relaterte produkter',
       addToBasket: 'Legg i handlekurv',
       buy: 'KJØP',
+      outOfStock: 'Ikke på lager',
+      stock: '{{stockCount}} på lager',
       attributes: {
         color: 'Color',
         green: 'Green',
@@ -79,9 +82,14 @@ export default {
       menu: 'Meny',
       searchPlaceholder: 'Søk etter ting',
       ecomBy: 'Nettbutikk av',
-      loadingVideo: 'Laster video'
+      loadingVideo: 'Laster video',
+      slider: {
+        previous: 'Se forrige element',
+        next: 'Se neste element'
+      }
     },
     search: {
+      label: 'Søk',
       foundResults: 'Fant {{count}} resultater',
       orderTitle: 'Sorter etter',
       order: {
@@ -92,7 +100,7 @@ export default {
         STOCK_ASC: 'Lagerbeholding stigende',
         STOCK_DESC: 'Lagerbeholding synkende'
       },
-      filterResults: 'Filtrer resultater',
+      filter: 'Filtrer',
       facets: {
         viewNResults: 'Vis {{count}} resultat',
         viewNResults_plural: 'Vis {{count}} resultater',

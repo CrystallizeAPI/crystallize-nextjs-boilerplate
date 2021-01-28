@@ -3,14 +3,38 @@ import styled from 'styled-components';
 import { responsive } from './responsive';
 
 export const Outer = styled.div`
-  margin-bottom: 30px;
   max-width: 1600px;
   padding: 0 0;
   margin: 0 auto;
   display: block;
   min-height: 75vh;
+
   ${responsive.smAndLess} {
     padding: 0 1rem;
+  }
+
+  ${responsive.mdPlus} {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+`;
+
+export const Inner = styled.div`
+  margin: 0 auto;
+  display: block;
+  min-height: 100vh;
+  padding: 0 1rem;
+
+  ${responsive.smPlus} {
+    max-width: 1800px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  ${responsive.mdPlus} {
+    max-width: 1800px;
+    padding-left: 100px;
+    padding-right: 100px;
   }
 `;
 
@@ -22,9 +46,11 @@ export const Header = styled.div`
   max-width: 800px;
   text-align: ${(p) => (p.centerContent ? 'center' : 'left')};
   margin: ${(p) => (p.centerContent ? '0 auto' : '0 0 50px 0')};
+
   ${responsive.xs} {
     padding: 100px 0 50px;
   }
+
   h1 {
     font-size: 2.4rem;
     margin-bottom: 10px;

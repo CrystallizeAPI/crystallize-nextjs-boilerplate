@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 
 import { Spinner } from 'ui/spinner';
-import WidescreenRatio from 'ui/widescreen-ratio';
 import { useIntersectionObserver } from 'lib/intersection-observer';
 import { useT } from 'lib/i18n';
 
@@ -45,23 +44,21 @@ export default function Video({
   }, [isIntersecting, load]);
 
   return (
-    <WidescreenRatio>
-      <Outer ref={ref} {...rest}>
-        {load ? (
-          <VideoPlayer
-            playlists={playlists}
-            thumbnails={thumbnails}
-            autoplay={autoplay}
-            loop={loop}
-            controls={controls}
-            fluid={fluid}
-          />
-        ) : (
-          <Loader>
-            <Spinner style={{ margin: 10 }} /> {t('layout.loadingVideo')}
-          </Loader>
-        )}
-      </Outer>
-    </WidescreenRatio>
+    <Outer ref={ref} {...rest}>
+      {load ? (
+        <VideoPlayer
+          playlists={playlists}
+          thumbnails={thumbnails}
+          autoplay={autoplay}
+          loop={loop}
+          controls={controls}
+          fluid={fluid}
+        />
+      ) : (
+        <Loader>
+          <Spinner style={{ margin: 10 }} /> {t('layout.loadingVideo')}
+        </Loader>
+      )}
+    </Outer>
   );
 }

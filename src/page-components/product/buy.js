@@ -6,19 +6,20 @@ import { useBasket } from 'components/basket';
 import { useT } from 'lib/i18n';
 import { useLocale } from 'lib/app-config';
 
-import { ProductFooter, Price } from './styles';
+import {
+  ProductFooter,
+  Price,
+  DiscountDetails,
+  BeforePrice,
+  Percentage
+} from './styles';
 
-export default function BuyButton({ product, selectedVariant }) {
+export default function BuyButton({ product, selectedVariant, pricing }) {
   const [buying, setBuying] = useState(false);
   const basket = useBasket();
   const layout = useContext(LayoutContext);
   const t = useT();
   const locale = useLocale();
-
-  const { identifier, price, currency } =
-    selectedVariant.priceVariants.find(
-      (pv) => pv.identifier === locale.crystallizePriceVariant
-    ) || {};
 
   function buy() {
     /**
@@ -31,9 +32,16 @@ export default function BuyButton({ product, selectedVariant }) {
     basket.actions.addItem({
       sku: selectedVariant.sku,
       path: product.path,
-      priceVariantIdentifier: identifier || locale.crystallizePriceVariant
+      priceVariantIdentifier: pricing?.discountPrice
+        ? pricing?.discountPrice?.identifier
+        : pricing?.defaultPrice.identifier || locale.crystallizePriceVariant
     });
   }
+
+  const textDefaultPrice = t('common.price', {
+    value: pricing?.defaultPrice?.price,
+    currency: pricing?.defaultPrice?.currency
+  });
 
   /**
    * Draw attention to the item when the server state has
@@ -61,14 +69,29 @@ export default function BuyButton({ product, selectedVariant }) {
 
   return (
     <ProductFooter>
-      <Price>
-        <strong>{t('common.price', { value: price, currency })}</strong>
-      </Price>
+      {pricing?.discountPrice ? (
+        <Price discounted>
+          <strong>
+            {t('common.price', {
+              value: pricing?.discountPrice?.price,
+              currency: pricing?.discountPrice?.currency
+            })}
+          </strong>
+          <DiscountDetails>
+            <BeforePrice>{textDefaultPrice}</BeforePrice>
+            <Percentage>{`-${pricing?.discountPercentage}%`}</Percentage>
+          </DiscountDetails>
+        </Price>
+      ) : (
+        <Price>
+          <strong>{textDefaultPrice}</strong>
+        </Price>
+      )}
       <Button
-        width="200px"
+        width="250px"
         onClick={buy}
-        disabled={!currency}
-        state={buying ? 'loading' : null}
+        disabled={!pricing?.defaultPrice.currency}
+        state={buying && 'loading'}
       >
         {t('product.addToBasket')}
       </Button>

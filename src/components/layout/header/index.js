@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { useAuth } from 'components/auth';
 import { useSettings } from 'components/settings-context';
-import { useT } from 'lib/i18n';
+import IconUser from 'ui/icons/user';
 
 import BurgerButton from './burger-button';
 import BasketButton from './basket-button';
@@ -13,8 +12,8 @@ import Search from './search';
 import {
   Outer,
   Nav,
+  Btn,
   Logo,
-  NavActions,
   NavList,
   NavListItem,
   PreviewBar,
@@ -22,9 +21,7 @@ import {
 } from './styles';
 
 export default function Header({ simple, preview }) {
-  const t = useT();
   const { mainNavigation } = useSettings();
-  const auth = useAuth();
   const router = useRouter();
 
   const [navOpen, setNavOpen] = useState(false);
@@ -43,7 +40,7 @@ export default function Header({ simple, preview }) {
       <Outer simple={simple}>
         <Link href="/" passHref>
           <Logo>
-            <img src="/static/shop-logo.svg" alt="" width="56" height="84" />
+            <img src="/static/shop-logo.svg" alt="" width="207" height="35" />
           </Logo>
         </Link>
         <Nav open={navOpen}>
@@ -57,25 +54,16 @@ export default function Header({ simple, preview }) {
             ))}
           </NavList>
         </Nav>
-        <NavActions open={navOpen}>
+        <IconBar>
           <LocaleSwitcher />
-          {auth.isLoggedIn === true && (
-            <Link href="/my-account">
-              <a>{t('customer.account.title')}</a>
-            </Link>
-          )}
-          {auth.isLoggedIn === false && (
-            <Link href="/login">
-              <a>{t('customer.login.title')}</a>
-            </Link>
-          )}
-        </NavActions>
-        {!simple && (
-          <IconBar>
-            <Search />
-            <BasketButton />
-          </IconBar>
-        )}
+          <Link href="/account">
+            <Btn as="a" aria-label="User area">
+              <IconUser />
+            </Btn>
+          </Link>
+          <Search />
+          <BasketButton />
+        </IconBar>
         <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
       </Outer>
     </>

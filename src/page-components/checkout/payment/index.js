@@ -19,9 +19,10 @@ import {
   PaymentProviders,
   PaymentButton,
   PaymentProvider,
-  SectionHeader
+  SectionHeader,
+  CheckoutFormGroup
 } from '../styles';
-import Voucher from '../voucher';
+// import Voucher from '../voucher';
 
 const StripeCheckout = dynamic(() => import('./stripe'));
 const KlarnaCheckout = dynamic(() => import('./klarna'));
@@ -192,103 +193,110 @@ export default function Payment() {
 
   return (
     <Inner>
-      <form noValidate>
-        <Row>
-          <InputGroup>
-            <Label htmlFor="firstname">{t('customer.firstName')}</Label>
-            <Input
-              name="firstname"
-              type="text"
-              value={firstName}
-              onChange={(e) =>
-                setState({ ...state, firstName: e.target.value })
-              }
-              required
-            />
-          </InputGroup>
-          <InputGroup>
-            <Label htmlFor="lastname">{t('customer.lastName')}</Label>
-            <Input
-              name="lastname"
-              type="text"
-              value={lastName}
-              onChange={(e) => setState({ ...state, lastName: e.target.value })}
-              required
-            />
-          </InputGroup>
-        </Row>
-        <Row>
-          <InputGroup>
-            <Label htmlFor="email">{t('customer.email')}</Label>
-            <Input
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setState({ ...state, email: e.target.value })}
-              required
-            />
-          </InputGroup>
-        </Row>
-      </form>
+      <CheckoutFormGroup>
+        <SectionHeader>{t('checkout.title')}</SectionHeader>
+        <form noValidate>
+          <Row>
+            <InputGroup>
+              <Label htmlFor="firstname">{t('customer.firstName')}</Label>
+              <Input
+                name="firstname"
+                type="text"
+                value={firstName}
+                onChange={(e) =>
+                  setState({ ...state, firstName: e.target.value })
+                }
+                required
+              />
+            </InputGroup>
+            <InputGroup>
+              <Label htmlFor="lastname">{t('customer.lastName')}</Label>
+              <Input
+                name="lastname"
+                type="text"
+                value={lastName}
+                onChange={(e) =>
+                  setState({ ...state, lastName: e.target.value })
+                }
+                required
+              />
+            </InputGroup>
+          </Row>
+          <Row>
+            <InputGroup>
+              <Label htmlFor="email">{t('customer.email')}</Label>
+              <Input
+                name="email"
+                type="email"
+                value={email}
+                onChange={(e) => setState({ ...state, email: e.target.value })}
+                required
+              />
+            </InputGroup>
+          </Row>
+        </form>
+      </CheckoutFormGroup>
 
-      <Voucher />
+      {/* <Voucher /> */}
 
-      <div>
-        <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
-        {paymentConfig.loading ? (
-          <Spinner />
-        ) : (
-          <div>
-            {enabledPaymentProviders.length === 0 ? (
-              <i>{t('checkout.noPaymentProvidersConfigured')}</i>
-            ) : (
-              <PaymentProviders>
-                <PaymentSelector>
-                  {enabledPaymentProviders.map((paymentProviderName) => {
-                    const paymentProvider = paymentProviders.find(
-                      (p) => p.name === paymentProviderName
-                    );
-                    if (!paymentProvider) {
-                      return (
-                        <small>
-                          {t('checkout.paymentProviderNotConfigured', {
-                            name: paymentProviderName
-                          })}
-                        </small>
+      <CheckoutFormGroup withUpperMargin>
+        <div>
+          <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
+          {paymentConfig.loading ? (
+            <Spinner />
+          ) : (
+            <div>
+              {enabledPaymentProviders.length === 0 ? (
+                <i>{t('checkout.noPaymentProvidersConfigured')}</i>
+              ) : (
+                <PaymentProviders>
+                  <PaymentSelector>
+                    {enabledPaymentProviders.map((paymentProviderName) => {
+                      const paymentProvider = paymentProviders.find(
+                        (p) => p.name === paymentProviderName
                       );
-                    }
+                      if (!paymentProvider) {
+                        return (
+                          <small>
+                            {t('checkout.paymentProviderNotConfigured', {
+                              name: paymentProviderName
+                            })}
+                          </small>
+                        );
+                      }
 
-                    return (
-                      <PaymentButton
-                        key={paymentProvider.name}
-                        color={paymentProvider.color}
-                        type="button"
-                        selected={
-                          selectedPaymentProvider === paymentProvider.name
-                        }
-                        onClick={() =>
-                          setSelectedPaymentProvider(paymentProvider.name)
-                        }
-                      >
-                        <img
-                          src={paymentProvider.logo}
-                          alt={t('checkout.paymentProviderLogoAlt', {
-                            name: paymentProvider.name
-                          })}
-                        />
-                      </PaymentButton>
-                    );
-                  })}
-                </PaymentSelector>
+                      return (
+                        <PaymentButton
+                          key={paymentProvider.name}
+                          color={paymentProvider.color}
+                          type="button"
+                          selected={
+                            selectedPaymentProvider === paymentProvider.name
+                          }
+                          onClick={() =>
+                            setSelectedPaymentProvider(paymentProvider.name)
+                          }
+                        >
+                          <img
+                            src={paymentProvider.logo}
+                            alt={t('checkout.paymentProviderLogoAlt', {
+                              name: paymentProvider.name
+                            })}
+                          />
+                        </PaymentButton>
+                      );
+                    })}
+                  </PaymentSelector>
 
-                {paymentProviders
-                  .find((p) => p.name === selectedPaymentProvider)
-                  ?.render()}
-              </PaymentProviders>
-            )}
-          </div>
-        )}
-      </div>
+                  {paymentProviders
+                    .find((p) => p.name === selectedPaymentProvider)
+                    ?.render()}
+                </PaymentProviders>
+              )}
+            </div>
+          )}
+        </div>
+      </CheckoutFormGroup>
     </Inner>
   );
 }

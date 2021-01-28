@@ -7,7 +7,13 @@ import Totals from 'components/basket/totals';
 import { useT } from 'lib/i18n';
 
 import Payment from './payment';
-import { Outer, Inner, SectionHeader, Container } from './styles';
+import {
+  Outer,
+  Inner,
+  SectionHeader,
+  Container,
+  CheckoutFormGroup
+} from './styles';
 
 function Checkout() {
   const basket = useBasket();
@@ -27,15 +33,16 @@ function Checkout() {
     <Outer>
       <Inner>
         <Container>
-          <SectionHeader>{t('checkout.title')}</SectionHeader>
           <Payment />
         </Container>
         <Container>
-          <SectionHeader>{t('basket.title')}</SectionHeader>
-          <OrderItems cart={cart} />
-          <div style={{ padding: '0 15px' }}>
-            <Totals />
-          </div>
+          <CheckoutFormGroup>
+            <SectionHeader>{t('basket.title')}</SectionHeader>
+            <OrderItems cart={cart} />
+            <div style={{ padding: '0 15px' }}>
+              <Totals />
+            </div>
+          </CheckoutFormGroup>
         </Container>
       </Inner>
     </Outer>

@@ -5,15 +5,18 @@ import { responsive } from 'ui';
 
 export const Outer = styled.header`
   text-align: center;
-  padding: 20px 75px;
-  max-width: 1600px;
+  padding: 20px 100px;
+  max-width: var(--content-max-width);
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 0 auto 0;
+  position: relative;
+  margin: 0 auto 50px;
 
   ${responsive.smAndLess} {
-    padding: 10px 90px 10px 20px;
+    padding: 10px 65px 10px 10px;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
   }
 `;
@@ -22,23 +25,28 @@ export const Logo = styled.a`
   height: 84px;
   display: block;
   object-fit: contain;
-
   position: relative;
   z-index: 99;
   img,
   svg {
+    display: block;
     height: 100%;
+  }
+  ${responsive.xs} {
+    height: 40px;
+    width: 110px;
+    margin-left: 25px;
   }
 `;
 
 export const Nav = styled.nav`
   display: flex;
-  margin: 10px 0 0 15px;
+  margin: 6px 0 0 15px;
   padding-left: 15px;
   width: 100%;
-  ${responsive.mdPlus} {
-    justify-content: center;
-  }
+  color: #000;
+  font-size: 18px;
+  font-family: var(--font-family-main);
   ${responsive.smAndLess} {
     display: none;
     position: absolute;
@@ -84,7 +92,6 @@ export const NavListItem = styled.li`
     padding: 10px 10px;
     transition: all 100ms;
     font-weight: 600;
-    text-transform: uppercase;
     letter-spacing: 1px;
     &:hover {
       text-decoration: underline;
@@ -101,33 +108,43 @@ export const Btn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   padding: 0;
   border-radius: 5px;
   justify-self: flex-end;
-  margin-left: 15px;
+  margin-left: 10px;
   img,
   svg {
-    width: 40px;
-  }
-  svg path {
-    stroke: var(--color-text-sub);
+    width: 45px;
   }
 
   &:hover,
   &:active {
     background: rgba(0, 0, 0, 0.05);
   }
+  ${responsive.xs} {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+  }
 `;
 
 export const BasketQuantity = styled.div`
   position: absolute;
-  font-weight: 500;
-  font-size: 14px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -25%);
+  font-weight: 600;
+  font-size: 11px;
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  right: -6px;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  background: #080708;
+  border: 3px solid #fff;
 `;
 
 export const NavActions = styled.div`

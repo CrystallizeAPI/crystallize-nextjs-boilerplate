@@ -51,8 +51,17 @@ export const SEARCH_QUERY = `
           path
           type
           ... on Product {
+            topics {
+              id
+              name
+            }
             matchingVariant {
-              price
+              priceVariants {
+                identifier
+                name
+                currency
+                price
+              }
               images {
                 url
                 variants {

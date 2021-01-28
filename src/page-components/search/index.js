@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
 import produce from 'immer';
 
 import Layout from 'components/layout';
@@ -8,45 +7,18 @@ import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
 import { urlToSpec, SEARCH_QUERY } from 'lib/search';
 import { useLocale } from 'lib/app-config';
 import toText from '@crystallize/content-transformer/toText';
-import { Outer, Header as H, H1 as h1, responsive } from 'ui';
-// import ShapeComponents from 'components/shape/components';
+import PageHeader from 'components/page-header';
 
+import { Outer } from 'ui';
+
+import Stackable from 'components/stackable';
+
+import { ListOuter, SearchActions, SearchActionsOnTheRight } from './styles';
 import query from './query';
-import Spec from './spec';
+import OrderBy from './order-by';
 import Results from './results';
 import Facets from './facets';
-
-const Header = styled(H)`
-  margin: 0;
-  padding: 30px 0;
-
-  ${responsive.mdPlus} {
-    padding: 75px 70px 25px;
-  }
-`;
-
-const H1 = styled(h1)`
-  padding: 0;
-`;
-
-const ListOuter = styled.div`
-  max-width: 1600px;
-  margin: 0 auto;
-
-  ${responsive.mdPlus} {
-    padding: 0 70px;
-    display: grid;
-    grid-gap: 40px;
-    grid-template-areas:
-      'facets spec'
-      'facets products';
-    grid-template-columns: 1fr 3fr;
-  }
-
-  ${responsive.lg} {
-    grid-template-columns: 1fr 4fr;
-  }
-`;
+import SearchCount from './count';
 
 function cleanFilterForTotalAggregations(filter) {
   return produce(filter, (draft) => {
@@ -169,10 +141,11 @@ export default function SearchPage(props) {
       fn(draft);
     });
 
-    /**
+    /*
      * We need to extract the [...catalogue] query params
      * in order to get a clean set of query params to work with
      */
+
     const { catalogue, ...queryWithoutRouteInfo } = newQuery;
 
     const newQueryAsString = new URLSearchParams(
@@ -195,7 +168,7 @@ export default function SearchPage(props) {
 
   function navigate({ direction }) {
     if (direction === 'nextPage') {
-      changeQuery((query) => {
+      return changeQuery((query) => {
         query.after = data.search.pageInfo.endCursor;
       });
     } else {
@@ -205,13 +178,24 @@ export default function SearchPage(props) {
     }
   }
 
+  function handleOrderByChange(orderBy, index) {
+    changeQuery((query) => {
+      if (index > 0) {
+        query.orderby = orderBy.value;
+      } else {
+        delete query.orderby;
+      }
+    });
+  }
+
   // We're waiting for the search result to come in
-  if (router.isFallback || !data || !data.search) {
+  const isWaitingForSearchResult = router.isFallback || !data || !data.search;
+  if (isWaitingForSearchResult) {
     return (
       <Layout title="Searching...">
         <Outer>
           <ListOuter>
-            <Spec spec={spec} changeQuery={changeQuery} />
+            <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
             <Facets spec={spec} changeQuery={changeQuery} />
           </ListOuter>
         </Outer>
@@ -221,24 +205,34 @@ export default function SearchPage(props) {
   const title = catalogue?.searchPage?.name
     ? catalogue.searchPage.name
     : 'Search';
+
   const description = catalogue?.searchPage?.components?.find(
     (c) => c.name === 'Brief'
   )?.content?.json;
 
+  const stacks = catalogue?.searchPage?.components?.find(
+    (c) => c.name === 'Stackable content'
+  )?.content?.items;
+
+  const totalResults = data.search.aggregations.totalResults;
   return (
     <Layout title={title} description={toText(description)}>
       <Outer>
-        <Header>
-          <H1>{title}</H1>
-        </Header>
+        <PageHeader {...{ title, description }} />
+        <Stackable stacks={stacks} />
         <ListOuter>
-          <Spec {...data.search} spec={spec} changeQuery={changeQuery} />
-          <Facets
-            aggregations={data.aggregations}
-            spec={spec}
-            changeQuery={changeQuery}
-            totalResults={data.search.aggregations.totalResults}
-          />
+          <SearchActions>
+            <Facets
+              aggregations={data.aggregations}
+              spec={spec}
+              changeQuery={changeQuery}
+              totalResults={totalResults}
+            />
+            <SearchActionsOnTheRight>
+              <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
+            </SearchActionsOnTheRight>
+          </SearchActions>
+          <SearchCount count={totalResults} />
           <Results {...data.search} spec={spec} navigate={navigate} />
         </ListOuter>
       </Outer>
