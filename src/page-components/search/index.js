@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import produce from 'immer';
+import styled from 'styled-components';
+import { Inner } from 'ui';
 
 import Layout from 'components/layout';
 import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
@@ -8,8 +10,6 @@ import { urlToSpec, SEARCH_QUERY } from 'lib/search';
 import { useLocale } from 'lib/app-config';
 import toText from '@crystallize/content-transformer/toText';
 import PageHeader from 'components/page-header';
-
-import { Outer } from 'ui';
 
 import Stackable from 'components/stackable';
 
@@ -19,6 +19,8 @@ import OrderBy from './order-by';
 import Results from './results';
 import Facets from './facets';
 import SearchCount from './count';
+
+const Outer = styled(Inner)``;
 
 function cleanFilterForTotalAggregations(filter) {
   return produce(filter, (draft) => {

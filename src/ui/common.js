@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { responsive } from './responsive';
 
 export const Outer = styled.div`
-  max-width: 1600px;
   padding: 0 0;
   margin: 0 auto;
   display: block;
@@ -14,6 +13,7 @@ export const Outer = styled.div`
   }
 
   ${responsive.mdPlus} {
+    max-width: 1600px;
     padding-left: 100px;
     padding-right: 100px;
   }
@@ -26,7 +26,6 @@ export const Inner = styled.div`
   padding: 0 1rem;
 
   ${responsive.smPlus} {
-    max-width: 1800px;
     padding-left: 2rem;
     padding-right: 2rem;
   }
