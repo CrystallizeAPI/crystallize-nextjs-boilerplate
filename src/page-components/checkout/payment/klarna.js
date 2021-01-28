@@ -1,44 +1,57 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { useT } from 'lib/i18n';
-import { doPost } from 'lib/rest-api/helpers';
+import ServiceApi from 'lib/service-api';
 
-export default function KlarnaCheckout({ paymentModel, basketActions }) {
-  const [state, setState] = useState('loading');
+export default function KlarnaCheckout({ checkoutModel, basketActions }) {
   const t = useT();
   const paymentContainerRef = useRef();
+  const [status, setStatus] = useState('loading');
 
   useEffect(() => {
-    async function loadCheckout() {
-      if (state !== 'loading') {
-        return;
-      }
+    async function load() {
+      setStatus('loading');
 
       try {
-        const { success, html, order_id } = await doPost(
-          '/api/payment-providers/klarna/render-checkout',
-          {
-            body: JSON.stringify({ paymentModel })
+        const response = await ServiceApi({
+          query: `
+            mutation klarnaRenderCheckout(
+              $checkoutModel: CheckoutModelInput!
+            ) {
+              paymentProviders {
+                klarna {
+                  renderCheckout(
+                    checkoutModel: $checkoutModel
+                  ) {
+                    crystallizeOrderId
+                    klarnaOrderId
+                    html
+                  }
+                }
+              }
+            }
+          `,
+          variables: {
+            checkoutModel
           }
-        );
+        });
 
-        // https://developers.klarna.com/documentation/klarna-checkout/integration-guide/render-the-checkout/
-        if (!success) {
-          setState('error');
-          return;
-        }
+        const {
+          html,
+          klarnaOrderId,
+          crystallizeOrderId
+        } = response.data.paymentProviders.klarna.renderCheckout;
 
-        setState('loaded');
-
-        basketActions.setMetadata({ klarnaOrderId: order_id });
+        basketActions.setKlarnaOrderId(klarnaOrderId);
+        basketActions.setCrystallizeOrderId(crystallizeOrderId);
 
         const checkoutContainer = paymentContainerRef.current;
-        
+
         checkoutContainer.innerHTML = html;
 
         const scriptsTags = checkoutContainer.getElementsByTagName('script');
 
-        // This is necessary otherwise the scripts tags are not going to be evaluated
+        // https://developers.klarna.com/documentation/klarna-checkout/integration-guide/render-the-checkout/
         for (let i = 0; i < scriptsTags.length; i++) {
           const { parentNode } = scriptsTags[i];
           const newScriptTag = document.createElement('script');
@@ -47,19 +60,21 @@ export default function KlarnaCheckout({ paymentModel, basketActions }) {
           parentNode.removeChild(scriptsTags[i]);
           parentNode.appendChild(newScriptTag);
         }
-      } catch (err) {
-        console.log(err);
-        setState('error');
+
+        setStatus('loaded');
+      } catch (error) {
+        console.log(error);
+        setStatus('error');
       }
     }
 
-    loadCheckout();
-  }, [basketActions, paymentModel, state]);
+    load();
+  }, [basketActions, checkoutModel]);
 
   return (
     <>
-      {state === 'loading' && <p>{t('checkout.loadingPaymentGateway')}</p>}
-      {state === 'error' && (
+      {status === 'loading' && <p>{t('checkout.loadingPaymentGateway')}</p>}
+      {status === 'error' && (
         <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
       )}
       <div ref={paymentContainerRef} />

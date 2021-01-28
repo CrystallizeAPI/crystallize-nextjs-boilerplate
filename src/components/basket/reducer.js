@@ -2,40 +2,84 @@ import produce from 'immer';
 
 export const initialState = {
   status: 'not-hydrated',
-  cart: [],
-  total: {},
-  metadata: {}
+  /**
+   * A simplistic basket which gets stored on client side
+   * Each client cart item consists of these fields:
+   *  - sku
+   *  - path
+   *  - priceVariantIdentifier
+   *  - quantity
+   */
+  clientBasket: {
+    cart: [],
+    voucherCode: null,
+
+    /**
+     * In some cases we create an order in Crystallize before
+     * the checkout is completed. Currently, this is done for
+     * Klarna and Vipps payments
+     */
+    crystallizeOrderId: null,
+
+    /**
+     * Track unfinished Klarna order
+     * Only used if you're doing Klarna payments
+     */
+    klarnaOrderId: null
+  },
+
+  // The validated basket sent back from the Service API
+  serverBasket: null,
+
+  // The basket cart item to draw attention to
+  attentionCartItem: {}
 };
 
 export default produce(function reducer(draft, { action, ...rest }) {
-  draft.changeTriggeredByChannel = false;
+  /**
+   * This flag helps keeping track of if the incoming
+   * change is triggered by _this_ browser tab or a
+   * different browser tab
+   */
+  draft.changeTriggeredByOtherTab = false;
 
   switch (action) {
     case 'hydrate': {
       if (draft.status === 'not-hydrated') {
-        draft.cart = rest.cart;
-        draft.metadata = rest.metadata;
-        draft.status = 'hydrated';
+        if (rest.cart) {
+          draft.clientBasket = rest || initialState.clientBasket;
+
+          if (!draft.clientBasket.cart) {
+            draft.clientBasket.cart = initialState.clientBasket.cart;
+          }
+        }
+        draft.status = 'server-state-is-stale';
       }
       break;
     }
 
-    case 'update-cart': {
-      draft.cart = rest.cart;
-      draft.metadata = rest.metadata;
-      draft.changeTriggeredByChannel = true;
+    case 'channel-update': {
+      draft.clientBasket = rest.clientBasket;
+      draft.serverBasket = rest.serverBasket;
+      draft.changeTriggeredByOtherTab = true;
+      draft.status = 'ready';
       break;
     }
 
+    case 'set-crystallize-order-id': {
+      draft.clientBasket.crystallizeOrderId = rest.crystallizeOrderId;
+      break;
+    }
+
+    case 'set-klarna-order-id': {
+      draft.clientBasket.klarnaOrderId = rest.klarnaOrderId;
+      break;
+    }
+
+    case 'server-update-failed':
     case 'empty': {
-      draft.cart = [];
-      draft.metadata = {};
-      draft.status = 'hydrated';
-      break;
-    }
-
-    case 'set-metadata': {
-      draft.metadata = rest.metadata;
+      draft.clientBasket = initialState.clientBasket;
+      draft.status = 'server-state-is-stale';
       break;
     }
 
@@ -49,13 +93,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
         throw new Error(`Please provide "sku" and "path" for ${action}`);
       }
 
-      const itemIndex = draft.cart.findIndex((i) => i.sku === sku);
+      const itemIndex = draft.clientBasket.cart.findIndex((i) => i.sku === sku);
 
       if (itemIndex !== -1) {
         if (action === 'remove-item') {
-          draft.cart.splice(itemIndex, 1);
+          draft.clientBasket.cart.splice(itemIndex, 1);
         } else {
-          const item = draft.cart[itemIndex];
+          const item = draft.clientBasket.cart[itemIndex];
 
           if (action === 'decrement-item') {
             item.quantity -= 1;
@@ -65,29 +109,31 @@ export default produce(function reducer(draft, { action, ...rest }) {
         }
       } else {
         if (!['remove-item', 'decrement-item'].includes(action)) {
-          draft.cart.push({
+          draft.clientBasket.cart.push({
             sku,
             path,
-            priceVariantIdentifier
+            priceVariantIdentifier,
+            quantity: 1
           });
         }
       }
 
-      /**
-       * Set addItemTime in order for the tiny basket to run an
-       * animation to help drawing attention to the added item
-       **/
-      if (action === 'add-item') {
-        draft.cart.find((i) => i.sku === sku).addItemTime = Date.now();
-      }
+      draft.status = 'server-state-is-stale';
+
       break;
     }
 
-    case 'extended-product-variants': {
-      draft.extendedProductVariants = rest.extendedProductVariants;
-      draft.cart = draft.cart.filter((c) =>
-        draft.extendedProductVariants?.find((e) => e.sku === c.sku)
-      );
+    case 'set-server-state': {
+      draft.serverBasket = rest.serverBasket;
+      draft.status = 'ready';
+      break;
+    }
+
+    case 'draw-attention': {
+      draft.attentionCartItem = {
+        time: Date.now(),
+        sku: rest.sku
+      };
       break;
     }
 
@@ -97,53 +143,11 @@ export default produce(function reducer(draft, { action, ...rest }) {
   }
 
   // A cart item is only valid if we have path and sku
-  draft.cart = draft.cart.filter(function validateCartItem({ path, sku }) {
-    return path && sku;
-  });
-
-  // Extend with data from the API
-  draft.cart = draft.cart.map(function extendAndMakeValid({
-    quantity = 1,
-    priceVariantIdentifier = 'default',
-    sku,
-    ...rest
-  }) {
-    return {
-      ...rest,
-      sku,
-      quantity,
-      priceVariantIdentifier,
-      extended: draft.extendedProductVariants?.find((e) => e.sku === sku)
-    };
-  });
-
-  // Calculate totals
-  draft.total = draft.cart.reduce(
-    (acc, curr) => {
-      const { quantity, extended } = curr;
-      if (extended) {
-        acc.gross += extended.price.gross * quantity;
-        acc.net += extended.price.net * quantity;
-        acc.currency = extended.price.currency;
+  if (draft.clientBasket.cart.length > 0) {
+    draft.clientBasket.cart = draft.clientBasket.cart.filter(
+      function validateCartItem({ path, sku }) {
+        return path && sku;
       }
-      acc.quantity += quantity;
-      return acc;
-    },
-    { gross: 0, net: 0, quantity: 0 }
-  );
-
-  draft.total.vat =
-    parseInt((draft.total.gross - draft.total.net) * 100, 10) / 100;
-
-  draft.productsVariantsToExtend = draft.cart.map(({ sku, path }) => ({
-    sku,
-    path
-  }));
-
-  if (
-    draft.status === 'hydrated' &&
-    (draft.cart.length === 0 || draft.extendedProductVariants?.length > 0)
-  ) {
-    draft.status = 'ready';
+    );
   }
 });

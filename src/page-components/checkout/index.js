@@ -3,7 +3,7 @@ import React from 'react';
 import { useBasket } from 'components/basket';
 import Layout from 'components/layout';
 import OrderItems from 'components/order-items';
-import { Totals } from 'components/basket/totals';
+import Totals from 'components/basket/totals';
 import { useT } from 'lib/i18n';
 
 import Payment from './payment';

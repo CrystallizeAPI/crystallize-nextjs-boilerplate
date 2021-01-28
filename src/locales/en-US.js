@@ -2,7 +2,7 @@ export default {
   translation: {
     common: {
       price: '{{value, currency}}',
-      vat: 'VAT: {{value, currency}}'
+      tax: 'TAX: {{value, currency}}'
     },
     frontpage: {
       title: 'Home'
@@ -22,6 +22,9 @@ export default {
           'Enter your email address and we’ll send a magic login link to your inbox.',
         emailAddressInvalid: 'Please enter a valid email address',
         sendMagicLink: 'Send me a magic link'
+      },
+      account: {
+        title: 'My account'
       }
     },
     product: {
@@ -48,7 +51,7 @@ export default {
       discount: 'Discount',
       totalPriceAfterDiscount: 'Total after discount',
       shippingPrice: 'Shipping',
-      vat: 'VAT',
+      tax: 'Tax',
       totalToPay: 'To pay',
       goToCheckout: 'Go to checkout'
     },

@@ -111,4 +111,8 @@ export default createGlobalStyle`
     height: auto;
     border: 0;
   }
+
+  .crystallize-layout__menu {
+    display: flex;
+  }
 `;

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import { useQuery } from 'react-query';
 import { loadStripe } from '@stripe/stripe-js';
 import {
   CardElement,
@@ -7,30 +9,11 @@ import {
   useElements
 } from '@stripe/react-stripe-js';
 
-import { doPost } from 'lib/rest-api/helpers';
-import { Button } from 'ui';
+import ServiceApi from 'lib/service-api';
+import { Button, Spinner } from 'ui';
 import { useT } from 'lib/i18n';
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-);
-
-// Persist by create order in Crystallize
-async function persistOrder({ paymentIntent, paymentModel }) {
-  const { data } = await doPost(
-    '/api/payment-providers/stripe/order-persistence',
-    {
-      body: JSON.stringify({
-        paymentIntentId: paymentIntent.id,
-        paymentModel
-      })
-    }
-  );
-
-  return data.orders.create.id;
-}
-
-function Form({ clientSecret, paymentModel, onSuccess }) {
+function Form({ stripeClientSecret, checkoutModel, onSuccess, onError }) {
   const t = useT();
   const stripe = useStripe();
   const elements = useElements();
@@ -49,10 +32,10 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
         return;
       }
 
-      const { customer } = paymentModel;
+      const { customer } = checkoutModel;
 
       const { error, paymentIntent } = await stripe.confirmCardPayment(
-        clientSecret,
+        stripeClientSecret,
         {
           payment_method: {
             card: elements.getElement(CardElement),
@@ -62,6 +45,7 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
           }
         }
       );
+
       if (error) {
         setStatus({ error });
       } else {
@@ -72,12 +56,34 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
           // execution. Set up a webhook or plugin to listen for the
           // payment_intent.succeeded event that handles any business critical
           // post-payment actions.
-          const orderId = await persistOrder({
-            paymentIntent,
-            paymentModel
+          const response = await ServiceApi({
+            query: `
+              mutation confirmStripeOrder($checkoutModel: CheckoutModelInput!, $paymentIntentId: String!) {
+                paymentProviders {
+                  stripe {
+                    confirmOrder(checkoutModel: $checkoutModel, paymentIntentId: $paymentIntentId) {
+                      success
+                      orderId
+                    }
+                  }
+                }
+              }
+            `,
+            variables: {
+              checkoutModel,
+              paymentIntentId: paymentIntent.id
+            }
           });
-          if (orderId) {
+
+          const {
+            success,
+            orderId
+          } = response.data.paymentProviders.stripe.confirmOrder;
+
+          if (success) {
             onSuccess(orderId);
+          } else {
+            onError();
           }
         }
       }
@@ -100,33 +106,70 @@ function Form({ clientSecret, paymentModel, onSuccess }) {
   );
 }
 
-export default function StripeWrapper({ paymentModel, ...props }) {
-  const [clientSecret, setClientSecret] = useState(null);
+export default function StripeWrapper({ checkoutModel, ...props }) {
+  const [stripeLoader, setStripeLoader] = useState(null);
+  const stripeConfig = useQuery('stripeConfig', () =>
+    ServiceApi({
+      query: `
+      {
+        paymentProviders {
+          stripe {
+            config
+          }
+        }
+      }
+    `
+    })
+  );
 
   useEffect(() => {
-    async function getClientSecret() {
-      const { client_secret } = await doPost(
-        '/api/payment-providers/stripe/create-payment-intent',
-        {
-          body: JSON.stringify({
-            paymentModel
-          })
-        }
+    if (stripeConfig.data && !stripeLoader) {
+      setStripeLoader(
+        loadStripe(
+          stripeConfig.data.data.paymentProviders.stripe.config.publishableKey
+        )
       );
-
-      setClientSecret(client_secret);
     }
+  }, [stripeConfig, stripeLoader]);
 
-    getClientSecret();
-  }, [paymentModel]);
+  // Get new paymentIntent
+  const stripePaymentIntent = useQuery('stripePaymentIntent', () =>
+    ServiceApi({
+      query: `
+        mutation StripePaymentIntent($checkoutModel: CheckoutModelInput!) {
+          paymentProviders {
+            stripe {
+              createPaymentIntent(checkoutModel: $checkoutModel)
+            }
+          }
+        }
+      `,
+      variables: {
+        checkoutModel
+      }
+    })
+  );
+
+  const stripeClientSecret =
+    stripePaymentIntent?.data?.data?.paymentProviders?.stripe
+      ?.createPaymentIntent?.client_secret;
+
+  if (stripeConfig.loading || !stripeLoader || !stripeClientSecret) {
+    return <Spinner />;
+  }
 
   return (
-    <Elements locale="en" stripe={stripePromise}>
-      <Form
-        {...props}
-        paymentModel={paymentModel}
-        clientSecret={clientSecret}
-      />
-    </Elements>
+    <>
+      <Head>
+        <script key="stripe-js" src="https://js.stripe.com/v3/" async />
+      </Head>
+      <Elements locale="en" stripe={stripeLoader}>
+        <Form
+          {...props}
+          checkoutModel={checkoutModel}
+          stripeClientSecret={stripeClientSecret}
+        />
+      </Elements>
+    </>
   );
 }

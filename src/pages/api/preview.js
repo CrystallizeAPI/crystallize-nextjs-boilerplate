@@ -1,3 +1,9 @@
+/**
+ * Preview catalogue items from Crystallize by setting a cookie
+ * for the user session. Read more about the Next.JS preview mode:
+ * https://nextjs.org/docs/advanced-features/preview-mode
+ */
+
 import { simplyFetchFromGraph } from 'lib/graph';
 import { defaultLocale } from 'lib/app-config';
 

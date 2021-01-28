@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { useBasket } from 'components/basket';
 import AttributeList from 'components/attribute-list';
 import { useT } from 'lib/i18n';
 
@@ -22,12 +23,13 @@ import {
 export default function TinyBasketItem({ actions, item }) {
   const t = useT();
   const [drawAttention, setDrawAttention] = useState(false);
+  const { attentionCartItem } = useBasket();
 
-  const { id, attributes, addItemTime, images } = item;
+  const { attributes, images } = item;
 
   // Draw users attention when the item is added to the basket
   useEffect(() => {
-    if (id) {
+    if (attentionCartItem.sku === item.sku) {
       setDrawAttention(true);
 
       let timeout = setTimeout(
@@ -36,7 +38,7 @@ export default function TinyBasketItem({ actions, item }) {
       );
       return () => clearTimeout(timeout);
     }
-  }, [id, addItemTime]);
+  }, [attentionCartItem.sku, item.sku]);
 
   function increment() {
     actions.incrementItem(item);
@@ -48,11 +50,6 @@ export default function TinyBasketItem({ actions, item }) {
 
   function remove() {
     actions.removeItem(item);
-  }
-
-  // Data is not fetched from the API yet
-  if (!id) {
-    return null;
   }
 
   return (
@@ -68,16 +65,16 @@ export default function TinyBasketItem({ actions, item }) {
           <PriceWrap>
             <Price>
               {t('common.price', {
-                value: item.price?.gross ?? 0,
-                currency: item.price?.currency
+                value: item.price.gross,
+                currency: item.price.currency
               })}
             </Price>
           </PriceWrap>
 
           <PriceVat>
             <span>
-              {t('common.vat', {
-                value: item.price?.vat ?? 0,
+              {t('common.tax', {
+                value: item.price.gross - item.price.net,
                 currency: item.price?.currency
               })}
             </span>

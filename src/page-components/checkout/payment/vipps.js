@@ -1,30 +1,58 @@
 import React, { useState, useEffect } from 'react';
 
-import { doPost } from 'lib/rest-api/helpers';
 import { useT } from 'lib/i18n';
+import ServiceApi from 'lib/service-api';
 
-export default function VippsWrapper({ paymentModel, onSuccess }) {
+export default function VippsWrapper({
+  checkoutModel,
+  basketActions,
+  onSuccess
+}) {
   const t = useT();
-  const [state, setState] = useState('loading');
+  const [status, setStatus] = useState('loading');
 
   useEffect(() => {
     async function load() {
-      setState('loading');
+      setStatus('loading');
 
-      const { url } = await doPost(
-        '/api/payment-providers/vipps/initiate-payment',
-        {
-          body: JSON.stringify({ paymentModel })
+      const response = await ServiceApi({
+        query: `
+          mutation vippsInitiatePayment(
+            $checkoutModel: CheckoutModelInput!
+          ) {
+            paymentProviders {
+              vipps {
+                initiatePayment(
+                  checkoutModel: $checkoutModel
+                ) {
+                  success
+                  checkoutLink
+                  crystallizeOrderId
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          checkoutModel
         }
-      );
+      });
 
-      return onSuccess(url);
+      const { success, crystallizeOrderId, checkoutLink } =
+        response.data?.paymentProviders?.vipps?.initiatePayment || {};
+
+      if (success) {
+        basketActions.setCrystallizeOrderId(crystallizeOrderId);
+        onSuccess(checkoutLink);
+      } else {
+        setStatus('error');
+      }
     }
 
     load();
-  }, [paymentModel, onSuccess]);
+  }, [checkoutModel, basketActions, onSuccess]);
 
-  if (state === 'error') {
+  if (status === 'error') {
     return (
       <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Vipps' })}</p>
     );

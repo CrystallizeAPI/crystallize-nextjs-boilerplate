@@ -2,12 +2,14 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
-import styled from 'styled-components';
 
-import appConfig, { useLocale } from 'lib/app-config';
+import styled from 'styled-components';
+import { useQuery } from 'react-query';
+
+import ServiceApi from 'lib/service-api';
 import { useT } from 'lib/i18n';
 import { useBasket } from 'components/basket';
+import { Spinner } from 'ui/spinner';
 
 import {
   Input,
@@ -19,19 +21,12 @@ import {
   PaymentProvider,
   SectionHeader
 } from '../styles';
+import Voucher from '../voucher';
 
-// {{#if payment-provider-stripe}}
 const StripeCheckout = dynamic(() => import('./stripe'));
-// {{/if}}
-// {{#if payment-provider-klarna}}
 const KlarnaCheckout = dynamic(() => import('./klarna'));
-// {{/if}}
-// {{#if payment-provider-vipps}}
 const VippsCheckout = dynamic(() => import('./vipps'));
-// {{/if}}
-// {{#if payment-provider-mollie}}
 const MollieCheckout = dynamic(() => import('./mollie'));
-// {{/if}}
 
 const Row = styled.div`
   display: flex;
@@ -42,9 +37,8 @@ const Inner = styled.div``;
 
 export default function Payment() {
   const t = useT();
-  const locale = useLocale();
   const router = useRouter();
-  const { cart, actions, metadata } = useBasket();
+  const { basketModel, actions } = useBasket();
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
   const [state, setState] = useState({
     firstName: '',
@@ -52,77 +46,99 @@ export default function Payment() {
     email: ''
   });
 
+  const paymentConfig = useQuery('paymentConfig', () =>
+    ServiceApi({
+      query: `
+      {
+        paymentProviders {
+          stripe {
+            enabled
+          }
+          klarna {
+            enabled
+          }
+          mollie {
+            enabled
+          }
+          vipps {
+            enabled
+          }
+        }
+      }
+    `
+    })
+  );
+
   // Handle locale with sub-path routing
   let multilingualUrlPrefix = '';
   if (window.location.pathname.startsWith(`/${router.locale}/`)) {
-    multilingualUrlPrefix = router.locale;
+    multilingualUrlPrefix = '/' + router.locale;
   }
 
   const { firstName, lastName, email } = state;
 
-  // Define the shared payment model for all payment providers
-  const paymentModel = {
-    multilingualUrlPrefix,
-    locale,
-    cart,
-    metadata,
+  function getURL(path) {
+    return `${location.protocol}//${location.host}${multilingualUrlPrefix}${path}`;
+  }
+
+  /**
+   * The checkout model shared between all the payment providers
+   * It contains everything needed to make a purchase and complete
+   * an order
+   */
+  const checkoutModel = {
+    basketModel,
     customer: {
       firstName,
       lastName,
       addresses: [
         {
           type: 'billing',
-          email
+          email: email || null
         }
       ]
-    }
+    },
+    confirmationURL: getURL(`/confirmation/{crystallizeOrderId}?emptyBasket`),
+    checkoutURL: getURL(`/checkout`),
+    termsURL: getURL(`/terms`)
   };
 
   const paymentProviders = [
-    // {{#if payment-provider-stripe}}
     {
       name: 'stripe',
       color: '#6773E6',
       logo: '/static/stripe-logo.png',
       render: () => (
         <PaymentProvider>
-          <Head>
-            <script key="stripe-js" src="https://js.stripe.com/v3/" async />
-          </Head>
           <StripeCheckout
-            paymentModel={paymentModel}
-            onSuccess={(orderId) => {
-              if (multilingualUrlPrefix) {
-                router.push(
-                  '/[locale]/confirmation/stripe/[orderId]',
-                  `/${multilingualUrlPrefix}/confirmation/stripe/${orderId}`
-                );
-              } else {
-                router.push(
-                  '/confirmation/stripe/[orderId]',
-                  `/confirmation/stripe/${orderId}`
-                );
-              }
+            checkoutModel={checkoutModel}
+            onSuccess={(crystallizeOrderId) => {
+              router.push(
+                checkoutModel.confirmationURL.replace(
+                  '{crystallizeOrderId}',
+                  crystallizeOrderId
+                )
+              );
               scrollTo(0, 0);
             }}
           />
         </PaymentProvider>
       )
     },
-    // {{/if}}
-    // {{#if payment-provider-klarna}}
     {
       name: 'klarna',
       color: '#F8AEC2',
       logo: '/static/klarna-logo.png',
       render: () => (
         <PaymentProvider>
-          <KlarnaCheckout paymentModel={paymentModel} basketActions={actions} />
+          <KlarnaCheckout
+            checkoutModel={checkoutModel}
+            basketActions={actions}
+            getURL={getURL}
+          />
         </PaymentProvider>
       )
     },
-    // {{/if}}
-    // {{#if payment-provider-vipps}}
     {
       name: 'vipps',
       color: '#fff',
@@ -130,7 +146,8 @@ export default function Payment() {
       render: () => (
         <PaymentProvider>
           <VippsCheckout
-            paymentModel={paymentModel}
+            checkoutModel={checkoutModel}
+            basketActions={actions}
             onSuccess={(url) => {
               if (url) window.location = url;
             }}
@@ -145,7 +162,8 @@ export default function Payment() {
       render: () => (
         <PaymentProvider>
           <MollieCheckout
-            paymentModel={paymentModel}
+            checkoutModel={checkoutModel}
+            basketActions={actions}
             onSuccess={(url) => {
               if (url) window.location = url;
             }}
@@ -153,8 +171,24 @@ export default function Payment() {
         </PaymentProvider>
       )
     }
-    // {{/if}}
   ];
+
+  const enabledPaymentProviders = [];
+  if (!paymentConfig.loading && paymentConfig.data) {
+    const { paymentProviders } = paymentConfig.data.data;
+    if (paymentProviders.klarna.enabled) {
+      enabledPaymentProviders.push('klarna');
+    }
+    if (paymentProviders.mollie.enabled) {
+      enabledPaymentProviders.push('mollie');
+    }
+    if (paymentProviders.vipps.enabled) {
+      enabledPaymentProviders.push('vipps');
+    }
+    if (paymentProviders.stripe.enabled) {
+      enabledPaymentProviders.push('stripe');
+    }
+  }
 
   return (
     <Inner>
@@ -197,52 +231,62 @@ export default function Payment() {
         </Row>
       </form>
 
+      <Voucher />
+
       <div>
         <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
-        {appConfig.paymentProviders.length === 0 ? (
-          <i>{t('checkout.noPaymentProvidersConfigured')}</i>
+        {paymentConfig.loading ? (
+          <Spinner />
         ) : (
-          <PaymentProviders>
-            <PaymentSelector>
-              {appConfig.paymentProviders.map((paymentProviderFromConfig) => {
-                const paymentProvider = paymentProviders.find(
-                  (p) => p.name === paymentProviderFromConfig
-                );
-                if (!paymentProvider) {
-                  return (
-                    <small>
-                      {t('checkout.paymentProviderNotConfigured', {
-                        name: paymentProviderFromConfig
-                      })}
-                    </small>
-                  );
-                }
-
-                return (
-                  <PaymentButton
-                    key={paymentProvider.name}
-                    color={paymentProvider.color}
-                    type="button"
-                    selected={selectedPaymentProvider === paymentProvider.name}
-                    onClick={() =>
-                      setSelectedPaymentProvider(paymentProvider.name)
+          <div>
+            {enabledPaymentProviders.length === 0 ? (
+              <i>{t('checkout.noPaymentProvidersConfigured')}</i>
+            ) : (
+              <PaymentProviders>
+                <PaymentSelector>
+                  {enabledPaymentProviders.map((paymentProviderName) => {
+                    const paymentProvider = paymentProviders.find(
+                      (p) => p.name === paymentProviderName
+                    );
+                    if (!paymentProvider) {
+                      return (
+                        <small>
+                          {t('checkout.paymentProviderNotConfigured', {
+                            name: paymentProviderName
+                          })}
+                        </small>
+                      );
                     }
-                  >
-                    <img
-                      src={paymentProvider.logo}
-                      alt={t('checkout.paymentProviderLogoAlt', {
-                        name: paymentProvider.name
-                      })}
-                    />
-                  </PaymentButton>
-                );
-              })}
-            </PaymentSelector>
 
-            {paymentProviders
-              .find((p) => p.name === selectedPaymentProvider)
-              ?.render()}
-          </PaymentProviders>
+                    return (
+                      <PaymentButton
+                        key={paymentProvider.name}
+                        color={paymentProvider.color}
+                        type="button"
+                        selected={
+                          selectedPaymentProvider === paymentProvider.name
+                        }
+                        onClick={() =>
+                          setSelectedPaymentProvider(paymentProvider.name)
+                        }
+                      >
+                        <img
+                          src={paymentProvider.logo}
+                          alt={t('checkout.paymentProviderLogoAlt', {
+                            name: paymentProvider.name
+                          })}
+                        />
+                      </PaymentButton>
+                    );
+                  })}
+                </PaymentSelector>
+
+                {paymentProviders
+                  .find((p) => p.name === selectedPaymentProvider)
+                  ?.render()}
+              </PaymentProviders>
+            )}
+          </div>
         )}
       </div>
     </Inner>

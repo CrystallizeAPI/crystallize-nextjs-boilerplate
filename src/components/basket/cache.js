@@ -1,4 +1,4 @@
-const cacheKey = 'crystallize-app-basket';
+const cacheKey = 'app-basket';
 
 export async function retrieveFromCache() {
   try {
@@ -9,7 +9,7 @@ export async function retrieveFromCache() {
   } catch (error) {
     // We might not have access to localStorage
   }
-  return { cart: [] };
+  return {};
 }
 
 export function persistToCache(data) {

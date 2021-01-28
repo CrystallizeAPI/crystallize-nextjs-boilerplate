@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import Layout from 'components/layout';
 import { H1, Button } from 'ui';
-import { sendMagicLink } from 'lib/rest-api';
-import { useAuth } from 'components/auth-context';
+import Layout from 'components/layout';
+import { useAuth, loginWithMagicLink } from 'components/auth';
 import { useT } from 'lib/i18n';
 
 import { LoginStyle, Outer, Fields } from './styles';
@@ -25,30 +24,23 @@ export default function Login() {
     const { email } = userData;
 
     try {
-      const { error, message } = await sendMagicLink(email);
-
-      if (error) {
-        console.error('Login failed');
-        throw error;
-      }
+      const { success, error } = await loginWithMagicLink(email);
 
       setUserData(
         Object.assign({}, userData, {
           loading: false,
-          message: message
+          message: success
+            ? 'Check your mail inbox for a login link'
+            : error || 'Could not send the login link email =('
         })
       );
     } catch (error) {
-      console.error(
-        'You have an error in your code or there are Network issues.',
-        error
-      );
+      console.error(error);
 
-      const { response } = error;
       setUserData(
         Object.assign({}, userData, {
           loading: false,
-          error: response ? response.statusText : error.message
+          error: 'Could not send a magic link email =('
         })
       );
     }

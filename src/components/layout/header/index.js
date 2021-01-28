@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { useAuth } from 'components/auth-context';
+import { useAuth } from 'components/auth';
 import { useSettings } from 'components/settings-context';
 import { useT } from 'lib/i18n';
 
@@ -59,11 +59,12 @@ export default function Header({ simple, preview }) {
         </Nav>
         <NavActions open={navOpen}>
           <LocaleSwitcher />
-          {auth.isLoggedIn ? (
-            <button type="button" onClick={auth.logout}>
-              Logout
-            </button>
-          ) : (
+          {auth.isLoggedIn === true && (
+            <Link href="/my-account">
+              <a>{t('customer.account.title')}</a>
+            </Link>
+          )}
+          {auth.isLoggedIn === false && (
             <Link href="/login">
               <a>{t('customer.login.title')}</a>
             </Link>
