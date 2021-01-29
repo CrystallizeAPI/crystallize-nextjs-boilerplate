@@ -112,6 +112,9 @@ export default {
           max: 'Maximum price'
         }
       }
+    },
+    vouchers: {
+      title: 'Voucher'
     }
   }
 };

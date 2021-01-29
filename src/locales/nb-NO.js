@@ -111,6 +111,9 @@ export default {
           max: 'Maksprice'
         }
       }
+    },
+    vouchers: {
+      title: 'Voucher'
     }
   }
 };

@@ -114,6 +114,9 @@ export default {
           max: 'Precio máximo'
         }
       }
+    },
+    vouchers: {
+      title: 'Vale'
     }
   }
 };
