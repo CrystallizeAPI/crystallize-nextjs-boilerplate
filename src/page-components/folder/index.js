@@ -38,7 +38,7 @@ export default function FolderPage({ folder, preview, hidePageHeader }) {
             </p>
             <ol>
               <li>
-                Create an item with the path of &qoute;/frontpage-2021&qoute;
+                Create an item with the path of &quot;/frontpage-2021&quot;
               </li>
               <li>Pull in a different item by changing /pages/index.js</li>
               <li>Create something completely custom 🎉 </li>
