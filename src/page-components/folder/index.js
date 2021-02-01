@@ -25,6 +25,30 @@ export async function getData({ asPath, language, preview = null }) {
 }
 
 export default function FolderPage({ folder, preview, hidePageHeader }) {
+  if (!folder) {
+    return (
+      <Layout title="Homepage">
+        <Outer>
+          <PageHeader title="Welcome 🥳" />
+
+          <div style={{ fontSize: 'var(--font-size-sm)' }}>
+            <p>
+              To show a Crystallize catalogue item here, you can do the
+              following:
+            </p>
+            <ol>
+              <li>
+                Create an item with the path of &qoute;/frontpage-2021&qoute;
+              </li>
+              <li>Pull in a different item by changing /pages/index.js</li>
+              <li>Create something completely custom 🎉 </li>
+            </ol>
+          </div>
+        </Outer>
+      </Layout>
+    );
+  }
+
   const { children, components } = folder;
 
   const gridRelations = components

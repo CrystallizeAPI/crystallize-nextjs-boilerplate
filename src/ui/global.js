@@ -113,7 +113,11 @@ export default createGlobalStyle`
     padding: 0;
   }
   figure {
-    margin:0;
+    margin: 0;
+
+    figcaption {
+      margin-top: 1em;
+    }
   }
   main {
     display: block;
