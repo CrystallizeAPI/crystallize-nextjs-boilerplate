@@ -157,6 +157,8 @@ export function BasketProvider({ locale, children }) {
         total: serverBasket?.total || {},
         attentionCartItem,
         actions: {
+          addVoucherCode: (voucherCode) =>
+            dispatch({ action: 'add-voucher', voucherCode }),
           empty: () => dispatch({ action: 'empty' }),
           addItem: dispatchCartItemAction('add-item'),
           removeItem: dispatchCartItemAction('remove-item'),

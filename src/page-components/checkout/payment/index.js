@@ -22,7 +22,7 @@ import {
   SectionHeader,
   CheckoutFormGroup
 } from '../styles';
-// import Voucher from '../voucher';
+import Voucher from '../voucher';
 
 const StripeCheckout = dynamic(() => import('./stripe'));
 const KlarnaCheckout = dynamic(() => import('./klarna'));
@@ -237,7 +237,7 @@ export default function Payment() {
         </form>
       </CheckoutFormGroup>
 
-      {/* <Voucher /> */}
+      <Voucher />
 
       <CheckoutFormGroup withUpperMargin>
         <div>
