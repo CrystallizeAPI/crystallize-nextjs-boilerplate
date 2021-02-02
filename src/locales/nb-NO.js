@@ -113,7 +113,8 @@ export default {
       }
     },
     vouchers: {
-      title: 'Voucher'
+      title: 'Voucher',
+      errorMessage: 'Kupongen kunne ikke brukes'
     }
   }
 };

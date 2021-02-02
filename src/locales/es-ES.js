@@ -116,7 +116,8 @@ export default {
       }
     },
     vouchers: {
-      title: 'Vale'
+      title: 'Vale',
+      errorMessage: 'El vale no ha podido ser aplicado'
     }
   }
 };

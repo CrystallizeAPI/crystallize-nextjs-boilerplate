@@ -114,7 +114,8 @@ export default {
       }
     },
     vouchers: {
-      title: 'Voucher'
+      title: 'Voucher',
+      errorMessage: 'Δεν ήταν δυνατή η χρήση του κουπονιού'
     }
   }
 };

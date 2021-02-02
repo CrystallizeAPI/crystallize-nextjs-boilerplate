@@ -117,7 +117,8 @@ export default {
       }
     },
     vouchers: {
-      title: 'Voucher'
+      title: 'Voucher',
+      errorMessage: "The voucher couldn't be applied"
     }
   }
 };

@@ -49,7 +49,7 @@ export default function Voucher() {
 
   return (
     <InputGroup>
-      <Label htmlFor="voucherCode">{t('checkout.vouchers.title')}</Label>
+      <Label htmlFor="voucherCode">{t('vouchers.title')}</Label>
       <VoucherDisplayer>
         <Input
           name="voucherCode"
@@ -59,9 +59,8 @@ export default function Voucher() {
         <Button onClick={handleClickOnApplyVoucher}>Apply</Button>
       </VoucherDisplayer>
 
-      {/* @todo add error message. Ex: needs login, wrong voucher code, etc */}
       {showErrorMessage && (
-        <ErrorMessage>{`The voucher couldn't be applied.`}</ErrorMessage>
+        <ErrorMessage>{t('vouchers.errorMessage')}</ErrorMessage>
       )}
     </InputGroup>
   );
