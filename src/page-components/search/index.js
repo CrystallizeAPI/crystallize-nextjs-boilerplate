@@ -13,7 +13,7 @@ import PageHeader from 'components/page-header';
 
 import Stackable from 'components/stackable';
 
-import { ListOuter, SearchActions, SearchActionsOnTheRight } from './styles';
+import { ListOuter, SearchActions, LocateRight } from './styles';
 import query from './query';
 import OrderBy from './order-by';
 import Results from './results';
@@ -217,6 +217,7 @@ export default function SearchPage(props) {
   )?.content?.items;
 
   const totalResults = data.search.aggregations.totalResults;
+
   return (
     <Layout title={title} description={toText(description)}>
       <Outer>
@@ -230,9 +231,9 @@ export default function SearchPage(props) {
               changeQuery={changeQuery}
               totalResults={totalResults}
             />
-            <SearchActionsOnTheRight>
+            <LocateRight>
               <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
-            </SearchActionsOnTheRight>
+            </LocateRight>
           </SearchActions>
           <SearchCount count={totalResults} />
           <Results {...data.search} spec={spec} navigate={navigate} />

@@ -18,7 +18,7 @@ export const SearchActions = styled.div`
   }
 `;
 
-export const SearchActionsOnTheRight = styled.div`
+export const LocateRight = styled.div`
   ${responsive.smPlus} {
     position: absolute;
     right: 0;
