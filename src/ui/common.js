@@ -3,14 +3,10 @@ import styled from 'styled-components';
 import { responsive } from './responsive';
 
 export const Outer = styled.div`
-  padding: 0 0;
+  padding: 0 1rem;
   margin: 0 auto;
   display: block;
   min-height: 75vh;
-
-  ${responsive.smAndLess} {
-    padding: 0 1rem;
-  }
 
   ${responsive.mdPlus} {
     max-width: 1600px;

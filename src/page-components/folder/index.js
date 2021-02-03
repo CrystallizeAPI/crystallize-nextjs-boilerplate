@@ -5,7 +5,7 @@ import Layout from 'components/layout';
 import Grid, { GridItem } from 'components/grid';
 import Listformat from 'components/listformat';
 import toText from '@crystallize/content-transformer/toText';
-import { List, Outer, SubNavigation, Item } from './styles';
+import { Outer, List, SubNavigation, Item } from './styles';
 import Stackable from 'components/stackable';
 import PageHeader from 'components/page-header';
 import ShapeComponents from 'components/shape/components';

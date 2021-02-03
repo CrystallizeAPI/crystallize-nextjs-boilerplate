@@ -1,15 +1,14 @@
 import styled from 'styled-components';
-import { responsive } from 'ui';
+import { responsive, Outer as O } from 'ui';
 
 export const H1 = styled.h1``;
-export const Outer = styled.div`
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  padding: 0 100px;
-  ${responsive.smAndLess} {
-    padding: 0 0 0 0;
+export const Outer = styled(O)`
+  min-height: initial;
+  ${responsive.mdPlus} {
+    max-width: var(--content-max-width);
   }
 `;
+
 export const List = styled.div`
   display: grid;
   grid-template-columns: 1fr;
