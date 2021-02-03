@@ -1,51 +1,46 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 import { useT } from 'lib/i18n';
 import { Input, InputGroup, Label } from '../styles';
 import { VoucherDisplayer, ErrorMessage } from './styles';
 import { Button } from 'ui';
 import { useBasket } from 'components/basket';
-// import ServiceApi from 'lib/service-api';
-// import GET_VOUCHER_QUERY from './get-voucher-query'
+import voucherReducer, { initialVoucherState } from './reducer';
+import ServiceApi from 'lib/service-api';
+import GET_VOUCHER_QUERY from './get-voucher-query';
 
 export default function Voucher() {
   const basket = useBasket();
   const t = useT();
-  const [voucherCode, setVoucherCode] = useState('');
-  const [hasError, setHasError] = useState(false);
-  const [
-    hasValidatedVoucherCodeAtLeastOnce,
-    setHasValidatedVoucherCodeAtLeastOnce
-  ] = useState(false);
+  const [state, dispatch] = useReducer(voucherReducer, initialVoucherState);
+  const { voucherCode, isValid } = state;
 
   async function handleClickOnApplyVoucher() {
-    // const { isValid } = await ServiceApi({
-    //   query: `
-    //     {
-    //       voucher(code: $code) {
-    //         isValid,
-    //         voucher {
-    //           code
-    //           discountAmount
-    //           discountPercent
-    //         }
-    //       }
-    //     }
-    //   `,
-    //   variables: { code: voucherCode }
-    // });
-    const isValid = true;
+    const response = await ServiceApi({
+      query: GET_VOUCHER_QUERY,
+      variables: { code: voucherCode }
+    });
 
-    setHasValidatedVoucherCodeAtLeastOnce(true);
-
-    if (!isValid) {
-      setHasError(true);
+    if (!response.data.voucher.isValid) {
+      dispatch({ action: 'voucher-validated-failed' });
       return;
     }
 
+    dispatch({ action: 'voucher-validated-successfully' });
     basket.actions.addVoucherCode(voucherCode);
   }
 
-  const showErrorMessage = hasError && hasValidatedVoucherCodeAtLeastOnce;
+  // we check if isValid === false because it can be undefined as well
+  // For more information, read the initialState comments
+  const showErrorMessage = isValid === false;
+
+  function handleOnChange(e) {
+    dispatch({
+      action: 'update-voucher',
+      payload: {
+        voucherCode: e.target.value
+      }
+    });
+  }
 
   return (
     <InputGroup>
@@ -54,7 +49,7 @@ export default function Voucher() {
         <Input
           name="voucherCode"
           value={voucherCode}
-          onChange={(e) => setVoucherCode(e.target.value)}
+          onChange={handleOnChange}
         />
         <Button onClick={handleClickOnApplyVoucher}>Apply</Button>
       </VoucherDisplayer>
