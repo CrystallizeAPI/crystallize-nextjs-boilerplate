@@ -25,6 +25,12 @@ export default function Voucher() {
   const { voucherCode, isValid } = state;
 
   async function handleClickOnApplyVoucher() {
+    // If a voucher code has been validated and applied,
+    // the user can't submit many times the same value.
+    if (state.voucherCode === basket.basketModel.voucherCode) {
+      return;
+    }
+
     const response = await ServiceApi({
       query: GET_VOUCHER_QUERY,
       variables: { code: voucherCode }
