@@ -80,7 +80,7 @@ export function BasketProvider({ locale, children }) {
     () => ({
       locale,
       cart: clientBasket.cart.map(clientCartItemForAPI),
-      voucher: clientBasket.voucher,
+      voucherCode: clientBasket.voucherCode,
       crystallizeOrderId: clientBasket.crystallizeOrderId,
       klarnaOrderId: clientBasket.klarnaOrderId
     }),
