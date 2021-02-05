@@ -11,7 +11,17 @@ import GET_VOUCHER_QUERY from './get-voucher-query';
 export default function Voucher() {
   const basket = useBasket();
   const t = useT();
-  const [state, dispatch] = useReducer(voucherReducer, initialVoucherState);
+  // We can create the initial state lazily by passing a function as third parameter that returns
+  // the inital state desired. This is usually done when it depends on props.
+  // See more at https://reactjs.org/docs/hooks-reference.html#lazy-initialization
+  const [state, dispatch] = useReducer(
+    voucherReducer,
+    initialVoucherState,
+    () => ({
+      ...initialVoucherState,
+      voucherCode: basket?.basketModel?.voucherCode || ''
+    })
+  );
   const { voucherCode, isValid } = state;
 
   async function handleClickOnApplyVoucher() {
