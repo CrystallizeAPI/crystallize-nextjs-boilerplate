@@ -9,6 +9,7 @@ export default `
           percent
         }
         currency
+        discount
       }
       cart {
         id
