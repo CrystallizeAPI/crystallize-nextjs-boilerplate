@@ -15,36 +15,45 @@ export default function Totals() {
     return null;
   }
 
+  const { currency } = total;
+  function printCurrencyAmount(value) {
+    return t('common.price', { value, currency });
+  }
+
+  const hasDiscount = total?.discount > 0;
+  const isLoading = status === 'server-state-is-stale';
   return (
     <Outer>
       <Rows>
-        {status === 'server-state-is-stale' && (
+        {isLoading && (
           <SpinnerWrap>
             <Spinner />
           </SpinnerWrap>
         )}
         <Row modifier="total-price">
           <span>{t('basket.totalPrice')}:</span>
-          <RowValue hide={status === 'server-state-is-stale'}>
-            {t('common.price', { value: total.net, currency: total.currency })}
-          </RowValue>
+          <RowValue hide={isLoading}>{printCurrencyAmount(total.net)}</RowValue>
         </Row>
         <Row modifier="total-tax">
           <span>{t('basket.tax')}:</span>
-          <RowValue hide={status === 'server-state-is-stale'}>
-            {t('common.price', {
-              value: parseInt((total.gross - total.net) * 100, 10) / 100,
-              currency: total.currency
-            })}
+          <RowValue hide={isLoading}>
+            {printCurrencyAmount(
+              parseInt((total.gross - total.net) * 100, 10) / 100
+            )}
           </RowValue>
         </Row>
+        {hasDiscount && (
+          <Row modifier="total-discout">
+            <span>{t('basket.discount')}:</span>
+            <RowValue hide={isLoading}>
+              {printCurrencyAmount(total.discount)}
+            </RowValue>
+          </Row>
+        )}
         <Row modifier="to-pay">
           <span>{t('basket.totalToPay')}:</span>
-          <RowValue hide={status === 'server-state-is-stale'}>
-            {t('common.price', {
-              value: total.gross,
-              currency: total.currency
-            })}
+          <RowValue hide={isLoading}>
+            {printCurrencyAmount(total.gross)}
           </RowValue>
         </Row>
       </Rows>
