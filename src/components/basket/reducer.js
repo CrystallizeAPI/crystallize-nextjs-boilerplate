@@ -159,6 +159,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
 
     case 'add-voucher': {
       draft.clientBasket.voucherCode = rest.voucherCode;
+      draft.status = 'server-state-is-stale';
       break;
     }
 
