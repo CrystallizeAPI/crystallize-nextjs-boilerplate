@@ -50,7 +50,8 @@ export default function VippsWrapper({
     }
 
     load();
-  }, [checkoutModel, basketActions, onSuccess]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (status === 'error') {
     return (

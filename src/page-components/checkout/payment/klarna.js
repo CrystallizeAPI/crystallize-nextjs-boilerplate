@@ -69,7 +69,8 @@ export default function KlarnaCheckout({ checkoutModel, basketActions }) {
     }
 
     load();
-  }, [basketActions, checkoutModel]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
