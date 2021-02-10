@@ -18,5 +18,11 @@ export default async function serviceApi({
     throw new Error(await response.text());
   }
 
-  return response.json();
+  const json = await response.json();
+
+  if (json.errors) {
+    console.error('Service API encountered an error', json.errors);
+  }
+
+  return json;
 }
