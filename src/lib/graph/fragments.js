@@ -61,6 +61,7 @@ export default `
         ...gridRelations
         ...propertiesTableContent
         ...dateTimeContent
+        ...choiceComponent
       }
     }
   }
@@ -149,7 +150,7 @@ export default `
           }
           isDefault
           name
-          image {
+          images {
             ...image
           }
         }
@@ -163,7 +164,7 @@ export default `
           ...imageContent
           ...videoContent
           ...gridRelations
-
+          ...choiceComponent
           ... on BooleanContent {
             value
           }
@@ -186,6 +187,7 @@ export default `
                     ...richText
                     ...imageContent
                     ...videoContent
+                    ...choiceComponent
                   }
                 }
               }
@@ -198,7 +200,7 @@ export default `
                   }
                   isDefault
                   name
-                  image {
+                  images {
                     ...image
                   }
                 }
@@ -243,7 +245,7 @@ export default `
                   attribute
                   value
                 }
-                images {
+                image {
                   url
                   altText
                   variants {
@@ -261,7 +263,7 @@ export default `
                 }
                 isDefault
                 name
-                image {
+                images {
                   ...image
                 }
               }
@@ -286,6 +288,59 @@ export default `
       properties {
         key
         value
+      }
+    }
+  }
+   fragment choiceComponent on ComponentChoiceContent {
+    selectedComponent {
+      name
+      type
+      content {
+        ...gridRelations
+        ...on ItemRelationsContent {
+          items {
+            id
+            name
+            path
+            type
+            shape {
+              name
+              id
+            }
+            topics {
+              id
+              name 	
+            }
+            ... on Product {
+              variants {
+                priceVariants {
+                  identifier
+                  price
+                  currency
+                }
+                isDefault
+                name
+                images {
+                  ...image
+                }
+              }
+            }
+            components {
+              name
+              type
+              content {
+                ...singleLine
+                ...richText
+                ...imageContent
+                ...videoContent
+                ...gridRelations
+                ... on BooleanContent {
+                  value
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
