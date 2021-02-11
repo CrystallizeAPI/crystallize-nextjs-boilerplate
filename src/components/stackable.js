@@ -3,6 +3,7 @@ import GridCollection from 'components/grid-collection';
 import Banner from 'components/banner';
 
 const StackRenderer = ({ stack }) => {
+  console.log(stack);
   switch (stack?.shape?.name) {
     case 'Item collection': {
       const title = stack?.components?.find(isTitleComponent)?.content?.text;
@@ -25,6 +26,35 @@ const StackRenderer = ({ stack }) => {
       return (
         <GridCollection title={title} description={description} grids={grids} />
       );
+    }
+
+    case 'Collection': {
+      const title = stack?.components?.find(isTitleComponent)?.content?.text;
+      const description = stack?.components?.find(isDescriptionComponent)
+        ?.content?.json;
+      const choice = stack?.components?.find(isChoiceComponent)?.content
+        ?.selectedComponent;
+      if (choice?.name === 'Grid') {
+        const grids = choice.content?.grids;
+        return (
+          <GridCollection
+            title={title}
+            description={description}
+            grids={grids}
+          />
+        );
+      }
+      if (choice?.name === 'Items') {
+        const items = choice.content?.items;
+        return (
+          <ItemCollection
+            title={title}
+            description={description}
+            items={items}
+          />
+        );
+      }
+      return <div>No choice has been made</div>;
     }
 
     case 'Banner': {
@@ -78,6 +108,9 @@ function isDescriptionComponent({ name }) {
 
 function isGridComponent({ name }) {
   return name === 'Grid';
+}
+function isChoiceComponent({ name }) {
+  return name === 'Content';
 }
 
 function isLinkTextComponent({ name }) {
