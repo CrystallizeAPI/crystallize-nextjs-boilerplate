@@ -21,7 +21,7 @@
     "lint": "eslint .",
     "validate": "lint-staged",
     "postinstall": "node ./_repo-utils/postinstall.js",
-    "bootstrap-frntr-shapes-to-tenant": "node ./_repo-utils/bootstrap-furniture-shapes.js"
+    "bootstrap-shapes-to-tenant": "node ./_repo-utils/bootstrap-furniture-shapes.js"
   },
   "husky": {
     "hooks": {

@@ -3,12 +3,12 @@
  * frntr boilerplate to look properly
  */
 
-//Your tenant id (not identifer). See the tenant tab https://pim.crystallize.com/settings/tenants
+//Your tenant id (not identifier). See the tenant tab https://pim.crystallize.com/settings/tenants
 const TENANT_ID = '';
 
 // Add your tokens https://pim.crystallize.com/settings/access-tokens
 const ACCESS_TOKEN_ID = '';
-const ACCESS_TOKEN_SECRET = ''; //
+const ACCESS_TOKEN_SECRET = '';
 
 const coreUrl = 'https://pim.crystallize.com/graphql';
 const fetch = require('node-fetch');
@@ -22,6 +22,7 @@ const {
 const Product = {
   tenantId: TENANT_ID,
   name: 'Product',
+  identifier: 'frntr-product',
   type: shapeTypes.product,
   components: [
     {
@@ -50,6 +51,7 @@ const Product = {
 const Folder = {
   tenantId: TENANT_ID,
   name: 'Folder',
+  identifier: 'frntr-folder',
   type: shapeTypes.folder,
   components: [
     {
@@ -78,6 +80,7 @@ const Folder = {
 const Article = {
   tenantId: TENANT_ID,
   name: 'Article',
+  identifier: 'frntr-article',
   type: shapeTypes.document,
   components: [
     {
@@ -116,6 +119,7 @@ const Article = {
 const Banner = {
   tenantId: TENANT_ID,
   name: 'Banner',
+  identifier: 'frntr-banner',
   type: shapeTypes.document,
   components: [
     {
@@ -154,6 +158,7 @@ const Banner = {
 const Collection = {
   tenantId: TENANT_ID,
   name: 'Collection',
+  identifier: 'frntr-collection',
   type: shapeTypes.document,
   components: [
     {
