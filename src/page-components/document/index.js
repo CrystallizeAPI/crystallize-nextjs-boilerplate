@@ -9,6 +9,7 @@ import toText from '@crystallize/content-transformer/toText';
 import query from './query';
 import TopicTag from 'components/topic-tag';
 import { useRouter } from 'next/router';
+import { getArticlesWithoutRepeatedElements } from './utils';
 import {
   Img,
   List,
@@ -61,24 +62,9 @@ export default function DocumentPage({ document, preview }) {
         node?.node?.path !== router?.asPath
     );
 
-  // We don't want to show duplicated elements to the user
-  let relatedArtclesIds, uniquesIdsRelatedArticles, uniqueRelatedArticles;
-  // We store into an array all the ids of the related articles items
-  if (relatedArticles) {
-    relatedArtclesIds = relatedArticles.map((a) => a.node.id) || [];
-    // Then, we create an array with non-repeated ids.
-    // This can be done easily with `Array.from(new Set(yourArray))` or `[...new Set(yourArray)]`
-    //
-    // Set objects has unique values. By Creating a set object and generating an array from this Set created,
-    // we assure that there are no repeated elements
-    //
-    // FYI: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
-    uniquesIdsRelatedArticles = Array.from(new Set(relatedArtclesIds));
-    // For each unique id of a related content, to get the full item.
-    uniqueRelatedArticles = uniquesIdsRelatedArticles.map((id) =>
-      relatedArticles.find((a) => a.node.id === id)
-    );
-  }
+  const relatedArticlesWithoutRepeatedElements = relatedArticles
+    ? getArticlesWithoutRepeatedElements(relatedArticles)
+    : null;
 
   const heading = title || document.name;
   const ISODate = published.toISOString();
@@ -98,11 +84,13 @@ export default function DocumentPage({ document, preview }) {
     </SidebarBlock>
   );
 
-  const relatedContent = Boolean(uniqueRelatedArticles?.length) && (
+  const relatedContent = Boolean(
+    relatedArticlesWithoutRepeatedElements?.length
+  ) && (
     <SidebarBlock>
       <H2>Related</H2>
       <List>
-        {uniqueRelatedArticles.map((item, i) => (
+        {relatedArticlesWithoutRepeatedElements.map((item, i) => (
           <Microformat key={i} item={item?.node} />
         ))}
       </List>
