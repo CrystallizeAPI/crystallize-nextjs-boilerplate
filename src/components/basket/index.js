@@ -130,6 +130,11 @@ export function BasketProvider({ locale, children }) {
   }
 
   function withLocalState(item) {
+    // Exclude voucher codes
+    if (item.sku.startsWith('--voucher--')) {
+      return item;
+    }
+
     const clientBasketCartItem = clientBasket.cart.find(
       (c) => c.sku === item.sku
     );
@@ -148,17 +153,36 @@ export function BasketProvider({ locale, children }) {
     };
   }
 
+  const cart = (serverBasket?.cart || []).map(withLocalState).filter(Boolean);
+  const totalWithoutDiscounts = cart
+    .filter((c) => !c.sku.startsWith('--voucher--'))
+    .reduce(
+      (acc, curr) => {
+        return {
+          gross: acc.gross + curr.price.gross,
+          net: acc.net + curr.price.net,
+          quantity: acc.quantity + curr.quantity
+        };
+      },
+      {
+        gross: 0,
+        quantity: 0
+      }
+    );
+
   return (
     <BasketContext.Provider
       value={{
         status,
         basketModel,
-        cart: (serverBasket?.cart || []).map(withLocalState).filter(Boolean),
+        cart,
         total: serverBasket?.total || {},
+        totalWithoutDiscounts,
         attentionCartItem,
         actions: {
           addVoucherCode: (voucherCode) =>
             dispatch({ action: 'add-voucher', voucherCode }),
+          removeVoucherCode: () => dispatch({ action: 'remove-voucher' }),
           empty: () => dispatch({ action: 'empty' }),
           addItem: dispatchCartItemAction('add-item'),
           removeItem: dispatchCartItemAction('remove-item'),

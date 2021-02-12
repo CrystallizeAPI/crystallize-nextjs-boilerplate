@@ -7,9 +7,9 @@ import { useBasket } from '../index';
 
 import { Outer, Rows, Row, RowValue, SpinnerWrap } from './styles';
 
-export default function Totals() {
+export default function Totals(props) {
   const t = useT();
-  const { cart, total, status } = useBasket();
+  const { cart, total, totalWithoutDiscounts, status } = useBasket();
 
   if (cart.length === 0) {
     return null;
@@ -22,8 +22,9 @@ export default function Totals() {
 
   const hasDiscount = total?.discount > 0;
   const isLoading = status === 'server-state-is-stale';
+
   return (
-    <Outer>
+    <Outer {...props}>
       <Rows>
         {isLoading && (
           <SpinnerWrap>
@@ -32,8 +33,18 @@ export default function Totals() {
         )}
         <Row modifier="total-price">
           <span>{t('basket.totalPrice')}:</span>
-          <RowValue hide={isLoading}>{printCurrencyAmount(total.net)}</RowValue>
+          <RowValue hide={isLoading}>
+            {printCurrencyAmount(totalWithoutDiscounts.gross)}
+          </RowValue>
         </Row>
+        {hasDiscount && (
+          <Row modifier="total-discout">
+            <span>{t('basket.discount')}:</span>
+            <RowValue hide={isLoading}>
+              {printCurrencyAmount(total.discount * -1)}
+            </RowValue>
+          </Row>
+        )}
         <Row modifier="total-tax">
           <span>{t('basket.tax')}:</span>
           <RowValue hide={isLoading}>
@@ -42,14 +53,6 @@ export default function Totals() {
             )}
           </RowValue>
         </Row>
-        {hasDiscount && (
-          <Row modifier="total-discout">
-            <span>{t('basket.discount')}:</span>
-            <RowValue hide={isLoading}>
-              {printCurrencyAmount(total.discount)}
-            </RowValue>
-          </Row>
-        )}
         <Row modifier="to-pay">
           <span>{t('basket.totalToPay')}:</span>
           <RowValue hide={isLoading}>

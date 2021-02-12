@@ -163,6 +163,12 @@ export default produce(function reducer(draft, { action, ...rest }) {
       break;
     }
 
+    case 'remove-voucher': {
+      draft.clientBasket.voucherCode = initialState.clientBasket.voucherCode;
+      draft.status = 'server-state-is-stale';
+      break;
+    }
+
     default: {
       throw new Error(`Action ${action} not supported`);
     }

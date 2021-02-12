@@ -9,7 +9,7 @@ import { Outer, Items, ItemOuter, BasketIsEmpty } from './styles';
 
 export default function TinyBasket() {
   const t = useT();
-  const { status, cart, actions } = useBasket();
+  const { status, cart } = useBasket();
 
   if (status === 'not-hydrated') {
     return null;
@@ -28,7 +28,7 @@ export default function TinyBasket() {
       <Items>
         {cart.map((item) => (
           <ItemOuter key={item.sku} item={item}>
-            <TinyBasketItem item={item} actions={actions} />
+            <TinyBasketItem item={item} />
           </ItemOuter>
         ))}
       </Items>

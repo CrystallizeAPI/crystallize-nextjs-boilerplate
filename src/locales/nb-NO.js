@@ -114,7 +114,7 @@ export default {
     },
     vouchers: {
       title: 'Voucher',
-      errorMessage: 'Kupongen kunne ikke brukes'
+      invalidCode: 'Kupongen "{{code}}" finnes ikke'
     }
   }
 };

@@ -14,40 +14,65 @@ import {
   ItemPrice
 } from './styles';
 
-export default function OrderItems({ cart }) {
+function OrderItem({ item }) {
   const t = useT();
 
+  if (item.sku.startsWith('--voucher--')) {
+    return (
+      <Item>
+        <ItemInfo>
+          <ItemName>{t('vouchers.title')}</ItemName>
+          <p>{item.name}</p>
+        </ItemInfo>
+        <ItemAmount>
+          <ItemPrice>
+            {t('common.price', {
+              value: item.price?.gross ?? 0,
+              currency: item.price?.currency
+            })}
+          </ItemPrice>
+        </ItemAmount>
+      </Item>
+    );
+  }
+
+  return (
+    <Item>
+      {item.imageUrl && (
+        <ItemImage src={item.imageUrl} alt={item.name} sizes="50vw" />
+      )}
+      <ItemInfo>
+        <ItemName>{item.name}</ItemName>
+        {item.attributes ? (
+          <AttributeList attributes={item.attributes} />
+        ) : (
+          <p>{item.sku}</p>
+        )}
+      </ItemInfo>
+      <ItemAmount>
+        <ItemQuantity>
+          {item.quantity} x{' '}
+          {t('common.price', {
+            value: item.price?.gross ?? 0,
+            currency: item.price?.currency
+          })}
+        </ItemQuantity>
+        <ItemPrice>
+          {t('common.price', {
+            value: (item.price?.gross ?? 0) * item.quantity,
+            currency: item.price?.currency
+          })}
+        </ItemPrice>
+      </ItemAmount>
+    </Item>
+  );
+}
+
+export default function OrderItems({ cart }) {
   return (
     <Items>
       {cart.map((item) => (
-        <Item key={item.sku}>
-          {item.imageUrl && (
-            <ItemImage src={item.imageUrl} alt={item.name} sizes="50vw" />
-          )}
-          <ItemInfo>
-            <ItemName>{item.name}</ItemName>
-            {item.attributes ? (
-              <AttributeList attributes={item.attributes} />
-            ) : (
-              <p>{item.sku}</p>
-            )}
-          </ItemInfo>
-          <ItemAmount>
-            <ItemQuantity>
-              {item.quantity} x{' '}
-              {t('common.price', {
-                value: item.price?.gross ?? 0,
-                currency: item.price?.currency
-              })}
-            </ItemQuantity>
-            <ItemPrice>
-              {t('common.price', {
-                value: (item.price?.gross ?? 0) * item.quantity,
-                currency: item.price?.currency
-              })}
-            </ItemPrice>
-          </ItemAmount>
-        </Item>
+        <OrderItem key={item.sku} item={item} />
       ))}
     </Items>
   );

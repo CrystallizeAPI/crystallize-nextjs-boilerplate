@@ -69,10 +69,12 @@ export const ItemInfo = styled.span`
 
 export const ItemInfoText = styled.div``;
 
+const imageWidth = '50px';
+
 export const ItemImage = styled(CrystallizeImage).attrs(() => ({
-  sizes: '50px'
+  sizes: imageWidth
 }))`
-  width: 50px;
+  width: ${imageWidth};
   position: relative;
 
   img {
@@ -81,6 +83,11 @@ export const ItemImage = styled(CrystallizeImage).attrs(() => ({
     height: 100%;
     object-fit: contain;
   }
+`;
+
+export const ImageImageEmpty = styled.div`
+  display: inline-block;
+  width: 50px;
 `;
 
 export const ItemName = styled.div`

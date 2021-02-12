@@ -12,9 +12,8 @@ export default `
         discount
       }
       cart {
-        id
-        name
         sku
+        name
         path
         quantity
         attributes {

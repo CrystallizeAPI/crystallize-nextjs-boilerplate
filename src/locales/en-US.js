@@ -118,7 +118,7 @@ export default {
     },
     vouchers: {
       title: 'Voucher',
-      errorMessage: "The voucher couldn't be applied"
+      invalidCode: 'The voucher "{{code}}" couldn\'t be applied'
     }
   }
 };
