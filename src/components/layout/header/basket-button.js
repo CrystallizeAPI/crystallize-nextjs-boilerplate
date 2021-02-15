@@ -8,7 +8,7 @@ import IconBasket from 'ui/icons/basket';
 import { Btn, BasketQuantity } from './styles';
 
 const BasketButton = () => {
-  const { cart } = useBasket();
+  const { totalWithoutDiscounts } = useBasket();
   const layout = React.useContext(LayoutContext);
   const t = useT();
 
@@ -19,9 +19,7 @@ const BasketButton = () => {
       aria-label={t('basket.title')}
     >
       <IconBasket />
-      <BasketQuantity>
-        {cart?.reduce((acc, curr) => acc + curr.quantity, 0)}
-      </BasketQuantity>
+      <BasketQuantity>{totalWithoutDiscounts.quantity}</BasketQuantity>
     </Btn>
   );
 };

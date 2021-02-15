@@ -19,13 +19,13 @@ function Checkout() {
   const basket = useBasket();
   const t = useT();
 
-  if (basket.status !== 'ready') {
+  if (basket.status === 'not-hydrated') {
     return <Outer center>{t('basket.loading')}</Outer>;
   }
 
   const { cart } = basket;
 
-  if (!cart?.length) {
+  if (basket.status === 'ready' && !cart?.length) {
     return <Outer center>{t('basket.empty', { context: 'inCheckout' })}</Outer>;
   }
 
@@ -39,9 +39,7 @@ function Checkout() {
           <CheckoutFormGroup>
             <SectionHeader>{t('basket.title')}</SectionHeader>
             <OrderItems cart={cart} />
-            <div style={{ padding: '0 15px' }}>
-              <Totals />
-            </div>
+            <Totals style={{ padding: '0 15px' }} />
           </CheckoutFormGroup>
         </Container>
       </Inner>

@@ -7,44 +7,56 @@ import { useBasket } from '../index';
 
 import { Outer, Rows, Row, RowValue, SpinnerWrap } from './styles';
 
-export default function Totals() {
+export default function Totals(props) {
   const t = useT();
-  const { cart, total, status } = useBasket();
+  const { cart, total, totalWithoutDiscounts, status } = useBasket();
 
   if (cart.length === 0) {
     return null;
   }
 
+  const { currency } = total;
+  function printCurrencyAmount(value) {
+    return t('common.price', { value, currency });
+  }
+
+  const hasDiscount = total?.discount > 0;
+  const isLoading = status === 'server-state-is-stale';
+
   return (
-    <Outer>
+    <Outer {...props}>
       <Rows>
-        {status === 'server-state-is-stale' && (
+        {isLoading && (
           <SpinnerWrap>
             <Spinner />
           </SpinnerWrap>
         )}
         <Row modifier="total-price">
           <span>{t('basket.totalPrice')}:</span>
-          <RowValue hide={status === 'server-state-is-stale'}>
-            {t('common.price', { value: total.net, currency: total.currency })}
+          <RowValue hide={isLoading}>
+            {printCurrencyAmount(totalWithoutDiscounts.gross)}
           </RowValue>
         </Row>
+        {hasDiscount && (
+          <Row modifier="total-discout">
+            <span>{t('basket.discount')}:</span>
+            <RowValue hide={isLoading}>
+              {printCurrencyAmount(total.discount * -1)}
+            </RowValue>
+          </Row>
+        )}
         <Row modifier="total-tax">
           <span>{t('basket.tax')}:</span>
-          <RowValue hide={status === 'server-state-is-stale'}>
-            {t('common.price', {
-              value: parseInt((total.gross - total.net) * 100, 10) / 100,
-              currency: total.currency
-            })}
+          <RowValue hide={isLoading}>
+            {printCurrencyAmount(
+              parseInt((total.gross - total.net) * 100, 10) / 100
+            )}
           </RowValue>
         </Row>
         <Row modifier="to-pay">
           <span>{t('basket.totalToPay')}:</span>
-          <RowValue hide={status === 'server-state-is-stale'}>
-            {t('common.price', {
-              value: total.gross,
-              currency: total.currency
-            })}
+          <RowValue hide={isLoading}>
+            {printCurrencyAmount(total.gross)}
           </RowValue>
         </Row>
       </Rows>

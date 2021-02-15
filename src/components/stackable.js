@@ -3,7 +3,6 @@ import GridCollection from 'components/grid-collection';
 import Banner from 'components/banner';
 
 const StackRenderer = ({ stack }) => {
-  console.log(stack);
   switch (stack?.shape?.name) {
     case 'Item collection': {
       const title = stack?.components?.find(isTitleComponent)?.content?.text;

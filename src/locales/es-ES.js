@@ -114,6 +114,10 @@ export default {
           max: 'Precio máximo'
         }
       }
+    },
+    vouchers: {
+      title: 'Vale',
+      invalidCode: 'El vale no ha podido ser aplicado'
     }
   }
 };
