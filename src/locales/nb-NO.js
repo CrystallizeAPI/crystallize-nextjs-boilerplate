@@ -111,6 +111,10 @@ export default {
           max: 'Maksprice'
         }
       }
+    },
+    vouchers: {
+      title: 'Voucher',
+      invalidCode: 'Kupongen "{{code}}" finnes ikke'
     }
   }
 };

@@ -9,11 +9,11 @@ export default `
           percent
         }
         currency
+        discount
       }
       cart {
-        id
-        name
         sku
+        name
         path
         quantity
         attributes {
@@ -22,11 +22,6 @@ export default `
         }
         price {
           gross
-          net
-          tax {
-            name
-            percent
-          }
           currency
         }
         images {

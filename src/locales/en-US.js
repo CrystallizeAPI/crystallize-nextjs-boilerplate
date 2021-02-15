@@ -115,6 +115,10 @@ export default {
           max: 'Maximum price'
         }
       }
+    },
+    vouchers: {
+      title: 'Voucher',
+      invalidCode: 'The voucher "{{code}}" couldn\'t be applied'
     }
   }
 };

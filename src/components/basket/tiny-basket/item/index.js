@@ -9,6 +9,7 @@ import {
   Row,
   ItemInfo,
   PriceWrapper,
+  ImageImageEmpty,
   ItemImage,
   ItemName,
   ItemQuantityChanger,
@@ -16,14 +17,13 @@ import {
   ItemDelete,
   PriceWrap,
   Price,
-  PriceVat,
   drawAttentionDuration
 } from './styles';
 
-export default function TinyBasketItem({ actions, item }) {
+export default function TinyBasketItem({ item }) {
   const t = useT();
   const [drawAttention, setDrawAttention] = useState(false);
-  const { attentionCartItem } = useBasket();
+  const { attentionCartItem, actions } = useBasket();
 
   const { attributes, images } = item;
 
@@ -52,6 +52,27 @@ export default function TinyBasketItem({ actions, item }) {
     actions.removeItem(item);
   }
 
+  if (item.sku.startsWith('--voucher--')) {
+    return (
+      <Item>
+        <ImageImageEmpty>{item.name}</ImageImageEmpty>
+        <PriceWrapper>
+          <PriceWrap>
+            <Price>
+              {t('common.price', {
+                value: item.price.gross,
+                currency: item.price.currency
+              })}
+            </Price>
+          </PriceWrap>
+        </PriceWrapper>
+        <ItemDelete onClick={actions.removeVoucherCode}>
+          {t('basket.removeItem', item)}
+        </ItemDelete>
+      </Item>
+    );
+  }
+
   return (
     <Item animate={drawAttention}>
       <ItemImage {...images?.[0]} />
@@ -70,15 +91,6 @@ export default function TinyBasketItem({ actions, item }) {
               })}
             </Price>
           </PriceWrap>
-
-          <PriceVat>
-            <span>
-              {t('common.tax', {
-                value: item.price.gross - item.price.net,
-                currency: item.price?.currency
-              })}
-            </span>
-          </PriceVat>
         </PriceWrapper>
       </ItemInfo>
       <div>

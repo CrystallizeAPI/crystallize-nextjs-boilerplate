@@ -112,6 +112,10 @@ export default {
           max: 'Maximum price'
         }
       }
+    },
+    vouchers: {
+      title: 'Voucher',
+      invalidCode: 'Δεν ήταν δυνατή η χρήση του κουπονιού'
     }
   }
 };
