@@ -22,11 +22,6 @@ export default `
         }
         price {
           gross
-          net
-          tax {
-            name
-            percent
-          }
           currency
         }
         images {

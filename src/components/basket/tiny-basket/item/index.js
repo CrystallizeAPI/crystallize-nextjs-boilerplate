@@ -17,7 +17,6 @@ import {
   ItemDelete,
   PriceWrap,
   Price,
-  PriceVat,
   drawAttentionDuration
 } from './styles';
 
@@ -92,15 +91,6 @@ export default function TinyBasketItem({ item }) {
               })}
             </Price>
           </PriceWrap>
-
-          <PriceVat>
-            <span>
-              {t('common.tax', {
-                value: item.price.gross - item.price.net,
-                currency: item.price?.currency
-              })}
-            </span>
-          </PriceVat>
         </PriceWrapper>
       </ItemInfo>
       <div>

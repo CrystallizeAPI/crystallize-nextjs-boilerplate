@@ -127,12 +127,6 @@ export const Price = styled.div`
   ${(p) => p.isDiscounted && 'text-decoration: line-through'};
 `;
 
-export const PriceVat = styled.div`
-  display: block;
-  font-size: 12px;
-  padding-top: 4px;
-`;
-
 export const SubInfoOuter = styled.div`
   font-size: 0.8rem;
 `;

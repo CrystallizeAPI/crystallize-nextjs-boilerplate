@@ -35,7 +35,6 @@ export default produce(function reducer(draft, { action, payload }) {
     }
 
     default:
-      console.log(action);
       throw new Error(`Action "${action}" not provided nor supported!`);
   }
 });

@@ -113,8 +113,8 @@ export default function VideoPlayer({
       return () => {
         try {
           playerRef.current?.dispose();
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          console.log(error);
         }
       };
     }
