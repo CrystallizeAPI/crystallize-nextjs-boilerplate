@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Image } from '@crystallize/react-image';
 
-import { H2 as H, Inner as I, responsive } from 'ui';
+import { Inner as I, responsive } from 'ui';
 
 export const Outer = styled(I)`
   margin: 0 auto;
@@ -11,7 +11,7 @@ export const Outer = styled(I)`
   }
 `;
 
-export const Hero = styled.div`
+export const Header = styled.div`
   font-size: 20px;
   margin-bottom: 50px;
 
@@ -21,7 +21,7 @@ export const Hero = styled.div`
   }
 `;
 
-export const HeroContent = styled.div`
+export const HeaderInner = styled.div`
   margin-bottom: 50px;
 
   ${responsive.smPlus} {
@@ -80,7 +80,7 @@ export const Img = styled(Image)`
   }
 `;
 
-export const PageContentLayout = styled.div`
+export const DocumentContent = styled.div`
   display: grid;
   grid-gap: 200px;
   grid-template-columns: 1fr;
@@ -116,23 +116,7 @@ export const Article = styled.article`
   }
 `;
 
-export const List = styled.div`
-  display: grid;
-  grid-gap: 5px;
-`;
-
-export const H2 = styled(H)`
-  color: var(--color-text-main);
-  font-size: 1rem;
-`;
-
 export const Sidebar = styled.div`
   margin-top: -15px;
   overflow-y: auto;
-`;
-
-export const SidebarBlock = styled.aside`
-  display: block;
-  margin-bottom: 50px;
-  padding-bottom: 10px;
 `;
