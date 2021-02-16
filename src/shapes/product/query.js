@@ -1,6 +1,6 @@
 import fragments from 'lib/graph/fragments';
 
-export default `
+export const QUERY_PRODUCT = `
   query PRODUCT_PAGE($language: String!, $path: String, $version: VersionLabel!) {
     product: catalogue(language: $language, path: $path, version: $version) {
       ...item
