@@ -1,6 +1,6 @@
-import DocumentShapeMicroformat from './document-item';
+import DocumentShapeMicroformat from 'shapes/document/microformat';
 import ProductShapeMicroformat from 'shapes/product/microformat';
-import FolderItem from './folder-item';
+import FolderShapeMicroformat from 'shapes/folder/microformat';
 
 export default function Microformat({ item }) {
   if (!item) {
@@ -10,7 +10,7 @@ export default function Microformat({ item }) {
   const commonProps = { key: item.path };
   const types = {
     product: <ProductShapeMicroformat {...commonProps} data={item} />,
-    folder: <FolderItem {...commonProps} data={item} />,
+    folder: <FolderShapeMicroformat {...commonProps} data={item} />,
     document: <DocumentShapeMicroformat {...commonProps} data={item} />
   };
 
