@@ -1,15 +1,17 @@
-import DocumentItem from './document-item';
-import ProductItem from './product-item';
-import FolderItem from './folder-item';
+import DocumentShapeMicroformat from 'shapes/document/microformat';
+import ProductShapeMicroformat from 'shapes/product/microformat';
+import FolderShapeMicroformat from 'shapes/folder/microformat';
 
 export default function Microformat({ item }) {
   if (!item) {
     return null;
   }
+
+  const commonProps = { key: item.path };
   const types = {
-    product: <ProductItem data={item} key={item.path} />,
-    folder: <FolderItem data={item} key={item.path} />,
-    document: <DocumentItem data={item} key={item.path} />
+    product: <ProductShapeMicroformat {...commonProps} data={item} />,
+    folder: <FolderShapeMicroformat {...commonProps} data={item} />,
+    document: <DocumentShapeMicroformat {...commonProps} data={item} />
   };
 
   return types[item.type] || null;

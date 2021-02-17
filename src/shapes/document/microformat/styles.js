@@ -35,14 +35,17 @@ export const MediaWrapper = styled.div`
   flex: 0 0 auto;
   border: 1px solid #dfdfdf;
   height: 120px;
+
   figure {
     height: 100%;
   }
+
   .video-js {
     flex: 0 0 auto;
     width: 100%;
     height: 100%;
   }
+
   img,
   video {
     display: block;
@@ -63,6 +66,7 @@ export const Img = styled(Image)`
 export const Text = styled.div`
   padding: 5px 0;
   color: var(--color-text-main);
+
   h3 {
     display: block;
     padding: 5px 0 0px;

@@ -46,51 +46,60 @@ export default function Login() {
     }
   }
 
-  return (
-    <Layout title={t('customer.login.title')}>
-      <Outer>
-        {auth.isLoggedIn ? (
-          <div>
-            <H1>{t('customer.login.loggedIn')}</H1>
-          </div>
-        ) : (
-          <LoginStyle>
-            <H1>{t('customer.login.title')}</H1>
+  if (auth.isLoggedIn) {
+    return (
+      <PageLayout title={t('customer.login.title')}>
+        <div>
+          <H1>{t('customer.login.loggedIn')}</H1>
+        </div>
+      </PageLayout>
+    );
+  }
 
-            <form onSubmit={handleSubmit} action="/api/loging" method="post">
-              <h4>{t('customer.login.instructions')}</h4>
-              <Fields>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder={t('customer.email')}
-                  required
-                  onChange={(event) =>
-                    setUserData(
-                      Object.assign({}, userData, {
-                        email: event.target.value
-                      })
-                    )
-                  }
-                />
-                <Button
-                  state={userData.loading ? 'loading' : null}
-                  type="submit"
-                  value="Submit"
-                >
-                  {t('customer.login.sendMagicLink')}
-                </Button>
-              </Fields>
-            </form>
-            {userData.message ? <p>{userData.message}</p> : ''}
-            {userData.error ? (
-              <p>{t('customer.login.emailAddressInvalid')}</p>
-            ) : (
-              ''
-            )}
-          </LoginStyle>
-        )}
+  return (
+    <PageLayout title={t('customer.login.title')}>
+      <Outer>
+        <LoginStyle>
+          <H1>{t('customer.login.title')}</H1>
+          <form onSubmit={handleSubmit} action="/api/loging" method="post">
+            <h4>{t('customer.login.instructions')}</h4>
+            <Fields>
+              <input
+                type="email"
+                name="email"
+                placeholder={t('customer.email')}
+                required
+                onChange={(event) =>
+                  setUserData(
+                    Object.assign({}, userData, {
+                      email: event.target.value
+                    })
+                  )
+                }
+              />
+              <Button
+                state={userData.loading ? 'loading' : null}
+                type="submit"
+                value="Submit"
+              >
+                {t('customer.login.sendMagicLink')}
+              </Button>
+            </Fields>
+          </form>
+          {userData.message ? <p>{userData.message}</p> : null}
+          {userData.error ? (
+            <p>{t('customer.login.emailAddressInvalid')}</p>
+          ) : null}
+        </LoginStyle>
       </Outer>
+    </PageLayout>
+  );
+}
+
+function PageLayout({ title, children }) {
+  return (
+    <Layout title={title}>
+      <Outer>{children}</Outer>
     </Layout>
   );
 }

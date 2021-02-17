@@ -13,9 +13,8 @@ export default function DocumentItem({ data }) {
   }
 
   const { name, path } = data;
-  let image;
   const images = data.components?.find((c) => c.type === 'images');
-  image = images?.content?.images?.[0];
+  const image = images?.content?.images?.[0];
   const video = data.components?.find((c) => c.name === 'Video');
 
   let media;
