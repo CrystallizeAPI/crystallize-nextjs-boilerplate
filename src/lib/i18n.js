@@ -9,36 +9,49 @@ export const useT = () => {
   return (val, options) => c.t(val, options);
 };
 
-export function I18nextProvider({ locale, localeResource, children }) {
-  const lng = locale.appLanguage;
+const init = (function () {
+  let initiated = false;
 
-  i18n.init({
-    resources: {
-      [lng]: localeResource
-    },
-    lng,
-
-    interpolation: {
-      escapeValue: false, // react already safe from xss
-      format: function (value, format, _, { currency }) {
-        if (format === 'uppercase') {
-          return value.toUpperCase();
-        }
-
-        if (format === 'currency') {
-          if (typeof value === 'undefined' || !currency) {
-            return 'N/A';
-          }
-          return new Intl.NumberFormat(locale, {
-            style: 'currency',
-            currency
-          }).format(value);
-        }
-
-        return value;
-      }
+  return ({ localeResource, locale }) => {
+    if (initiated) {
+      return;
     }
-  });
+    initiated = true;
+
+    const lng = locale.appLanguage;
+
+    i18n.init({
+      resources: {
+        [lng]: localeResource
+      },
+      lng,
+
+      interpolation: {
+        escapeValue: false, // react already safe from xss
+        format: function (value, format, _, { currency }) {
+          if (format === 'uppercase') {
+            return value.toUpperCase();
+          }
+
+          if (format === 'currency') {
+            if (typeof value === 'undefined' || !currency) {
+              return 'N/A';
+            }
+            return new Intl.NumberFormat(locale, {
+              style: 'currency',
+              currency
+            }).format(value);
+          }
+
+          return value;
+        }
+      }
+    });
+  };
+})();
+
+export function I18nextProvider({ locale, localeResource, children }) {
+  init({ locale, localeResource });
 
   return (
     <I18NextContext.Provider value={i18n}>{children}</I18NextContext.Provider>

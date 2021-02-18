@@ -15,7 +15,7 @@ const Paragraph = ({
   const hasText = !!body?.json?.length;
   const hasMedia = !!images || !!videos;
   return (
-    <Outer media={hasMedia} text={hasText}>
+    <Outer media={hasMedia ? hasMedia : undefined} text={hasText}>
       <Text>
         {!!title && title.text && (
           <Title>
