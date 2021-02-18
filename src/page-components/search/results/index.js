@@ -7,7 +7,7 @@ export default function SearchResults({ edges = [], navigate, pageInfo }) {
   return (
     <Outer>
       <ul>
-        {edges.map(({ cursor, node }) => (
+        {edges?.map(({ cursor, node }) => (
           <li key={cursor}>
             <Listformat item={node} />
           </li>
