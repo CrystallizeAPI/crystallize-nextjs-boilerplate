@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import i18n from 'i18next';
 
 const I18NextContext = createContext();
@@ -9,46 +9,49 @@ export const useT = () => {
   return (val, options) => c.t(val, options);
 };
 
-export function I18nextProvider({ locale, localeResource, children }) {
-  const lng = locale.appLanguage;
-  const [hasBeenInitialized, setHasBeenInitialized] = useState(false);
-  const setLibraryAsInitialized = () => setHasBeenInitialized(true);
+const init = (function () {
+  let initiated = false;
 
-  useEffect(() => {
-    i18n
-      .init({
-        resources: {
-          [lng]: localeResource
-        },
-        lng,
+  return ({ localeResource, locale }) => {
+    if (initiated) {
+      return;
+    }
+    initiated = true;
 
-        interpolation: {
-          escapeValue: false, // react already safe from xss
-          format: function (value, format, _, { currency }) {
-            if (format === 'uppercase') {
-              return value.toUpperCase();
-            }
+    const lng = locale.appLanguage;
 
-            if (format === 'currency') {
-              if (typeof value === 'undefined' || !currency) {
-                return 'N/A';
-              }
-              return new Intl.NumberFormat(locale, {
-                style: 'currency',
-                currency
-              }).format(value);
-            }
+    i18n.init({
+      resources: {
+        [lng]: localeResource
+      },
+      lng,
 
-            return value;
+      interpolation: {
+        escapeValue: false, // react already safe from xss
+        format: function (value, format, _, { currency }) {
+          if (format === 'uppercase') {
+            return value.toUpperCase();
           }
-        }
-      })
-      .then(setLibraryAsInitialized);
-  }, []);
 
-  if (!hasBeenInitialized) {
-    return null;
-  }
+          if (format === 'currency') {
+            if (typeof value === 'undefined' || !currency) {
+              return 'N/A';
+            }
+            return new Intl.NumberFormat(locale, {
+              style: 'currency',
+              currency
+            }).format(value);
+          }
+
+          return value;
+        }
+      }
+    });
+  };
+})();
+
+export function I18nextProvider({ locale, localeResource, children }) {
+  init({ locale, localeResource });
 
   return (
     <I18NextContext.Provider value={i18n}>{children}</I18NextContext.Provider>
