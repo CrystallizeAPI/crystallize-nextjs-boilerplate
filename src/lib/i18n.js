@@ -11,7 +11,8 @@ export const useT = () => {
 
 export function I18nextProvider({ locale, localeResource, children }) {
   const lng = locale.appLanguage;
-  const [instance, setInstance] = useState();
+  const [hasBeenInitialized, setHasBeenInitialized] = useState(false);
+  const setLibraryAsInitialized = () => setHasBeenInitialized(true);
 
   useEffect(() => {
     i18n
@@ -42,16 +43,14 @@ export function I18nextProvider({ locale, localeResource, children }) {
           }
         }
       })
-      .then(() => setInstance(i18n));
+      .then(setLibraryAsInitialized);
   }, []);
 
-  if (!instance) {
+  if (!hasBeenInitialized) {
     return null;
   }
 
   return (
-    <I18NextContext.Provider value={instance}>
-      {children}
-    </I18NextContext.Provider>
+    <I18NextContext.Provider value={i18n}>{children}</I18NextContext.Provider>
   );
 }
