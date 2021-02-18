@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import i18n from 'i18next';
 
 const I18NextContext = createContext();
@@ -11,36 +11,47 @@ export const useT = () => {
 
 export function I18nextProvider({ locale, localeResource, children }) {
   const lng = locale.appLanguage;
+  const [instance, setInstance] = useState();
 
-  i18n.init({
-    resources: {
-      [lng]: localeResource
-    },
-    lng,
+  useEffect(() => {
+    i18n
+      .init({
+        resources: {
+          [lng]: localeResource
+        },
+        lng,
 
-    interpolation: {
-      escapeValue: false, // react already safe from xss
-      format: function (value, format, _, { currency }) {
-        if (format === 'uppercase') {
-          return value.toUpperCase();
-        }
+        interpolation: {
+          escapeValue: false, // react already safe from xss
+          format: function (value, format, _, { currency }) {
+            if (format === 'uppercase') {
+              return value.toUpperCase();
+            }
 
-        if (format === 'currency') {
-          if (typeof value === 'undefined' || !currency) {
-            return 'N/A';
+            if (format === 'currency') {
+              if (typeof value === 'undefined' || !currency) {
+                return 'N/A';
+              }
+              return new Intl.NumberFormat(locale, {
+                style: 'currency',
+                currency
+              }).format(value);
+            }
+
+            return value;
           }
-          return new Intl.NumberFormat(locale, {
-            style: 'currency',
-            currency
-          }).format(value);
         }
+      })
+      .then(() => setInstance(i18n));
+  }, []);
 
-        return value;
-      }
-    }
-  });
+  if (!instance) {
+    return null;
+  }
 
   return (
-    <I18NextContext.Provider value={i18n}>{children}</I18NextContext.Provider>
+    <I18NextContext.Provider value={instance}>
+      {children}
+    </I18NextContext.Provider>
   );
 }
