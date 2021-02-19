@@ -6,9 +6,9 @@ import { Outer, List, SubNavigation, Item } from './styles';
 import Stackable from 'components/stackable';
 import PageHeader from 'components/page-header';
 import ShapeComponents from 'components/shape/components';
-import { FolderNotFound } from './components/folder-not-found';
-import { getData } from './get-data';
-import { getFolderTitle } from './utils';
+import { FolderNotFound } from '../components/folder-not-found';
+import { getData } from '../get-data';
+import { getFolderTitle } from '../utils';
 
 export { getData, getFolderTitle };
 

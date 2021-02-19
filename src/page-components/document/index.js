@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import DocumentShape, {
   getData as getDocumentData,
   getDocumentTitle
-} from 'shapes/document';
+} from 'shapes/document/page';
 import Layout from 'components/layout';
 import toText from '@crystallize/content-transformer/toText';
 

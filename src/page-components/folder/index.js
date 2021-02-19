@@ -3,7 +3,7 @@ import React from 'react';
 import FolderShape, {
   getData as getFolderData,
   getFolderTitle
-} from 'shapes/folder';
+} from 'shapes/folder/page';
 import Layout from 'components/layout';
 import toText from '@crystallize/content-transformer/toText';
 import { FolderNotFound } from 'shapes/folder/components/folder-not-found';

@@ -1,6 +1,6 @@
 import Layout from 'components/layout';
 import PageHeader from 'components/page-header';
-import { Outer } from '../../styles';
+import { Outer } from '../../page/styles';
 
 export function FolderNotFound() {
   return (
