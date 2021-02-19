@@ -25,7 +25,7 @@ export function DocumentHeader({ document }) {
         </Byline>
         <PageHeader
           title={getDocumentTitle(document)}
-          description={description.content.json}
+          description={description?.content?.json}
         />
       </HeaderInner>
       <Social />
