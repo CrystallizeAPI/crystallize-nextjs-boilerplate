@@ -3,7 +3,7 @@ import Layout from 'components/layout';
 import toText from '@crystallize/content-transformer/toText';
 import { useLocale } from 'lib/app-config';
 import SchemaOrg from './schema';
-import ProductShape, { getData as getProductData } from 'shapes/product';
+import ProductShape, { getData as getProductData } from 'shapes/product/page';
 
 export const getData = getProductData;
 

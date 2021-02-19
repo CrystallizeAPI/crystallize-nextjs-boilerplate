@@ -6,7 +6,7 @@ import {
   isDescriptionComponent,
   isSpecsComponent,
   isRelatedProductsComponent
-} from './utils';
+} from '../utils';
 import ShapeComponents from 'components/shape/components';
 import getRelativePriceVariants from 'lib/pricing';
 import Collection from 'components/item-collection';
@@ -14,7 +14,7 @@ import Collection from 'components/item-collection';
 import TopicTag from 'components/topic-tag';
 import VariantSelector from './components/variant-selector';
 import Buy from './components/buy';
-import { getData } from './get-data';
+import { getData } from '../get-data';
 import Stock from './components/stock';
 import { useT } from 'lib/i18n';
 

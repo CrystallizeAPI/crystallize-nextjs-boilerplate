@@ -13,3 +13,7 @@ export function isSpecsComponent({ name }) {
 export function isRelatedProductsComponent({ name }) {
   return name === 'Related products';
 }
+
+export function findDefaultVariant(variants) {
+  return variants?.find((variant) => variant.isDefault);
+}

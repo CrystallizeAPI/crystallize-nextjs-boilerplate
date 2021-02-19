@@ -8,6 +8,7 @@ import TopicTag from 'components/topic-tag';
 import Price from './components/price';
 
 import { Outer, Footer, ImageWrapper, Img, Inner, Tags } from './styles';
+import { findDefaultVariant } from '../utils';
 
 export default function ProductItem({ data }) {
   const locale = useLocale();
@@ -20,10 +21,6 @@ export default function ProductItem({ data }) {
   const variant = matchingVariant || findDefaultVariant(variants) || {};
   const image = variant?.images?.[0] || variant?.image;
   const pricing = getRelativePriceVariants({ variant, locale });
-
-  function findDefaultVariant(variants) {
-    return variants?.find((variant) => variant.isDefault);
-  }
 
   return (
     <Link href={path} passHref>
