@@ -1,8 +1,8 @@
 import React from 'react';
 import ShapeComponents from 'components/shape/components';
 import Microformat from 'components/microformat';
-import { DocumentHeader } from '../components/header';
-import { DocumentRelatedContentSection } from '../components/related-content';
+import { DocumentHeader } from './components/header';
+import { DocumentRelatedContentSection } from './components/related-content';
 import { getData } from '../get-data';
 import { getDocumentTitle, getArticlesWithoutRepeatedElements } from '../utils';
 import {

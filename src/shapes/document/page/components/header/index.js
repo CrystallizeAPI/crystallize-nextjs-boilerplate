@@ -1,4 +1,4 @@
-import { getDocumentTitle, getHumanReadableDate } from '../../utils';
+import { getDocumentTitle, getHumanReadableDate } from '../../../utils';
 import Social from 'components/social';
 import TopicTag from 'components/topic-tag';
 
@@ -10,17 +10,17 @@ export function DocumentHeader({ document }) {
   const publicatedAt = new Date(document?.publishedAt);
   const ISODate = publicatedAt.toISOString();
   const humanReadableDate = getHumanReadableDate(publicatedAt);
-  const topics = document?.topics;
+  const topics = document?.topics
+    ? document?.topics?.map((topic) => (
+        <TopicTag underline {...topic} key={topic.id} />
+      ))
+    : null;
 
   return (
     <Header>
       <HeaderInner>
         <Byline>
-          {topics
-            ? topics?.map((topic) => (
-                <TopicTag underline {...topic} key={topic.id} />
-              ))
-            : null}
+          {topics}
           <time dateTime={ISODate}>{humanReadableDate}</time>
         </Byline>
         <PageHeader

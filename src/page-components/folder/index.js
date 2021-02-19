@@ -6,7 +6,7 @@ import FolderShape, {
 } from 'shapes/folder/page';
 import Layout from 'components/layout';
 import toText from '@crystallize/content-transformer/toText';
-import { FolderNotFound } from 'shapes/folder/components/folder-not-found';
+import { FolderNotFound } from 'shapes/folder/page/components/folder-not-found';
 
 export const getData = getFolderData;
 
