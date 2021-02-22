@@ -28,9 +28,9 @@ Build **a rich ecommerce that stands out from
 the others with our super structured [PIM][13] engine** (_Product Information Management_)
 in Crystallize powering your product catalogue.
 
-A fast frontend performance its a key ingredient to achieve the best user-experience possible
-and to improve your conversion rate. In order to reach the maximum amount of people, **we follow
-the [best ecommerce SEO practices][14] possible so you rank higher on search engines**.
+[Site speed](https://crystallize.com/learn/best-practices/frontend-performance/site-speed) is an important
+component of the [SEO checklist](https://crystallize.com/learn/best-practices/seo/seo-checklist). [Measuring core web vitals](https://crystallize.com/learn/best-practices/frontend-performance/core-web-vitals) is important to make sure you rank higher in search engines and also
+improves your conversion rate. You sell attract more customers and sell more.
 
 **[Rich content driven ecommerce experiences][15] builds the foundation for a [content strategy for exponential
 growth marketing][16].**
