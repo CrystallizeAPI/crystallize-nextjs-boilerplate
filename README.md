@@ -18,6 +18,8 @@ Enjoy our [demo furniture site][24].
 ![Website that sell plants displaying them as a grid. Ecommerce created with the Crystallize NextJS boilerplate and powered by our GraphQL API](https://i.imgur.com/v3tGgyZ.png)
 
 
+## Introduction
+
 This Next.js boilerplate is a great starting point when building [React
 ecommerce][11] experiences that **create wonderful user experiences because we focus
 on [frontend performance][12]**.
@@ -36,11 +38,7 @@ growth marketing][16].**
 
 ## Get Started Inmediately
 
-You don’t need to install or configure tools like webpack or Babel.
-They are preconfigured and hidden so that you can focus on the code.
-
-Use [Crystallize CLI][17] to bootstrap a project with this
-`Next.js + React` boilerplate.
+Use the [Crystallize CLI][17] to bootstrap a project in 4 simple guied steps. 
 
 Simply run the following command (>= Node 8 required):
 
@@ -48,17 +46,21 @@ Simply run the following command (>= Node 8 required):
 npx @crystallize/cli my-project
 ```
 
-This will walk you through the steps:
+**This will walk you through the steps:**
 1. Choose the tech stack you want
-> To get this one, select: Next.js - Complete ecommerce
+> To get this storefront, select: Next.js - Complete ecommerce
+
 2. Specify your tenant (the name of your project)
 > At this point, you can select our demo tenant (furniture) or use your own.
+> If you choose your own, you will have to create the content on our [Product Information Management][9]
+
 3. Select if you want to support multiple languages
+
 4. Select the service API
 > At this point, you can select between our demo Service API or your own service API tenant.
 > 
-> A Service API is a project that can be modified and/or extended that we've created as a backend
-> for any of our storefronts that handle logic such as the basket, the checkout, the authentication, webhooks, and so on.
+> A [Service API is an open-source project that acts as backend for any of our open-source storefronts][25] that currently hndles the basket, the checkout, the authentication, webhooks, etc. You can modify and/or extended it as you like.
+> Deploy it to Vercel, Amazon Web Services, etc. (we're adding new provieders)
 > 
 > Take into account that if you've selected your own tenant, you need to have your own service API
 > because our demo Service API doesn't support products with different shape/attributes.
@@ -96,6 +98,10 @@ related to entries in the `pages/` directory.
 ### `src/components/`
 
 All your shared React components.
+
+### `src/shapes/`
+
+All your related stuff to shapes. Components, styles, graphql queries and more.
 
 ### `src/ui/`
 
@@ -153,3 +159,4 @@ Open-source and MIT license.
 [22]: https://slack.com
 [23]: https://platform.sh
 [24]: https://furniture.superfast.shop/
+[25]: https://github.com/CrystallizeAPI/service-api-boilerplate/
