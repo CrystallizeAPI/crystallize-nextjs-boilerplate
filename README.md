@@ -4,18 +4,24 @@
 [![Next: latest][2]][3] [![code style: prettier][4]][5]
 [![code linter: Eslint][6]][7]
 
-The bare minimum skeleton you need to get a frontend up and running on the
-[headless ecommerce][8] & GraphQL based [product Information Management][9]
-service [Crystallize][10]. [React commerce with Next.js SSR][11].
+A fully-working ecommerce storefront boilerplate built with NextJS that runs on the [headless ecommerce][8] & GraphQL based [product Information Management][9]
+service [Crystallize][10]. **Clone, run it up and sell!**
+
+> ⚠️   If you feel more comfortable with other technologies, we also have some other [open-source ecommerce storefronts][11] that could suit you.
+
+![Website that sell plants displaying them as a grid. Ecommerce created with the Crystallize NextJS boilerplate and powered by our GraphQL API](https://i.imgur.com/qrY7GsR.png)
+
 
 This Next.js boilerplate is a great starting point when building [React
-ecommerce][11] experiences with [frontend performance][12] in focus. You can
-have rich ecommerce content with the super structured [PIM][13] engine in
-Crystallize powering your product catalogue.
+ecommerce][11] experiences with wonderful user experiences because we focus
+on [frontend performance][12]. You can have rich ecommerce content with the
+super structured [PIM][13] engine (_Product Information Management_) in Crystallize powering your product catalogue.
 
-Fast frontend performance delivers a better ecommerce experience and is a key
-ingredient in the [ecommerce SEO checklist][14]. [Rich content driven ecommerce
-experiences][15] builds the foundation for a [content strategy for exponential
+Fast frontend performance its a key ingredient to achieve the best user-experience possible
+and to improve your conversion rate. In order to reach the maximum amount of people, we follow
+the [best ecommerce SEO practices][14] possible so you rank higher on search engines.
+
+[Rich content driven ecommerce experiences][15] builds the foundation for a [content strategy for exponential
 growth marketing][16].
 
 Check it out, the boilerplate is Open Source and MIT licensed.
@@ -102,12 +108,12 @@ and [Platform.sh][23]
 [6]:
   https://img.shields.io/badge/code_linter-eslint-463fd4.svg?style=flat-square
 [7]: https://github.com/prettier/prettier
-[8]: https://crystallize.com/product
-[9]: https://crystallize.com/product/product-information-management
+[8]: https://crystallize.com/ecommerce
+[9]: https://crystallize.com/ecommerce/pim
 [10]: https://crystallize.com
 [11]: https://crystallize.com/developers
 [12]: https://crystallize.com/blog/frontend-performance-measuring-kpis
-[13]: https://crystallize.com/product/product-information-management
+[13]: https://crystallize.com/ecommerce/pim
 [14]: https://crystallize.com/blog/ecommerce-seo-checklist
 [15]:
   https://crystallize.com/blog/content-rich-storytelling-makes-juicy-ecommerce
@@ -121,3 +127,4 @@ and [Platform.sh][23]
   https://img.shields.io/static/v1?label=Slack&logo=slack&message=Crystallize%20Community&color=68d1b7
 [22]: https://slack.com
 [23]: https://platform.sh
+
