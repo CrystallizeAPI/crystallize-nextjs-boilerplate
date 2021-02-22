@@ -32,9 +32,8 @@ in Crystallize powering your product catalogue.
 component of the [SEO checklist](https://crystallize.com/learn/best-practices/seo/seo-checklist). [Measuring core web vitals](https://crystallize.com/learn/best-practices/frontend-performance/core-web-vitals) is important to make sure you rank higher in search engines and also
 improves your conversion rate. You sell attract more customers and sell more.
 
-**[Rich content driven ecommerce experiences][15] builds the foundation for a [content strategy for exponential
-growth marketing][16].**
-
+Build content rich eCommerce experiences. Freedom in [content modeling](https://crystallize.com/learn/best-practices/information-architecture/content-modeling)
+builds the foundation for an successful content strategy.
 
 ## Get Started Inmediately
 
