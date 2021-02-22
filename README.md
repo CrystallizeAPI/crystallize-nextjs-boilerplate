@@ -7,24 +7,25 @@
 A fully-working ecommerce storefront boilerplate built with NextJS that runs on the [headless ecommerce][8] & GraphQL based [product Information Management][9]
 service [Crystallize][10]. **Clone, run it up and sell!**
 
-> ⚠️   If you feel more comfortable with other technologies, we also have some other [open-source ecommerce storefronts][11] that could suit you.
+> ⚠️  We also have some other [open-source ecommerce storefronts][11] that could be of your interest.
 
 ![Website that sell plants displaying them as a grid. Ecommerce created with the Crystallize NextJS boilerplate and powered by our GraphQL API](https://i.imgur.com/qrY7GsR.png)
 
 
 This Next.js boilerplate is a great starting point when building [React
-ecommerce][11] experiences with wonderful user experiences because we focus
-on [frontend performance][12]. You can have rich ecommerce content with the
-super structured [PIM][13] engine (_Product Information Management_) in Crystallize powering your product catalogue.
+ecommerce][11] experiences that **create wonderful user experiences because we focus
+on [frontend performance][12]**. Build **a rich ecommerce that stands out from
+the others with our super structured [PIM][13] engine** (_Product Information Management_)
+in Crystallize powering your product catalogue.
 
-Fast frontend performance its a key ingredient to achieve the best user-experience possible
+A fast frontend performance its a key ingredient to achieve the best user-experience possible
 and to improve your conversion rate. In order to reach the maximum amount of people, we follow
 the [best ecommerce SEO practices][14] possible so you rank higher on search engines.
 
-[Rich content driven ecommerce experiences][15] builds the foundation for a [content strategy for exponential
+> [Rich content driven ecommerce experiences][15] builds the foundation for a [content strategy for exponential
 growth marketing][16].
 
-Check it out, the boilerplate is Open Source and MIT licensed.
+
 
 ## Get a quick preview
 
@@ -97,6 +98,9 @@ and [Platform.sh][23]
 - Register a Vercel account
 - Install vercel `yarn global add vercel` or `npm i -g vercel`
 - Run `vercel`
+
+## License
+Open-source and MIT license.
 
 [0]: https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square
 [1]: https://github.com/facebook/react
