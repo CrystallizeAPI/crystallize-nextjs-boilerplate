@@ -37,6 +37,8 @@ builds the foundation for an successful content strategy.
 
 ## Get Started Inmediately
 
+To get started, you can either watch the [livestream where we create an ecommerce from zero to production explaining all the steps][26] or follow the instructions below 👇.
+
 Use the [Crystallize CLI][17] to bootstrap a project in 4 simple guied steps. 
 
 Simply run the following command (>= Node 8 required):
@@ -159,3 +161,4 @@ Open-source and MIT license.
 [23]: https://platform.sh
 [24]: https://furniture.superfast.shop/
 [25]: https://github.com/CrystallizeAPI/service-api-boilerplate/
+[26]: https://crystallize.com/learn/open-source/boilerplates/react-nextjs
