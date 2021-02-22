@@ -7,33 +7,39 @@
 A fully-working ecommerce storefront boilerplate built with NextJS that runs on the [headless ecommerce][8] & GraphQL based [product Information Management][9]
 service [Crystallize][10]. **Clone, run it up and sell!**
 
-> ⚠️  We also have some other [open-source ecommerce storefronts][11] that could be of your interest.
+_⚠️  We also have some other [open-source ecommerce storefronts][11] that could be of your interest._
 
-![Website that sell plants displaying them as a grid. Ecommerce created with the Crystallize NextJS boilerplate and powered by our GraphQL API](https://i.imgur.com/qrY7GsR.png)
+
+## See a LIVE demo
+
+Enjoy our [demo furniture site][24].
+
+
+![Website that sell plants displaying them as a grid. Ecommerce created with the Crystallize NextJS boilerplate and powered by our GraphQL API](https://i.imgur.com/v3tGgyZ.png)
 
 
 This Next.js boilerplate is a great starting point when building [React
 ecommerce][11] experiences that **create wonderful user experiences because we focus
-on [frontend performance][12]**. Build **a rich ecommerce that stands out from
+on [frontend performance][12]**.
+
+Build **a rich ecommerce that stands out from
 the others with our super structured [PIM][13] engine** (_Product Information Management_)
 in Crystallize powering your product catalogue.
 
 A fast frontend performance its a key ingredient to achieve the best user-experience possible
-and to improve your conversion rate. In order to reach the maximum amount of people, we follow
-the [best ecommerce SEO practices][14] possible so you rank higher on search engines.
+and to improve your conversion rate. In order to reach the maximum amount of people, **we follow
+the [best ecommerce SEO practices][14] possible so you rank higher on search engines**.
 
-> [Rich content driven ecommerce experiences][15] builds the foundation for a [content strategy for exponential
-growth marketing][16].
+**[Rich content driven ecommerce experiences][15] builds the foundation for a [content strategy for exponential
+growth marketing][16].**
 
 
+## Get Started Inmediately
 
-## Get a quick preview
+You don’t need to install or configure tools like webpack or Babel.
+They are preconfigured and hidden so that you can focus on the code.
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/CrystallizeAPI/crystallize-nextjs-boilerplate&env=CRYSTALLIZE_TENANT_IDENTIFIER&envDescription=Enter%20your%20own%20tenant%20identifier,%20or%20use%20the%20default:%20furniture)
-
-## Getting Started
-
-You can use [Crystallize CLI][17] to bootstrap a project with this
+Use [Crystallize CLI][17] to bootstrap a project with this
 `Next.js + React` boilerplate.
 
 Simply run the following command (>= Node 8 required):
@@ -42,8 +48,23 @@ Simply run the following command (>= Node 8 required):
 npx @crystallize/cli my-project
 ```
 
-This will walk you through the steps of specifying your tenant, choosing the
-template (Next.js + React) and adding additional features such as Vercel.
+This will walk you through the steps:
+1. Choose the tech stack you want
+> To get this one, select: Next.js - Complete ecommerce
+2. Specify your tenant (the name of your project)
+> At this point, you can select our demo tenant (furniture) or use your own.
+3. Select if you want to support multiple languages
+4. Select the service API
+> At this point, you can select between our demo Service API or your own service API tenant.
+> 
+> A Service API is a project that can be modified and/or extended that we've created as a backend
+> for any of our storefronts that handle logic such as the basket, the checkout, the authentication, webhooks, and so on.
+> 
+> Take into account that if you've selected your own tenant, you need to have your own service API
+> because our demo Service API doesn't support products with different shape/attributes.
+> 
+> To have your own Service API, you'll need to execute again, our CLI and select 
+> the option "Service API - Backend for any of the frontends"
 
 Once your project has been created, you can simply navigate into your project's
 directory and run the following to start up your development server:
@@ -131,4 +152,4 @@ Open-source and MIT license.
   https://img.shields.io/static/v1?label=Slack&logo=slack&message=Crystallize%20Community&color=68d1b7
 [22]: https://slack.com
 [23]: https://platform.sh
-
+[24]: https://furniture.superfast.shop/
