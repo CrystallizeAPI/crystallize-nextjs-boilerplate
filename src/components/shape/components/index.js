@@ -58,6 +58,9 @@ const ShapeComponents = ({ components = [], overrides }) => {
           }
 
           if (type === 'videos') {
+            if (typeof window === undefined) {
+              return null;
+            }
             if (!component.content || !component.content.videos) {
               return null;
             }
