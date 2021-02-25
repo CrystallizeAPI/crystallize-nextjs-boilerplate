@@ -7,7 +7,7 @@ const SchemaOrg = ({ variants, summary }) => {
 
   variants?.forEach((variant) => {
     const { price, currency } =
-      variant.priceVariants.find((pv) => pv.identifier === 'default') || {};
+      variant.priceVariants?.find((pv) => pv.identifier === 'default') || {};
     schema.push({
       '@context': 'https://schema.org/',
       '@type': 'Product',
