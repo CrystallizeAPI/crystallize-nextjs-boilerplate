@@ -90,12 +90,12 @@ export const DescriptionWrapper = styled.div`
   }
 
   h2 {
-    font-size: var(--font-size-l);
+    font-size: var(--font-size-md);
   }
 
   h3 {
     margin-left: 25px;
-    font-size: var(--font-size-l);
+    font-size: var(--font-size-md);
     line-height: 38px;
     ${responsive.mdPlus} {
       margin-left: 50px;
@@ -142,7 +142,7 @@ export const ImgContainer = styled.div`
 `;
 
 export const Title = styled(H1)`
-  font-size: var(--font-size-xxl);
+  font-size: var(--font-size-xl);
   font-weight: 900;
 `;
 
