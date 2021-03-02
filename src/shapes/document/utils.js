@@ -39,5 +39,3 @@ export function getDocumentTitle(doc) {
 export function getHumanReadableDate(date) {
   return date.toDateString();
 }
-
-export function findAllDocumentTopics() {}
