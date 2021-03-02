@@ -28,7 +28,7 @@ export const Price = styled.div`
   color: var(--color-text-sub);
   display: flex;
   flex-direction: column;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   margin-bottom: 20px;
   margin-top: 20px;
   ${is('discounted')`

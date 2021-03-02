@@ -5,17 +5,19 @@ export default createGlobalStyle`
     /* Typography */
     --font-family-main: "Trebuchet MS", sans-serif;
 
-    --font-size-xl: 40px;
-    --font-size-lg: 32px;
-    --font-size-md: 26px;
-    --font-size-sm: 16px;
+    --font-size-xxl: 40px;
+    --font-size-xl: 32px;
+    --font-size-l: 26px;
+    --font-size-m: 20px;
+    --font-size-s: 16px;
+    --font-size-xs: 14px;
 
-    --font-size-body: 20px;
-    --font-size-secondary: 16px;
-    --font-size-tags: 14px;
+    --font-size-body: var(--font-size-m);
+    --font-size-secondary: var(--font-size-s);
+    --font-size-tags:var(--font-size-xs);
 
-    --font-listing-name-size: 16px;
-    --font-listing-price-size: 18px;
+    --font-listing-name-size: var(--font-size-s);
+    --font-listing-price-size: var(--font-size-s);
     --font-max-width: 800px;
 
     /* Colors */

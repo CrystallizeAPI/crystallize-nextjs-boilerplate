@@ -103,12 +103,12 @@ export const Article = styled.article`
   }
 
   h2 {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-l);
   }
 
   h3 {
     margin-left: 25px;
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-l);
     line-height: 38px;
     ${responsive.mdPlus} {
       margin-left: 50px;

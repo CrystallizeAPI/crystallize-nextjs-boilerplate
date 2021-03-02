@@ -66,7 +66,7 @@ export const Text = styled.div`
     rgba(8, 7, 8, 0.8) 100%
   );
   h3 {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-l);
     color: inherit;
     margin: 0;
     line-height: 1.4em;

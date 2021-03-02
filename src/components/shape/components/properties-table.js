@@ -7,7 +7,7 @@ const Section = styled.div`
 
   h3 {
     margin: 0 0 0.5em 0;
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-l);
   }
 `;
 

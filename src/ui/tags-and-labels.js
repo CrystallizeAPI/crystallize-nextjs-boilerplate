@@ -14,5 +14,5 @@ export const DiscountLabel = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 900;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
 `;

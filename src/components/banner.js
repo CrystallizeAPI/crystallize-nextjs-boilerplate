@@ -27,7 +27,7 @@ const Description = styled.div`
   }
 `;
 const Title = styled.h2`
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-weight: 600;
   margin-bottom: 15px;
 `;
@@ -35,7 +35,7 @@ const Button = styled.a`
   padding: 10px 15px;
   display: inline-block;
   margin-top: 15px;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-s);
   font-weight: 600;
   border-radius: 4px;
   color: #fff;

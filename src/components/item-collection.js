@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import is from 'styled-is';
 
-import { H1, screen, responsive } from 'ui';
+import { H1, responsive } from 'ui';
 import ContentTransformer from 'ui/content-transformer';
 import useResizeObserver from 'lib/use-resize-observer';
 import useScrollEnded from 'lib/use-scroll-ended';

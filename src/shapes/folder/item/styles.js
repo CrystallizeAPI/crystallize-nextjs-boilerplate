@@ -20,7 +20,7 @@ export const Text = styled.div`
   width: 100%;
 
   h3 {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-s);
     text-align: center;
     font-weight: 600;
     margin: 0 0 0 5px;

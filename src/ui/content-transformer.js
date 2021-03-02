@@ -62,7 +62,7 @@ const ContentTransformerOuter = styled.div`
   }
   blockquote {
     padding-left: 2em;
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-l);
     font-style: italic;
     position: relative;
     display: flex;

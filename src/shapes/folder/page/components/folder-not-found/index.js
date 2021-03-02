@@ -8,7 +8,7 @@ export function FolderNotFound() {
       <Outer>
         <PageHeader title="Welcome 🥳" />
 
-        <div style={{ fontSize: 'var(--font-size-sm)' }}>
+        <div style={{ fontSize: 'var(--font-size-s)' }}>
           <p>
             To show a Crystallize catalogue item here, you can do the following:
           </p>

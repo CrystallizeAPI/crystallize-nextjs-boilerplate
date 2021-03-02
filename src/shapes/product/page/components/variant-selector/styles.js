@@ -40,7 +40,7 @@ export const Button = styled.button.attrs(() => ({
 
 export const AttributeName = styled.h4`
   color: var(--color-text-main);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-s);
   font-weight: 600;
   margin: 25px 0 10px;
 `;
