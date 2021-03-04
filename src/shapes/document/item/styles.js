@@ -24,13 +24,13 @@ export const MediaWrapper = styled.div`
   figure {
     height: 100%;
   }
-  .video-js {
+  .react-video {
     flex: 0 0 auto;
     width: 100%;
     height: 100%;
   }
   img,
-  video {
+  .react-video video {
     display: block;
     object-fit: cover;
     object-position: center;
@@ -56,6 +56,7 @@ export const Text = styled.div`
   justify-content: flex-end;
   padding: 3em var(--content-padding);
   position: absolute;
+  z-index: 2;
   color: #fff;
   bottom: 0;
 
