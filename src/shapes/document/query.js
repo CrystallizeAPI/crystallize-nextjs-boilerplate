@@ -1,7 +1,7 @@
 import fragments from 'lib/graph/fragments';
 
 export const QUERY_DOCUMENT = `
-  query FOLDER_PAGE($language: String!, $path: String, $version: VersionLabel! ) {
+  query DOCUMENT_PAGE($language: String!, $path: String, $version: VersionLabel! ) {
 
     document: catalogue(language: $language, path: $path, version: $version) {
       ...item
