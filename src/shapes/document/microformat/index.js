@@ -23,7 +23,7 @@ export default function DocumentItem({ data }) {
     media = (
       <VideoPlayer
         {...video.content.videos[0]}
-        autoplay
+        autoPlay
         loop
         controls={false}
       />

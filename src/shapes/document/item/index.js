@@ -24,7 +24,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
     media = (
       <VideoPlayer
         {...video.content.videos[0]}
-        autoplay
+        autoPlay
         loop
         controls={false}
       />
