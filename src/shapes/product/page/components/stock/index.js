@@ -12,7 +12,7 @@ const STOCK_COLOR_INDICATOR = {
 
 const Stock = ({ selectedVariant }) => {
   const stockCount = selectedVariant?.stock;
-  const hasStock = stockCount > 1;
+  const hasStock = stockCount >= 1;
   const hasMoreStockThanLimit = stockCount > STOCK_LIMIT;
 
   let stockColor;

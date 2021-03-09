@@ -80,9 +80,9 @@ export default function VariantSelector({
     );
   }
 
-  function onAttributeSelect({ attribute, value }) {
+  function onAttributeSelect({ attributeName, value }) {
     const selectedAttributes = attributesToObject(selectedVariant);
-    selectedAttributes[attribute] = value;
+    selectedAttributes[attributeName] = value;
 
     // Get the most suitable variant
     let variant = variants.find((variant) =>
@@ -96,22 +96,20 @@ export default function VariantSelector({
     if (!variant) {
       variant = variants.find((variant) =>
         variant.attributes.some(
-          (a) => a.attribute === attribute && a.value === value
+          (a) => a.attribute === attributeName && a.value === value
         )
       );
     }
 
-    if (variant) {
-      onVariantChange(variant);
-    }
+    onVariantChange(variant);
   }
 
   return (
     <Outer>
-      {Object.keys(attributes).map((attribute) => {
-        const attr = attributes[attribute];
+      {Object.keys(attributes).map((attributeName) => {
+        const valuesForEachAttribute = attributes[attributeName];
         const selectedAttr = selectedVariant.attributes.find(
-          (a) => a.attribute === attribute
+          (a) => a.attribute === attributeName
         );
 
         if (!selectedAttr) {
@@ -119,12 +117,12 @@ export default function VariantSelector({
         }
 
         return (
-          <div key={attribute}>
-            <AttributeName>{attribute}</AttributeName>
+          <div key={attributeName}>
+            <AttributeName>{attributeName}</AttributeName>
             <AttributeSelector>
-              {attr.map((value) => {
+              {valuesForEachAttribute.map((value) => {
                 const selectedAttributes = attributesToObject(selectedVariant);
-                selectedAttributes[attribute] = value;
+                selectedAttributes[attributeName] = value;
 
                 // Get the most suitable variant
                 const mostSuitableVariant = variants.find((variant) =>
@@ -136,7 +134,7 @@ export default function VariantSelector({
                 return (
                   <AttributeButton
                     key={value}
-                    onClick={() => onAttributeSelect({ attribute, value })}
+                    onClick={() => onAttributeSelect({ attributeName, value })}
                     type="button"
                     selected={value === selectedAttr.value}
                     hasVariantForAttribute={hasVariantForAttribute}
