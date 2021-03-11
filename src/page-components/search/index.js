@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import { Inner } from 'ui';
 
 import Layout from 'components/layout';
-import { simplyFetchFromGraph, simplyFetchFromSearchGraph } from 'lib/graph';
+import { getData } from './get-data';
+import { cleanFilterForTotalAggregations } from './utils';
+import { simplyFetchFromSearchGraph } from 'lib/graph';
 import { urlToSpec, SEARCH_QUERY } from 'lib/search';
 import { useLocale } from 'lib/app-config';
 import toText from '@crystallize/content-transformer/toText';
@@ -14,7 +16,6 @@ import PageHeader from 'components/page-header';
 import Stackable from 'components/stackable';
 
 import { ListOuter, SearchActions, LocateRight } from './styles';
-import query from './query';
 import OrderBy from './order-by';
 import Results from './results';
 import Facets from './facets';
@@ -22,56 +23,7 @@ import SearchCount from './count';
 
 const Outer = styled(Inner)``;
 
-function cleanFilterForTotalAggregations(filter) {
-  return produce(filter, (draft) => {
-    delete draft.productVariants.priceRange;
-    delete draft.productVariants.attributes;
-  });
-}
-
-export async function getData({ asPath, preview, language, searchSpec }) {
-  const [searchQueryResponse, catalogueQueryResponse] = await Promise.all([
-    simplyFetchFromSearchGraph({
-      query: SEARCH_QUERY,
-      variables: {
-        ...searchSpec,
-        aggregationsFilter: cleanFilterForTotalAggregations(searchSpec.filter)
-      }
-    }),
-    asPath
-      ? simplyFetchFromGraph({
-          query,
-          variables: {
-            path: asPath,
-            language,
-            version: preview ? 'draft' : 'published'
-          }
-        })
-      : {}
-  ]);
-
-  if (!searchQueryResponse.data) {
-    return {
-      search: null,
-      catalogue: null,
-      language
-    };
-  }
-
-  const {
-    search,
-    aggregations: { aggregations } = {}
-  } = searchQueryResponse.data;
-
-  return {
-    search: {
-      search,
-      aggregations
-    },
-    catalogue: catalogueQueryResponse.data || null,
-    language
-  };
-}
+export { getData };
 
 async function loadPage(spec) {
   const { data } = await simplyFetchFromSearchGraph({
