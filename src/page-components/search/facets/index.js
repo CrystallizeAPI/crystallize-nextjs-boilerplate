@@ -120,8 +120,8 @@ export default function Facets({
 
   const hasMinMaxPriceRangeValuesDifferent =
     priceRange &&
-    priceRange?.min !== price.min &&
-    priceRange?.max !== price.max;
+    priceRange?.min !== price?.min &&
+    priceRange?.max !== price?.max;
 
   return (
     <Outer>
