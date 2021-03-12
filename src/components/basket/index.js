@@ -170,6 +170,24 @@ export function BasketProvider({ locale, children }) {
       }
     );
 
+  /**
+   * Something went wrong when fetching the basket from the Service API
+   * You should not show this feedback in production, and rather deal
+   * with Service API errors in a more smooth fashion
+   */
+  if (status === 'server-update-failed') {
+    return (
+      <div style={{ margin: '0 auto', maxWidth: 400, padding: 50 }}>
+        Oh-uh. Something went wrong when getting data from the Service API
+        <br />
+        <br />
+        <button onClick={() => dispatch({ action: 'retry-server-update' })}>
+          Try again
+        </button>
+      </div>
+    );
+  }
+
   return (
     <BasketContext.Provider
       value={{
