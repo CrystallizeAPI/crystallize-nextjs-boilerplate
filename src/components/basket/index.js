@@ -100,9 +100,9 @@ export function BasketProvider({ locale, children }) {
           }
         });
 
-        if (!stale) {
+        if (!stale && response.data) {
           dispatch({
-            action: 'set-server-state',
+            action: 'set-server-basket',
             serverBasket: response.data.basket
           });
         }
@@ -115,7 +115,7 @@ export function BasketProvider({ locale, children }) {
     }
 
     let timeout;
-    if (status === 'server-state-is-stale') {
+    if (status === 'server-basket-is-stale') {
       timeout = setTimeout(getServerBasket, 250);
     }
 

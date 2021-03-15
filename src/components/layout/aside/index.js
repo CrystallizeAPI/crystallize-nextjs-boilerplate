@@ -55,7 +55,7 @@ export default function Aside() {
     <Outer>
       <Heading>
         {t('basket.title')}
-        {basket.status === 'server-state-is-stale' && (
+        {basket.status === 'server-basket-is-stale' && (
           <Spinner style={{ marginLeft: 15 }} />
         )}
       </Heading>
