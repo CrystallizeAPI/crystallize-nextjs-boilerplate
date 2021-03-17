@@ -186,7 +186,6 @@ export default function Facets({
                       attribute={attribute}
                       value={value}
                       count={count}
-                      spec={spec}
                       isChecked={isAttributeValueChecked}
                       onChange={handleOnFacetCheckboxChange}
                     />
