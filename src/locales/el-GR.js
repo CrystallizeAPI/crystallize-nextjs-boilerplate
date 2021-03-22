@@ -115,7 +115,10 @@ export default {
     },
     vouchers: {
       title: 'Voucher',
-      invalidCode: 'Δεν ήταν δυνατή η χρήση του κουπονιού'
+      invalidCode: 'Δεν ήταν δυνατή η χρήση του κουπονιού',
+      inputPlaceholder: '[Got a voucher code?]',
+      applyCode: '[Apply]',
+      remove: '[Remove voucher]'
     }
   }
 };
