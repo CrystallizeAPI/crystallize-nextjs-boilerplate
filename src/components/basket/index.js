@@ -100,9 +100,9 @@ export function BasketProvider({ locale, children }) {
           }
         });
 
-        if (!stale) {
+        if (!stale && response.data) {
           dispatch({
-            action: 'set-server-state',
+            action: 'set-server-basket',
             serverBasket: response.data.basket
           });
         }
@@ -115,7 +115,7 @@ export function BasketProvider({ locale, children }) {
     }
 
     let timeout;
-    if (status === 'server-state-is-stale') {
+    if (status === 'server-basket-is-stale') {
       timeout = setTimeout(getServerBasket, 250);
     }
 
@@ -169,6 +169,24 @@ export function BasketProvider({ locale, children }) {
         quantity: 0
       }
     );
+
+  /**
+   * Something went wrong when fetching the basket from the Service API
+   * You should not show this feedback in production, and rather deal
+   * with Service API errors in a more smooth fashion
+   */
+  if (status === 'server-update-failed') {
+    return (
+      <div style={{ margin: '0 auto', maxWidth: 400, padding: 50 }}>
+        Oh-uh. Something went wrong when getting data from the Service API
+        <br />
+        <br />
+        <button onClick={() => dispatch({ action: 'retry-server-update' })}>
+          Try again
+        </button>
+      </div>
+    );
+  }
 
   return (
     <BasketContext.Provider

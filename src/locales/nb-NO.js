@@ -48,8 +48,8 @@ export default {
       remainingUntilFreeShipping:
         'Kjøp for {{amount, currency}} ekstra for å oppnå gratis frakt',
       totalPrice: 'Totalt',
-      discount: 'Fratrekk',
-      totalPriceAfterDiscount: 'Totalt etter fratrekk',
+      discount: 'Rabatt',
+      totalPriceAfterDiscount: 'Totalt etter rabatt',
       shippingPrice: 'Frakt',
       tax: 'Moms',
       totalToPay: 'Til betaling',
@@ -113,8 +113,11 @@ export default {
       }
     },
     vouchers: {
-      title: 'Voucher',
-      invalidCode: 'Kupongen "{{code}}" finnes ikke'
+      title: 'Kupong',
+      invalidCode: 'Kupongen "{{code}}" finnes ikke',
+      inputPlaceholder: 'Har du en kupongkode?',
+      applyCode: 'Legg til',
+      remove: 'Fjern kupong'
     }
   }
 };

@@ -4,13 +4,25 @@ import styled from 'styled-components';
 import { useLocale, getValidLocale } from 'lib/app-config';
 
 const Outer = styled.div`
+  flex: 1 1 auto;
   display: inline-flex;
   margin: 0 20px;
+
+  &:hover {
+    background: #efefef;
+  }
 `;
 
 const SelectAsText = styled.div`
+  flex: 1 1 auto;
   position: relative;
   white-space: nowrap;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: 700;
 
   select {
     position: absolute;

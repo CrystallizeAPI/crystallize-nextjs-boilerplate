@@ -118,7 +118,10 @@ export default {
     },
     vouchers: {
       title: 'Voucher',
-      invalidCode: 'The voucher "{{code}}" couldn\'t be applied'
+      invalidCode: 'The voucher "{{code}}" couldn\'t be applied',
+      inputPlaceholder: 'Got a voucher code?',
+      applyCode: '[Apply]',
+      remove: 'Remove voucher'
     }
   }
 };

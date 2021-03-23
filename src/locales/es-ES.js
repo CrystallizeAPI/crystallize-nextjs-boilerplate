@@ -117,7 +117,10 @@ export default {
     },
     vouchers: {
       title: 'Vale',
-      invalidCode: 'El vale no ha podido ser aplicado'
+      invalidCode: 'El vale no ha podido ser aplicado',
+      inputPlaceholder: '[Got a voucher code?]',
+      applyCode: '[Apply]',
+      remove: '[Remove voucher]'
     }
   }
 };

@@ -38,8 +38,12 @@ function OrderItem({ item }) {
 
   return (
     <Item>
-      {item.imageUrl && (
+      {item.imageUrl ? (
         <ItemImage src={item.imageUrl} alt={item.name} sizes="50vw" />
+      ) : (
+        item.images?.[0] && (
+          <ItemImage {...item.images[0]} alt={item.name} sizes="50vw" />
+        )
       )}
       <ItemInfo>
         <ItemName>{item.name}</ItemName>

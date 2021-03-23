@@ -1,3 +1,4 @@
+import App from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -49,9 +50,11 @@ function MyApp({ Component, pageProps, commonData }) {
   );
 }
 
-MyApp.getInitialProps = async function ({ router }) {
+MyApp.getInitialProps = async function (appContext) {
+  const appProps = await App.getInitialProps(appContext);
+
   try {
-    const locale = getLocaleFromContext(router);
+    const locale = getLocaleFromContext(appContext.router);
 
     const localeResource = await import(`../locales/${locale.appLanguage}`);
 
@@ -87,6 +90,7 @@ MyApp.getInitialProps = async function ({ router }) {
     });
 
     return {
+      ...appProps,
       commonData: {
         localeResource: localeResource.default,
         locale,
@@ -100,6 +104,7 @@ MyApp.getInitialProps = async function ({ router }) {
 
     // Fallback values
     return {
+      ...appProps,
       commonData: {
         mainNavigation: [],
         locale: defaultLocale,

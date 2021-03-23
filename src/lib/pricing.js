@@ -4,9 +4,12 @@ export default function getRelativePriceVariants({ variant, locale }) {
       (pv) => pv.identifier === locale.crystallizePriceVariant
     ) || {};
 
-  //Get price variant with identifier "sales" from Crystallize
+  // Get price variant with identifier "sales" from Crystallize
   const discountPrice =
-    variant?.priceVariants?.find((pv) => pv.identifier === 'sales') || null;
+    variant?.priceVariants?.find(
+      (pv) =>
+        pv.identifier === 'sales' && pv.currency === defaultPrice?.currency
+    ) || null;
 
   const discountPercentage = (100 * discountPrice?.price) / defaultPrice?.price;
 

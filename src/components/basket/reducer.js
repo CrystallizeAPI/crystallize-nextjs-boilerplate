@@ -52,7 +52,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
             draft.clientBasket.cart = initialState.clientBasket.cart;
           }
         }
-        draft.status = 'server-state-is-stale';
+        draft.status = 'server-basket-is-stale';
       }
       break;
     }
@@ -75,10 +75,19 @@ export default produce(function reducer(draft, { action, ...rest }) {
       break;
     }
 
-    case 'server-update-failed':
+    case 'server-update-failed': {
+      draft.status = 'server-update-failed';
+      break;
+    }
+
+    case 'retry-server-update': {
+      draft.status = 'server-basket-is-stale';
+      break;
+    }
+
     case 'empty': {
       draft.clientBasket = initialState.clientBasket;
-      draft.status = 'server-state-is-stale';
+      draft.status = 'server-basket-is-stale';
       break;
     }
 
@@ -117,12 +126,12 @@ export default produce(function reducer(draft, { action, ...rest }) {
         }
       }
 
-      draft.status = 'server-state-is-stale';
+      draft.status = 'server-basket-is-stale';
 
       break;
     }
 
-    case 'set-server-state': {
+    case 'set-server-basket': {
       draft.serverBasket = rest.serverBasket;
       draft.status = 'ready';
 
@@ -159,13 +168,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
 
     case 'add-voucher': {
       draft.clientBasket.voucherCode = rest.voucherCode;
-      draft.status = 'server-state-is-stale';
+      draft.status = 'server-basket-is-stale';
       break;
     }
 
     case 'remove-voucher': {
       draft.clientBasket.voucherCode = initialState.clientBasket.voucherCode;
-      draft.status = 'server-state-is-stale';
+      draft.status = 'server-basket-is-stale';
       break;
     }
 

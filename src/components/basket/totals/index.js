@@ -21,7 +21,7 @@ export default function Totals(props) {
   }
 
   const hasDiscount = total?.discount > 0;
-  const isLoading = status === 'server-state-is-stale';
+  const isLoading = status === 'server-basket-is-stale';
 
   return (
     <Outer {...props}>

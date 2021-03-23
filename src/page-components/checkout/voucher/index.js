@@ -74,7 +74,7 @@ export default function Voucher() {
       <VoucherApplied>
         {t('vouchers.title')}:<span>{basket.basketModel.voucherCode}</span>
         <button type="button" onClick={basket.actions.removeVoucherCode}>
-          Remove
+          {t('vouchers.remove')}
         </button>
       </VoucherApplied>
     );
@@ -83,7 +83,7 @@ export default function Voucher() {
   if (!state.showForm) {
     return (
       <ShowForm onClick={() => dispatch({ action: 'show-form' })}>
-        Got a voucher code?
+        {t('vouchers.inputPlaceholder')}
       </ShowForm>
     );
   }
@@ -102,7 +102,7 @@ export default function Voucher() {
           type="submit"
           state={status === 'voucher-validating' && 'loading'}
         >
-          Apply
+          {t('vouchers.applyCode')}
         </Button>
       </VoucherDisplayer>
 

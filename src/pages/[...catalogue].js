@@ -9,8 +9,6 @@
 
 import React from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
-import DefaultErrorPage from 'next/error';
 
 import { simplyFetchFromGraph } from 'lib/graph';
 import { urlToSpec } from 'lib/search';
@@ -74,6 +72,14 @@ export async function getStaticProps(context) {
         path: asPath
       }
     });
+
+    // Item not found for path. It's a 404
+    if (!getItemType.data.catalogue) {
+      return {
+        notFound: true
+      };
+    }
+
     const { type, children } = getItemType.data.catalogue;
 
     let renderer = 'folder';
@@ -109,8 +115,7 @@ export async function getStaticProps(context) {
   }
 
   return {
-    props: {},
-    revalidate: 1
+    notFound: true
   };
 }
 
@@ -185,7 +190,7 @@ export async function getStaticPaths({ locales, defaultLocale }) {
 
   return {
     paths,
-    fallback: true
+    fallback: 'blocking'
   };
 }
 
@@ -195,18 +200,6 @@ export default function GenericCatalogueItem({ renderer, asPath, ...rest }) {
 
   if (router.isFallback) {
     return <Layout loading />;
-  }
-
-  // No data was found for route. It's a 404
-  if (Object.keys(rest).length === 0) {
-    return (
-      <>
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-        <DefaultErrorPage statusCode={404} />
-      </>
-    );
   }
 
   return <Component key={asPath} {...rest} />;
