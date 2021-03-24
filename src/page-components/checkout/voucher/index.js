@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { Button } from 'ui';
 import ServiceApi from 'lib/service-api';
 import { useBasket } from 'components/basket';
@@ -16,7 +16,7 @@ import voucherReducer, { initialVoucherState } from './reducer';
 
 export default function Voucher() {
   const basket = useBasket();
-  const t = useT();
+  const { t } = useTranslation('basket');
 
   // We can create the initial state lazily by passing a function as third parameter that returns
   // the inital state desired. This is usually done when it depends on props.

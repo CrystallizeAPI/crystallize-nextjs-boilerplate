@@ -1,4 +1,4 @@
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import styled from 'styled-components';
 
 import { responsive } from 'ui';
@@ -65,10 +65,10 @@ const Lines = styled.div`
 `;
 
 export default function BurgerButton({ active, onClick }) {
-  const t = useT();
+  const { t } = useTranslation('common');
 
   return (
-    <Outer open={active} onClick={onClick} aria-label={t('layout.menu')}>
+    <Outer open={active} onClick={onClick} aria-label={t('menu')}>
       <Lines open={active} />
     </Outer>
   );

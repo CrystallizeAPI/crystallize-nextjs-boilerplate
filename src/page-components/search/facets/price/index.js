@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { Outer, Values, Input, RangeWrap } from './styles';
 
 export function Price({ min, max, value, onChange }) {
-  const t = useT();
+  const { t } = useTranslation('search');
   const [priceValue, setPriceValue] = useState(value);
 
   useEffect(() => {
@@ -41,12 +41,12 @@ export function Price({ min, max, value, onChange }) {
         <InputValue
           value={priceValue.min}
           onChange={onMinChange}
-          aria-label={t('search.facets.price.min')}
+          aria-label={t('facets.price.min')}
         />
         <InputValue
           value={priceValue.max}
           onChange={onMaxChange}
-          aria-label={t('search.facets.price.max')}
+          aria-label={t('facets.price.max')}
         />
       </Values>
       <RangeWrap>

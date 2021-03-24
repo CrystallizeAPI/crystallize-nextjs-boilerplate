@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 import { useBasket } from '../index';
 import TinyBasketItem from './item';
@@ -8,7 +8,7 @@ import TinyBasketItem from './item';
 import { Outer, Items, ItemOuter, BasketIsEmpty } from './styles';
 
 export default function TinyBasket() {
-  const t = useT();
+  const { t } = useTranslation('basket');
   const { status, cart } = useBasket();
 
   if (status === 'not-hydrated') {
@@ -18,7 +18,7 @@ export default function TinyBasket() {
   if (!cart?.length) {
     return (
       <Outer>
-        <BasketIsEmpty>{t('basket.empty')}</BasketIsEmpty>
+        <BasketIsEmpty>{t('empty')}</BasketIsEmpty>
       </Outer>
     );
   }

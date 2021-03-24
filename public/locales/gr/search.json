@@ -1,0 +1,22 @@
+{
+  "orderTitle": "[Order by]",
+  "order": {
+    "ITEM_NAME_ASC": "[Name ascending]",
+    "ITEM_NAME_DESC": "[Name descending]",
+    "PRICE_ASC": "[Price ascending]",
+    "PRICE_DESC": "[Price descending]",
+    "STOCK_ASC": "[Stock ascending]",
+    "STOCK_DESC": "[Stock descending]"
+  },
+  "filter": "[Filter]",
+  "facets": {
+    "viewNResults": "[Show {{count}} result]",
+    "viewNResults_plural": "[Show {{count}} results]",
+    "reset": "[Reset]",
+    "price": {
+      "title": "[Price]",
+      "min": "[Minimum price]",
+      "max": "[Maximum price]"
+    }
+  }
+}

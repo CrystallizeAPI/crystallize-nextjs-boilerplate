@@ -1,14 +1,14 @@
 import React from 'react';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { Button, Text } from './styles';
 import IconFilters from 'ui/icons/filters';
 
 export const ButtonToggleFacets = React.forwardRef(
   ({ areFacetsShown, ...rest }, ref) => {
-    const t = useT();
+    const { t } = useTranslation(['common', 'search']);
     const textToggleFacetsButton = areFacetsShown
-      ? t('common.close')
-      : t('search.filter');
+      ? t('close')
+      : t('search:filter');
 
     return (
       <Button

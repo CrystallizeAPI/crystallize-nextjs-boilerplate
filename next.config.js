@@ -1,12 +1,7 @@
+const { i18n } = require('./next-i18next.config');
+
 module.exports = {
-  // For more information on internationalized routing,
-  // check out the Next.js docs:
-  // https://nextjs.org/docs/advanced-features/i18n-routing
-  i18n: {
-    // Match these locales with app.config.json
-    locales: ['en', 'no'],
-    defaultLocale: 'en'
-  },
+  i18n,
   async redirects() {
     return [
       {

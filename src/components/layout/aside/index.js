@@ -7,7 +7,7 @@ import TinyBasket from 'components/basket/tiny-basket';
 import Totals from 'components/basket/totals';
 import { Button } from 'ui';
 import { Spinner } from 'ui/spinner';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 import { Outer, Heading, Content, Footer } from './styles';
 
@@ -35,7 +35,7 @@ const CheckoutBtn = styled(Button)`
 `;
 
 export default function Aside() {
-  const t = useT();
+  const { t } = useTranslation('basket');
   const basket = useBasket();
   const [going, setGoing] = useState(false);
 
@@ -48,13 +48,13 @@ export default function Aside() {
   };
 
   if (basket.status === 'not-hydrated') {
-    return t('basket.loading');
+    return t('loading');
   }
 
   return (
     <Outer>
       <Heading>
-        {t('basket.title')}
+        {t('title')}
         {basket.status === 'server-basket-is-stale' && (
           <Spinner style={{ marginLeft: 15 }} />
         )}
@@ -71,7 +71,7 @@ export default function Aside() {
             disabled={!basket.cart.length}
             onClick={onCheckoutClick}
           >
-            {t('basket.goToCheckout')}
+            {t('goToCheckout')}
           </CheckoutBtn>
         </Link>
       </Footer>

@@ -1,3 +1,5 @@
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
 import Cmp, { getData } from 'page-components/folder';
 import { getLocaleFromContext } from 'lib/app-config';
 
@@ -12,7 +14,11 @@ export async function getStaticProps(context) {
   });
 
   return {
-    props: { ...data, hidePageHeader: true },
+    props: {
+      ...data,
+      hidePageHeader: true,
+      ...(await serverSideTranslations(context.locale, ['common', 'basket']))
+    },
     revalidate: 1
   };
 }

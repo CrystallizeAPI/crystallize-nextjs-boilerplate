@@ -1,0 +1,16 @@
+{
+  "title": "Betaling",
+  "payNow": "Betal nå",
+  "choosePaymentMethod": "Velg betalingsmetode",
+  "noPaymentProvidersConfigured": "Ingen betalingstjenester er konfigurert",
+  "paymentProviderNotConfigured": "Betalingstjenesten {{name}} er ikke konfigurert",
+  "paymentProviderLogoAlt": "Logo for {{name}}",
+  "confirmingCardPayment": "Please wait your card details are confirmed...",
+  "loadingPaymentGateway": "Laster betalingstjenesten...",
+  "loadingPaymentGatewayFailed": "Oisann. Betalingstjenesten {{name}} kan ikke lastes akkurat nå",
+  "confirmation": {
+    "title": "Ordrebekreftelse",
+    "shortStatus": "Din ordre er bekreftet",
+    "shortStatus_withEmail": "Din ordre er bekreftet. En kopi av ordren er send til {{email}}"
+  }
+}

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 
 import ServiceApi from 'lib/service-api';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { useBasket } from 'components/basket';
 import { Spinner } from 'ui/spinner';
 
@@ -37,7 +37,7 @@ const Row = styled.div`
 const Inner = styled.div``;
 
 export default function Payment() {
-  const t = useT();
+  const { t } = useTranslation(['checkout', 'customer']);
   const router = useRouter();
   const { basketModel, actions } = useBasket();
   const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
@@ -194,11 +194,11 @@ export default function Payment() {
   return (
     <Inner>
       <CheckoutFormGroup>
-        <SectionHeader>{t('checkout.title')}</SectionHeader>
+        <SectionHeader>{t('title')}</SectionHeader>
         <form noValidate>
           <Row>
             <InputGroup>
-              <Label htmlFor="firstname">{t('customer.firstName')}</Label>
+              <Label htmlFor="firstname">{t('customer:firstName')}</Label>
               <Input
                 name="firstname"
                 type="text"
@@ -210,7 +210,7 @@ export default function Payment() {
               />
             </InputGroup>
             <InputGroup>
-              <Label htmlFor="lastname">{t('customer.lastName')}</Label>
+              <Label htmlFor="lastname">{t('customer:lastName')}</Label>
               <Input
                 name="lastname"
                 type="text"
@@ -224,7 +224,7 @@ export default function Payment() {
           </Row>
           <Row>
             <InputGroup>
-              <Label htmlFor="email">{t('customer.email')}</Label>
+              <Label htmlFor="email">{t('customer:email')}</Label>
               <Input
                 name="email"
                 type="email"
@@ -241,13 +241,13 @@ export default function Payment() {
 
       <CheckoutFormGroup withUpperMargin>
         <div>
-          <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
+          <SectionHeader>{t('choosePaymentMethod')}</SectionHeader>
           {paymentConfig.loading ? (
             <Spinner />
           ) : (
             <div>
               {enabledPaymentProviders.length === 0 ? (
-                <i>{t('checkout.noPaymentProvidersConfigured')}</i>
+                <i>{t('noPaymentProvidersConfigured')}</i>
               ) : (
                 <PaymentProviders>
                   <PaymentSelector>
@@ -258,7 +258,7 @@ export default function Payment() {
                       if (!paymentProvider) {
                         return (
                           <small>
-                            {t('checkout.paymentProviderNotConfigured', {
+                            {t('paymentProviderNotConfigured', {
                               name: paymentProviderName
                             })}
                           </small>
@@ -279,7 +279,7 @@ export default function Payment() {
                         >
                           <img
                             src={paymentProvider.logo}
-                            alt={t('checkout.paymentProviderLogoAlt', {
+                            alt={t('paymentProviderLogoAlt', {
                               name: paymentProvider.name
                             })}
                           />
