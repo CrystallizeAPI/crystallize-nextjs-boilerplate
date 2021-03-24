@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import produce from 'immer';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { simplyFetchFromSearchGraph } from 'lib/graph';
 import { SEARCH_QUERY } from 'lib/search';
 import { useLocale } from 'lib/app-config';
@@ -65,7 +65,7 @@ const searchReducer = produce(function reducer(draft, { action, ...rest }) {
 });
 
 export default function Search() {
-  const t = useT();
+  const { t } = useTranslation('common');
   const router = useRouter();
   const outerRef = useRef();
   const searchInput = useRef();
@@ -123,7 +123,11 @@ export default function Search() {
 
   return (
     <>
-      <Btn type="button" onClick={onClickSearchBtn} aria-label="Search">
+      <Btn
+        type="button"
+        onClick={onClickSearchBtn}
+        aria-label={t('search.label')}
+      >
         <svg viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M28.4155 25.7638L23.6818 21.0311C23.4491 20.7993 23.134 20.6691 22.8055 20.6691C22.4769 20.6691 22.1618 20.7993 21.9291 21.0311C20.6818 22.2369 19.0696 22.995 17.3451 23.1865C15.6207 23.3781 13.8814 22.9923 12.3998 22.0897C10.9181 21.187 9.7778 19.8185 9.15748 18.1984C8.53715 16.5784 8.47185 14.7984 8.97181 13.1372C9.47177 11.4761 10.5088 10.0277 11.9203 9.01897C13.3318 8.01022 15.0382 7.49811 16.772 7.56286C18.5059 7.62761 20.1692 8.26556 21.5016 9.37678C22.8339 10.488 23.7599 12.0097 24.1346 13.7035C24.403 14.9323 24.3753 16.2073 24.0539 17.4233C24.0159 17.5657 24.0064 17.7142 24.0258 17.8604C24.0452 18.0065 24.0933 18.1473 24.1671 18.2749C24.241 18.4024 24.3393 18.5142 24.4564 18.6038C24.5735 18.6934 24.7071 18.759 24.8495 18.797C25.1372 18.8736 25.4436 18.8329 25.7013 18.6837C25.9589 18.5345 26.1468 18.2891 26.2235 18.0015C26.841 15.6807 26.6115 13.2159 25.576 11.0491C24.5405 8.88221 22.7668 7.15507 20.5729 6.17736C18.379 5.19965 15.9085 5.03534 13.6044 5.71389C11.3003 6.39245 9.31341 7.86947 7.99995 9.88009C6.68649 11.8907 6.13242 14.3034 6.43711 16.6855C6.7418 19.0676 7.88531 21.2632 9.66258 22.8786C11.4398 24.4941 13.7346 25.4237 16.1353 25.5007C18.536 25.5777 20.8857 24.7971 22.7629 23.2989L26.8286 27.3593C26.9327 27.4636 27.0564 27.5464 27.1925 27.6029C27.3287 27.6594 27.4746 27.6885 27.622 27.6885C27.7694 27.6885 27.9154 27.6594 28.0515 27.6029C28.1877 27.5464 28.3114 27.4636 28.4155 27.3593C28.5212 27.2551 28.6051 27.1309 28.6624 26.9939C28.7197 26.857 28.7492 26.71 28.7492 26.5615C28.7492 26.4131 28.7197 26.2661 28.6624 26.1292C28.6051 25.9922 28.5212 25.868 28.4155 25.7638V25.7638Z"
@@ -137,7 +141,7 @@ export default function Search() {
       </Btn>
       <SearchWrapper isOpen={isOpen}>
         <Outer ref={outerRef}>
-          <SearchLabel>{t('layout.searchPlaceholder')}</SearchLabel>
+          <SearchLabel>{t('search.placeholder')}</SearchLabel>
           <InputGroup as="form" method="get" role="search" onSubmit={onSubmit}>
             <Input
               ref={searchInput}
@@ -147,7 +151,7 @@ export default function Search() {
               onChange={(e) =>
                 dispatch({ action: 'setSearchTerm', value: e.target.value })
               }
-              placeholder={t('layout.searchPlaceholder')}
+              placeholder={t('search.placeholder')}
               aria-label={t('search.label')}
             />
             {status === 'searching' && <InputSpinner />}

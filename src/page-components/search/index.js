@@ -45,7 +45,7 @@ async function loadPage(spec) {
 export default function SearchPage(props) {
   const { search, catalogue } = props;
   const firstLoad = useRef();
-  const { query, asPath, isFallback, ...router } = useRouter();
+  const { query, asPath, ...router } = useRouter();
   const locale = useLocale();
   const [data, setData] = useState(search);
 
@@ -74,18 +74,16 @@ export default function SearchPage(props) {
 
   // Query changed
   useEffect(() => {
-    if (!isFallback) {
-      if (!firstLoad.current) {
-        firstLoad.current = true;
+    if (!firstLoad.current) {
+      firstLoad.current = true;
 
-        if (query.catalogue) {
-          return;
-        }
+      if (query.catalogue) {
+        return;
       }
-
-      loadPageCb(query);
     }
-  }, [query, isFallback, loadPageCb]);
+
+    loadPageCb(query);
+  }, [query, loadPageCb]);
 
   // Change the url query params
   function changeQuery(fn) {
@@ -143,7 +141,7 @@ export default function SearchPage(props) {
   }
 
   // We're waiting for the search result to come in
-  const isWaitingForSearchResult = router.isFallback || !data || !data.search;
+  const isWaitingForSearchResult = !data || !data.search;
   if (isWaitingForSearchResult) {
     return (
       <Layout title="Searching...">

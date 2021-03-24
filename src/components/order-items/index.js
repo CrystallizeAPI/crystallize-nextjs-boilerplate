@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AttributeList from 'components/attribute-list';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 import {
   Item,
@@ -15,18 +15,18 @@ import {
 } from './styles';
 
 function OrderItem({ item }) {
-  const t = useT();
+  const { t } = useTranslation(['common', 'basket']);
 
   if (item.sku.startsWith('--voucher--')) {
     return (
       <Item>
         <ItemInfo>
-          <ItemName>{t('vouchers.title')}</ItemName>
+          <ItemName>{t('basket:vouchers.title')}</ItemName>
           <p>{item.name}</p>
         </ItemInfo>
         <ItemAmount>
           <ItemPrice>
-            {t('common.price', {
+            {t('price', {
               value: item.price?.gross ?? 0,
               currency: item.price?.currency
             })}
@@ -56,13 +56,13 @@ function OrderItem({ item }) {
       <ItemAmount>
         <ItemQuantity>
           {item.quantity} x{' '}
-          {t('common.price', {
+          {t('price', {
             value: item.price?.gross ?? 0,
             currency: item.price?.currency
           })}
         </ItemQuantity>
         <ItemPrice>
-          {t('common.price', {
+          {t('price', {
             value: (item.price?.gross ?? 0) * item.quantity,
             currency: item.price?.currency
           })}

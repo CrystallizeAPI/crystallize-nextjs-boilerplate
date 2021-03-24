@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconStock } from 'ui/icons';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { Outer, StockColorIndicator } from './styles';
 
 const STOCK_LIMIT = 20;
@@ -36,14 +36,14 @@ const Stock = ({ selectedVariant }) => {
 export default Stock;
 
 function OutOfStock() {
-  const t = useT();
+  const { t } = useTranslation('product');
 
-  return <span>{t('product.outOfStock')}</span>;
+  return <span>{t('outOfStock')}</span>;
 }
 
 function StockCount({ count }) {
-  const t = useT();
+  const { t } = useTranslation('product');
   const stockCountToDisplay = count > STOCK_LIMIT ? `${STOCK_LIMIT}+` : count;
 
-  return <span>{t('product.stock', { stockCount: stockCountToDisplay })}</span>;
+  return <span>{t('stock', { stockCount: stockCountToDisplay })}</span>;
 }

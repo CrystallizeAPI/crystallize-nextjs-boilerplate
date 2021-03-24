@@ -4,7 +4,7 @@ import { useBasket } from 'components/basket';
 import Layout from 'components/layout';
 import OrderItems from 'components/order-items';
 import Totals from 'components/basket/totals';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 import Payment from './payment';
 import {
@@ -17,16 +17,16 @@ import {
 
 function Checkout() {
   const basket = useBasket();
-  const t = useT();
+  const { t } = useTranslation('basket');
 
   if (basket.status === 'not-hydrated') {
-    return <Outer center>{t('basket.loading')}</Outer>;
+    return <Outer center>{t('loading')}</Outer>;
   }
 
   const { cart } = basket;
 
   if (basket.status === 'ready' && !cart?.length) {
-    return <Outer center>{t('basket.empty', { context: 'inCheckout' })}</Outer>;
+    return <Outer center>{t('empty', { context: 'inCheckout' })}</Outer>;
   }
 
   return (
@@ -37,7 +37,7 @@ function Checkout() {
         </Container>
         <Container>
           <CheckoutFormGroup>
-            <SectionHeader>{t('basket.title')}</SectionHeader>
+            <SectionHeader>{t('title')}</SectionHeader>
             <OrderItems cart={cart} />
             <Totals style={{ padding: '0 15px' }} />
           </CheckoutFormGroup>
@@ -48,10 +48,10 @@ function Checkout() {
 }
 
 export default function CheckoutWithLayout(props) {
-  const t = useT();
+  const { t } = useTranslation('checkout');
 
   return (
-    <Layout title={t('checkout.title')} simple>
+    <Layout title={t('title')} simple>
       <Checkout {...props} />
     </Layout>
   );

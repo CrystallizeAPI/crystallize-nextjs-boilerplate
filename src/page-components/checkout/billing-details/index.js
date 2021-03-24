@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { responsive, H3 } from 'ui';
 
 const Outer = styled.div`
@@ -24,7 +24,7 @@ const Inner = styled.div`
 `;
 
 const BillingDetails = ({ order }) => {
-  const t = useT();
+  const { t } = useTranslation('customer');
   const { email } = order.customer.addresses?.[0] || {};
 
   return (
@@ -32,13 +32,13 @@ const BillingDetails = ({ order }) => {
       <Inner>
         <H3>Billing Details</H3>
         <p>
-          {t('customer.name')}:{' '}
+          {t('name')}:{' '}
           <strong>
             {order.customer.firstName} {order.customer.lastName}
           </strong>
         </p>
         <p>
-          {t('customer.email')}: <strong>{email}</strong>
+          {t('email')}: <strong>{email}</strong>
         </p>
       </Inner>
     </Outer>

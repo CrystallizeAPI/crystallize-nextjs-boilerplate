@@ -1,0 +1,19 @@
+{
+  "frontpage": "Hjem",
+  "price": "{{value, currency}}",
+  "tax": "Moms: {{value, currency}}",
+  "close": "Lukk",
+  "menu": "Menu",
+  "search": {
+    "placeholder": "Søk etter ting",
+    "label": "Søk",
+    "foundResults": "Fant {{count}} resultat",
+    "foundResults_plural": "Fant {{count}} resultater"
+  },
+  "ecomBy": "Nettbutikk av",
+  "loadingVideo": "Laster video",
+  "slider": {
+    "previous": "Se forrige element",
+    "next": "Se neste element"
+  }
+}

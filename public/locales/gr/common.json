@@ -1,0 +1,19 @@
+{
+  "frontpage": "Κεντρική",
+  "price": "{{value, currency}}",
+  "tax": "ΦΠΑ: {{value, currency}}",
+  "close": "Κλείσε",
+  "menu": "Μενού",
+  "search": {
+    "label": "Αναζήτηση",
+    "placeholder": "[Find things]",
+    "foundResults": "[Found {{count}} matching result]",
+    "foundResults_plural": "[Found {{count}} matching results]"
+  },
+  "ecomBy": "Ηλεκτρονικό κατάστημα από",
+  "loadingVideo": "Το βίνετο φορτώνει",
+  "slider": {
+    "previous": "Δείτε το προηγούμενο αντικείμενο",
+    "next": "Δείτε το επόμενο αντικείμενο"
+  }
+}

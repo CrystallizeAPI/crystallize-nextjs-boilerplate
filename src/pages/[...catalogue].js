@@ -1,19 +1,23 @@
 /**
- * This file is used when we deal with an unknown url, e.g.:
+ * Example of a wildcard route to deal with unknown urls, e.g.:
  * /teddy-bears/fluffy-teddy
- * We need to check on the Crystallize end if this is a valid
- * url, typically by querying the catalogue to see if there is
- * an item with this url as path.
- * If we get nothing back from Crystallize, it's a 404
+ *
+ * WARNING: This strategy is not optimised for performance, and
+ * you should instead create separate pages for your different
+ * pages that matches your Crystallize catalogue. E.g.:
+ * pages
+ *  - blog
+ *    - [blog-post].js
+ *  - chairs
+ *    - [chair].js
  */
 
 import React from 'react';
-import { useRouter } from 'next/router';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { simplyFetchFromGraph } from 'lib/graph';
 import { urlToSpec } from 'lib/search';
-import { getLocaleFromContext, getValidLocale } from 'lib/app-config';
-import Layout from 'components/layout';
+import { getLocaleFromContext, getLocaleFromName } from 'lib/app-config';
 
 import DocPage, { getData as getDataDoc } from 'page-components/document';
 import FolderPage, { getData as getDataFolder } from 'page-components/folder';
@@ -45,6 +49,11 @@ function childrenIsMostlyProducts(children) {
   return productsCount > children.length / 2;
 }
 
+/**
+ * We need to check on the Crystallize end if this is a valid
+ * url, by querying the catalogue to see if there is an item
+ * with this url as path.
+ */
 export async function getStaticProps(context) {
   const { params, preview } = context;
   const { catalogue } = params;
@@ -80,6 +89,13 @@ export async function getStaticProps(context) {
       };
     }
 
+    const translations = await serverSideTranslations(context.locale, [
+      'common',
+      'basket',
+      'search',
+      'product'
+    ]);
+
     const { type, children } = getItemType.data.catalogue;
 
     let renderer = 'folder';
@@ -104,6 +120,7 @@ export async function getStaticProps(context) {
     return {
       props: {
         ...data,
+        ...translations,
         asPath,
         renderer
       },
@@ -125,7 +142,7 @@ export async function getStaticPaths({ locales, defaultLocale }) {
   await Promise.all((locales || ['en']).map(handleLocale));
 
   async function handleLocale(localeName) {
-    const locale = getValidLocale(localeName);
+    const locale = getLocaleFromName(localeName);
 
     function handleItem({ path, name, children }) {
       if (path !== '/index' && !name?.startsWith('_')) {
@@ -195,12 +212,7 @@ export async function getStaticPaths({ locales, defaultLocale }) {
 }
 
 export default function GenericCatalogueItem({ renderer, asPath, ...rest }) {
-  const router = useRouter();
   const Component = (renderers[renderer] || renderers.folder).component;
-
-  if (router.isFallback) {
-    return <Layout loading />;
-  }
 
   return <Component key={asPath} {...rest} />;
 }

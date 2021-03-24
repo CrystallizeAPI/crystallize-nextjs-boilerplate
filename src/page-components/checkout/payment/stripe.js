@@ -11,10 +11,10 @@ import {
 
 import ServiceApi from 'lib/service-api';
 import { Button, Spinner } from 'ui';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 function Form({ stripeClientSecret, checkoutModel, onSuccess, onError }) {
-  const t = useT();
+  const { t } = useTranslation('checkout');
   const stripe = useStripe();
   const elements = useElements();
   const [status, setStatus] = useState('idle');
@@ -99,7 +99,7 @@ function Form({ stripeClientSecret, checkoutModel, onSuccess, onError }) {
           state={status === 'confirming' ? 'loading' : null}
           disabled={status === 'confirming'}
         >
-          {t('checkout.payNow')}
+          {t('payNow')}
         </Button>
       </div>
     </form>

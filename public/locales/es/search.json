@@ -1,0 +1,22 @@
+{
+  "orderTitle": "Ordenar por",
+  "order": {
+    "ITEM_NAME_ASC": "Nombre ascendente",
+    "ITEM_NAME_DESC": "Nombre descendente",
+    "PRICE_ASC": "Precio ascendente",
+    "PRICE_DESC": "Precio descendente",
+    "STOCK_ASC": "Objetos reserva ascendente",
+    "STOCK_DESC": "Objetos reserva descendente"
+  },
+  "filter": "Filtrar",
+  "facets": {
+    "viewNResults": "Mostrar {{count}} resultado",
+    "viewNResults_plural": "Mostrar {{count}} resultados",
+    "reset": "Reiniciar",
+    "price": {
+      "title": "Precio",
+      "min": "Precio mínimo",
+      "max": "Precio máximo"
+    }
+  }
+}

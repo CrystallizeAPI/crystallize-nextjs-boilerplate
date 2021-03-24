@@ -1,0 +1,8 @@
+{
+  "relatedProduct": "También podrías estar interesado en",
+  "relatedProduct_plural": "También podríais estar interesados en",
+  "addToBasket": "Añadir a la cesta",
+  "buy": "COMPRA",
+  "stock": "{{stockCount}} en reserva",
+  "outOfStock": "Sin reserva"
+}

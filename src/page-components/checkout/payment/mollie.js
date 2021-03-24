@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import ServiceApi from 'lib/service-api';
 
 export default function MollieWrapper({
@@ -8,7 +8,7 @@ export default function MollieWrapper({
   basketActions,
   onSuccess
 }) {
-  const t = useT();
+  const { t } = useTranslation('checkout');
   const [status, setStatus] = useState('loading');
 
   useEffect(() => {
@@ -54,10 +54,8 @@ export default function MollieWrapper({
   }, []);
 
   if (status === 'error') {
-    return (
-      <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Mollie' })}</p>
-    );
+    return <p>{t('loadingPaymentGatewayFailed', { name: 'Mollie' })}</p>;
   }
 
-  return <p>{t('checkout.loadingPaymentGateway')}</p>;
+  return <p>{t('loadingPaymentGateway')}</p>;
 }

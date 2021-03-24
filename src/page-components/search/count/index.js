@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 export const TotalResults = styled.span`
   color: #000;
@@ -12,7 +12,7 @@ export const TotalResults = styled.span`
 `;
 
 export default function SearchCount({ count }) {
-  const t = useT();
+  const { t } = useTranslation('common');
 
   return <TotalResults>{t('search.foundResults', { count })}</TotalResults>;
 }

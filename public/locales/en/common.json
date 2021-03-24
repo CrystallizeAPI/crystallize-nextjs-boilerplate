@@ -1,0 +1,19 @@
+{
+  "frontpage": "Home",
+  "price": "{{value, currency}}",
+  "tax": "TAX: {{value, currency}}",
+  "close": "Close",
+  "menu": "Menu",
+  "search": {
+    "placeholder": "Find things",
+    "label": "Search",
+    "foundResults": "Found {{count}} matching result",
+    "foundResults_plural": "Found {{count}} matching results"
+  },
+  "ecomBy": "eCommerce by",
+  "loadingVideo": "Loading video",
+  "slider": {
+    "previous": "See the previous item",
+    "next": "See the next item"
+  }
+}

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
-import { useLocale, getValidLocale } from 'lib/app-config';
+import { useLocale, getLocaleFromName } from 'lib/app-config';
 
 const Outer = styled.div`
   flex: 1 1 auto;
@@ -53,7 +53,7 @@ export default function LocaleSwitcher() {
       <SelectAsText>
         <span>{locale.displayName}</span>
         <select onChange={onChange} defaultValue={locale.locale}>
-          {router.locales.map(getValidLocale).map((l) => (
+          {router.locales.map(getLocaleFromName).map((l) => (
             <option value={l.locale} key={l.locale}>
               {l.displayName}
             </option>
