@@ -5,12 +5,10 @@
   "noPaymentProvidersConfigured": "Κανένας τρόπος πληρωμής δεν έχει διαμορφωθεί",
   "paymentProviderNotConfigured": "Ο πάροχος πληρωμών {{name}} δεν έχει διαμορφωθεί",
   "paymentProviderLogoAlt": "Λογότυπο για {{name}}",
-  "confirmingCardPayment": "Please wait your card details are confirmed...",
   "loadingPaymentGateway": "Αρχικοποίηση τρόπου πληρωμής...",
   "loadingPaymentGatewayFailed": "Ωχ, φαίνεται πως δεν μπορούσαμε να αρχικοποιήσουμε τον τρόπο πληρωμής: {{name}}",
   "confirmation": {
     "title": "Επιβεβαίωση παραγγελίας",
-    "shortStatus": "Η παραγγελία σας έχει επιβεβαιωθεί.",
-    "shortStatus_withEmail": "Η παραγγελία σας έχει επιβεβαιωθεί. Ένα αντίγραφο έχει αποσταλεί στη διεύθυνση: {{email}}"
+    "shortStatus": "Η παραγγελία σας έχει επιβεβαιωθεί."
   }
 }

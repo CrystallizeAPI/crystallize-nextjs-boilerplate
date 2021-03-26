@@ -7,8 +7,7 @@
   "search": {
     "label": "Αναζήτηση",
     "placeholder": "[Find things]",
-    "foundResults": "[Found {{count}} matching result]",
-    "foundResults_plural": "[Found {{count}} matching results]"
+    "foundResults": "[Found {{count}} matching result]"
   },
   "ecomBy": "Ηλεκτρονικό κατάστημα από",
   "loadingVideo": "Το βίνετο φορτώνει",

@@ -3,7 +3,6 @@
   "loading": "Espera. Estamos actualizando tu cesta...",
   "removeItem": "eliminar {{name}} de tu cesta",
   "empty": "Tu cesta está vacía",
-  "empty_inCheckout": "No tienes objetos en tu cesta",
   "remainingUntilFreeShipping": "Añade otra {{amount, currency}} a tu pedido para tener envío gratuito.",
   "totalPrice": "Precio total",
   "discount": "Descuento",

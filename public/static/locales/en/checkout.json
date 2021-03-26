@@ -5,12 +5,10 @@
   "noPaymentProvidersConfigured": "No payment providers are configured",
   "paymentProviderNotConfigured": "Payment provider {{name}} is not configured",
   "paymentProviderLogoAlt": "Logo for {{name}}",
-  "confirmingCardPayment": "Please wait your card details are confirmed...",
   "loadingPaymentGateway": "Initialising payment gateway...",
   "loadingPaymentGatewayFailed": "Oh no. Could not load the {{name}} payment gateway",
   "confirmation": {
     "title": "Order confirmation",
-    "shortStatus": "Your order has been confirmed.",
-    "shortStatus_withEmail": "Your order has been confirmed. A copy of your order has been sent to {{email}}"
+    "shortStatus": "Your order has been confirmed."
   }
 }

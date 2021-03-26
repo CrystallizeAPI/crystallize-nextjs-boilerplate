@@ -8,7 +8,6 @@
     "placeholder": "Find things",
     "label": "Search",
     "foundResults": "Found {{count}} matching result",
-    "foundResults_plural": "Found {{count}} matching results"
   },
   "ecomBy": "eCommerce by",
   "loadingVideo": "Loading video",

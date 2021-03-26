@@ -5,12 +5,10 @@
   "noPaymentProvidersConfigured": "No hay proveedores de pago configurados",
   "paymentProviderNotConfigured": "El proveedor de pagos {{name}} no está configurado",
   "paymentProviderLogoAlt": "Logo de {{name}}",
-  "confirmingCardPayment": "Porfavor espera a que los datos de la tarjeta se validen...",
   "loadingPaymentGateway": "Inicializando pasarela de pago...",
   "loadingPaymentGatewayFailed": "Oh no. No pudimos cargar la pasarela de pago de {{name}}",
   "confirmation": {
     "title": "Confirmación de pedido",
-    "shortStatus": "Tu pedido se ha confirmado.",
-    "shortStatus_withEmail": "Tu pedido se ha confirmado. Se ha enviado una copia a {{email}}"
+    "shortStatus": "Tu pedido se ha confirmado."
   }
 }

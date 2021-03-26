@@ -7,8 +7,7 @@
   "search": {
     "placeholder": "Søk etter ting",
     "label": "Søk",
-    "foundResults": "Fant {{count}} resultat",
-    "foundResults_plural": "Fant {{count}} resultater"
+    "foundResults": "Fant {{count}} resultat"
   },
   "ecomBy": "Nettbutikk av",
   "loadingVideo": "Laster video",
