@@ -1,5 +1,5 @@
 import React from 'react';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 import { Price, BeforePrice, Percentage } from './styles';
 
@@ -59,7 +59,7 @@ function OldPricing({ pricing }) {
 }
 
 function TranslatedPrice({ amount, currency }) {
-  const t = useT();
+  const { t } = useTranslation('common');
 
-  return t('common.price', { value: amount, currency });
+  return t('price', { value: amount, currency });
 }

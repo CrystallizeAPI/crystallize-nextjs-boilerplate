@@ -7,7 +7,7 @@ import ContentTransformer from 'ui/content-transformer';
 import useResizeObserver from 'lib/use-resize-observer';
 import useScrollEnded from 'lib/use-scroll-ended';
 import Listformat from 'components/listformat';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 const Outer = styled.div`
   margin-bottom: 100px;
@@ -256,21 +256,17 @@ export default function ItemCollection({ title, description, items }) {
 }
 
 function ArrowLeft(props) {
-  const t = useT();
+  const { t } = useTranslation('common');
+
   return (
-    <Arrow
-      aria-label={t('layout.slider.previous')}
-      className="prev"
-      {...props}
-    />
+    <Arrow aria-label={t('slider.previous')} className="prev" {...props} />
   );
 }
 
 function ArrowRight(props) {
-  const t = useT();
-  return (
-    <Arrow aria-label={t('layout.slider.next')} className="next" {...props} />
-  );
+  const { t } = useTranslation('common');
+
+  return <Arrow aria-label={t('slider.next')} className="next" {...props} />;
 }
 
 function ScrollLeftButton({ scrollState, onClick }) {

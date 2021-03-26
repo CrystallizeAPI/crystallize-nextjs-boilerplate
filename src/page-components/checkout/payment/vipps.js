@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import ServiceApi from 'lib/service-api';
 
 export default function VippsWrapper({
@@ -8,7 +8,7 @@ export default function VippsWrapper({
   basketActions,
   onSuccess
 }) {
-  const t = useT();
+  const { t } = useTranslation('checkout');
   const [status, setStatus] = useState('loading');
 
   useEffect(() => {
@@ -54,10 +54,8 @@ export default function VippsWrapper({
   }, []);
 
   if (status === 'error') {
-    return (
-      <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Vipps' })}</p>
-    );
+    return <p>{t('loadingPaymentGatewayFailed', { name: 'Vipps' })}</p>;
   }
 
-  return <p>{t('checkout.loadingPaymentGateway')}</p>;
+  return <p>{t('loadingPaymentGateway')}</p>;
 }

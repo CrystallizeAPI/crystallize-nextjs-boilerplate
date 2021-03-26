@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import ServiceApi from 'lib/service-api';
 
 export default function KlarnaCheckout({ checkoutModel, basketActions }) {
-  const t = useT();
+  const { t } = useTranslation('checkout');
   const paymentContainerRef = useRef();
   const [status, setStatus] = useState('loading');
 
@@ -74,9 +74,9 @@ export default function KlarnaCheckout({ checkoutModel, basketActions }) {
 
   return (
     <>
-      {status === 'loading' && <p>{t('checkout.loadingPaymentGateway')}</p>}
+      {status === 'loading' && <p>{t('loadingPaymentGateway')}</p>}
       {status === 'error' && (
-        <p>{t('checkout.loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
+        <p>{t('loadingPaymentGatewayFailed', { name: 'Klarna' })}</p>
       )}
       <div ref={paymentContainerRef} />
     </>

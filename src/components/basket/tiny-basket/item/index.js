@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useBasket } from 'components/basket';
 import AttributeList from 'components/attribute-list';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 import {
   Item,
@@ -21,7 +21,7 @@ import {
 } from './styles';
 
 export default function TinyBasketItem({ item }) {
-  const t = useT();
+  const { t } = useTranslation(['common', 'basket']);
   const [drawAttention, setDrawAttention] = useState(false);
   const { attentionCartItem, actions } = useBasket();
 
@@ -59,7 +59,7 @@ export default function TinyBasketItem({ item }) {
         <PriceWrapper>
           <PriceWrap>
             <Price>
-              {t('common.price', {
+              {t('price', {
                 value: item.price.gross,
                 currency: item.price.currency
               })}
@@ -67,7 +67,7 @@ export default function TinyBasketItem({ item }) {
           </PriceWrap>
         </PriceWrapper>
         <ItemDelete onClick={actions.removeVoucherCode}>
-          {t('basket.removeItem', item)}
+          {t('basket:removeItem', item)}
         </ItemDelete>
       </Item>
     );
@@ -85,7 +85,7 @@ export default function TinyBasketItem({ item }) {
         <PriceWrapper>
           <PriceWrap>
             <Price>
-              {t('common.price', {
+              {t('price', {
                 value: item.price.gross,
                 currency: item.price.currency
               })}
@@ -108,7 +108,7 @@ export default function TinyBasketItem({ item }) {
           </button>
         </ItemQuantityChanger>
       </div>
-      <ItemDelete onClick={remove}>{t('basket.removeItem', item)}</ItemDelete>
+      <ItemDelete onClick={remove}>{t('basket:removeItem', item)}</ItemDelete>
     </Item>
   );
 }

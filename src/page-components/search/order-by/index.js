@@ -1,9 +1,9 @@
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { orderByOptions } from 'lib/search';
 import { Outer } from './styles';
 
 export default function OrderBy({ orderBy, onChange }) {
-  const t = useT();
+  const { t } = useTranslation('search');
 
   const handleOnChange = (e) => {
     const index = orderByOptions.findIndex(
@@ -16,11 +16,11 @@ export default function OrderBy({ orderBy, onChange }) {
     <Outer
       value={orderBy?.value}
       onChange={handleOnChange}
-      aria-label={t('search.orderTitle')}
+      aria-label={t('orderTitle')}
     >
       {orderByOptions.map((option) => (
         <option key={option.value} value={option.value}>
-          {t(`search.order.${option.value}`)}
+          {t(`order.${option.value}`)}
         </option>
       ))}
     </Outer>

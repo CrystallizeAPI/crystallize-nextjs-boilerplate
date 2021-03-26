@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import produce from 'immer';
 
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { Button } from 'ui';
 
 import {
@@ -23,7 +23,7 @@ export default function Facets({
   changeQuery,
   totalResults
 }) {
-  const t = useT();
+  const { t } = useTranslation('search');
   const { priceRange } = spec.filter.productVariants;
   const { price } = aggregations;
   const [areFacetsShown, setAreFacetsShown] = useState(false);
@@ -132,11 +132,11 @@ export default function Facets({
       <FacetsDisplayer $show={areFacetsShown}>
         {price && price.min !== price.max && (
           <FacetGroup
-            title={t('search.facets.price.title')}
+            title={t('facets.price.title')}
             action={
               hasMinMaxPriceRangeValuesDifferent && (
                 <FaceGroupAction onClick={() => resetFacet({ name: 'price' })}>
-                  {t('search.facets.reset')}
+                  {t('facets.reset')}
                 </FaceGroupAction>
               )
             }
@@ -165,7 +165,7 @@ export default function Facets({
               action={
                 hasFiltersApplied && (
                   <FaceGroupAction onClick={handleAttributeValueChange}>
-                    {t('search.facets.reset')}
+                    {t('facets.reset')}
                   </FaceGroupAction>
                 )
               }
@@ -198,7 +198,7 @@ export default function Facets({
 
         <ButtonCloseFacets>
           <Button onClick={hideFilters}>
-            {t('search.facets.viewNResults', { count: totalResults })}
+            {t('facets.viewNResults', { count: totalResults })}
           </Button>
         </ButtonCloseFacets>
       </FacetsDisplayer>

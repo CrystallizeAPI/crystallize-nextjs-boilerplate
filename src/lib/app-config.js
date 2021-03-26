@@ -24,21 +24,21 @@ export function useLocale() {
   return getLocaleFromContext(router);
 }
 
-export function getValidLocale(name) {
+export function getLocaleFromName(name) {
   return appConfig.locales.find((l) => l.locale === name) || defaultLocale;
 }
 
 export function getLocaleFromContext({ locale, query, asPath } = {}) {
   if (locale) {
-    return getValidLocale(locale);
+    return getLocaleFromName(locale);
   }
 
   if (query?.locale) {
-    return getValidLocale(query.locale);
+    return getLocaleFromName(query.locale);
   }
 
   // Fallback to using the first part of the asPath
-  return getValidLocale(asPath?.split('/').filter(Boolean)[0]);
+  return getLocaleFromName(asPath?.split('/').filter(Boolean)[0]);
 }
 
 export default appConfig;

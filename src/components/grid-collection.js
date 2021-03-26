@@ -31,9 +31,9 @@ export default function GridCollection({ title, description, grids }) {
         </Description>
       )}
       {!!grids?.length &&
-        grids.map((grid) => (
+        grids.map((grid, index) => (
           <Grid
-            key={grid.id}
+            key={grid.id || index}
             model={grid}
             cellComponent={({ cell }) => (
               <GridItem data={cell.item} gridCell={cell} />

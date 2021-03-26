@@ -1,18 +1,21 @@
 import App from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { appWithTranslation } from 'next-i18next';
 
 import { AuthProvider } from 'components/auth';
 import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
 import { simplyFetchFromGraph } from 'lib/graph';
 import { getLocaleFromContext, defaultLocale } from 'lib/app-config';
-import { I18nextProvider } from 'lib/i18n';
+import { i18nextAdditionalConfig } from 'lib/i18n';
+
+import nextI18NextConfig from '../../next-i18next.config.js';
 
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps, commonData }) {
-  const { mainNavigation, locale, localeResource } = commonData;
+  const { mainNavigation, locale } = commonData;
 
   /**
    * Customise these values to match your site
@@ -36,15 +39,13 @@ function MyApp({ Component, pageProps, commonData }) {
     <>
       <DefaultSeo {...SEOSettings} />
       <QueryClientProvider client={queryClient}>
-        <I18nextProvider locale={locale} localeResource={localeResource}>
-          <SettingsProvider mainNavigation={mainNavigation}>
-            <AuthProvider>
-              <BasketProvider locale={locale}>
-                <Component {...pageProps} />
-              </BasketProvider>
-            </AuthProvider>
-          </SettingsProvider>
-        </I18nextProvider>
+        <SettingsProvider mainNavigation={mainNavigation}>
+          <AuthProvider>
+            <BasketProvider locale={locale}>
+              <Component {...pageProps} />
+            </BasketProvider>
+          </AuthProvider>
+        </SettingsProvider>
       </QueryClientProvider>
     </>
   );
@@ -55,8 +56,6 @@ MyApp.getInitialProps = async function (appContext) {
 
   try {
     const locale = getLocaleFromContext(appContext.router);
-
-    const localeResource = await import(`../locales/${locale.appLanguage}`);
 
     /**
      * Get shared data for all pages
@@ -92,7 +91,6 @@ MyApp.getInitialProps = async function (appContext) {
     return {
       ...appProps,
       commonData: {
-        localeResource: localeResource.default,
         locale,
         tenant,
         mainNavigation: mainNavigation?.filter((i) => !i.name.startsWith('_'))
@@ -114,4 +112,7 @@ MyApp.getInitialProps = async function (appContext) {
   }
 };
 
-export default MyApp;
+export default appWithTranslation(MyApp, {
+  ...nextI18NextConfig,
+  ...i18nextAdditionalConfig
+});

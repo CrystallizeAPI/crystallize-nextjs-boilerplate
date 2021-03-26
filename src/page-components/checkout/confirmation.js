@@ -7,7 +7,7 @@ import Layout from 'components/layout';
 import { useBasket } from 'components/basket';
 import OrderItems from 'components/order-items';
 import { H1, H3, Outer, Header } from 'ui';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 import BillingDetails from './billing-details';
 
@@ -37,7 +37,7 @@ const TotalLine = styled.div`
 
 export default function Confirmation({ order }) {
   const basket = useBasket();
-  const t = useT();
+  const { t } = useTranslation(['common', 'checkout', 'order']);
   const router = useRouter();
 
   // Empty the basket
@@ -84,12 +84,12 @@ export default function Confirmation({ order }) {
   const { total } = order;
 
   return (
-    <Layout title={t('checkout.confirmation.title')}>
+    <Layout title={t('checkout:confirmation.title')}>
       <Outer>
         <CustomHeader>
-          <H1>{t('checkout.confirmation.title')}</H1>
+          <H1>{t('checkout:confirmation.title')}</H1>
           <p>
-            {t('checkout.confirmation.shortStatus', {
+            {t('checkout:confirmation.shortStatus', {
               context: email ? 'withEmail' : null,
               email
             })}
@@ -97,18 +97,18 @@ export default function Confirmation({ order }) {
           <Line />
           <BillingDetails order={order} />
           <Line />
-          <H3>{t('order.item', { count: cart.length })}</H3>
+          <H3>{t('order:item', { count: cart.length })}</H3>
           <OrderItems cart={cart} />
           <Totals>
             <TotalLine bold>
-              {t('order.total')}:{' '}
-              {t('common.price', {
+              {t('order:total')}:{' '}
+              {t('price', {
                 value: total.gross,
                 currency: total.currency
               })}
             </TotalLine>
             <TotalLine>
-              {t('common.tax', {
+              {t('tax', {
                 value: total.gross - total.net,
                 currency: total.currency
               })}

@@ -10,12 +10,13 @@ export const Outer = styled.div`
   &:nth-child(even) {
     grid-template-areas: 'media media media media media media . content content content content content';
   }
-  ${isNot('text')`
+  ${isNot('$text')`
     grid-template-areas: 'media media media media media media media media media media media media' ;
-  `}
-  ${isNot('media')`
+  `};
+
+  ${isNot('$media')`
     grid-template-areas: '. . . . content content content content . . . .';
-  `} */
+  `};
 `;
 
 export const Title = styled.div`

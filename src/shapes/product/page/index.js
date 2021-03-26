@@ -16,7 +16,7 @@ import VariantSelector from './components/variant-selector';
 import Buy from './components/buy';
 import { getData } from '../get-data';
 import Stock from './components/stock';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 
 import {
   Inner,
@@ -36,7 +36,7 @@ import {
 export { getData };
 
 export default function ProductShape({ product, locale }) {
-  const t = useT();
+  const { t } = useTranslation('product');
   const { name, components = [], variants = [], topics = [] } = product;
 
   // Set the selected variant to the default
@@ -126,10 +126,7 @@ export default function ProductShape({ product, locale }) {
 
       {Boolean(relatedProducts) && (
         <RelatedContainer>
-          <Collection
-            items={relatedProducts}
-            title={t('product.relatedProduct')}
-          />
+          <Collection items={relatedProducts} title={t('relatedProduct')} />
         </RelatedContainer>
       )}
     </>

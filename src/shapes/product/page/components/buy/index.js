@@ -3,7 +3,7 @@ import { LayoutContext } from '@crystallize/react-layout';
 
 import { Button } from 'ui';
 import { useBasket } from 'components/basket';
-import { useT } from 'lib/i18n';
+import { useTranslation } from 'lib/i18n';
 import { useLocale } from 'lib/app-config';
 
 import {
@@ -18,7 +18,7 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
   const [buying, setBuying] = useState(false);
   const basket = useBasket();
   const layout = useContext(LayoutContext);
-  const t = useT();
+  const { t } = useTranslation(['common', 'product']);
   const locale = useLocale();
 
   function buy() {
@@ -38,7 +38,7 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
     });
   }
 
-  const textDefaultPrice = t('common.price', {
+  const textDefaultPrice = t('price', {
     value: pricing?.defaultPrice?.price,
     currency: pricing?.defaultPrice?.currency
   });
@@ -72,7 +72,7 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
       {pricing?.discountPrice ? (
         <Price discounted>
           <strong>
-            {t('common.price', {
+            {t('price', {
               value: pricing?.discountPrice?.price,
               currency: pricing?.discountPrice?.currency
             })}
@@ -93,7 +93,7 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
         disabled={!pricing?.defaultPrice.currency}
         state={buying && 'loading'}
       >
-        {t('product.addToBasket')}
+        {t('product:addToBasket')}
       </Button>
     </ProductFooter>
   );
