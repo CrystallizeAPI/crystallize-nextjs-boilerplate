@@ -1,5 +1,6 @@
 {
   "relatedProduct": "Relatert produkt",
+  "relatedProduct_plural": "Relaterte produkter",
   "addToBasket": "Legg i handlekurv",
   "buy": "KJØP",
   "stock": "{{stockCount}} på lager",
