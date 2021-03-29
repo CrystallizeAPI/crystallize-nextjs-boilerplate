@@ -7,7 +7,7 @@
   "search": {
     "placeholder": "Find things",
     "label": "Search",
-    "foundResults": "Found {{count}} matching result",
+    "foundResults": "Found {{count}} matching result"
   },
   "ecomBy": "eCommerce by",
   "loadingVideo": "Loading video",
