@@ -14,6 +14,7 @@
   "search": {
     "placeholder": "[Find things]",
     "label": "Buscar",
-    "foundResults": "Hemos encontrado {{count}} resultado de búsqueda"
+    "foundResults": "Hemos encontrado {{count}} resultado de búsqueda",
+    "foundResults_plural": "Hemos encontrado {{count}} resultados de búsqueda"
   }
 }
