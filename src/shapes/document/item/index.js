@@ -46,7 +46,7 @@ export default function DocumentItem({ data, colSpan = '4' }) {
         <Text>
           <Title>{name}</Title>
           <Description>
-            <ContentTransformer {...description?.content?.json} />
+            <ContentTransformer json={description?.content?.json} />
           </Description>
         </Text>
       </Outer>

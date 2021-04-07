@@ -25,7 +25,7 @@ const Paragraph = ({
         )}
         {hasText && (
           <Body>
-            <ContentTransformer {...body.json} />
+            <ContentTransformer json={body.json} />
           </Body>
         )}
       </Text>

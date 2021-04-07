@@ -27,7 +27,7 @@ export default function GridCollection({ title, description, grids }) {
       {!!title && <Title as="h4">{title}</Title>}
       {!!description && (
         <Description>
-          <ContentTransformer {...description} />
+          <ContentTransformer json={description} />
         </Description>
       )}
       {!!grids?.length &&

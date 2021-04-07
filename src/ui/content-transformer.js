@@ -1,15 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import CrystallizeContentTransformer from '@crystallize/content-transformer/react';
+import {
+  ContentTransformer,
+  NodeContent
+} from '@crystallize/react-content-transformer';
 
+/**
+ * An example of how to override the rendering
+ * of a link node
+ */
 const commonTransfomerOverrides = {
-  // Example of a link override
-  link({ metadata, renderNode, ...rest }) {
-    const { href } = metadata;
+  link(props) {
+    const { href } = props.metadata;
 
     return (
       <a className="fancy-link" href={href}>
-        {renderNode(rest)}
+        <NodeContent {...props} />
       </a>
     );
   }
@@ -85,13 +91,10 @@ const ContentTransformerOuter = styled.div`
   }
 `;
 
-export default function ContentTransformer(props) {
+export default function StyledContentTransformer({ json }) {
   return (
     <ContentTransformerOuter>
-      <CrystallizeContentTransformer
-        {...props}
-        overrides={commonTransfomerOverrides}
-      />
+      <ContentTransformer json={json} overrides={commonTransfomerOverrides} />
     </ContentTransformerOuter>
   );
 }

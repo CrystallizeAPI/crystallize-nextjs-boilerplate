@@ -21,7 +21,7 @@ export default function PageHeader({ title, description }) {
     <Outer>
       <H1>{title}</H1>
       <Description>
-        <ContentTransformer {...description} />
+        <ContentTransformer json={description} />
       </Description>
     </Outer>
   );

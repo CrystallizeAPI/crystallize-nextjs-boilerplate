@@ -229,7 +229,7 @@ export default function ItemCollection({ title, description, items }) {
       {Boolean(title) && <Title as="h4">{title}</Title>}
       {Boolean(description) && (
         <Description>
-          <ContentTransformer {...description} />
+          <ContentTransformer json={description} />
         </Description>
       )}
       {Boolean(items) && (

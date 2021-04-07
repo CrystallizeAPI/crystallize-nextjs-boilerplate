@@ -189,7 +189,7 @@ const Banner = ({
         {!!title && <Title>{title}</Title>}
         {!!description && (
           <Description>
-            <ContentTransformer {...description} />
+            <ContentTransformer json={description} />
           </Description>
         )}
         {!!link && (

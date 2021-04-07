@@ -101,7 +101,7 @@ export default function ProductShape({ product, locale }) {
             <Title>{name}</Title>
             {summaryComponent && (
               <Summary>
-                <ContentTransformer {...summaryComponent?.content?.json} />
+                <ContentTransformer json={summaryComponent?.content?.json} />
               </Summary>
             )}
             {topics?.map((topic) => (

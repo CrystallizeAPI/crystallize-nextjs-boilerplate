@@ -75,7 +75,7 @@ const ShapeComponents = ({ components = [], overrides }) => {
             return (
               <ContentOuter key={key}>
                 <Component>
-                  <ContentTransformer {...component.content.json} />
+                  <ContentTransformer json={component.content.json} />
                 </Component>
               </ContentOuter>
             );
