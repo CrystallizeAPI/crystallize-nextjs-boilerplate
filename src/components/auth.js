@@ -13,7 +13,7 @@ export async function loginWithMagicLink(email) {
         user {
           sendMagicLink(
             email: "${email}"
-            redirectURLAfterLogin: "${location.protocol}//${location.host}/my-account"
+            redirectURLAfterLogin: "${location.protocol}//${location.host}/account"
           ) {
             success
             error
