@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import produce from 'immer';
 
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { simplyFetchFromSearchGraph } from 'lib/graph';
 import { SEARCH_QUERY } from 'lib/search';
 import { useLocale } from 'lib/app-config';

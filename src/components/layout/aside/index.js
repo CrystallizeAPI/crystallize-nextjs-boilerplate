@@ -7,7 +7,7 @@ import TinyBasket from 'components/basket/tiny-basket';
 import Totals from 'components/basket/totals';
 import { Button } from 'ui';
 import { Spinner } from 'ui/spinner';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 import { Outer, Heading, Content, Footer } from './styles';
 

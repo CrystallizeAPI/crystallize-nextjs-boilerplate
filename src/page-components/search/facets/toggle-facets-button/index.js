@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { Button, Text } from './styles';
 import IconFilters from 'ui/icons/filters';
 

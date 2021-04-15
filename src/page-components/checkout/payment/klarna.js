@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import ServiceApi from 'lib/service-api';
 
 export default function KlarnaCheckout({ checkoutModel, basketActions }) {

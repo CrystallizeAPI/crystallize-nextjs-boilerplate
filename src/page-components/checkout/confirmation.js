@@ -7,7 +7,7 @@ import Layout from 'components/layout';
 import { useBasket } from 'components/basket';
 import OrderItems from 'components/order-items';
 import { H1, H3, Outer, Header } from 'ui';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 import BillingDetails from './billing-details';
 

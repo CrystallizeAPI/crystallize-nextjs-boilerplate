@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import ServiceApi from 'lib/service-api';
 
 export default function VippsWrapper({

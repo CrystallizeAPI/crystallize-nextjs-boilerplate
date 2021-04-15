@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { Outer, Values, Input, RangeWrap } from './styles';
 
 export function Price({ min, max, value, onChange }) {

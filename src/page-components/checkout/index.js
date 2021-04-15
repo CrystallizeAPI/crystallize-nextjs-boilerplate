@@ -4,7 +4,7 @@ import { useBasket } from 'components/basket';
 import Layout from 'components/layout';
 import OrderItems from 'components/order-items';
 import Totals from 'components/basket/totals';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 import Payment from './payment';
 import {

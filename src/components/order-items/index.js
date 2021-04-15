@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AttributeList from 'components/attribute-list';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 import {
   Item,

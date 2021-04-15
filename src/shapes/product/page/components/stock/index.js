@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconStock } from 'ui/icons';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { Outer, StockColorIndicator } from './styles';
 
 const STOCK_LIMIT = 20;

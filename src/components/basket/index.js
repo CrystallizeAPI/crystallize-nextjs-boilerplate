@@ -21,6 +21,7 @@ export function BasketProvider({ locale, children }) {
       status,
       clientBasket,
       serverBasket,
+      totalQuantity,
       changeTriggeredByOtherTab,
       attentionCartItem
     },
@@ -154,21 +155,6 @@ export function BasketProvider({ locale, children }) {
   }
 
   const cart = (serverBasket?.cart || []).map(withLocalState).filter(Boolean);
-  const totalWithoutDiscounts = cart
-    .filter((c) => !c.sku.startsWith('--voucher--'))
-    .reduce(
-      (acc, curr) => {
-        return {
-          gross: acc.gross + curr.price.gross,
-          net: acc.net + curr.price.net,
-          quantity: acc.quantity + curr.quantity
-        };
-      },
-      {
-        gross: 0,
-        quantity: 0
-      }
-    );
 
   /**
    * Something went wrong when fetching the basket from the Service API
@@ -195,7 +181,7 @@ export function BasketProvider({ locale, children }) {
         basketModel,
         cart,
         total: serverBasket?.total || {},
-        totalWithoutDiscounts,
+        totalQuantity,
         attentionCartItem,
         actions: {
           addVoucherCode: (voucherCode) =>

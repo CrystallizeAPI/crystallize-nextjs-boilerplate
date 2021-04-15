@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { responsive, H3 } from 'ui';
 
 const Outer = styled.div`

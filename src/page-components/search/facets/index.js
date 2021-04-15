@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import produce from 'immer';
 
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { Button } from 'ui';
 
 import {

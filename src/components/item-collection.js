@@ -7,7 +7,7 @@ import ContentTransformer from 'ui/content-transformer';
 import useResizeObserver from 'lib/use-resize-observer';
 import useScrollEnded from 'lib/use-scroll-ended';
 import Listformat from 'components/listformat';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 const Outer = styled.div`
   margin-bottom: 100px;

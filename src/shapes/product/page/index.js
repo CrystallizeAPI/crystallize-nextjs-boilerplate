@@ -16,7 +16,7 @@ import VariantSelector from './components/variant-selector';
 import Buy from './components/buy';
 import { getData } from '../get-data';
 import Stock from './components/stock';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 import {
   Inner,

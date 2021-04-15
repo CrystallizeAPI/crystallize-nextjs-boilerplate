@@ -191,4 +191,9 @@ export default produce(function reducer(draft, { action, ...rest }) {
       }
     );
   }
+
+  draft.totalQuantity = draft.clientBasket.cart.reduce(
+    (acc, c) => acc + c.quantity,
+    0
+  );
 });

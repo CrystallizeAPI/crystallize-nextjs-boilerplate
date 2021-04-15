@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 
 import ServiceApi from 'lib/service-api';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { useBasket } from 'components/basket';
 import { Spinner } from 'ui/spinner';
 

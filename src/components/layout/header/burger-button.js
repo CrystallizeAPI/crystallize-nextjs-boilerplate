@@ -1,4 +1,4 @@
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import styled from 'styled-components';
 
 import { responsive } from 'ui';

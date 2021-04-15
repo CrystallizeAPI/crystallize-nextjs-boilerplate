@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { Button } from 'ui';
 import ServiceApi from 'lib/service-api';
 import { useBasket } from 'components/basket';

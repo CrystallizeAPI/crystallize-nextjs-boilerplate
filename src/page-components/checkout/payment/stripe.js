@@ -11,7 +11,7 @@ import {
 
 import ServiceApi from 'lib/service-api';
 import { Button, Spinner } from 'ui';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 function Form({ stripeClientSecret, checkoutModel, onSuccess, onError }) {
   const { t } = useTranslation('checkout');

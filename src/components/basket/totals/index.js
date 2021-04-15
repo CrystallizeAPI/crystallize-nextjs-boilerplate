@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { Spinner } from 'ui/spinner';
 
 import { useBasket } from '../index';
@@ -9,7 +9,7 @@ import { Outer, Rows, Row, RowValue, SpinnerWrap } from './styles';
 
 export default function Totals(props) {
   const { t } = useTranslation(['common', 'basket']);
-  const { cart, total, totalWithoutDiscounts, status } = useBasket();
+  const { cart, total, status } = useBasket();
 
   if (cart.length === 0) {
     return null;
@@ -34,7 +34,7 @@ export default function Totals(props) {
         <Row modifier="total-price">
           <span>{t('basket:totalPrice')}:</span>
           <RowValue hide={isLoading}>
-            {printCurrencyAmount(totalWithoutDiscounts.gross)}
+            {printCurrencyAmount(total.gross + total.discount)}
           </RowValue>
         </Row>
         {hasDiscount && (

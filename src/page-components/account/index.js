@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { H1, Button } from 'ui';
 import Layout from 'components/layout';
 import { useAuth, loginWithMagicLink } from 'components/auth';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 import { LoginStyle, Outer, Fields } from './styles';
 

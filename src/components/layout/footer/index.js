@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import LogoCrystallize from 'ui/icons/logo-crystallize';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 
 import { useSettings } from 'components/settings-context';
 

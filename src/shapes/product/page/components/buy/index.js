@@ -3,7 +3,7 @@ import { LayoutContext } from '@crystallize/react-layout';
 
 import { Button } from 'ui';
 import { useBasket } from 'components/basket';
-import { useTranslation } from 'lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { useLocale } from 'lib/app-config';
 
 import {
