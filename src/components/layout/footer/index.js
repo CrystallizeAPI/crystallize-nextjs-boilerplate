@@ -15,7 +15,7 @@ export default function Footer() {
   return (
     <Outer>
       <Link href="/">
-        <a>
+        <a aria-label="Logo">
           <Logo>
             <img src="/static/shop-logo.svg" alt="" width="56" height="84" />
           </Logo>
