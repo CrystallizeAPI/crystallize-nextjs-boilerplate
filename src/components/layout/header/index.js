@@ -39,7 +39,7 @@ export default function Header({ simple, preview }) {
       )}
       <Outer simple={simple}>
         <Link href="/" passHref>
-          <Logo>
+          <Logo aria-label="Logo">
             <img src="/static/shop-logo.svg" alt="" width="207" height="35" />
           </Logo>
         </Link>
