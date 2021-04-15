@@ -8,7 +8,6 @@ import { SettingsProvider } from 'components/settings-context';
 import { BasketProvider } from 'components/basket';
 import { simplyFetchFromGraph } from 'lib/graph';
 import { getLocaleFromContext, defaultLocale } from 'lib/app-config';
-import { i18nextAdditionalConfig } from 'lib/i18n';
 
 import nextI18NextConfig from '../../next-i18next.config.js';
 
@@ -112,7 +111,4 @@ MyApp.getInitialProps = async function (appContext) {
   }
 };
 
-export default appWithTranslation(MyApp, {
-  ...nextI18NextConfig,
-  ...i18nextAdditionalConfig
-});
+export default appWithTranslation(MyApp, nextI18NextConfig);
