@@ -38,7 +38,7 @@
     "@crystallize/content-transformer": "9.0.0",
     "@crystallize/grid-renderer": "2.0.1",
     "@crystallize/react-content-transformer": "1.1.1",
-    "@crystallize/react-image": "6.0.2",
+    "@crystallize/react-image": "6.1.0",
     "@crystallize/react-layout": "3.2.0",
     "@crystallize/react-video": "1.6.3",
     "@stripe/react-stripe-js": "1.1.2",
