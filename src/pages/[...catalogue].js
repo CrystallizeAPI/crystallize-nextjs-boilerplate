@@ -24,6 +24,8 @@ import FolderPage, { getData as getDataFolder } from 'page-components/folder';
 import ProdPage, { getData as getDataProd } from 'page-components/product';
 import SearchPage, { getData as getDataSearch } from 'page-components/search';
 
+import nextI18NextConfig from '../../next-i18next.config.js';
+
 const renderers = {
   document: {
     component: DocPage,
@@ -89,12 +91,11 @@ export async function getStaticProps(context) {
       };
     }
 
-    const translations = await serverSideTranslations(context.locale, [
-      'common',
-      'basket',
-      'search',
-      'product'
-    ]);
+    const translations = await serverSideTranslations(
+      context.locale,
+      ['common', 'basket', 'search', 'product'],
+      nextI18NextConfig
+    );
 
     const { type, children } = getItemType.data.catalogue;
 

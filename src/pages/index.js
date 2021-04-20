@@ -3,6 +3,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Cmp, { getData } from 'page-components/folder';
 import { getLocaleFromContext } from 'lib/app-config';
 
+import nextI18NextConfig from '../../next-i18next.config.js';
+
 export async function getStaticProps(context) {
   const { preview } = context;
   const locale = getLocaleFromContext(context);
@@ -17,7 +19,11 @@ export async function getStaticProps(context) {
     props: {
       ...data,
       hidePageHeader: true,
-      ...(await serverSideTranslations(context.locale, ['common', 'basket']))
+      ...(await serverSideTranslations(
+        context.locale,
+        ['common', 'basket'],
+        nextI18NextConfig
+      ))
     },
     revalidate: 1
   };
