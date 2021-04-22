@@ -105,7 +105,7 @@ export const orderByOptions = [
 ].map((o) => ({ value: `${o.field}_${o.direction}`, ...o }));
 
 export const defaultSpec = {
-  first: 25,
+  first: 5,
   orderBy: {
     field: orderByOptions[0].field,
     direction: orderByOptions[0].direction
