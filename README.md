@@ -4,42 +4,47 @@
 [![Next: latest][2]][3] [![code style: prettier][4]][5]
 [![code linter: Eslint][6]][7]
 
-A fully-working ecommerce storefront boilerplate built with NextJS that runs on the [headless ecommerce][8] & GraphQL based [product Information Management][9]
+A fully-working ecommerce storefront boilerplate built with NextJS that runs on
+the [headless ecommerce][8] & GraphQL based [product Information Management][9]
 service [Crystallize][10]. **Clone, run it up and sell!**
 
-_⚠️  We also have some other [open-source ecommerce storefronts][11] that could be of your interest._
-
+_⚠️ We also have some other [open-source ecommerce storefronts][11] that could
+be of your interest._
 
 ## See a LIVE demo
 
 Enjoy our [demo furniture site][24].
 
-
 ![Website that sell plants displaying them as a grid. Ecommerce created with the Crystallize NextJS boilerplate and powered by our GraphQL API](https://i.imgur.com/v3tGgyZ.png)
-
 
 ## Introduction
 
 This Next.js boilerplate is a great starting point when building [React
-ecommerce][11] experiences that **create wonderful user experiences because we focus
-on [frontend performance][12]**.
+ecommerce][11] experiences that **create wonderful user experiences because we
+focus on [frontend performance][12]**.
 
-Build **a rich ecommerce that stands out from
-the others with our super structured [PIM][13] engine** (_Product Information Management_)
-in Crystallize powering your product catalogue.
+Build **a rich ecommerce that stands out from the others with our super
+structured [PIM][13] engine** (_Product Information Management_) in Crystallize
+powering your product catalogue.
 
-[Site speed](https://crystallize.com/learn/best-practices/frontend-performance/site-speed) is an important
-component of the [SEO checklist](https://crystallize.com/learn/best-practices/seo/seo-checklist). [Measuring core web vitals](https://crystallize.com/learn/best-practices/frontend-performance/core-web-vitals) is important to make sure you rank higher in search engines and also
-improves your conversion rate. You sell attract more customers and sell more.
+[Site speed](https://crystallize.com/learn/best-practices/frontend-performance/site-speed)
+is an important component of the
+[SEO checklist](https://crystallize.com/learn/best-practices/seo/seo-checklist).
+[Measuring core web vitals](https://crystallize.com/learn/best-practices/frontend-performance/core-web-vitals)
+is important to make sure you rank higher in search engines and also improves
+your conversion rate. You sell attract more customers and sell more.
 
-Build content rich eCommerce experiences. Freedom in [content modeling](https://crystallize.com/learn/best-practices/information-architecture/content-modeling)
+Build content rich eCommerce experiences. Freedom in
+[content modeling](https://crystallize.com/learn/best-practices/information-architecture/content-modeling)
 builds the foundation for an successful content strategy.
 
-## Get Started Inmediately
+## Get Started Immediately
 
-To get started, you can either watch the [livestream where we create an ecommerce from zero to production explaining all the steps][26] or follow the instructions below 👇.
+To get started, you can either watch the [livestream where we create an
+ecommerce from zero to production explaining all the steps][26] or follow the
+instructions below 👇.
 
-Use the [Crystallize CLI][17] to bootstrap a project in 4 simple guied steps. 
+Use the [Crystallize CLI][17] to bootstrap a project in 4 simple guied steps.
 
 Simply run the following command (>= Node 8 required):
 
@@ -48,26 +53,35 @@ npx @crystallize/cli my-project
 ```
 
 **This will walk you through the steps:**
+
 1. Choose the tech stack you want
-> To get this storefront, select: Next.js - Complete ecommerce
+
+   > To get this storefront, select: Next.js - Complete ecommerce
 
 2. Specify your tenant (the name of your project)
-> At this point, you can select our demo tenant (furniture) or use your own.
-> If you choose your own, you will have to create the content on our [Product Information Management][9]
+
+   > At this point, you can select our demo tenant (furniture) or use your own.
+   > If you choose your own, you will have to create the content on our [Product
+   > Information Management][9]
 
 3. Select if you want to support multiple languages
 
 4. Select the service API
-> At this point, you can select between our demo Service API or your own service API tenant.
-> 
-> A [Service API is an open-source project that acts as backend for any of our open-source storefronts][25] that currently hndles the basket, the checkout, the authentication, webhooks, etc. You can modify and/or extended it as you like.
-> Deploy it to Vercel, Amazon Web Services, etc. (we're adding new provieders)
-> 
-> Take into account that if you've selected your own tenant, you need to have your own service API
-> because our demo Service API doesn't support products with different shape/attributes.
-> 
-> To have your own Service API, you'll need to execute again, our CLI and select 
-> the option "Service API - Backend for any of the frontends"
+   > At this point, you can select between our demo Service API or your own
+   > service API tenant.
+   >
+   > A [Service API is an open-source project that acts as backend for any of
+   > our open-source storefronts][25] that currently hndles the basket, the
+   > checkout, the authentication, webhooks, etc. You can modify and/or extended
+   > it as you like. Deploy it to Vercel, Amazon Web Services, etc. (we're
+   > adding new provieders)
+   >
+   > Take into account that if you've selected your own tenant, you need to have
+   > your own service API because our demo Service API doesn't support products
+   > with different shape/attributes.
+   >
+   > To have your own Service API, you'll need to execute again, our CLI and
+   > select the option "Service API - Backend for any of the frontends"
 
 Once your project has been created, you can simply navigate into your project's
 directory and run the following to start up your development server:
@@ -128,6 +142,7 @@ and [Platform.sh][23]
 - Run `vercel`
 
 ## License
+
 Open-source and MIT license.
 
 [0]: https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square
