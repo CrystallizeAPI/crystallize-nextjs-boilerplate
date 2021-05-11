@@ -36,6 +36,8 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
         ? pricing?.discountPrice?.identifier
         : pricing?.defaultPrice.identifier || locale.crystallizePriceVariant
     });
+
+    layout.actions.showRight();
   }
 
   const textDefaultPrice = t('price', {
@@ -51,16 +53,13 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
     async function drawAttentionToItemInBasket() {
       setBuying(false);
 
-      // Wait for the layout menu to open
-      await layout.actions.showRight();
-
       /**
        * Give the user time to rest their eyes after the
-       * right layou menu has been shown
+       * right layout menu has been shown
        */
       setTimeout(() => {
         basket.actions.drawAttention(selectedVariant.sku);
-      }, 250);
+      }, 100);
     }
     if (buying && basket.status === 'ready') {
       drawAttentionToItemInBasket();

@@ -115,14 +115,12 @@ export function BasketProvider({ locale, children }) {
       }
     }
 
-    let timeout;
     if (status === 'server-basket-is-stale') {
-      timeout = setTimeout(getServerBasket, 250);
+      getServerBasket();
     }
 
     return () => {
       stale = true;
-      clearTimeout(timeout);
     };
   }, [status, locale.crystallizeCatalogueLanguage, basketModel]);
 
