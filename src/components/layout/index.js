@@ -44,6 +44,7 @@ export default function Layout({
 
   //@TODO add url to .env
   const siteUrl = null;
+
   return (
     <>
       <Head>

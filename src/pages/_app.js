@@ -1,4 +1,5 @@
 import App from 'next/app';
+import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { appWithTranslation } from 'next-i18next';
@@ -36,6 +37,22 @@ function MyApp({ Component, pageProps, commonData }) {
 
   return (
     <>
+      <Head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-DB8GYMSJT0"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DB8GYMSJT0');
+          `
+          }}
+        />
+      </Head>
       <DefaultSeo {...SEOSettings} />
       <QueryClientProvider client={queryClient}>
         <SettingsProvider mainNavigation={mainNavigation}>

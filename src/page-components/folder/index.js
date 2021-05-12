@@ -1,5 +1,6 @@
 import React from 'react';
 
+import * as tracker from 'lib/tracker';
 import FolderShape, {
   getData as getFolderData,
   getFolderTitle
@@ -14,6 +15,15 @@ export default function FolderPage({ folder, preview, hidePageHeader }) {
   if (!folder) {
     return <FolderNotFound />;
   }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  React.useEffect(() => {
+    if (location.pathname === '/') {
+      tracker.logEvent({
+        eventType: 'home-page-view'
+      });
+    }
+  }, []);
 
   const { components } = folder;
   const title = getFolderTitle(folder);

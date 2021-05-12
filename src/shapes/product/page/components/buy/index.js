@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { LayoutContext } from '@crystallize/react-layout';
 
+import * as tracker from 'lib/tracker';
 import { Button } from 'ui';
 import { useBasket } from 'components/basket';
 import { useTranslation } from 'next-i18next';
@@ -21,7 +22,7 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
   const { t } = useTranslation(['common', 'product']);
   const locale = useLocale();
 
-  function buy() {
+  async function buy() {
     /**
      * Give user immidiate feedback that they've triggered
      * the buy action. This is important for user gratification
@@ -35,6 +36,19 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
       priceVariantIdentifier: pricing?.discountPrice
         ? pricing?.discountPrice?.identifier
         : pricing?.defaultPrice.identifier || locale.crystallizePriceVariant
+    });
+
+    await tracker.waitUntilLoaded();
+
+    tracker.logEvent({
+      eventType: 'add-to-cart',
+      cartId: tracker.getVisitorId(),
+      productDetails: [
+        {
+          product: { id: selectedVariant.sku },
+          quantity: 1
+        }
+      ]
     });
   }
 

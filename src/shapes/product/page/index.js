@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image as Img } from '@crystallize/react-image';
 import ContentTransformer from 'ui/content-transformer';
 import {
@@ -10,6 +10,7 @@ import {
 import ShapeComponents from 'components/shape/components';
 import getRelativePriceVariants from 'lib/pricing';
 import Collection from 'components/item-collection';
+import * as tracker from 'lib/tracker';
 
 import TopicTag from 'components/topic-tag';
 import VariantSelector from './components/variant-selector';
@@ -43,6 +44,49 @@ export default function ProductShape({ product, locale }) {
   const [selectedVariant, setSelectedVariant] = useState(
     variants.find((variant) => variant.isDefault)
   );
+
+  // Recommended products
+  const [othersViewedProducts, setOthersViewedProducts] = useState(null);
+
+  useEffect(() => {
+    (async function getRecommendations() {
+      if (othersViewedProducts) {
+        return;
+      }
+
+      await tracker.waitUntilLoaded();
+
+      fetch(
+        `/api/recommendations/${
+          selectedVariant.sku
+        }?visitorId=${tracker.getVisitorId()}`
+      )
+        .then((r) => r.json())
+        .then((r) => {
+          const products = r?.results?.map((p) => {
+            const item = p.itemMetadata.catalogItem;
+            const { productMetadata } = item;
+
+            return {
+              id: p.id,
+              name: item.title,
+              type: 'product',
+              path: productMetadata.canonicalProductUri.replace(
+                'https://recommend.superfast.shop',
+                ''
+              ),
+              images: productMetadata.images,
+              price: {
+                price: productMetadata.exactPrice.originalPrice,
+                currency: productMetadata.currencyCode
+              }
+            };
+          });
+
+          setOthersViewedProducts(products);
+        });
+    })();
+  }, []);
 
   function onVariantChange(variant) {
     setSelectedVariant(variant);
@@ -126,7 +170,21 @@ export default function ProductShape({ product, locale }) {
 
       {Boolean(relatedProducts) && (
         <RelatedContainer>
-          <Collection items={relatedProducts} title={t('relatedProduct')} />
+          <Collection
+            items={relatedProducts}
+            title={t('relatedProduct', { count: relatedProducts.length })}
+          />
+        </RelatedContainer>
+      )}
+
+      {Boolean(othersViewedProducts) && (
+        <RelatedContainer>
+          <Collection
+            items={othersViewedProducts}
+            title={t('othersViewedProducts', {
+              count: othersViewedProducts.length
+            })}
+          />
         </RelatedContainer>
       )}
     </>

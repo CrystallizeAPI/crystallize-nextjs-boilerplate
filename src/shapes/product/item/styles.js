@@ -25,17 +25,14 @@ export const ImageWrapper = styled.div`
   height: 100%;
   border: 1px solid #dfdfdf;
   background: var(--listformat-product-background);
+
+  picture,
   figure {
+    display: block;
     height: 100%;
   }
-`;
 
-export const Img = styled(Image)`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-
-  > img {
+  img {
     display: block;
     object-fit: var(--listformat-product-image-fit);
     object-position: var(--listformat-product-image-position);
@@ -43,6 +40,12 @@ export const Img = styled(Image)`
     height: 100%;
     overflow: hidden;
   }
+`;
+
+export const Img = styled(Image)`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 `;
 
 export const Footer = styled.div`

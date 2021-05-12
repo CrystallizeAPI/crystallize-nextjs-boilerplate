@@ -20,7 +20,8 @@
     "prod": "npm run build && npm run start",
     "lint": "eslint .",
     "validate": "lint-staged",
-    "bootstrap-shapes-to-tenant": "node ./_repo-utils/bootstrap-furniture-shapes.js"
+    "google-data-export:dev": "nodemon google-data-export",
+    "google-data-export": "node google-data-export"
   },
   "husky": {
     "hooks": {
@@ -64,6 +65,7 @@
     "@crystallize/import-utilities": "0.10.4",
     "babel-eslint": "10.1.0",
     "babel-plugin-styled-components": "1.10.7",
+    "dotenv-flow": "^3.2.0",
     "eslint": "7.0.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-jsx-a11y": "6.2.3",
@@ -73,7 +75,8 @@
     "fs-extra": "9.0.1",
     "husky": "4.2.1",
     "lint-staged": "10.2.2",
-    "node-fetch": "2.6.1",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7",
     "prettier": "2.0.5"
   }
 }

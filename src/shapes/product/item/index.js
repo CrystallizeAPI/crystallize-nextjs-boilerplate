@@ -18,6 +18,41 @@ export default function ProductItem({ data }) {
   }
 
   const { name, path, type, variants, matchingVariant } = data;
+
+  // Google recommendations result
+  if (!variants && data.images) {
+    const { images, price } = data;
+    return (
+      <Link href={path} passHref>
+        <Outer type={type}>
+          <Inner>
+            <ImageWrapper>
+              <figure>
+                <picture>
+                  <source
+                    srcSet={images.map((i) => `${i.uri} ${i.width}w`)}
+                    type={
+                      images[0].uri.endsWith('.jpg')
+                        ? 'image/jpeg'
+                        : 'image/png'
+                    }
+                    sizes="250px"
+                  />
+                  <img src={images[0].uri} />
+                </picture>
+              </figure>
+            </ImageWrapper>
+
+            <Footer>
+              <H3>{name}</H3>
+              <Price pricing={{ defaultPrice: price }} />
+            </Footer>
+          </Inner>
+        </Outer>
+      </Link>
+    );
+  }
+
   const variant = matchingVariant || findDefaultVariant(variants) || {};
   const image = variant?.images?.[0] || variant?.image;
   const pricing = getRelativePriceVariants({ variant, locale });

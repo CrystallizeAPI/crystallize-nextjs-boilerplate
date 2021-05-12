@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import is from 'styled-is';
 import { useRouter } from 'next/router';
 
+import * as tracker from 'lib/tracker';
 import Layout from 'components/layout';
 import { useBasket } from 'components/basket';
 import OrderItems from 'components/order-items';
@@ -40,11 +41,29 @@ export default function Confirmation({ order }) {
   const { t } = useTranslation(['common', 'checkout', 'order']);
   const router = useRouter();
 
+  console.log(order);
+
   // Empty the basket
   useEffect(() => {
     if (router.query) {
       if ('emptyBasket' in router.query) {
         basket.actions.empty();
+
+        tracker.logEvent({
+          eventType: 'purchase-complete',
+          productDetails: order.cart.map((cartItem) => {
+            return {
+              product: {
+                id: cartItem.sku
+              },
+              quantity: cartItem.quantity
+            };
+          }),
+          purchaseTransaction: {
+            revenue: order.total.gross,
+            currencyCode: order.total.currency
+          }
+        });
 
         const url = new URL(location.href);
 

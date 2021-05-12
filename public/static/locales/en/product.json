@@ -1,6 +1,8 @@
 {
   "relatedProduct": "You might also be interested in",
   "relatedProduct_plural": "You might also be interested in",
+  "othersViewedProducts": "Others have viewed this product",
+  "othersViewedProducts_plural": "Others have viewed these products",
   "addToBasket": "Add to Basket",
   "buy": "BUY",
   "stock": "{{stockCount}} in stock",
