@@ -197,4 +197,8 @@ export const PreviewBar = styled.div`
 `;
 export const IconBar = styled.div`
   display: flex;
+
+  > a {
+    cursor: pointer;
+  }
 `;

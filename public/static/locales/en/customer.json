@@ -11,7 +11,8 @@
     "loggedIn": "You are logged in",
     "instructions": "Enter your email address and we’ll send a magic login link to your inbox.",
     "emailAddressInvalid": "Please enter a valid email address",
-    "sendMagicLink": "Send me a magic link"
+    "sendMagicLink": "Send me a magic link",
+    "error_CUSTOMER_NOT_FOUND": "Cannot find this customer"
   },
   "account": {
     "title": "My account"

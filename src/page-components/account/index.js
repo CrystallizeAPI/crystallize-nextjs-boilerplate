@@ -31,7 +31,8 @@ export default function Login() {
           loading: false,
           message: success
             ? 'Check your mail inbox for a login link'
-            : error || 'Could not send the login link email =('
+            : t(`login.error_${error}`) ||
+              'Could not send the login link email =('
         })
       );
     } catch (error) {
