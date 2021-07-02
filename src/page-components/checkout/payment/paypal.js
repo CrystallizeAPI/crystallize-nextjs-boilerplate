@@ -125,7 +125,9 @@ export default function PaypalWrapper({ checkoutModel, onSuccess }) {
         <>
           {config?.clientId && total?.currency && (
             <Script
-              src={`https://www.paypal.com/sdk/js?client-id=${config.clientId}&currency=${total.currency}`}
+              src={`https://www.paypal.com/sdk/js?client-id=${
+                config.clientId
+              }&currency=${total.currency.toUpperCase()}`}
               onLoad={renderPayalCheckout}
             />
           )}
