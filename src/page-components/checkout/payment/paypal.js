@@ -1,134 +1,137 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import Script from 'next/script';
+
 import ServiceApi from 'lib/service-api';
+import { useBasket } from 'components/basket';
+import { Button } from 'ui';
 
 export default function PaypalWrapper({ checkoutModel, onSuccess }) {
-  const [scriptLoaded, setLoadingScript] = useState(undefined);
-  const paypalRef = useRef(undefined);
-
-  function injectScript(src) {
-    return new Promise(function (resolve, reject) {
-      var script = document.createElement('script');
-      script.src = src;
-      script.addEventListener('load', function () {
-        resolve();
-        setLoadingScript(true);
-      });
-      script.addEventListener('error', function (e) {
-        reject(e);
-      });
-      document.body.appendChild(script);
-    });
-  }
+  const { total } = useBasket();
+  const [config, setConfig] = useState(null);
+  const [status, setStatus] = useState('not-started');
 
   useEffect(() => {
-    async function fetchPaypalConfig() {
+    (async function fetchPaypalConfig() {
       const paymentConfig = await ServiceApi({
         query: `
-            query {
-                paymentProviders{
-                    paypal{
-                        config
-                    }
-                }
-            }
-        `
-      });
-
-      const {
-        clientId,
-        currency
-      } = paymentConfig?.data?.paymentProviders?.paypal?.config;
-
-      console.log('currency -', currency);
-
-      if (clientId) {
-        injectScript(
-          `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`
-        );
-      }
-    }
-    fetchPaypalConfig();
-  }, []);
-
-  useEffect(() => {
-    if (window.paypal) {
-      paypalRef.current = window.paypal;
-      paypalRef.current
-        .Buttons({
-          createOrder: async function () {
-            const response = await ServiceApi({
-              query: `
-                    mutation paypal($checkoutModel: CheckoutModelInput!) {
-                        paymentProviders {
-                            paypal {
-                            createPayment(checkoutModel: $checkoutModel){
-                                    success
-                                    orderId
-                                }
-                            }
-                        }
-                    }
-                 `,
-              variables: {
-                checkoutModel
+          query {
+            paymentProviders {
+              paypal {
+                config
               }
-            });
-
-            const {
-              success: createPaymentSuccess,
-              orderId
-            } = response?.data?.paymentProviders?.paypal?.createPayment;
-            if (!createPaymentSuccess) {
-              return;
-            }
-
-            return orderId;
-          },
-          onApprove: async function (data) {
-            // capture payment
-            const paypalOrderId = data?.orderID;
-            if (!paypalOrderId) {
-              return;
-            }
-
-            const response = await ServiceApi({
-              query: `
-                    mutation paypal($orderId: String!,$checkoutModel: CheckoutModelInput!) {
-                        paymentProviders {
-                            paypal {
-                                confirmPayment(orderId: $orderId,checkoutModel: $checkoutModel){
-                                    success
-                                    orderId
-                                }
-                            }
-                        }
-                    }
-             `,
-              variables: {
-                orderId: paypalOrderId,
-                checkoutModel
-              }
-            });
-
-            const {
-              success,
-              orderId
-            } = response?.data?.paymentProviders?.paypal?.confirmPayment;
-
-            if (success) {
-              onSuccess(orderId);
-            } else {
-              alert('Whoops, transaction failed');
             }
           }
-        })
-        .render('#paypal-button-container');
+        `
+      });
+      const config = paymentConfig?.data?.paymentProviders?.paypal?.config;
+      if (config) {
+        setConfig(config);
+      } else {
+        setStatus('failed #0');
+      }
+    })();
+  }, []);
+
+  function renderPayalCheckout() {
+    if (!window.paypal) {
+      console.log('window.paypal not available');
+      setStatus('failed #1');
+      return;
     }
-  }, [scriptLoaded]);
+
+    window.paypal
+      .Buttons({
+        createOrder: async function () {
+          const response = await ServiceApi({
+            query: `
+              mutation paypal($checkoutModel: CheckoutModelInput!) {
+                paymentProviders {
+                  paypal {
+                    createPayment(checkoutModel: $checkoutModel) {
+                      success
+                      orderId
+                    }
+                  }
+                }
+              }
+            `,
+            variables: {
+              checkoutModel
+            }
+          });
+
+          const result =
+            response?.data?.paymentProviders?.paypal?.createPayment || {};
+
+          if (!result?.success) {
+            setStatus('failed #2');
+            return;
+          }
+
+          return result.orderId;
+        },
+        onApprove: async function (data) {
+          const paypalOrderId = data?.orderID;
+          if (!paypalOrderId) {
+            setStatus('failed #3');
+            return;
+          }
+
+          /**
+           * Create an order in Crystallize when the
+           * customer has approved it.
+           */
+          const response = await ServiceApi({
+            query: `
+              mutation paypal($orderId: String!, $checkoutModel: CheckoutModelInput!) {
+                paymentProviders {
+                  paypal {
+                    confirmPayment(orderId: $orderId, checkoutModel: $checkoutModel){
+                      success
+                      orderId
+                    }
+                  }
+                }
+              }
+             `,
+            variables: {
+              orderId: paypalOrderId,
+              checkoutModel
+            }
+          });
+
+          const result =
+            response?.data?.paymentProviders?.paypal?.confirmPayment;
+
+          if (!result?.success) {
+            setStatus('failed #4');
+          } else {
+            setStatus('succeeded');
+            onSuccess(result.orderId);
+          }
+        }
+      })
+      .render('#paypal-button-container');
+  }
 
   return (
     <>
-      <div id="paypal-button-container"></div>
+      {status.startsWith('failed') ? (
+        <div>
+          Something went wrong with the payment ({status}).{' '}
+          <Button onClick={() => location.reload()}>Try again</Button>
+        </div>
+      ) : (
+        <>
+          {config?.clientId && total?.currency && (
+            <Script
+              src={`https://www.paypal.com/sdk/js?client-id=${config.clientId}&currency=${total.currency}`}
+              onLoad={renderPayalCheckout}
+            />
+          )}
+          <div id="paypal-button-container" />
+        </>
+      )}
     </>
   );
 }

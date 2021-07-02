@@ -10,8 +10,5 @@ module.exports = {
         permanent: false
       }
     ];
-  },
-  future: {
-    webpack5: true
   }
 };

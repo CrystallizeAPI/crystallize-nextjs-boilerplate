@@ -65,6 +65,9 @@ export default function Payment() {
           vipps {
             enabled
           }
+          paypal {
+            enabled
+          }
         }
       }
     `
