@@ -7,7 +7,7 @@
 import { simplyFetchFromGraph } from 'lib/graph';
 import { defaultLocale } from 'lib/app-config';
 
-export default async (req, res) => {
+export default async function preview(req, res) {
   // Leave preview mode
   if ('leave' in req.query) {
     res.clearPreviewData();
@@ -73,4 +73,4 @@ export default async (req, res) => {
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
   res.writeHead(307, { Location: redirectTo });
   res.end();
-};
+}

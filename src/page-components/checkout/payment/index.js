@@ -28,6 +28,7 @@ const StripeCheckout = dynamic(() => import('./stripe'));
 const KlarnaCheckout = dynamic(() => import('./klarna'));
 const VippsCheckout = dynamic(() => import('./vipps'));
 const MollieCheckout = dynamic(() => import('./mollie'));
+const PaypalCheckout = dynamic(() => import('./paypal'));
 
 const Row = styled.div`
   display: flex;
@@ -62,6 +63,9 @@ export default function Payment() {
             enabled
           }
           vipps {
+            enabled
+          }
+          paypal {
             enabled
           }
         }
@@ -171,6 +175,28 @@ export default function Payment() {
           />
         </PaymentProvider>
       )
+    },
+    {
+      name: 'paypal',
+      color: '#fff',
+      logo: '/static/paypal-logo.png',
+      render: () => (
+        <PaymentProvider>
+          <PaypalCheckout
+            checkoutModel={checkoutModel}
+            basketActions={actions}
+            onSuccess={(crystallizeOrderId) => {
+              router.push(
+                checkoutModel.confirmationURL.replace(
+                  '{crystallizeOrderId}',
+                  crystallizeOrderId
+                )
+              );
+              scrollTo(0, 0);
+            }}
+          ></PaypalCheckout>
+        </PaymentProvider>
+      )
     }
   ];
 
@@ -188,6 +214,9 @@ export default function Payment() {
     }
     if (paymentProviders.stripe.enabled) {
       enabledPaymentProviders.push('stripe');
+    }
+    if (paymentProviders.paypal.enabled) {
+      enabledPaymentProviders.push('paypal');
     }
   }
 
