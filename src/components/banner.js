@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Image } from '@crystallize/react-image';
+import { Image as CrystallizeImage } from '@crystallize/react-image';
 import ContentTransformer from 'ui/content-transformer';
 import { responsive } from 'ui';
 
@@ -201,7 +201,10 @@ function Banner({
         </div>
       </Content>
       <Img className="banner-media">
-        <Image {...image?.[0]} sizes="(max-width: 700px) 100vw, 1200px" />
+        <CrystallizeImage
+          {...image?.[0]}
+          sizes="(max-width: 700px) 100vw, 1200px"
+        />
       </Img>
     </Outer>
   );

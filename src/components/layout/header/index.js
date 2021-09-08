@@ -56,7 +56,7 @@ export default function Header({ simple, preview }) {
         </Nav>
         <IconBar>
           <LocaleSwitcher />
-          <Link href="/account">
+          <Link href="/account" passHref>
             <Btn as="a" aria-label="User area">
               <IconUser />
             </Btn>

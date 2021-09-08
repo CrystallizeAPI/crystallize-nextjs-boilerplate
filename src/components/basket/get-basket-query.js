@@ -1,4 +1,4 @@
-export default `
+const GET_BASKET_QUERY = `
   query getServerBasket($basketModel: BasketModelInput!) {
     basket(basketModel: $basketModel) {
       total {
@@ -36,3 +36,5 @@ export default `
     }
   }
 `;
+
+export default GET_BASKET_QUERY;

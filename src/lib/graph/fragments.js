@@ -1,4 +1,4 @@
-export default `
+const FRAGMENTS = `
   fragment product on Product {
     id
     language
@@ -349,3 +349,5 @@ export default `
     datetime
   }
 `;
+
+export default FRAGMENTS;

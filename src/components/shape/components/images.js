@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import is from 'styled-is';
-import { Image } from '@crystallize/react-image';
+import { Image as CrystallizeImage } from '@crystallize/react-image';
 
 import { responsive } from 'ui';
 
@@ -64,7 +64,7 @@ export default function Images({ images }) {
   if (images.length === 1) {
     return (
       <Outer>
-        <Image {...images[0]} sizes="80vw" />
+        <CrystallizeImage {...images[0]} sizes="80vw" />
       </Outer>
     );
   }
@@ -79,7 +79,7 @@ export default function Images({ images }) {
               image?.variants?.[0].height >= image?.variants?.[0]?.width
             }
           >
-            <Image {...image} sizes="80vw" />
+            <CrystallizeImage {...image} sizes="80vw" />
           </ImgContainer>
         ))}
       </List>
