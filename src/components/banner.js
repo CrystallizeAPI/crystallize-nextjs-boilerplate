@@ -175,34 +175,36 @@ const Outer = styled.div`
   }
 `;
 
-const Banner = ({
+function Banner({
   title,
   description,
   link,
   linkText,
   image,
   addTextAsOverlay
-}) => (
-  <Outer className={addTextAsOverlay ? 'banner--withOverlay' : ''}>
-    <Content className="banner-content">
-      <div>
-        {!!title && <Title>{title}</Title>}
-        {!!description && (
-          <Description>
-            <ContentTransformer json={description} />
-          </Description>
-        )}
-        {!!link && (
-          <Button className="banner-button" href={link}>
-            {linkText}
-          </Button>
-        )}
-      </div>
-    </Content>
-    <Img className="banner-media">
-      <Image {...image?.[0]} sizes="(max-width: 700px) 100vw, 1200px" />
-    </Img>
-  </Outer>
-);
+}) {
+  return (
+    <Outer className={addTextAsOverlay ? 'banner--withOverlay' : ''}>
+      <Content className="banner-content">
+        <div>
+          {!!title && <Title>{title}</Title>}
+          {!!description && (
+            <Description>
+              <ContentTransformer json={description} />
+            </Description>
+          )}
+          {!!link && (
+            <Button className="banner-button" href={link}>
+              {linkText}
+            </Button>
+          )}
+        </div>
+      </Content>
+      <Img className="banner-media">
+        <Image {...image?.[0]} sizes="(max-width: 700px) 100vw, 1200px" />
+      </Img>
+    </Outer>
+  );
+}
 
 export default Banner;
