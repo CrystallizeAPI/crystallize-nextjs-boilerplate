@@ -55,16 +55,6 @@ export const SEARCH_QUERY = `
               id
               name
             }
-            variants {
-              sku
-              images {
-                url
-                variants {
-                  width
-                  url
-                }
-              }
-            }
             matchingVariant {
               sku
               priceVariants {

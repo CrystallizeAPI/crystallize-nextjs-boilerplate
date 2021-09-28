@@ -19,12 +19,8 @@ export default function ProductItem({ data }) {
 
   const { name, path, type, variants, matchingVariant } = data;
   const variant = matchingVariant || findDefaultVariant(variants) || {};
-  let image = variant?.images?.[0] || variant?.image;
-  if (!image) {
-    image = variants.find((v) => v.sku === variant.sku)?.images?.[0];
-  }
+  const image = variant?.images?.[0] || variant?.image;
   const pricing = getRelativePriceVariants({ variant, locale });
-  console.log({ image2: image });
 
   return (
     <Link href={path} passHref>
