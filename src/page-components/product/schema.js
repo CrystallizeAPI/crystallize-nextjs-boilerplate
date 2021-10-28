@@ -8,6 +8,10 @@ const SchemaOrg = ({ variants, summary }) => {
   variants?.forEach((variant) => {
     const { price, currency } =
       variant.priceVariants?.find((pv) => pv.identifier === 'default') || {};
+
+    const { stock } =
+      variant.stockLocations?.find((sl) => sl.identifier === 'default') ?? {};
+
     schema.push({
       '@context': 'https://schema.org/',
       '@type': 'Product',
@@ -21,7 +25,7 @@ const SchemaOrg = ({ variants, summary }) => {
         priceCurrency: currency,
         url: router?.asPath,
         availability:
-          variant?.stock > 0
+          stock > 0
             ? `https://schema.org/InStock`
             : `https://schema.org/OutOfStock`,
         price,

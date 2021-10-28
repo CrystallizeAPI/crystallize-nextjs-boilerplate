@@ -17,7 +17,11 @@ const FRAGMENTS = `
         price
         currency
       }
-      stock
+      stockLocations {
+        identifier
+        name
+        stock
+      }
       isDefault
       attributes {
         attribute
@@ -139,7 +143,7 @@ const FRAGMENTS = `
       }
       topics {
         id
-        name 	
+        name
       }
       ... on Product {
         variants {
@@ -239,7 +243,11 @@ const FRAGMENTS = `
                   price
                   currency
                 }
-                stock
+                stockLocations {
+                  identifier
+                  name
+                  stock
+                }
                 isDefault
                 attributes {
                   attribute
@@ -309,7 +317,7 @@ const FRAGMENTS = `
             }
             topics {
               id
-              name 	
+              name
             }
             ... on Product {
               variants {

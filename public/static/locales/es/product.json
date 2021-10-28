@@ -3,6 +3,6 @@
   "relatedProduct_plural": "También podríais estar interesados en",
   "addToBasket": "Añadir a la cesta",
   "buy": "COMPRA",
-  "stock": "{{stockCount}} en reserva",
+  "stock": "en reserva: {{stockCount}}",
   "outOfStock": "Sin reserva"
 }
