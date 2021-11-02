@@ -10,8 +10,6 @@ const STOCK_COLOR_INDICATOR = {
 };
 
 const Stock = ({ selectedVariant }) => {
-  const { t } = useTranslation('product');
-
   return (
     <Outer>
       {selectedVariant.stockLocations?.map(({ identifier, name, stock }) => {
