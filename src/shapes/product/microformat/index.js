@@ -25,7 +25,13 @@ export default function ProductItem({ data }) {
       <Outer type={type}>
         <Inner>
           <ImageWrapper>
-            {image && <Img {...image} alt={name} sizes="250px" />}
+            {image && (
+              <Img
+                {...image}
+                alt={name}
+                sizes="(min-width: 1000px) 250px, 45vw"
+              />
+            )}
           </ImageWrapper>
 
           <Footer>

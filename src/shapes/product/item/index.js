@@ -28,12 +28,21 @@ export default function ProductItem({ data }) {
         <Inner>
           <ImageWrapper>
             <Tags>
-              {data?.topics?.map((topic) => (
-                <TopicTag {...topic} key={`listing-${topic.id}-${data?.id}`} />
+              {data?.topics?.map((topic, index) => (
+                <TopicTag
+                  {...topic}
+                  key={`listing-${topic.id}-${data?.id}-${index}`}
+                />
               ))}
             </Tags>
 
-            {image && <Img {...image} alt={name} sizes="250px" />}
+            {image && (
+              <Img
+                {...image}
+                alt={name}
+                sizes="(min-width: 1000px) 250px, 45vw"
+              />
+            )}
           </ImageWrapper>
 
           <Footer>
