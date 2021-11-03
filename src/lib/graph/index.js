@@ -1,3 +1,5 @@
+import { reduceImageSizeInCatalogueResponse } from '../reduce-image-size-in-catalogue-response';
+
 /**
  * Helper for getting a catalogue item with a path
  * from url, removing any query params from the variables
@@ -55,7 +57,9 @@ export async function simplyFetchFromGraph({
     throw new Error(await response.text());
   }
 
-  return response.json();
+  const json = await response.json();
+
+  return reduceImageSizeInCatalogueResponse(json);
 }
 
 export function simplyFetchFromSearchGraph(args) {
