@@ -36,7 +36,7 @@ export function reduceImageSizeInCatalogueResponse(catalogueResponse) {
         new Set(item.variants.map(getFormatFromUrl))
       );
 
-      // Remove avif it is bigger than webp
+      // Remove avif if it is bigger than webp
       if (
         item.variants.find(
           (v) => v.url.endsWith('.avif') && v.url.includes('/@100/')
@@ -45,7 +45,10 @@ export function reduceImageSizeInCatalogueResponse(catalogueResponse) {
           (v) => v.url.endsWith('.webp') && v.url.includes('/@100/')
         )?.size
       ) {
-        item._availableFormats.slice(item._availableFormats.indexOf('avif'), 1);
+        item._availableFormats.splice(
+          item._availableFormats.indexOf('avif'),
+          1
+        );
       }
 
       delete item.variants;
