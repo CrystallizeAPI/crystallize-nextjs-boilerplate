@@ -36,6 +36,17 @@ function MyApp({ Component, pageProps, commonData }) {
 
   return (
     <>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `
+          <!-- cr-topbar-start -->
+          <div id="cr-boilers" style="height: 50px;">
+            <script>(function () {const d = document.createElement('script');d.src='https://feature-top-bar-poc-crystallize.superfast.live/static/scripts/boilerplate-topbar.js';d.defer=true;document.head.appendChild(d);}())</script>
+          </div>
+          <!-- cr-topbar-end -->
+          `
+        }}
+      />
       <DefaultSeo {...SEOSettings} />
       <QueryClientProvider client={queryClient}>
         <SettingsProvider mainNavigation={mainNavigation}>
