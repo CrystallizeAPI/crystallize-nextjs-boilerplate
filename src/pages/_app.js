@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps, commonData }) {
 
   return (
     <>
-      {/* cr-boilers-start */}
+      {/*crystallize-boilerplates-topbar-start*/}
       <div
         dangerouslySetInnerHTML={{
           __html: `
@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps, commonData }) {
           `
         }}
       />
-      {/* cr-boilers-end */}
+      {/*crystallize-boilerplates-topbar-end*/}
       <DefaultSeo {...SEOSettings} />
       <QueryClientProvider client={queryClient}>
         <SettingsProvider mainNavigation={mainNavigation}>
