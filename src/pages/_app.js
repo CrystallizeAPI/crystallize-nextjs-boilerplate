@@ -36,17 +36,17 @@ function MyApp({ Component, pageProps, commonData }) {
 
   return (
     <>
+      {/* cr-boilers-start */}
       <div
         dangerouslySetInnerHTML={{
           __html: `
-          <!-- cr-topbar-start -->
-          <div id="cr-boilers" style="height: 50px;">
-            <script>(function () {const d = document.createElement('script');d.src='https://feature-top-bar-poc-crystallize.superfast.live/static/scripts/boilerplate-topbar.js';d.defer=true;document.head.appendChild(d);}())</script>
+          <div id="cr-boilers" style="height: 52px;">
+            <script>(function () {const d = document.createElement('script');d.src='https://crystallize.com/static/scripts/boilerplate-topbar.min.js';d.defer=true;document.head.appendChild(d);}())</script>
           </div>
-          <!-- cr-topbar-end -->
           `
         }}
       />
+      {/* cr-boilers-end */}
       <DefaultSeo {...SEOSettings} />
       <QueryClientProvider client={queryClient}>
         <SettingsProvider mainNavigation={mainNavigation}>
