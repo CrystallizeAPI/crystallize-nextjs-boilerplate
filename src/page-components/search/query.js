@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import fragments from 'lib/graph/fragments';
 
 export default `

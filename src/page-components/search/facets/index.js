@@ -37,7 +37,7 @@ export default function Facets({
   // After opening them, the window scroll is blocked so the content
   // underneath that modal, can't be scrolled.
   //
-  // For larger resolutions than 1024px included, we don't have that behavioir anymore.
+  // For larger resolutions than 1024px included, we don't have that behaviour anymore.
   // When the facets are opened, the are toggled below the open/hide buttons.
   // Because of this, the body scroll should not be blocked.
   //
