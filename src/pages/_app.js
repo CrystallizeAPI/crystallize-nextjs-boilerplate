@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps, commonData }) {
         dangerouslySetInnerHTML={{
           __html: `
           <div id="cr-boilers" style="height: 52px;">
-            <script>(function () {const d = document.createElement('script');d.src='https://crystallize.com/static/scripts/boilerplate-topbar.min.js';d.defer=true;document.head.appendChild(d);}())</script>
+            <script>(function () {const d = document.createElement('script');d.src='https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js';d.defer=true;document.head.appendChild(d);}())</script>
           </div>
           `
         }}
