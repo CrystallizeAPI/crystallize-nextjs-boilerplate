@@ -30,6 +30,7 @@ const FRAGMENTS = `
           url
           width
           height
+          size
         }
       }
     }
@@ -85,6 +86,7 @@ const FRAGMENTS = `
       url
       width
       height
+      size
     }
   }
 
@@ -252,6 +254,7 @@ const FRAGMENTS = `
                     url
                     width
                     height
+                    size
                   }
                 }
               }
