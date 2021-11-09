@@ -4,5 +4,5 @@
   "addToBasket": "Προσθήκη στο καλάθι",
   "buy": "ΑΓΟΡΑ",
   "outOfStock": "Μη διαθέσιμο",
-  "stock": "{{stockCount}} σε αποθεμα"
+  "stock": "σε αποθεμα: {{stockCount}}"
 }
