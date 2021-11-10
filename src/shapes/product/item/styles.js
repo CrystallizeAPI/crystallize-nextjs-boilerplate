@@ -35,7 +35,7 @@ export const Img = styled(Image)`
   height: 100%;
   overflow: hidden;
 
-  > img {
+  img {
     display: block;
     object-fit: var(--listformat-product-image-fit);
     object-position: var(--listformat-product-image-position);
