@@ -1,0 +1,21 @@
+{
+  "title": "Cesta",
+  "loading": "Espera. Estamos actualizando tu cesta...",
+  "removeItem": "eliminar {{name}} de tu cesta",
+  "empty": "Tu cesta está vacía",
+  "remainingUntilFreeShipping": "Añade otra {{amount, currency}} a tu pedido para tener envío gratuito.",
+  "totalPrice": "Precio total",
+  "discount": "Descuento",
+  "totalPriceAfterDiscount": "Total con descuento realizado",
+  "shippingPrice": "Envio",
+  "tax": "[Tax]",
+  "totalToPay": "A pagar",
+  "goToCheckout": "Ir a pagar",
+  "vouchers": {
+    "title": "Vale",
+    "invalidCode": "El vale no ha podido ser aplicado",
+    "inputPlaceholder": "[Got a voucher code?]",
+    "applyCode": "[Apply]",
+    "remove": "[Remove voucher]"
+  }
+}

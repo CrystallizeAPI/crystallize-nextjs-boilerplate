@@ -1,0 +1,21 @@
+{
+  "title": "Καλάθι",
+  "loading": "Περίμενε. Φορτώνουμε το καλάθι σου...",
+  "removeItem": "Αφαίρεσε {{name}} από το καλάθι",
+  "empty": "Το καλάθι σου είναι άδειο",
+  "remainingUntilFreeShipping": "Πρόσθεσε {{amount, currency}} στην παραγγελία σου για δωρεάν μεταφορικά.",
+  "totalPrice": "Συνολική τιμή",
+  "discount": "Έκπτωση",
+  "totalPriceAfterDiscount": "Τελική τιμή μετά την έκπτωση",
+  "shippingPrice": "Μεταφορικά",
+  "tax": "ΦΠΑ",
+  "totalToPay": "Αξία",
+  "goToCheckout": "Oλοκλήρωση παραγγελίας",
+  "vouchers": {
+    "title": "Voucher",
+    "invalidCode": "Δεν ήταν δυνατή η χρήση του κουπονιού",
+    "inputPlaceholder": "[Got a voucher code?]",
+    "applyCode": "[Apply]",
+    "remove": "[Remove voucher]"
+  }
+}

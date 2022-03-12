@@ -1,0 +1,20 @@
+{
+  "name": "Name",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "streetAddress": "Street address",
+  "postalCode": "Postal code",
+  "email": "Email",
+  "emailPlaceholder": "you@your.place",
+  "login": {
+    "title": "Login",
+    "loggedIn": "You are logged in",
+    "instructions": "Enter your email address and we’ll send a magic login link to your inbox.",
+    "emailAddressInvalid": "Please enter a valid email address",
+    "sendMagicLink": "Send me a magic link",
+    "error_CUSTOMER_NOT_FOUND": "Cannot find this customer"
+  },
+  "account": {
+    "title": "My account"
+  }
+}

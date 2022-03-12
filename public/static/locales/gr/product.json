@@ -1,0 +1,8 @@
+{
+  "relatedProduct": "Σχετικό προϊόν",
+  "relatedProduct_plural": "Σχετικά προϊόντα",
+  "addToBasket": "Προσθήκη στο καλάθι",
+  "buy": "ΑΓΟΡΑ",
+  "outOfStock": "Μη διαθέσιμο",
+  "stock": "σε αποθεμα: {{stockCount}}"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Navn",
+  "firstName": "Fornavn",
+  "lastName": "Etternavnn",
+  "streetAddress": "Gate",
+  "postalCode": "Postnr.",
+  "email": "Epost",
+  "emailPlaceholder": "deg@ditt.sted",
+  "login": {
+    "title": "Logg inn",
+    "loggedIn": "Du er logget inn",
+    "instructions": "Tast inn din epostaddresse og vi vil sende deg en passordfri innlogginslink",
+    "emailAddressInvalid": "Vennligst oppgi en gyldig epostaddresse",
+    "sendMagicLink": "Send meg innloggingslink på epost",
+    "error_CUSTOMER_NOT_FOUND": "Fant ikke denne kunden"
+  },
+  "account": {
+    "title": "Min konto"
+  }
+}

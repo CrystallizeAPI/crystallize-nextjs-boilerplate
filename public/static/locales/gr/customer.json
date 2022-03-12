@@ -1,0 +1,20 @@
+{
+  "name": "Ονοματεπώνυμο",
+  "firstName": "Όνομα",
+  "lastName": "Επώνυμο",
+  "streetAddress": "Διεύθυνση",
+  "postalCode": "Ταχυδρομικός κώδικας",
+  "email": "Email",
+  "emailPlaceholder": "you@your.place",
+  "login": {
+    "title": "Σύνδεση",
+    "loggedIn": "Είστε συνδεδεμένος/η",
+    "instructions": "Εισάγετε τη διεύθυνση ηλεκτρονικού ταχυδρομίου σας και θα σας στείλουμε ένα σύνδεσμο σύνδεσης στο λογαριασμό σας.",
+    "emailAddressInvalid": "Παρακαλώ εισάγετε έναν έγκυρο σύνδεσμο",
+    "sendMagicLink": "Στείλε μου σύνδεσμο",
+    "error_CUSTOMER_NOT_FOUND": "[Cannot find this customer]"
+  },
+  "account": {
+    "title": "[My account]"
+  }
+}

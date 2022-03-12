@@ -1,0 +1,20 @@
+{
+  "name": "Nombre",
+  "firstName": "Nombre",
+  "lastName": "Apellido",
+  "streetAddress": "Dirección",
+  "postalCode": "Codigo postal",
+  "email": "Correo electrónico",
+  "emailPlaceholder": "tu@tu.direcction",
+  "login": {
+    "title": "Inicio sesión",
+    "loggedIn": "Tienes una sesión activa",
+    "instructions": "Introduce una dirección de correo electrónico y te enviaremos un enlace mágico para inciar sesión a tu correo.",
+    "emailAddressInvalid": "Por favor introduce una dirección de correo electrónico válida",
+    "sendMagicLink": "Envíame el enlace mágico",
+    "error_CUSTOMER_NOT_FOUND": "[Cannot find this customer]"
+  },
+  "account": {
+    "title": "[My account]"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "orderTitle": "Sorter etter",
+  "order": {
+    "ITEM_NAME_ASC": "Navn stigende",
+    "ITEM_NAME_DESC": "Navn synkende",
+    "PRICE_ASC": "Pris stigende",
+    "PRICE_DESC": "Pris synkende",
+    "STOCK_ASC": "Lagerbeholding stigende",
+    "STOCK_DESC": "Lagerbeholding synkende"
+  },
+  "filter": "Filtrer",
+  "facets": {
+    "viewNResults": "Vis {{count}} resultat",
+    "viewNResults_plural": "Vis {{count}} resultater",
+    "reset": "Tilbakestill",
+    "price": {
+      "title": "Pris",
+      "min": "Minpris",
+      "max": "Maksprice"
+    }
+  }
+}

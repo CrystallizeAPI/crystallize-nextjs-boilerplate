@@ -1,0 +1,14 @@
+{
+  "title": "Comprar",
+  "payNow": "Pagar ahora",
+  "choosePaymentMethod": "Elegir método de pago",
+  "noPaymentProvidersConfigured": "No hay proveedores de pago configurados",
+  "paymentProviderNotConfigured": "El proveedor de pagos {{name}} no está configurado",
+  "paymentProviderLogoAlt": "Logo de {{name}}",
+  "loadingPaymentGateway": "Inicializando pasarela de pago...",
+  "loadingPaymentGatewayFailed": "Oh no. No pudimos cargar la pasarela de pago de {{name}}",
+  "confirmation": {
+    "title": "Confirmación de pedido",
+    "shortStatus": "Tu pedido se ha confirmado."
+  }
+}

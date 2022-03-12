@@ -1,0 +1,20 @@
+{
+  "frontpage": "Inicio",
+  "price": "{{value, currency}}",
+  "tax": "VAT: {{value, currency}}",
+  "close": "Cerrar",
+  "menu": "Menú",
+  "searchPlaceholder": "Busca cosas",
+  "ecomBy": "eCommerce por",
+  "loadingVideo": "Cargando video",
+  "slider": {
+    "previous": "Ver el elemento siguiente",
+    "next": "Ver el elemento anterior"
+  },
+  "search": {
+    "placeholder": "[Find things]",
+    "label": "Buscar",
+    "foundResults": "Hemos encontrado {{count}} resultado de búsqueda",
+    "foundResults_plural": "Hemos encontrado {{count}} resultados de búsqueda"
+  }
+}

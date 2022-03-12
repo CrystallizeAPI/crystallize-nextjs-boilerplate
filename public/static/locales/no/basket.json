@@ -1,0 +1,20 @@
+{
+  "title": "Handlekurv",
+  "loading": "Vennligst vent. Henter din handlekurv...",
+  "removeItem": "Fjern {{name}} fra handlekurven",
+  "empty": "Handlekurven din er tom",
+  "remainingUntilFreeShipping": "Kjøp for {{amount, currency}} ekstra for å oppnå gratis frakt",
+  "totalPrice": "Totalt",
+  "discount": "Rabatt",
+  "shippingPrice": "Frakt",
+  "tax": "Moms",
+  "totalToPay": "Til betaling",
+  "goToCheckout": "Gå til betaling",
+  "vouchers": {
+    "title": "Kupong",
+    "invalidCode": "Kupongen \"{{code}}\" finnes ikke",
+    "inputPlaceholder": "Har du en kupongkode?",
+    "applyCode": "Legg til",
+    "remove": "Fjern kupong"
+  }
+}
